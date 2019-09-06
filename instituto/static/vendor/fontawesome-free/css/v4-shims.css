@@ -23,7 +23,7 @@
   content: "\f00d"; }
 
 .fa.fa-gear:before {
-  content: "\f013"; }
+  content: "\f12e"; }
 
 .fa.fa-trash-o {
   font-family: 'Font Awesome 5 Free';
@@ -409,10 +409,10 @@
   content: "\f0e3"; }
 
 .fa.fa-tachometer:before {
-  content: "\f3fd"; }
+  content: "\f015"; }
 
 .fa.fa-dashboard:before {
-  content: "\f3fd"; }
+  content: "\f015"; }
 
 .fa.fa-comment-o {
   font-family: 'Font Awesome 5 Free';
@@ -517,7 +517,7 @@
   font-weight: 400; }
 
 .fa.fa-folder-o:before {
-  content: "\f07b"; }
+  content: "\f007"; }
 
 .fa.fa-folder-open-o {
   font-family: 'Font Awesome 5 Free';
@@ -1405,7 +1405,7 @@
   content: "\f1fb"; }
 
 .fa.fa-area-chart:before {
-  content: "\f1fe"; }
+  content: "\f005"; }
 
 .fa.fa-pie-chart:before {
   content: "\f200"; }
