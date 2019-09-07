@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import home,especialidades
+from .views import home,listarespecialidades, eliminarEspecialidad
 
 urlpatterns = [
     path('',home,name='index'),
-    path('especialidades/',especialidades,name='especialidades'),
+    path('especialidades/',listarespecialidades,name='especialidades'),
+    path('eliminar_especialidad/<int:id>',eliminarEspecialidad,name='eliminar_especialidad'),
 ]

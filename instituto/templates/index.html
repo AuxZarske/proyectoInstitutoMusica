@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-
+{%block head%}
 <head>
 
   <meta charset="utf-8">
@@ -20,12 +20,15 @@
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 </head>
+{%endblock head%}
+{%block estilos%}
 
+{%endblock estilos%}
 <body id="page-top">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
+    {%block sidebar%}
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -188,13 +191,13 @@
 
     </ul>
     <!-- End of Sidebar -->
-
+  {%endblock sidebar%}
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
       <div id="content">
-
+        {%block barra%}
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -216,6 +219,7 @@
           </form>
 
            Topbar Navbar -->
+           {%endblock barra%}
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -372,9 +376,9 @@
         <!-- End of Topbar -->
       
       <div class = "container-fluid">
-      {% block contenido %}
+      {%block contenidiPagina%}
             home
-      {% endblock contenido %}
+      {% endblock contenidiPagina %}
       </div>
       
 
@@ -410,7 +414,7 @@
       </div>
     </div>
   </div>
-
+  {%block archivos%}
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -426,7 +430,7 @@
   <!-- Page level custom scripts -->
   <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
   <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-
+  {%endblock archivos%}
 </body>
 
 </html>

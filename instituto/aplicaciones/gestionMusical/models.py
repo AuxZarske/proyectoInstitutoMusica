@@ -10,6 +10,7 @@ class Especialidad(models.Model):
     nombre = models.CharField('Nombre de la especialidad', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la especialidad', null = False, blank = False)
     estado = models.BooleanField('Especialidad activo/inactivo', default = True)
+    fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
 
     class Meta:
         verbose_name = 'Especialidad'
@@ -54,6 +55,8 @@ class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = False, blank = False)
     gustoMusical = models.CharField('Musica que prefiere ejecutar el alumno', max_length = 300, null = False, blank = False)
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = False, blank = False)
+    
+
 
     class Meta:
         verbose_name = 'Alumno'
