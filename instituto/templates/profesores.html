@@ -1,4 +1,6 @@
+{%extends 'index.html'%}
 {% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
@@ -10,194 +12,54 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Todo Por Arte</title>
+  <title>SB Admin 2 - Tables</title>
 
-  <!-- Custom fonts for this template-->
-  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Custom fonts for this template -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
 </head>
 {%endblock head%}
 {%block estilos%}
+    <style type="text/css">
+        h6#fraseTable{
+            display: inline-block;
+            
 
+        }
+        a#fraseTableBoton{
+              display: inline-block;
+              float: right;
+             
+              
+
+        }
+
+
+
+
+    </style>
 {%endblock estilos%}
+
+
 <body id="page-top">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    {%block sidebar%}
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'gestionMusical:index' %}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">TODO<sup>x</sup>ARTE</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'gestionMusical:index' %}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Inicio</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Instituto
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Clases</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Clases Actuales:</h6>
-            <a class="collapse-item" href="buttons.html">cuarteto menor</a>
-            <a class="collapse-item" href="cards.html">banda mayor</a>
-            <a class="collapse-item" href="buttons.html">coro jovenes</a>
-            <a class="collapse-item" href="cards.html">grupo cuerdas</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Mensajeria</span>
-        </a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Gestion
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            
-            <a class="collapse-item" href="{% url 'gestionMusical:alumnos'  %}">Alumnos</a>
-            <a class="collapse-item" href="{% url 'gestionMusical:profesores'  %}">Profesores</a>
-            
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'gestionMusical:especialidades'  %}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Especialidades</span></a>
-      </li>
-
-      
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Almacen
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesOne" aria-expanded="true" aria-controls="collapsePagesOne">
-          <i class="fas fa-fw fa-folder-open"></i>
-          <span>Documentacion</span>
-        </a>
-        <div id="collapsePagesOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            
-            <a class="collapse-item" href="login.html">Partituras</a>
-            <a class="collapse-item" href="register.html">Temas/Actividades</a>
-            
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-guitar"></i>
-          <span>Instrumentos</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Extras
-      </div>
-
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-tools"></i>
-          <span>Configuracion</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-
-
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
-  {%endblock sidebar%}
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
       <div id="content">
-        {%block barra%}
+
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -206,20 +68,9 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search 
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          
 
-           Topbar Navbar -->
-           {%endblock barra%}
+          <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -242,7 +93,14 @@
               </div>
             </li>
 
-            
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+              <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
@@ -374,16 +232,114 @@
 
         </nav>
         <!-- End of Topbar -->
-      
-      <div class = "container-fluid">
-      {%block contenidiPagina%}
-            home
-      {% endblock contenidiPagina %}
+
+        {%block contenidiPagina%}
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Profesores</h1>
+          <p class="mb-4">En la siguiente tabla podra visualizar los profesores que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de profesores que cuenta actualmente:</h6>
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_profesor'%}" class="btn btn-primary btn-icon-split">
+                              
+                                    <span class="icon text-white-50">
+                                          <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Añadir Profesor</span>
+                                    
+                              
+                              </a>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>DNI</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Fecha Nacimiento</th>
+                      <th>Domicilio</th>
+                      <th>Correo Electronico</th>
+                      <th>Telefono</th>
+                      <th>Sexo</th>
+                      <th>Observaciones</th>
+                      <th>Acciones</th>
+                      
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    {% for profe in profesores%}
+                    
+                      {% if profe.estado %}
+                        <tr>
+                          <td>{{profe.dni}}</td>
+                          <td>{{profe.nombre}}</td>
+                          <td>{{profe.apellido}}</td>
+                          <td>{{profe.fechaNac}}</td>
+                          <td>{{profe.domicilio}}</td>
+                          <td>{{profe.correoElectronico}}</td>
+                          <td>{{profe.telefono}}</td>
+                          <td>{{profe.sexo}}</td>
+                          <td>{{profe.observaciones}}</td>
+                          <td>
+                          
+                          <center>
+                              
+                              <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-warning btn-icon-split">
+                              
+                                    <span class="icon text-white-50">
+                                          <i class="fas fa-paint-brush"></i>
+                                    </span>
+                                    
+                                    
+                              
+                              </a>
+
+                              <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}" class="btn btn-danger btn-icon-split">
+
+                                    <span class="icon text-white-50">
+                                          <i class="fas fa-trash"></i>
+                                    </span>
+                                    
+
+                              </a>
+                          </center>
+                        
+                          </td>
+                        
+                        </tr>
+                        {%endif%}
+                    {%endfor%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+        {%endblock contenidiPagina%}
+
       </div>
-      
+      <!-- End of Main Content -->
 
-
-      
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -416,20 +372,21 @@
   </div>
   {%block archivos%}
   <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
   <!-- Core plugin JavaScript-->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
 
   <!-- Page level plugins -->
-  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+  <script src="{%static 'vendor/datatables/jquery.dataTables.min.js'%}"></script>
+  <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
 
   <!-- Page level custom scripts -->
-  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+  <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
   {%endblock archivos%}
 </body>
 

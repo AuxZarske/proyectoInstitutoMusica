@@ -246,7 +246,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta actualmente:</h6>
-              <a id="fraseTableBoton" href="#" class="btn btn-primary btn-icon-split">
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_especialidad'%}" class="btn btn-primary btn-icon-split">
                               
                                     <span class="icon text-white-50">
                                           <i class="fas fa-plus"></i>
@@ -281,7 +281,7 @@
                           <td>
                           <center>
                               
-                              <a href="#" class="btn btn-warning btn-icon-split">
+                              <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}" class="btn btn-warning btn-icon-split">
                               
                                     <span class="icon text-white-50">
                                           <i class="fas fa-paint-brush"></i>
