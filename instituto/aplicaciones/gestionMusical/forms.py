@@ -1,10 +1,15 @@
 from django import forms
-from .models import Especialidad, Profesor, Usuario, Alumno
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad
         fields = ['nombre','descripcion']
+
+class ClaseForm(forms.ModelForm):
+    class Meta:
+        model = Clase
+        fields = ['nombre','descripcion','diaSemanal','horaInicio','duracion']
 
 
 class UsuarioForm(forms.ModelForm):

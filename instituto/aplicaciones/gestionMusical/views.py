@@ -144,3 +144,46 @@ def editarAlumno(request,dni):
 
     
     return render(request,'crear_alumno.html',{'alumno_form':alumno_form,'error':error})
+
+
+
+
+def listarclases(request):
+    clases = Clase.objects.all()
+    return render(request,'clases.html',{'clases':clases})
+
+
+def eliminarClase(request,id):
+    clase = Clase.objects.get(id=id)
+    
+    clase.estado = False
+    clase.save()
+    return redirect('gestionMusical:clases')
+    
+def crearClase(request):
+    if request.method == 'POST':
+        clase_form = ClaseForm(request.POST)
+        if clase_form.is_valid():
+            clase_form.save()
+            return redirect('gestionMusical:clases')
+    else:
+        clase_form =ClaseForm()
+    return render(request,'crear_clase.html',{'clase_form':clase_form})
+
+def editarClase(request,id):
+    clase_form = None
+    error = None
+    try:
+        clase = Clase.objects.get(id =id,estado=True)
+        if request.method == 'GET':
+            clase_form = ClaseForm(instance = clase)
+        else:
+            clase_form = ClaseForm(request.POST, instance = clase)
+            if clase_form.is_valid():
+                clase_form.save()
+            return redirect('gestionMusical:clases')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    
+    return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error})

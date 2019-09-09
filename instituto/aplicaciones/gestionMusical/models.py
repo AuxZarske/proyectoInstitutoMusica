@@ -2,6 +2,7 @@ from django.db import models
 
 
 
+
 # Create your models here.
 
 
@@ -20,6 +21,37 @@ class Especialidad(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Partitura(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre de la partitura', max_length = 100, null = False, blank = False)
+    compositor = models.CharField('compositor de la partitura', max_length = 250, null = False, blank = False)
+    descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
+    estado = models.BooleanField('clase activo/inactivo', default = True)
+    nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
+    tipoDescripto = models.TextField('descripcion de la partitura', null = False, blank = False)
+    #falta imagen url
+    especialidadesAcordes = models.ManyToManyField(Especialidad)
+   
+
+    class Meta:
+        verbose_name = 'Partitura'
+        verbose_name_plural = 'Partituras'
+
+class Tema(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre del tema', max_length = 100, null = False, blank = False)
+    descripcion = models.TextField('Descripcion del tema', null = False, blank = False)
+    estado = models.BooleanField('tema activo/inactivo', default = True)
+    nivel = models.CharField('Nivel del tema', max_length = 100, null = False, blank = False)
+    tipo = models.CharField('Tipo de la tema', max_length = 100, null = False, blank = False)
+    #falta imagen url
+   
+
+
+    class Meta:
+        verbose_name = 'Tema'
+        verbose_name_plural = 'Temas'
 
 class Usuario (models.Model):
     dni = models.CharField('DNI', primary_key = True, max_length = 8, null = False, blank = False)
@@ -55,11 +87,38 @@ class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = False, blank = False)
     gustoMusical = models.CharField('Musica que prefiere ejecutar el alumno', max_length = 300, null = False, blank = False)
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = False, blank = False)
+    especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING)
+    partiturasAsociadas = models.ManyToManyField(Partitura)
+    temasAsociadas = models.ManyToManyField(Tema)
     
 
 
     class Meta:
         verbose_name = 'Alumno'
         verbose_name_plural = 'Alumnos'
+
+
+class Clase(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre de la clase', max_length = 100, null = False, blank = False)
+    descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
+    estado = models.BooleanField('Clase activo/inactivo', default = True)
+    diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
+    horaInicio = models.CharField('hora de inicio',max_length=50) 
+    duracion = models.IntegerField('duracion de la clase', null = False, blank = False, default=0)
+    alumnoAsociados = models.ManyToManyField(Alumno)
+    profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING)
+    temasAsignados = models.ManyToManyField(Tema)
+    partiturasAsignados =  models.ManyToManyField(Partitura)
+    
+
+    class Meta:
+        verbose_name = 'Clase'
+        verbose_name_plural = 'Clases'
+
+
+
+
 
 

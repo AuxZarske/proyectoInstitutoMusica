@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, home, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, home, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase
 
 urlpatterns = [
     path('',home,name='index'),
@@ -18,4 +18,9 @@ urlpatterns = [
     path('eliminar_alumno/<int:dni>',eliminarAlumno,name='eliminar_alumno'),
     path('crear_alumno/',crearAlumno,name='crear_alumno'),
     path('editar_alumno/<int:dni>',editarAlumno,name='editar_alumno'),
+
+    path('clases/',listarclases,name='clases'),
+    path('eliminar_clase/<int:id>',eliminarClase,name='eliminar_clase'),
+    path('crear_clase/',crearClase,name='crear_clase'),
+    path('editar_clase/<int:id>',editarClase,name='editar_clase'),
 ]
