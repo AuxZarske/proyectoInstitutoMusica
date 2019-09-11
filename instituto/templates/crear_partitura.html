@@ -22,7 +22,18 @@
 </head>
 <style type="text/css">
         
-       
+        input#id_nombre::placeholder{
+              text:"Nombre de Especialidad";
+             
+              
+
+        }
+        input#id_descripcion{
+              placeholder:"Descripcion";
+             
+              
+
+        }
 
 
 
@@ -41,7 +52,7 @@
           
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Crear Clase!</h1>
+                <h1 class="h4 text-gray-900 mb-4">Crear Especialidad!</h1>
               </div>
               <form class="user" method="POST">
               {% csrf_token %}
@@ -51,17 +62,13 @@
               {% else %}
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                          
+                         {{partitura_form.as_p}}  
                   </div>
                   
-                </div>
-                <div class="form-group">
-                        {{clase_form.as_p}}  
-                <div> 
-                
+               
                 </div>
                 <p> </p>
-                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Clase Nueva</button>
+                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Partitura Nueva</button>
                 
                 {% endif %}
                 </form>

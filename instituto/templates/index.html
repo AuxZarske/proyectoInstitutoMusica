@@ -70,18 +70,22 @@
             <a class="collapse-item" href="{% url 'gestionMusical:clases'  %}">Ver Clases</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Clases Actuales:</h6>
-            <a class="collapse-item" href="buttons.html">cuarteto menor</a>
-            <a class="collapse-item" href="cards.html">banda mayor</a>
-            <a class="collapse-item" href="buttons.html">coro jovenes</a>
-            <a class="collapse-item" href="cards.html">grupo cuerdas</a>
-
+            
+            
+            {%for clase in clases%}
+            
+                {%if clase.estado%}
+                     <a class="collapse-item" href="{% url 'gestionMusical:una_clase' clase.id %}">{{clase.nombre}}</a>
+                {%endif%}
+            {%endfor%}
+            
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="{% url 'gestionMusical:mensajes'  %}">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Mensajeria</span>
         </a>
@@ -137,8 +141,8 @@
         <div id="collapsePagesOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             
-            <a class="collapse-item" href="login.html">Partituras</a>
-            <a class="collapse-item" href="register.html">Temas/Actividades</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:partituras'  %}">Partituras</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:temas'  %}">Temas/Actividades</a>
             
           </div>
         </div>
@@ -146,7 +150,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{% url 'gestionMusical:instrumentos'  %}">
           <i class="fas fa-fw fa-guitar"></i>
           <span>Instrumentos</span></a>
       </li>

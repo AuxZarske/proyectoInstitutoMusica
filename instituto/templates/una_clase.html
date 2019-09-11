@@ -1,0 +1,142 @@
+{%extends 'index.html'%}
+
+{%block estilos%}
+<style type="text/css">
+    div.eleccion{
+        display: inline-block;
+        margin-right: 60px;
+        text-align: left;
+        margin-bottom: 30px;
+
+    }
+    div.informacion{
+          display: inline-block;
+          text-align: left;
+          border: 5px solid #ccd2d9;
+          width: 300px;
+          height: 400px;
+          border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 7px solid #ccd2d9;
+          
+         
+          
+
+    }
+    h4#descripcion{
+
+        text-align: justify
+    }
+    a#tituloLista{
+
+        background-color:#1585e8;
+        color: black;
+    }
+    div#zonaInferior{
+
+        margin-top: 40px;
+        
+    }
+    div.unBloque{
+        
+        border: 2px solid;
+        padding: 2%;
+        
+    }
+    div.contenedorMedio{
+        border: 2px solid;
+        display: inline-block;
+        
+        
+    }
+
+
+
+
+</style>
+{%endblock estilos%}
+
+{%block contenidiPagina%}
+            <div>
+                <div>
+                    
+                    <center>
+                        <h2>Grupo joven sonoro</h1>
+                        <h3>Profe a Cargo: jose maria fulano</h2>
+                        <h4 id = "descripcion">Para escribir este Libro, Lucas empleó una abundante documentación: las tradiciones de la Iglesia de Jerusalén y de la comunidad de Antioquía, el testimonio personal de Pablo y, en particular, un «diario de viaje» que narraba la actividad misionera del Apóstol, donde el empleo del «nosotros» indica que su autor era un testigo presencial de los acontecimientos. </h2>
+                    </center>
+                    
+                </div>
+                <div id ="zonaInferior">
+                    <center>
+                    <div class="unBloque">
+                        <div class="contenedorMedio">
+                        <div class="eleccion">
+
+                                <div class="list-group">
+                                <a  class="list-group-item list-group-item" id="tituloLista">
+                                    Lista de Alumnos Asignados:
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">juan carlos</a>
+                                <a href="#" class="list-group-item list-group-item-action">luis alberto</a>
+                                <a href="#" class="list-group-item list-group-item-action">julio juliano</a>
+                                
+                                </div>
+
+                        </div>
+                        <div class="informacion">   .....detalles alumno, marcar asistencia
+
+
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="unBloque">
+                        <div class="contenedorMedio">
+                        <div class="eleccion">
+
+                                <div class="list-group">
+                                        <a  class="list-group-item list-group-item" id="tituloLista">
+                                            Lista de Temas Asignados:
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">juan carlos</a>
+                                        <a href="#" class="list-group-item list-group-item-action">luis alberto</a>
+                                        <a href="#" class="list-group-item list-group-item-action">julio juliano</a>
+                                        
+                                        </div>
+                            
+    
+    
+                        </div>
+                        <div class="informacion"> detalles alumno
+    
+    
+                        </div>
+                        </div>
+                    </div>
+                    <div class="unBloque">
+                        <div class="contenedorMedio">
+                        <div class="eleccion">
+        
+                                <div class="list-group">
+                                        <a  class="list-group-item list-group-item" id="tituloLista">
+                                            Lista de Partituras Asignados:
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">juan carlos</a>
+                                        <a href="#" class="list-group-item list-group-item-action">luis alberto</a>
+                                        <a href="#" class="list-group-item list-group-item-action">julio juliano</a>
+                                        
+                                        </div>
+        
+                        </div>
+                        <div class="informacion"> detalles alumno
+        
+        
+                        </div>
+                        </div>
+                    </div>
+                    </center>
+                </div>
+            </div>
+{% endblock contenidiPagina %}

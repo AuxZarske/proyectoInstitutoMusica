@@ -290,10 +290,32 @@
                           <td>{{clase.diaSemanal}}</td>
                           <td>{{clase.horaInicio}}</td>
                           <td>{{clase.duracion}}</td>
-                          <td>{{clase.alumnoAsociados}}</td>
-                          <td>{{clase.profesorCargo}}</td>
-                          <td>{{clase.temasAsignados}}</td>
-                          <td>{{clase.partiturasAsignados}}</td>
+                          {% if clase.alumnoAsociados.size != None %}
+                                 <td>{{clase.alumnoAsociados}}</td>
+                          {% else%}
+                                <td>Ninguno</td>
+                          {%endif%}
+
+                          {% if clase.profesorCargo != None %}
+                                <td>{{clase.profesorCargo}}</td>
+                          {% else%}
+                                <td>Ninguno</td>
+                          {%endif%}
+
+                          {% if clase.temasAsignados.size != None %}
+                                <td>{{clase.temasAsignados}}</td>
+                          {% else%}
+                                <td>Ninguno</td>
+                          {%endif%}
+
+                          {% if clase.partiturasAsignados.size != None %}
+                                <td>{{clase.partiturasAsignados}}</td>
+                          {% else%}
+                                <td>Ninguno</td>
+                          {%endif%}
+                          
+                          
+                          
                           <td>
                           
                           <center>

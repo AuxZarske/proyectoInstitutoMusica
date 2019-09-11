@@ -1,3 +1,4 @@
+
 {%extends 'index.html'%}
 {% load staticfiles %}
 
@@ -67,19 +68,19 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Especialidades</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar las especialidades que cuenta la institucion actualmente; editar o eliminar alguna. Ademas de insertar una nueva al sistema.</p>
+          <h1 class="h3 mb-2 text-gray-800">Partituras</h1>
+          <p class="mb-4">En la siguiente tabla podra visualizar las partituras que cuenta la institucion actualmente; editar o eliminar alguna. Ademas de insertar una nueva al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta actualmente:</h6>
-              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_especialidad'%}" class="btn btn-primary btn-icon-split">
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_partitura'%}" class="btn btn-primary btn-icon-split">
                               
                                     <span class="icon text-white-50">
                                           <i class="fas fa-plus"></i>
                                     </span>
-                                    <span class="text">Añadir Especialidad</span>
+                                    <span class="text">Añadir Partitura</span>
                                     
                               
                               </a>
@@ -91,25 +92,32 @@
                     <tr>
                       <th>#</th>
                       <th>Nombre</th>
-                      <th>Descripcion</th>
-                      <th>Fecha de creacion</th>
+                      <th>Compositor</th>
+                      <th>Tipo Descripto</th>
+                      <th>Nivel</th>
+                      <th>Especialida Permitida</th>
+                      <th>Documento</th>
                       <th>Acciones</th>
                       
                     </tr>
                   </thead>
                   
                   <tbody>
-                    {% for especialidad in especialidades%}
-                      {% if especialidad.estado %}
+                    {% for parti in partituras%}
+                    
                         <tr>
-                          <td>{{especialidad.id}}</td>
-                          <td>{{especialidad.nombre}}</td>
-                          <td>{{especialidad.descripcion}}</td>
-                          <td>{{especialidad.fechaCreacion}}</td>
+                          <td>{{parti.id}}</td>
+                          <td>{{parti.nombre}}</td>
+                          <td>{{parti.compositor}}</td>
+                          <td>{{parti.tipoDescripto}}</td>
+                          <td>{{parti.nivel}}</td>
+                          <td>canto, guitarra, flauta</td>
+                          <td>doc.pdf</td>
+                          
                           <td>
                           <center>
                               
-                              <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}" class="btn btn-warning btn-icon-split">
+                              <a href="{% url 'gestionMusical:editar_partitura' parti.id %}" class="btn btn-warning btn-icon-split">
                               
                                     <span class="icon text-white-50">
                                           <i class="fas fa-paint-brush"></i>
@@ -119,7 +127,7 @@
                               
                               </a>
 
-                              <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}" class="btn btn-danger btn-icon-split">
+                              <a href="{% url 'gestionMusical:eliminar_partitura' parti.id %}" class="btn btn-danger btn-icon-split">
 
                                     <span class="icon text-white-50">
                                           <i class="fas fa-trash"></i>
@@ -131,7 +139,7 @@
                           </td>
                         
                         </tr>
-                        {%endif%}
+                        
                     {%endfor%}
                   </tbody>
                 </table>

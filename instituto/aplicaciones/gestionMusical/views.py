@@ -1,15 +1,17 @@
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def home(request):
-    return render(request,'index.html')
+    clases = Clase.objects.all()
+    return render(request,'index.html', {'clases':clases})
 
 def listarespecialidades(request):
+    clases = Clase.objects.all()
     especialidades = Especialidad.objects.all()
-    return render(request,'especialidades.html',{'especialidades':especialidades})
+    return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
 
 
 def eliminarEspecialidad(request,id):
@@ -53,15 +55,17 @@ def error(request):
 
 
 def listarprofesores(request):
+    clases = Clase.objects.all()
     profesores = Profesor.objects.all()
     
-    return render(request,'profesores.html',{'profesores':profesores})
+    return render(request,'profesores.html',{'profesores':profesores,'clases':clases})
 
 
 
 
 
 def eliminarProfesor(request,dni):
+
     profesor = Profesor.objects.get(dni=dni)
     
     profesor.estado = False
@@ -102,9 +106,10 @@ def editarProfesor(request,dni):
 
 
 def listaralumnos(request):
+    clases = Clase.objects.all()
     alumnos = Alumno.objects.all()
     
-    return render(request,'alumnos.html',{'alumnos':alumnos})
+    return render(request,'alumnos.html',{'alumnos':alumnos, 'clases':clases})
 
 
 
@@ -187,3 +192,75 @@ def editarClase(request,id):
 
     
     return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error})
+
+
+def mostrarClase (request,id):
+    clases = Clase.objects.all()
+    return render(request,'una_clase.html',{'clases':clases})
+
+def listarmensajes(request):
+    clases = Clase.objects.all()
+    return render(request,'mensajes.html',{'clases':clases})
+    
+def listarpartituras(request):
+    clases = Clase.objects.all()
+    partituras =  Partitura.objects.all()
+    return render(request,'partituras.html',{'clases':clases,'partituras':partituras})
+
+
+def eliminarPartitura(request,id):
+    partitura = Partitura.objects.get(id=id)
+    
+    
+    partitura.delete()
+    return redirect('gestionMusical:partituras')
+    
+def crearPartitura(request):
+    if request.method == 'POST':
+        partitura_form = PartituraForm(request.POST)
+        if partitura_form.is_valid():
+            partitura_form.save()
+            return redirect('gestionMusical:partituras')
+    else:
+        partitura_form =PartituraForm()
+    return render(request,'crear_partitura.html',{'partitura_form':partitura_form})
+
+def editarPartitura(request,id):
+    partitura_form = None
+    error = None
+    try:
+        partitura = Partitura.objects.get(id =id)
+        if request.method == 'GET':
+            partitura_form = PartituraForm(instance = partitura)
+        else:
+            partitura_form = PartituraForm(request.POST, instance = partitura)
+            if partitura_form.is_valid():
+                partitura_form.save()
+            return redirect('gestionMusical:partituras')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    
+    return render(request,'crear_partituras.html',{'partitura_form':partitura_form,'error':error})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def listartemas(request):
+    clases = Clase.objects.all()
+    return render(request,'temas.html',{'clases':clases})
+
+def listarinstrumentos(request):
+    clases = Clase.objects.all()
+    return render(request,'instrumentos.html',{'clases':clases})
+
