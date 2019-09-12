@@ -35,7 +35,8 @@ def editarEspecialidad(request,id):
     especialidad_form = None
     error = None
     try:
-        especialidad = Especialidad.objects.get(id =id,estado=True)
+        especialidad = Especialidad.objects.get(id =id)
+
         if request.method == 'GET':
             especialidad_form = EspecialidadForm(instance = especialidad)
         else:

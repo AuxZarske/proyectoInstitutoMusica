@@ -34,23 +34,37 @@
               
 
         }
+        div.cuadro{
+            
+            margin-top: 10%;
+            padding-right: 23%;
+            padding-left: 23%;
+        }
 
-
-
+        div#llkk{
+            color: black;
+            background-color: rgb(61, 178, 207);
+            padding: 3%;
+            border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #ccd2d9;
+        }
 
     </style>
 <body class="bg-gradient-primary">
 
   <div class="container">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
+    
+      
         <!-- Nested Row within Card Body -->
-        <div class="row">
+        
           
-          <div class="col-lg-7">
           
-            <div class="p-5">
+          
+            <div class="cuadro">
+                <div id="llkk">
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Crear Especialidad!</h1>
               </div>
@@ -62,28 +76,29 @@
               {% else %}
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                         {{especialidad_form.nombre}}  
+
+                         {{especialidad_form.as_p}}  
+
                   </div>
                   
-                </div>
-                <div class="form-group">
-                        {{especialidad_form.descripcion}}  
-                <div> 
-                
+               
                 </div>
                 <p> </p>
-                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Especialidad Nueva</button>
-                
+                <div>
+                        <button type= "button" class="btn btn-primary btn-user btn-block">Registrar Nueva y Cargar Otra</button>
+                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Nueva y Terminar</button>
+                 
+            </div>
                 {% endif %}
                 </form>
                
-              
+            </div>
             </div>
             
-          </div>
-        </div>
-      </div>
-    </div>
+          
+        
+      
+    
 
   </div>
 

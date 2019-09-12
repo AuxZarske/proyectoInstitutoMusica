@@ -40,6 +40,10 @@
               
 
         }
+        div.delete{
+
+          margin-top: 10px;
+        }
 
 
 
@@ -92,7 +96,7 @@
                       <th>#</th>
                       <th>Nombre</th>
                       <th>Descripcion</th>
-                      <th>Fecha de creacion</th>
+                      <th>Fecha Creacion</th>
                       <th>Acciones</th>
                       
                     </tr>
@@ -100,7 +104,7 @@
                   
                   <tbody>
                     {% for especialidad in especialidades%}
-                      {% if especialidad.estado %}
+                      
                         <tr>
                           <td>{{especialidad.id}}</td>
                           <td>{{especialidad.nombre}}</td>
@@ -118,20 +122,26 @@
                                     
                               
                               </a>
+                              
 
+                              
+                                
+                                <div class="delete">
                               <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}" class="btn btn-danger btn-icon-split">
 
                                     <span class="icon text-white-50">
                                           <i class="fas fa-trash"></i>
+                                         
                                     </span>
                                     <span class="text">Eliminar</span>
 
                               </a>
+                            </div>
                           </center>
                           </td>
                         
                         </tr>
-                        {%endif%}
+                        
                     {%endfor%}
                   </tbody>
                 </table>

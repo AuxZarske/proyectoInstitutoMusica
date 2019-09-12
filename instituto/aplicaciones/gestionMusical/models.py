@@ -10,7 +10,7 @@ class Especialidad(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la especialidad', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la especialidad', null = False, blank = False)
-    estado = models.BooleanField('Especialidad activo/inactivo', default = True)
+    
     fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
 
     class Meta:
@@ -45,7 +45,7 @@ class Tema(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre del tema', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion del tema', null = False, blank = False)
-    estado = models.BooleanField('tema activo/inactivo', default = True)
+    
     nivel = models.CharField('Nivel del tema', max_length = 100, null = False, blank = False)
     tipo = models.CharField('Tipo de la tema', max_length = 100, null = False, blank = False)
     #falta imagen url
@@ -68,6 +68,7 @@ class Usuario (models.Model):
     domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
     telefono = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
+    estado = models.BooleanField('Usuario activo/inactivo', default = True)
     
 
     class Meta:
@@ -93,7 +94,7 @@ class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = False, blank = False)
     gustoMusical = models.CharField('Musica que prefiere ejecutar el alumno', max_length = 300, null = False, blank = False)
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = False, blank = False)
-    especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING)
+    especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING,  null = True, blank = True)
     partiturasAsociadas = models.ManyToManyField(Partitura)
     temasAsociadas = models.ManyToManyField(Tema)
     
@@ -109,7 +110,6 @@ class Clase(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la clase', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
-    estado = models.BooleanField('Clase activo/inactivo', default = True)
     diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
     horaInicio = models.CharField('hora de inicio',max_length=50) 
     duracion = models.IntegerField('duracion de la clase', null = False, blank = False, default=0)
