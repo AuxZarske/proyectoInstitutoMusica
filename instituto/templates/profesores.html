@@ -264,12 +264,12 @@
                       <th>DNI</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
-                      <th>Fecha Nacimiento</th>
-                      <th>Domicilio</th>
+                      
+                      
                       <th>Correo Electronico</th>
-                      <th>Telefono</th>
-                      <th>Sexo</th>
-                      <th>Observaciones</th>
+                     
+                      
+                      
                       <th>Acciones</th>
                       
                     </tr>
@@ -283,26 +283,37 @@
                           <td>{{profe.dni}}</td>
                           <td>{{profe.nombre}}</td>
                           <td>{{profe.apellido}}</td>
-                          <td>{{profe.fechaNac}}</td>
-                          <td>{{profe.domicilio}}</td>
+                          
                           <td>{{profe.correoElectronico}}</td>
-                          <td>{{profe.telefono}}</td>
-                          <td>{{profe.sexo}}</td>
-                          <td>{{profe.observaciones}}</td>
+                          
+                          
+                          
                           <td>
                           
                           <center>
                               
-                              <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-warning btn-icon-split">
                               
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-paint-brush"></i>
-                                    </span>
-                                    
-                                    
-                              
-                              </a>
 
+                              <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-primary">
+                              
+                                  <span class="icon text-white-50">
+                                        <i class="fas fa-eye"></i>
+                                  </span>
+                                  
+                                  
+                            
+                            </a>
+
+
+                            <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-warning btn-icon-split">
+                              
+                                <span class="icon text-white-50">
+                                      <i class="fas fa-paint-brush"></i>
+                                </span>
+                                
+                                
+                          
+                          </a>
                               <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}" class="btn btn-danger btn-icon-split">
 
                                     <span class="icon text-white-50">

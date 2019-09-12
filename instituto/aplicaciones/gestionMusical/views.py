@@ -26,6 +26,10 @@ def crearEspecialidad(request):
         especialidad_form = EspecialidadForm(request.POST)
         if especialidad_form.is_valid():
             especialidad_form.save()
+        
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_especialidad')
+        else:
             return redirect('gestionMusical:especialidades')
     else:
         especialidad_form =EspecialidadForm()
@@ -43,6 +47,7 @@ def editarEspecialidad(request,id):
             especialidad_form = EspecialidadForm(request.POST, instance = especialidad)
             if especialidad_form.is_valid():
                 especialidad_form.save()
+            
             return redirect('gestionMusical:especialidades')
     except ObjectDoesNotExist as e:
         error = e

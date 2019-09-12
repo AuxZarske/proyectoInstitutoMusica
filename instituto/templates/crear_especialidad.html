@@ -20,6 +20,16 @@
   <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
 
 </head>
+<script type="text/javascript">
+
+function boton(num){
+    
+    document.getElementById("custId").value = num;
+
+
+}
+
+</script>
 <style type="text/css">
         
         input#id_nombre::placeholder{
@@ -40,7 +50,16 @@
             padding-right: 23%;
             padding-left: 23%;
         }
+        button#botonVolver{
 
+          float: right;
+          border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #5d23e6;
+          background-color: rgb(63, 200, 235);
+
+        }
         div#llkk{
             color: black;
             background-color: rgb(61, 178, 207);
@@ -77,7 +96,9 @@
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
 
-                         {{especialidad_form.as_p}}  
+                         {{especialidad_form.as_p}} 
+                         
+
 
                   </div>
                   
@@ -85,14 +106,23 @@
                 </div>
                 <p> </p>
                 <div>
-                        <button type= "button" class="btn btn-primary btn-user btn-block">Registrar Nueva y Cargar Otra</button>
-                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Nueva y Terminar</button>
-                 
+                        <button type= "submit"   class="btn btn-primary btn-user btn-block" value="otro" onclick="boton(1)">Registrar y Cargar Otra
+                                
+                        </button>
+                        
+                        <br>
+                <button type= "sumbit" class="btn btn-primary btn-user btn-block" value="termine" onclick="boton(2)">Registrar y Terminar
+                        
+                </button>
+                <input type="hidden" id="custId" name="custId" value="no cambio">
             </div>
                 {% endif %}
                 </form>
                
             </div>
+
+
+            <button id="botonVolver">Volver</button>
             </div>
             
           
