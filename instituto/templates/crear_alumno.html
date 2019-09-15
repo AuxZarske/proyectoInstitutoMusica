@@ -123,11 +123,13 @@ background-color: rgb(63, 200, 235);
                 </div>
                 
                 <div class="form-group">
-                  
+                    {%if editacion != 1%}
                       <div class="labelito">
                         <label class="labeNombre">DNI:</label>
                         {{alumno_form.dni}} 
                       </div>
+                      
+                      {%endif%}
                       <div class="labelito">
                           <label class="labeNombre" >Apellido:</label>
                           {{alumno_form.apellido}} 

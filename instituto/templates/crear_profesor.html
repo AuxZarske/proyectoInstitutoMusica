@@ -118,10 +118,12 @@ background-color: rgb(63, 200, 235);
                 
                 <div class="form-group">
                   
+                    {%if editacion != 1%}
                       <div class="labelito">
                         <label class="labeNombre">DNI:</label>
                         {{profesor_form.dni}} 
                       </div>
+                      {%endif%}
                       <div class="labelito">
                           <label class="labeNombre" >Apellido:</label>
                           {{profesor_form.apellido}} 
