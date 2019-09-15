@@ -3,6 +3,9 @@ from .models import Especialidad, Profesor, Alumno, Clase, Partitura
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 
+
+
+
 # Create your views here.
 def home(request):
     clases = Clase.objects.all()
@@ -79,32 +82,82 @@ def eliminarProfesor(request,dni):
     return redirect('gestionMusical:profesores')
     
 def crearProfesor(request):
+    editacion = 0
+    especialidadesTodas = Especialidad.objects.all()
+    
     if request.method == 'POST':
         profesor_form = ProfesorForm(request.POST)
         if profesor_form.is_valid():
             profesor_form.save()
+            
+            eldni = request.POST['dni']
+            elProfe = Profesor.objects.get(dni = eldni)
+            #obtener especialidad
+            peticion = request.POST.copy()
+
+            try:
+                espp = peticion.pop('especiales')
+                for e in espp:
+                    elProfe.especialidades.add(e)
+            except:
+                print("An exception occurred")
+            
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_profesor')
+        else:
             return redirect('gestionMusical:profesores')
     else:
         profesor_form =ProfesorForm()
-    return render(request,'crear_profesor.html',{'profesor_form':profesor_form})
+    return render(request,'crear_profesor.html',{'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas,'editacion':editacion})
 
 def editarProfesor(request,dni):
     profesor_form = None
     error = None
+    editacion = 1
+    especialidadesTodas = list(Especialidad.objects.all())
+    espePro = []
     try:
+        
         profesor = Profesor.objects.get(dni =dni,estado=True)
+        
+        
+        lespePro = list(Profesor.objects.values('especialidades').filter(dni=dni))
+        
+        for e in lespePro:
+            if e['especialidades'] != None:
+                espePro.append(Especialidad.objects.get(id = e['especialidades']))
+        
+        for e in espePro:
+            especialidadesTodas.remove(e)
+
         if request.method == 'GET':
             profesor_form = ProfesorForm(instance = profesor)
         else:
             profesor_form = ProfesorForm(request.POST, instance = profesor)
             if profesor_form.is_valid():
                 profesor_form.save()
+                
+                elProfe = Profesor.objects.get(dni = dni)
+                           
+                #eliminar relacion
+                todas = elProfe.especialidades.all()
+                for espec in todas:
+                    elProfe.especialidades.remove(espec)
+                            
+                peticion = request.POST.copy()
+                try:
+                    espp = peticion.pop('especiales')
+                    for e in espp:
+                        elProfe.especialidades.add(e)
+                except:
+                    print("An exception occurred")         
             return redirect('gestionMusical:profesores')
     except ObjectDoesNotExist as e:
-        error = e
+        error = None
+        print(e)
 
     
-    return render(request,'crear_profesor.html',{'profesor_form':profesor_form,'error':error})
+    return render(request,'crear_profesor.html',{'profesor_form':profesor_form,'error':error,'especialidadesTodas':especialidadesTodas, 'espePro':espePro,'editacion':editacion})
 
 
 
@@ -129,32 +182,81 @@ def eliminarAlumno(request,dni):
     return redirect('gestionMusical:alumnos')
     
 def crearAlumno(request):
+    editacion = 0
+    especialidadesTodas = Especialidad.objects.all()
     if request.method == 'POST':
         alumno_form = AlumnoForm(request.POST)
         if alumno_form.is_valid():
             alumno_form.save()
+            eldni = request.POST['dni']
+            elAlu = Alumno.objects.get(dni = eldni)
+            print(request.POST)
+            
+            laEspe = request.POST['especiales']
+            
+            if laEspe != '':
+                laEspecialidad = Especialidad.objects.get(id = laEspe)
+                elAlu.especialidadRequerida = laEspecialidad
+                elAlu.save()
+            else:
+                print("no me dio especialidad alguna")
+
+            #consigo esp, pongo como atributo, guardo alumno modificado
+            
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_alumno')
+        else:
             return redirect('gestionMusical:alumnos')
+
+
     else:
         alumno_form =AlumnoForm()
-    return render(request,'crear_alumno.html',{'alumno_form':alumno_form})
+    return render(request,'crear_alumno.html',{'alumno_form':alumno_form,'especialidadesTodas':especialidadesTodas,'editacion':editacion})
 
 def editarAlumno(request,dni):
     alumno_form = None
     error = None
+    editacion = 1
+    especialidadesTodas = list(Especialidad.objects.all())
+    espeAlu = []
     try:
         alumno = Alumno.objects.get(dni =dni,estado=True)
+        if alumno.especialidadRequerida != None:
+            espeAlu.append(alumno.especialidadRequerida)
+            
+            especialidadesTodas.remove(espeAlu[0])
+            
         if request.method == 'GET':
             alumno_form = AlumnoForm(instance = alumno)
         else:
             alumno_form = AlumnoForm(request.POST, instance = alumno)
             if alumno_form.is_valid():
                 alumno_form.save()
+
+                #CONSEGUIR EL ALUMNO,
+                elAlumno = Alumno.objects.get(dni = dni)
+
+                #Poner vacia la relacion
+                elAlumno.especialidadRequerida = None
+                elAlumno.save()
+                #obtener la espe seleccionada
+                laEspe = request.POST['especiales']
+                
+                if laEspe != '':
+                    laEspecialidad = Especialidad.objects.get(id = laEspe)
+                    elAlumno.especialidadRequerida = laEspecialidad
+                    elAlumno.save()
+                else:
+                    print("no me dio especialidad alguna")
+                
+
+
             return redirect('gestionMusical:alumnos')
     except ObjectDoesNotExist as e:
         error = e
 
     
-    return render(request,'crear_alumno.html',{'alumno_form':alumno_form,'error':error})
+    return render(request,'crear_alumno.html',{'alumno_form':alumno_form,'error':error,'especialidadesTodas':especialidadesTodas, 'espeAlu':espeAlu,'editacion':editacion})
 
 
 

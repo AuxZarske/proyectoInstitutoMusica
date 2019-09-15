@@ -41,8 +41,25 @@
 
         }
 
+        label.col-form-label{
+          display: inline-block;
+         
+        }
+        div#icon8{
+          padding: 10px;
+          width: 40px;
+          height: 40px;
+        }
+        div#icon7{
+          
+          width: 100px;
+          height: 100px;
+        }
+        div#ere{
 
-
+margin-right: 2px;
+margin-left: 2px;
+}
 
     </style>
 {%endblock estilos%}
@@ -277,7 +294,7 @@
                   
                   <tbody>
                     {% for profe in profesores%}
-                    
+                        {%if profe.estado%}
                      
                         <tr>
                           <td>{{profe.dni}}</td>
@@ -292,19 +309,94 @@
                           
                           <center>
                               
-                              
+                             
 
-                              <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-primary">
-                              
-                                  <span class="icon text-white-50">
-                                        <i class="fas fa-eye"></i>
-                                  </span>
+                              <div class="btn-group">
+                                <center>
+                                    <div >
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{profe.dni}}">
+                                    
+                                    <i class="fa fa-eye"></i>
                                   
-                                  
-                            
-                            </a>
+                                  </button>
+                                </div>
+                                </center>
+                                  <div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales</h4>
+                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                          </button>
+                                                  
+                                              </div>
+                                              <div class="modal-body">
+                                                  <div class="form-group row">
+                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">DNI: </label>
+                                                      <div class="col-sm-10">
+                                                        {{profe.dni}}
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido:</label>
+                                                        <div class="col-sm-10">
+                                                            {{profe.apellido}}
+                                                        </div>
+                                                      </div>
+                                                      <div class="form-group row">
+                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
+                                                          <div class="col-sm-10">
+                                                              {{profe.nombre}}
+                                                          </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
+                                                            <div class="col-sm-10">
+                                                                {{profe.sexo}}
+                                                            </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
+                                                              <div class="col-sm-10">
+                                                                  {{profe.fechaNac}}
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Domicilio:</label>
+                                                                <div class="col-sm-10">
+                                                                    {{profe.domicilio}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="form-group row">
+                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Telefono:</label>
+                                                                  <div class="col-sm-10">
+                                                                      {{profe.telefono}}
+                                                                  </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Correo:</label>
+                                                                    <div class="col-sm-10">
+                                                                        {{profe.correoElectronico}}
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="form-group row">
+                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Observaciones:</label>
+                                                                      <div class="col-sm-10">
+                                                                          {{profe.observaciones}}
+                                                                      </div>
+                                                                    </div>
+                                                  
+                                              </div>
+                                              <div class="modal-footer">
+                                                  
+                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                              </div>
+                              
+                                          </div>
+                                      </div>
+                                  </div>
 
-
+                                  <div id="ere">
                             <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-warning btn-icon-split">
                               
                                 <span class="icon text-white-50">
@@ -314,20 +406,45 @@
                                 
                           
                           </a>
-                              <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}" class="btn btn-danger btn-icon-split">
-
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-trash"></i>
-                                    </span>
-                                    
-
-                              </a>
+                              </div>
+                              <div class="btn-group">
+                                <center>
+                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{profe.dni}}">
+                                      <div id="icon8">
+                                    <i class="fas fa-trash"></i>
+                                  </div>
+                                  </button>
+                                </center>
+                                
+                                  <div class="modal fade bs-example-modal-lg2{{profe.dni}}" id="myModal2{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Confirmacion de Eliminacion</h4>
+                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                          </button>
+                                                  
+                                              </div>
+                                              <div class="modal-body">
+                                                  <h4>Esta seguro de Eliminar al Profesor {{profe.apellido}} {{profe.nombre}} ???</h4>
+                                                  
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                  <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}">
+                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                </a>
+                                                </div>
+                              
+                                          </div>
+                                      </div>
+                                  </div>
                           </center>
                         
                           </td>
                         
                         </tr>
-                        
+                        {%endif%}
                     {%endfor%}
                   </tbody>
                 </table>

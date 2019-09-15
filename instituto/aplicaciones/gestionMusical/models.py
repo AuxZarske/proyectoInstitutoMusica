@@ -82,7 +82,7 @@ class Usuario (models.Model):
 
 
 class Profesor(Usuario):
-    observaciones = models.TextField('Observaciones del Profesor', null = False, blank = False)
+    observaciones = models.TextField('Observaciones del Profesor', null = True, blank = True)
     especialidades = models.ManyToManyField(Especialidad)
 
 
@@ -91,7 +91,7 @@ class Profesor(Usuario):
         verbose_name_plural = 'Profesores'
 
 class Alumno(Usuario):
-    observaciones = models.TextField('Observaciones del Alumno', null = False, blank = False)
+    observaciones = models.TextField('Observaciones del Alumno', null = True, blank = True)
     gustoMusical = models.CharField('Musica que prefiere ejecutar el alumno', max_length = 300, null = False, blank = False)
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = False, blank = False)
     especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING,  null = True, blank = True)

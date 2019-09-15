@@ -53,6 +53,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'instituto.urls'
 
 TEMPLATES = [
+
+
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['templates'],

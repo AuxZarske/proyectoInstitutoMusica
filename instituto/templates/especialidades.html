@@ -26,6 +26,14 @@
 
 </head>
 {%endblock head%}
+
+
+<script type="text/javascript">
+
+  
+
+</script>
+
 {%block estilos%}
     <style type="text/css">
         h6#fraseTable{
@@ -44,7 +52,9 @@
 
           margin-top: 10px;
         }
-
+        body {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
 
 
 
@@ -112,7 +122,7 @@
                           <td>{{especialidad.fechaCreacion}}</td>
                           <td>
                           <center>
-                              
+                              <div id="ere">
                               <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}" class="btn btn-warning btn-icon-split">
                               
                                     <span class="icon text-white-50">
@@ -122,20 +132,20 @@
                                     
                               
                               </a>
-                              
+                            </div>
 
                               
                                 
                                 <div class="delete">
-                              <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}" class="btn btn-danger btn-icon-split">
-
+                              
+<button class="btn btn-danger btn-icon-split" id="elBotonBorra">
                                     <span class="icon text-white-50">
                                           <i class="fas fa-trash"></i>
                                          
                                     </span>
                                     <span class="text">Eliminar</span>
-
-                              </a>
+                                  </button>
+                              
                             </div>
                           </center>
                           </td>
@@ -212,6 +222,8 @@
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  <script src="{%static 'js/sweetalert2.all.min.js'%}"></script>
+  <script src="{%static 'js/alertas.js'%}"></script>
   {%endblock archivos%}
 </body>
 
