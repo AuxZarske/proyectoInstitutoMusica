@@ -86,7 +86,11 @@ function boton(num){
             <div class="cuadro">
                 <div id="llkk">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Crear Especialidad!</h1>
+                  {%if editacion != 1%}
+                  <h1 class="h4 text-gray-900 mb-4">Crear Especialidad!</h1>
+                  {%else%}
+                <h1 class="h4 text-gray-900 mb-4">Editar Especialidad!</h1>
+                {%endif%}
               </div>
               <form class="user" method="POST">
               {% csrf_token %}
@@ -107,9 +111,11 @@ function boton(num){
                 </div>
                 <p> </p>
                 <div>
+                    {%if editacion != 1%}
                         <button type= "submit"   class="btn btn-primary btn-user btn-block" value="otro" onclick="boton(1)">Registrar y Cargar Otra
                                 
                         </button>
+                        {%endif%}
                         
                         <br>
                 <button type= "sumbit" class="btn btn-primary btn-user btn-block" value="termine" onclick="boton(2)">Registrar y Terminar

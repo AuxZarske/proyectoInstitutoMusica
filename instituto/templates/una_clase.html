@@ -6,6 +6,21 @@
 
 
 {%block estilos%}
+<script type="text/javascript">
+
+    function ocultar_mostrar(){
+        //alert(document.getElementById("elGranMenu").style.display )
+
+        if(document.getElementById("elGranMenu").style.display == "none" || document.getElementById("elGranMenu").style.display == "" ){
+            document.getElementById("elGranMenu").style.display='block';
+        }
+        else{
+                document.getElementById("elGranMenu").style.display='none';
+            }
+    
+    }
+    
+    </script>
 <style type="text/css">
     div.eleccion{
         display: inline-block;
@@ -51,12 +66,85 @@
         padding: 2%;
         
     }
+    p.nomAlu{
+        border: 1px solid;
+        display: inline-block
+
+    }
+    a.verAlu{
+        border: 1px solid;
+        display: inline-block
+    }
+    a.selectAlu{
+        border: 1px solid;
+    }
     div.contenedorMedio{
         border: 2px solid;
         display: inline-block;
         
         
     }
+    div#zonaInferior{
+
+        border: 2px solid;
+
+    }
+    div#listaPrincipal{
+
+        border: 2px solid;
+        text-align: left;
+        
+
+    }
+    div#bloqueSecundario{
+
+        border: 2px solid;
+    }
+    div#temas{
+
+        border: 2px solid;
+        }
+    div#partituras{
+
+        border: 2px solid;
+        }
+    div#elGranMenu{
+        border: 1px solid;
+        margin-top: 10px;
+        display: none;
+        
+        
+    }
+    div.laListaAlumnos{
+        border: 1px solid;
+        padding: 5px;
+        display: inline-block;
+
+    }
+    div#nombreAlu{
+        display:inline-block;
+        margin-left: 5%;
+        align-self: top;
+        vertical-align: top;
+        margin-top: 1%;
+        font-size: 22px;
+    }
+    div#miBoton{
+        width: 250px;
+    }
+    p.nomAlu{
+        float: left;
+    }
+    a.verAlu{
+        float: right;
+    }
+    a.selectAlu{
+        float:right;
+    }
+    button.btn-secondary{
+        background-color: #162cd0;
+    }
+
 
 
 
@@ -69,108 +157,65 @@
                 <div>
                     
                     <center>
-                        <h2>Grupo joven sonoro</h1>
-                        <h3>Profe a Cargo: jose maria fulano</h2>
-                        <h4 id = "descripcion">Para escribir este Libro, Lucas empleó una abundante documentación: las tradiciones de la Iglesia de Jerusalén y de la comunidad de Antioquía, el testimonio personal de Pablo y, en particular, un «diario de viaje» que narraba la actividad misionera del Apóstol, donde el empleo del «nosotros» indica que su autor era un testigo presencial de los acontecimientos. </h2>
+                        <h2>Clase: {{laClase.nombre}}</h1>
+                        <h3>Profe a Cargo: {{laClase.profesorCargo.apellido}}, {{laClase.profesorCargo.nombre}}</h2>
+                        <h4 id = "descripcion">{{laClase.descripcion}} </h2>
                     </center>
                     
                 </div>
                 <div id ="zonaInferior">
                    
                     <center>
-                    <div class="unBloque">
-                        <div class="contenedorMedio">
-                        <div class="eleccion">
+                    <div id="listaPrincipal">
+                        
+                            <div class="laListaAlumnos">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="miBoton" onclick="ocultar_mostrar()">
+                                      Lista de Alumnos de Clase:
+                                    </button>
+                                    <div id="elGranMenu" >
 
-                                <div class="list-group">
-                                <a  class="list-group-item list-group-item" id="tituloLista">
-                                    Lista de Alumnos Asignados:
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">juan carlos</a>
-                                <a href="#" class="list-group-item list-group-item-action">luis alberto</a>
-                                <a href="#" class="list-group-item list-group-item-action">julio juliano</a>
-                                
-                                </div>
-
-                        </div>
-                        <div class="informacion">   .....detalles alumno, marcar asistencia
-
-
-                        </div>
-                        </div>
-                    </div>
-
-                    <div class="unBloque">
-                        <div class="contenedorMedio">
-                        <div class="eleccion">
-
-                                <div class="list-group">
-                                        <a  class="list-group-item list-group-item" id="tituloLista" >
-                                            Lista de Partituras Asignados:
-                                        </a>
-                                        <select class="custom-select" multiple style="height:300px">
-                                        
-                                        <option value="1" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="2" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="3" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="4" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="5" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="6" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="7" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="8" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="9" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="10" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="11" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="12" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="13" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="14" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="15" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        </select>
+                                      
+                                      <div class="unaFila">
+                                          <p class="nomAlu">el nombre va aqui</p>
+                                          <a class="verAlu" href="#">V</a>
+                                          <a class="selectAlu" href="#">I</a>
+                                      </div>
+                                      <div class="unaFila">
+                                            <p class="nomAlu">el nombre va aqui</p>
+                                            <a class="verAlu" href="#">V</a>
+                                            <a class="selectAlu" href="#">I</a>
                                     </div>
+                                      
+                                    <div class="unaFila">
+                                        <button id="Asistencia">Marcar Asistencia</button>
+                                    </div>
+
+                                    </div>
+                            </div>
+
+                            <div id="nombreAlu">
+                                Alumno: Ninguno seleccionado
+                                <span>
+                                        >w
+                                    </span>
+                            </div>
                             
-    
-    
-                        </div>
-                        <div class="informacion"> detalles alumno
-    
-    
-                        </div>
-                        </div>
+
+
+
+
+
                     </div>
-                    <div class="unBloque">
-                        <div class="contenedorMedio">
-                        <div class="eleccion">
-        
-                                <div class="list-group">
-                                        <a  class="list-group-item list-group-item" id="tituloLista" >
-                                            Lista de Partituras Asignados:
-                                        </a>
-                                        <select class="custom-select" multiple style="height:300px">
-                                        
-                                        <option value="1" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="2" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="3" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="4" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="5" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="6" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="7" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="8" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="9" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="10" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="11" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="12" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="13" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="14" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        <option value="15" class="list-group-item list-group-item-action"><a href="#" >juan carlos</a></option>
-                                        </select>
-                                    </div>
-        
-                        </div>
-                        <div class="informacion"> detalles alumno
-        
-        
-                        </div>
-                        </div>
+                    <div id="bloqueSecundario">
+                            
+                            <div id="temas">
+                                    blocke 1
+                            </div>
+                            <div id="partituras">
+                                    blocke 2
+                            </div>
+
+
                     </div>
                     </center>
                 </div>

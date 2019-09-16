@@ -115,8 +115,7 @@ class Clase(models.Model):
     duracion = models.IntegerField('duracion de la clase', null = False, blank = False, default=0)
     alumnoAsociados = models.ManyToManyField(Alumno, default = None)
     profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
-    temasAsignados = models.ManyToManyField(Tema, default = None)
-    partiturasAsignados =  models.ManyToManyField(Partitura, default = None)
+    
     
     
     class Meta:

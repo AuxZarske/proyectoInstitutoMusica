@@ -107,7 +107,11 @@ background-color: rgb(63, 200, 235);
           <div id="cuadrot"></div>
             <div id="llkkt">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Crear Alumno</h1>
+                  {%if editacion != 1%}
+                  <h1 class="h4 text-gray-900 mb-4">Crear Alumno!</h1>
+                  {%else%}
+                <h1 class="h4 text-gray-900 mb-4">Editar Alumno!</h1>
+                {%endif%}
               </div>
               <form class="user" method="POST">
               {% csrf_token %}

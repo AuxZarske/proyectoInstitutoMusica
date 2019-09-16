@@ -25,20 +25,22 @@ def eliminarEspecialidad(request,id):
     return redirect('gestionMusical:especialidades')
     
 def crearEspecialidad(request):
+    editacion = 0
     if request.method == 'POST':
         especialidad_form = EspecialidadForm(request.POST)
         if especialidad_form.is_valid():
             especialidad_form.save()
-        
+            print(request.POST)
         if(request.POST['custId'] == '1'):
             return redirect('gestionMusical:crear_especialidad')
         else:
             return redirect('gestionMusical:especialidades')
     else:
         especialidad_form =EspecialidadForm()
-    return render(request,'crear_especialidad.html',{'especialidad_form':especialidad_form})
+    return render(request,'crear_especialidad.html',{'especialidad_form':especialidad_form,'editacion':editacion})
 
 def editarEspecialidad(request,id):
+    editacion = 1
     especialidad_form = None
     error = None
     try:
@@ -56,7 +58,7 @@ def editarEspecialidad(request,id):
         error = e
 
     
-    return render(request,'crear_especialidad.html',{'especialidad_form':especialidad_form,'error':error})
+    return render(request,'crear_especialidad.html',{'especialidad_form':especialidad_form,'error':error,'editacion':editacion})
 
 def error(request):
     
@@ -87,7 +89,7 @@ def crearProfesor(request):
     
     if request.method == 'POST':
         profesor_form = ProfesorForm(request.POST)
-        
+
         if profesor_form.is_valid():
             profesor_form.save()
             
@@ -191,10 +193,7 @@ def crearAlumno(request):
             alumno_form.save()
             eldni = request.POST['dni']
             elAlu = Alumno.objects.get(dni = eldni)
-            print(request.POST)
-            
             laEspe = request.POST['especiales']
-            
             if laEspe != '':
                 laEspecialidad = Especialidad.objects.get(id = laEspe)
                 elAlu.especialidadRequerida = laEspecialidad
@@ -269,43 +268,58 @@ def listarclases(request):
 
 def eliminarClase(request,id):
     clase = Clase.objects.get(id=id)
-    
-    clase.estado = False
-    clase.save()
+    clase.delete()
     return redirect('gestionMusical:clases')
     
 def crearClase(request):
+    editacion = 0
+    profesTodos = Profesor.objects.filter(estado = True)
     if request.method == 'POST':
         clase_form = ClaseForm(request.POST)
         if clase_form.is_valid():
+
             clase_form.save()
-            return redirect('gestionMusical:clases')
+
+            if(request.POST['custId'] == '1'):
+                return redirect('gestionMusical:crear_clase')
+            else:
+                return redirect('gestionMusical:clases')   
+
     else:
         clase_form =ClaseForm()
-    return render(request,'crear_clase.html',{'clase_form':clase_form})
+    return render(request,'crear_clase.html',{'clase_form':clase_form,'editacion':editacion,'profesTodos':profesTodos})
 
 def editarClase(request,id):
     clase_form = None
+    editacion = 1
     error = None
+    profesTodos = list(Profesor.objects.filter(estado = True))
+    profeCargo = []
     try:
-        clase = Clase.objects.get(id =id,estado=True)
+        clase = Clase.objects.get(id =id)
+
+        if clase.profesorCargo != None:
+            profeCargo.append(clase.profesorCargo)
+            profesTodos.remove(profeCargo[0])
+
         if request.method == 'GET':
             clase_form = ClaseForm(instance = clase)
         else:
             clase_form = ClaseForm(request.POST, instance = clase)
             if clase_form.is_valid():
                 clase_form.save()
+
             return redirect('gestionMusical:clases')
     except ObjectDoesNotExist as e:
         error = e
 
     
-    return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error})
+    return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error,'editacion':editacion,'profesTodos':profesTodos,'profeCargo':profeCargo})
 
 
 def mostrarClase (request,id):
-    clases = Clase.objects.all()
-    return render(request,'una_clase.html',{'clases':clases})
+    laClase = Clase.objects.get(id = id)
+    return render(request,'una_clase.html',{'laClase':laClase})
 
 def listarmensajes(request):
     clases = Clase.objects.all()

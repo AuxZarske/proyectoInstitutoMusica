@@ -43,6 +43,26 @@
               
 
         }
+        
+        label.col-form-label{
+          display: inline-block;
+         
+        }
+        div#icon8{
+          padding: 10px;
+          width: 40px;
+          height: 40px;
+        }
+        div#icon7{
+          
+          width: 100px;
+          height: 100px;
+        }
+        div#ere{
+
+margin-right: 2px;
+margin-left: 2px;
+}
 
 
 
@@ -266,14 +286,10 @@
                     <tr>
                       <th>#</th>
                       <th>Nombre</th>
-                      <th>Descripcion</th>
+                      
                       <th>diaSemanal</th>
                       <th>horaInicio</th>
-                      <th>duracion</th>
-                      <th>alumnoAsociados</th>
-                      <th>profesorCargo</th>
-                      <th>temasAsignados</th>
-                      <th>partiturasAsignados</th>
+                      
                       <th>Acciones</th>
                       
                     </tr>
@@ -282,37 +298,15 @@
                   <tbody>
                     {% for clase in clases%}
                     
-                      {% if clase.estado %}
+                      
                         <tr>
                           <td>{{clase.id}}</td>
-                          <td>{{clase.nombre}}</td>
-                          <td>{{clase.descripcion}}</td>
+                          <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
+                          
                           <td>{{clase.diaSemanal}}</td>
                           <td>{{clase.horaInicio}}</td>
-                          <td>{{clase.duracion}}</td>
-                          {% if clase.alumnoAsociados.size != None %}
-                                 <td>{{clase.alumnoAsociados}}</td>
-                          {% else%}
-                                <td>Ninguno</td>
-                          {%endif%}
-
-                          {% if clase.profesorCargo != None %}
-                                <td>{{clase.profesorCargo}}</td>
-                          {% else%}
-                                <td>Ninguno</td>
-                          {%endif%}
-
-                          {% if clase.temasAsignados.size != None %}
-                                <td>{{clase.temasAsignados}}</td>
-                          {% else%}
-                                <td>Ninguno</td>
-                          {%endif%}
-
-                          {% if clase.partiturasAsignados.size != None %}
-                                <td>{{clase.partiturasAsignados}}</td>
-                          {% else%}
-                                <td>Ninguno</td>
-                          {%endif%}
+                         
+                          
                           
                           
                           
@@ -320,6 +314,88 @@
                           
                           <center>
                               
+                              <div class="btn-group">
+                                  <center>
+                                      <div >
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{clase.id}}">
+                                      
+                                      <i class="fa fa-eye"></i>
+                                    
+                                    </button>
+                                  </div>
+                                  </center>
+                                    <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                            </button>
+                                                    
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">ID: </label>
+                                                        <div class="col-sm-10">
+                                                          {{clase.id}}
+                                                        </div>
+                                                      </div>
+                                                      <div class="form-group row">
+                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
+                                                          <div class="col-sm-10">
+                                                              
+                                                              {{clase.nombre}}
+                                                          </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Descripcion:</label>
+                                                            <div class="col-sm-10">
+                                                                {{clase.descripcion}}
+                                                            </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Dia Semanal:</label>
+                                                              <div class="col-sm-10">
+                                                                  {{clase.diaSemanal}}
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Hora Inicio:</label>
+                                                                <div class="col-sm-10">
+                                                                    {{clase.horaInicio}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="form-group row">
+                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Duracion:</label>
+                                                                  <div class="col-sm-10">
+                                                                      {{clase.duracion}}
+                                                                  </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Profesor a Cargo:</label>
+                                                                    <div class="col-sm-10">
+                                                                        {{clase.profesorCargo}}
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="form-group row">
+                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Alumnos:</label>
+                                                                      <div class="col-sm-10">
+                                                                          {{clase.alumnoAsociados.all}}
+                                                                      </div>
+                                                                    </div>
+                                                                    
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                               <a href="{% url 'gestionMusical:editar_clase' clase.id %}" class="btn btn-warning btn-icon-split">
                               
                                     <span class="icon text-white-50">
@@ -330,20 +406,48 @@
                               
                               </a>
 
-                              <a href="{% url 'gestionMusical:eliminar_clase' clase.id %}" class="btn btn-danger btn-icon-split">
+                              <div class="btn-group">
+                                  <center>
+                                    <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{clase.id}}">
+                                        <div id="icon8">
+                                      <i class="fas fa-trash"></i>
+                                    </div>
+                                    </button>
+                                  </center>
+                              <div class="modal fade bs-example-modal-lg2{{clase.id}}" id="myModal2{{clase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h4 class="modal-title" id="myModalLabel{{clase.id}}">Confirmacion de Eliminacion</h4>
+                                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                      </button>
+                                              
+                                          </div>
+                                          <div class="modal-body">
+                                              <h4>Esta seguro de Eliminar la clase {{clase.nombre}}  ???</h4>
+                                              
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                              <a href="{% url 'gestionMusical:eliminar_clase' clase.id %}">
+                                              <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                            </a>
+                                            </div>
+                          
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
 
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-trash"></i>
-                                    </span>
-                                    
 
-                              </a>
+
+
                           </center>
                         
                           </td>
                         
                         </tr>
-                        {%endif%}
+                        
                     {%endfor%}
                   </tbody>
                 </table>
@@ -414,6 +518,7 @@
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  
   {%endblock archivos%}
 </body>
 

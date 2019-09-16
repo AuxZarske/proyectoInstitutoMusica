@@ -20,28 +20,77 @@
   <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
 
 </head>
+<script type="text/javascript">
+
+function boton(num){
+    
+    document.getElementById("custId").value = num;
+
+
+}
+
+</script>
 <style type="text/css">
         
-       
+        input#id_nombre::placeholder{
+              text:"Nombre de Especialidad";
+             
+              
 
+        }
+        input#id_descripcion{
+              placeholder:"Descripcion";
+             
+              
 
+        }
+        div.cuadro{
+            
+            margin-top: 10%;
+            padding-right: 23%;
+            padding-left: 23%;
+        }
+        button#botonVolver{
 
+          float: right;
+          border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #5d23e6;
+          background-color: rgb(63, 200, 235);
+
+        }
+        div#llkk{
+            color: black;
+            background-color: rgb(61, 178, 207);
+            padding: 3%;
+            border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #ccd2d9;
+        }
+        
 
     </style>
 <body class="bg-gradient-primary">
 
   <div class="container">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
+    
+      
         <!-- Nested Row within Card Body -->
-        <div class="row">
+        
           
-          <div class="col-lg-7">
           
-            <div class="p-5">
+          
+            <div class="cuadro">
+                <div id="llkk">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Crear Clase!</h1>
+                  {%if editacion != 1%}
+                  <h1 class="h4 text-gray-900 mb-4">Crear Clase!</h1>
+                  {%else%}
+                <h1 class="h4 text-gray-900 mb-4">Editar Clase!</h1>
+                {%endif%}
               </div>
               <form class="user" method="POST">
               {% csrf_token %}
@@ -51,28 +100,85 @@
               {% else %}
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
+
+                      <div class="labelito">
+                          <label class="labeNombre">Nombre de la Clase:</label>
+                          {{clase_form.nombre}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Descripcion de la Clase:</label>
+                          {{clase_form.descripcion}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Dia de la Semana:</label>
+                          {{clase_form.diaSemanal}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Hora de Inicio:</label>
+                          {{clase_form.horaInicio}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Duracion de la Clase:</label>
+                          {{clase_form.duracion}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Profesor a Cargo:</label>
+                          <div>
+                              <select name="profesorCargo" id="id_profesorCargo">
+                                  
+                                  <option value=''>------</option>
+                                  {% for esp in profesTodos %}
+                                             <option value='{{esp.dni}}'>{{esp.nombre}}</option>
+
+                                  {% endfor %}
+                                  {% for espt in profeCargo %}
+                                             <option value='{{espt.dni}}'selected>{{espt.nombre}}</option>
+
+                                  {% endfor %}
+                                  
+                                  
+                                  
+                                  
+                                </select>
+
+                          </div>
                           
+                      </div>  
+
+
                   </div>
                   
-                </div>
-                <div class="form-group">
-                        {{clase_form.as_p}}  
-                <div> 
-                
+               
                 </div>
                 <p> </p>
-                <button type= "sumbit" class="btn btn-primary btn-user btn-block">Registrar Clase Nueva</button>
-                
+                <div>
+                    {%if editacion != 1%}
+                        <button type= "submit"   class="btn btn-primary btn-user btn-block" value="otro" onclick="boton(1)">Registrar y Cargar Otra
+                                
+                        </button>
+                        {%endif%}
+                        
+                        <br>
+                <button type= "sumbit" class="btn btn-primary btn-user btn-block" value="termine" onclick="boton(2)">Registrar y Terminar
+                        
+                </button>
+                <input type="hidden" id="custId" name="custId" value="no cambio">
+            </div>
                 {% endif %}
                 </form>
                
-              
+            </div>
+
+            <a href="{% url 'gestionMusical:clases'%}">
+            <button id="botonVolver">Volver</button>
+          </a>
+
             </div>
             
-          </div>
-        </div>
-      </div>
-    </div>
+          
+        
+      
+    
 
   </div>
 
