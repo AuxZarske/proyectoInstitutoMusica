@@ -26,7 +26,7 @@ class Partitura(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la partitura', max_length = 100, null = False, blank = False)
     compositor = models.CharField('compositor de la partitura', max_length = 250, null = False, blank = False)
-    descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
+    descripcion = models.TextField('Descripcion', null = False, blank = False)
     archivoURL = models.TextField('url de la partitura', null = False, blank = False)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     tipoDescripto = models.TextField('descripcion de la partitura', null = False, blank = False)
@@ -48,7 +48,7 @@ class Tema(models.Model):
     
     nivel = models.CharField('Nivel del tema', max_length = 100, null = False, blank = False)
     tipo = models.CharField('Tipo de la tema', max_length = 100, null = False, blank = False)
-    archivoURL = models.TextField('url de la tema', null = False, blank = False)
+    archivoURL = models.CharField('url de la tema', max_length = 500, null = False, blank = False)
     #falta imagen url
    
 

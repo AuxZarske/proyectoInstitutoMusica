@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -380,8 +380,46 @@ def editarPartitura(request,id):
 
 
 def listartemas(request):
-    clases = Clase.objects.all()
-    return render(request,'temas.html',{'clases':clases})
+    temas = Tema.objects.all()
+    return render(request,'temas.html',{'temas':temas})
+
+def eliminarTema(request,id):
+    tema = Tema.objects.get(id=id) 
+    tema.delete()
+    return redirect('gestionMusical:temas')
+    
+def crearTema(request):
+    editacion = 0
+    if request.method == 'POST':
+        tema_form = TemaForm(request.POST)
+        if tema_form.is_valid():
+            tema_form.save()
+            return redirect('gestionMusical:temas')
+    else:
+        tema_form =TemaForm()
+    return render(request,'crear_tema.html',{'tema_form':tema_form,'editacion':editacion})
+
+def editarTema(request,id):
+    tema_form = None
+    editacion = 1
+    error = None
+    try:
+        tema = Tema.objects.get(id =id)
+        if request.method == 'GET':
+            tema_form = TemaForm(instance = tema)
+        else:
+            tema_form = TemaForm(request.POST, instance = tema)
+            if tema_form.is_valid():
+                tema_form.save()
+            return redirect('gestionMusical:temas')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    
+    return render(request,'crear_tema.html',{'tema_form':tema_form,'error':error,'editacion':editacion})
+
+
+
 
 def listarinstrumentos(request):
     clases = Clase.objects.all()

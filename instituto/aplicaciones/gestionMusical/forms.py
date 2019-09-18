@@ -1,5 +1,5 @@
 from django import forms
-from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
@@ -9,7 +9,13 @@ class EspecialidadForm(forms.ModelForm):
 class PartituraForm(forms.ModelForm):
     class Meta:
         model = Partitura
-        fields = ['nombre','compositor','tipoDescripto','nivel']
+        fields = ['nombre','compositor','tipoDescripto','nivel','archivoURL','descripcion']
+
+
+class TemaForm(forms.ModelForm):
+    class Meta:
+        model = Tema
+        fields = ['nombre','descripcion','nivel','tipo','archivoURL']
 
 class ClaseForm(forms.ModelForm):
     class Meta:

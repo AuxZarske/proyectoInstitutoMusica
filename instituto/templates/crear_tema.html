@@ -108,9 +108,9 @@ background-color: rgb(63, 200, 235);
             <div id="llkkt">
               <div class="text-center">
                   {%if editacion != 1%}
-                  <h1 class="h4 text-gray-900 mb-4">Crear Partitura!</h1>
+                  <h1 class="h4 text-gray-900 mb-4">Crear Tema!</h1>
                   {%else%}
-                <h1 class="h4 text-gray-900 mb-4">Editar Partitura!</h1>
+                <h1 class="h4 text-gray-900 mb-4">Editar Tema!</h1>
                 {%endif%}
               </div>
               <form class="user" method="POST">
@@ -130,24 +130,24 @@ background-color: rgb(63, 200, 235);
                     
                       <div class="labelito">
                           <label class="labeNombre" >Nombre:</label>
-                          {{partitura_form.nombre}} 
+                          {{tema_form.nombre}} 
                       </div>
                       
                       <div class="labelito">
                           <label  class="labeNombre">Nivel:</label>
-                          {{partitura_form.nivel}} 
+                          {{tema_form.nivel}} 
                       </div>
                       <div class="labelito">
-                          <label class="labeNombre">Compositor:</label>
-                          {{partitura_form.compositor}} 
+                          <label class="labeNombre">Tipo:</label>
+                          {{tema_form.tipo}} 
                       </div>
                       <div class="labelito">
                           <label class="labeNombre">Archivo:</label>
-                          {{partitura_form.archivoURL}} 
+                          {{tema_form.archivoURL}} 
                       </div>
                       <div class="labelito">
                             <label class="labeNombre" >Descripcion:</label>
-                            {{partitura_form.descripcion}} 
+                            {{tema_form.descripcion}} 
                         </div>
                       
                       
@@ -179,7 +179,7 @@ background-color: rgb(63, 200, 235);
                
               
             </div>
-            <a href="{% url 'gestionMusical:partituras'%}">
+            <a href="{% url 'gestionMusical:temas'%}">
                 <button id="botonVolver">Volver</button></a>
           </div>
 
