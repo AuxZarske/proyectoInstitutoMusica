@@ -462,9 +462,8 @@ def asociarAlumnoClase(request,idA,idC):
     laClase = Clase.objects.get(id = idC)
     laClase.alumnoAsociados.add(Alumno.objects.get(dni = idA, estado=True))
     laClase.save()
-    listAlumnos = laClase.alumnoAsociados.all()
-    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
+    idA = 0
+    return redirect('gestionMusical:ver_alumno_clase',idA,idC)
 
 def desasociarAlumnoClase(request,idA,idC):
     #desasocia
@@ -472,15 +471,19 @@ def desasociarAlumnoClase(request,idA,idC):
 
     laClase.alumnoAsociados.remove(Alumno.objects.get(dni = idA, estado=True))
     laClase.save()
-
-    listAlumnos = laClase.alumnoAsociados.all()
-    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
+    idA = 0
+    return redirect('gestionMusical:ver_alumno_clase',idA,idC)
 
 def verAlumnoClase(request,dni,idC):
     elAlumno = None
-    partiturasTodas = Partitura.objects.all()
-    elAlumno = Alumno.objects.get(dni = dni)
+    partiturasTodas = None
+    temasTodos = None
+    try:
+        elAlumno = Alumno.objects.get(dni = dni)
+    except:
+        print("jjiji")
+        elAlumno = None
+
     laClase = Clase.objects.get(id = idC)
     listAlumnos = list(laClase.alumnoAsociados.all())
     listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
@@ -491,9 +494,19 @@ def verAlumnoClase(request,dni,idC):
     partituras = []
     temas = []
     if elAlumno != None:
-        partituras = elAlumno.partiturasAsociadas.all()
-        temas = elAlumno.temasAsociadas.all()
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partitura':partituras,'temas':temas,'partiturasTodas':partiturasTodas})
+        
+        partituras = list(elAlumno.partiturasAsociadas.all())
+        temas = list(elAlumno.temasAsociadas.all()) 
+
+        partiturasTodas = list(Partitura.objects.all())
+        for r in partituras:
+            partiturasTodas.remove(r)
+
+        temasTodos = list(Tema.objects.all())
+        for t in temas:
+            temasTodos.remove(t)  
+        
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):
@@ -502,19 +515,37 @@ def asociarPartituraAlumno(request,dni,idP, idC):
     elAlumno.partiturasAsociadas.add(Partitura.objects.get(id = idP))
     elAlumno.save()
 
-    partiturasTodas = Partitura.objects.all()
-    laClase = Clase.objects.get(id = idC)
+    return redirect('gestionMusical:ver_alumno_clase',dni,idC)
 
-    listAlumnos = laClase.alumnoAsociados.all()
-    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
-    copia = listAlumnosTotal.copy()
-    for a in copia:       
-        if listAlumnos.count(a) > 0:
-            listAlumnosTotal.remove(a)
-    partituras = []
-    temas = []
-    if elAlumno != None:
-        partituras = elAlumno.partiturasAsociadas.all()
-        temas = elAlumno.temasAsociadas.all()
 
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partitura':partituras,'temas':temas,'partiturasTodas':partiturasTodas})
+def desasociarAlumnoPartitura(request,dni,idP, idC):
+    #desasocia
+    elAlumno = Alumno.objects.get(dni = dni)
+    elAlumno.partiturasAsociadas.remove(Partitura.objects.get(id = idP))
+    elAlumno.save()
+        
+
+    return redirect('gestionMusical:ver_alumno_clase',dni,idC)
+
+
+def asociarTemaAlumno(request,dni,idT, idC):
+    #asocia
+    elAlumno = Alumno.objects.get(dni = dni)
+    elAlumno.temasAsociadas.add(Tema.objects.get(id = idT))
+    elAlumno.save()
+
+        
+
+    return redirect('gestionMusical:ver_alumno_clase',dni,idC)
+
+
+def desasociarAlumnoTema(request,dni,idT, idC):
+    #desasocia
+    elAlumno = Alumno.objects.get(dni = dni)
+    elAlumno.temasAsociadas.remove(Tema.objects.get(id = idT))
+    elAlumno.save()
+
+  
+        
+
+    return redirect('gestionMusical:ver_alumno_clase',dni,idC)

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, home, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, home, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema
 
 urlpatterns = [
     path('',home,name='index'),
@@ -47,6 +47,10 @@ urlpatterns = [
     path('desasociar_alumno_clase/<int:idA>/<int:idC>',desasociarAlumnoClase,name='desasociar_alumno_clase'),
     
     path('ver_alumno_clase/<int:dni>/<int:idC>',verAlumnoClase,name='ver_alumno_clase'),
+
     path('asociar_alumno_partitura/<int:dni>/<int:idP>/<int:idC>',asociarPartituraAlumno,name='asociar_alumno_partitura'),
-   
+    path('desasociar_partitura_alumno/<int:dni>/<int:idP>/<int:idC>',desasociarAlumnoPartitura,name='desasociar_partitura_alumno'),
+
+    path('asociar_alumno_tema/<int:dni>/<int:idT>/<int:idC>',asociarTemaAlumno,name='asociar_alumno_tema'),
+    path('desasociar_tema_alumno/<int:dni>/<int:idT>/<int:idC>',desasociarAlumnoTema,name='desasociar_tema_alumno'),
 ]
