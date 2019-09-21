@@ -30,17 +30,7 @@
 {%block estilos%}
 <script type="text/javascript">
 
-    function ocultar_mostrar(){
-        //alert(document.getElementById("elGranMenu").style.display )
-
-        if(document.getElementById("elGranMenu").style.display == "none" || document.getElementById("elGranMenu").style.display == "" ){
-            document.getElementById("elGranMenu").style.display='block';
-        }
-        else{
-                document.getElementById("elGranMenu").style.display='none';
-            }
     
-    }
     
     </script>
 <style type="text/css">
@@ -130,7 +120,71 @@ margin-left: 2px;
         display: inline-block
         
     }
+    input.elCheck{
+      display: inline-block;
+    }
+    p.nombreLista{
+      display: inline-block;
+      margin-right: 1%;
+    }
+    div.asosiarNombre{
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      padding: 2px;
+      background-color: rgb(116, 85, 202);
+      margin: auto;
+      
+      text-align: center;
+      border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          float: right;
+    }
+    div.verMasNombre{
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      padding: 2px;
+      background-color: rgb(85, 188, 202);
+      margin: auto;
+      margin-right: 2%;
+      
+      text-align: center;
+      border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          float: right;
+
+    }
+    div.desasosiarNombre{
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      padding: 2px;
+      background-color: rgb(228, 69, 69);
+      margin: auto;
+      margin-right: 2%;
+      
+      text-align: center;
+      border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          float: right;
+    }
+    div.laFilita{
+
+      border-bottom: 4px solid;
+      text-align: left;
+      padding-left: 2%;
+      padding-right: 4%;
+      margin-top: 2%;
+    }
+    div#modaldos{
+
     
+    text-align: left;
+    }
     div.contenedorMedio{
         border: 2px solid;
         display: inline-block;
@@ -160,15 +214,21 @@ margin-left: 2px;
         
         margin-top: 10px;
         display: none;
-        background-color: rgb(200, 252, 193);
+        background-color: rgba(200, 252, 193, 0.815);
         
         
+    }
+    button#miBoton{
+      border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
     }
     div.laListaAlumnos{
         
         padding: 5px;
         display: inline-block;
-        background-color: rgb(200, 252, 193);
+        width: 100%;
+        background-color: rgba(200, 252, 193, 0.295);
         border-radius: 43px 43px 43px 43px;
           -moz-border-radius: 43px 43px 43px 43px;
           -webkit-border-radius: 43px 43px 43px 43px;
@@ -183,7 +243,10 @@ margin-left: 2px;
         font-size: 22px;
     }
     div#miBoton{
-        width: 250px;
+        width: 280px;
+        border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
     }
     p.nomAlu{
         float: left;
@@ -200,6 +263,14 @@ margin-left: 2px;
         vertical-align: bottom;
         display: inline-block;
         
+    }
+    div.laFilitaUno{
+      border-bottom: 2px solid;
+      text-align: left;
+      padding-left: 2%;
+      padding-right: 4%;
+      height: 50px;
+      padding-top: 10px;
     }
     button.btn-secondary{
         background-color: #162cd0;
@@ -239,8 +310,10 @@ margin-left: 2px;
     }
     div#tyutyu{
         display: inline-block;
+        padding-top: 50px;
         height: 100px;
         width: 100%;
+        
 
     }
     div#lopi{
@@ -281,95 +354,165 @@ margin-left: 2px;
                     <div id="listaPrincipal">
                         
                             <div class="laListaAlumnos">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="miBoton" onclick="ocultar_mostrar()">
-                                      Lista de Alumnos de Clase:
-                                    </button>
-                                    <div id="elGranMenu" >
+                                    <!--inicio modal-->
+                                    <div class="btn-group">
+    
+                                        <button type="button" class="btn btn-primary" id="miBoton" data-toggle="modal" data-target=".bs-example-modal-lg{{laClase.id}}">
+                                          Lista de Alumnos de Clase: 
+                                        </button>
+                                    
+                                        <div class="modal fade bs-example-modal-lg{{laClase.id}}" id="myModal{{laClase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel{{laClase.id}}">Lista de Alumnos de la Clase: </h4>
+                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                </button>
+                                                        
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--lista escrolleable de alumnos, ver, desasociar, asistencia check-->
+                                                        <div id="" style="overflow-y:scroll; height:400px;">
+                                                        
+                                                            {%for alu in listAlumnos%}
+                                                        
+                                                            <div class="laFilitaUno">
+                                                              <input type="checkbox" class="elCheck" >
+                                                              <p class="nombreLista">{{alu.apellido}}, {{alu.nombre}}</p> 
+                                                              <div class="desasosiarNombre">
+                                                                <a href="{% url 'gestionMusical:desasociar_alumno_clase' alu.dni  laClase.id %}">
+                                                              <span class="icon text-white-50">
+                                                                  <i class="fas fa-minus"></i>
+                                                              </span> 
+                                                            </a>
+                                                            </div>
+                                                            <div class="verMasNombre">
+                                                                <a href="{% url 'gestionMusical:ver_alumno_clase' alu.dni laClase.id %}">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </span> 
+                                                                </a>
+                                                              </div>
+                                                            </div> 
+                                                            
+                                                            {%endfor%}
 
-                                      
-                                      <div class="unaFila">
-                                          <center>
-                                          <p class="nomAlu">el nombre va aqui</p>
-                                          
-                                          <div class="verAlu">
-                                                <button type="button" class="btn btn-primary btn-circle btn-sm" >
-                                                  
-                                                  <i class="fa fa-eye"></i>
-                                                
-                                                </button>
-                                              </div>
-                                          <div class="selectAlu"><input class="elCheck"  type="checkbox"></div>
-                                        </center>
-                                      </div>
-
-                                      <div class="unaFila">
-                                            <center>
-                                            <p class="nomAlu">el nombre va aqui</p>
-                                            
-                                            <div class="verAlu">
-                                                  <button type="button" class="btn btn-primary btn-circle btn-sm" >
+                                                            
+                                                            
+                                                            
+                                                            
+                                                           
+                                                        
+                                                          </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        
+                                                        <button type="button" class="btn btn-primary">Marcar Asistencia</button>
+                                                    </div>
                                                     
-                                                    <i class="fa fa-eye"></i>
-                                                  
-                                                  </button>
                                                 </div>
-                                            <div class="selectAlu"><input class="elCheck"  type="checkbox"></div>
-                                          </center>
+                                            </div>
                                         </div>
 
-                                        <div class="unaFila">
-                                                <center>
-                                                <p class="nomAlu">el nombre va aqui</p>
-                                                
-                                                <div class="verAlu">
-                                                      <button type="button" class="btn btn-primary btn-circle btn-sm" >
-                                                        
-                                                        <i class="fa fa-eye"></i>
-                                                      
-                                                      </button>
-                                                    </div>
-                                                <div class="selectAlu"><input class="elCheck" type="checkbox"></div>
-                                              </center>
-                                            </div>
-                                      
-                                      
-                                    <div class="unaFila" id="ultimaFila">
-                                        <button id="Asistencia">Marcar Asistencia</button>
-                                    </div>
 
-                                    </div>
+
+
+
+
+                                    <!--fin modal-->
                             </div>
                             <div id="addAlumno">
-                              
-                                    <button class="btn btn-success btn-icon-split" id="elBotonAdd">
+                              <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-icon-split" id="elBotonAdd" data-toggle="modal" data-target=".bs-example-modal-lg2{{laClase.id}}">
                                                   <span class="icon text-white-50">
                                                         <i class="fas fa-plus"></i>
                                                        
                                                   </span>
-                                                  <span class="text">Asociar Nuevo Alumno</span>
-                                                </button>
-                                            
-                            </div>
+                                                  
+                                                    <span class="text">Asociar Nuevo Alumno</span>
+                                                  
+                                    </button>
+                                    <div class="modal fade bs-example-modal-lg2{{laClase.id}}" id="myModal3{{laClase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h4 class="modal-title" id="myModalLabel{{laClase.id}}">Lista de alumnos disponibles:</h4>
+                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                          </button>
+                                                  
+                                              </div>
+                                              <div class="modal-body">
+                                                  <div id="modaldos" style="overflow-y:scroll; height:400px;">
+                                                    
+                                                  
+                                                      {%for alu in listAlumnosTotal%}
+                                                        
+                                                      <div class="laFilita">
+                                                        
+                                                        <p class="nombreLista">{{alu.apellido}}, {{alu.nombre}}</p> 
+                                                        <div class="asosiarNombre">
+                                                         <a href="{% url 'gestionMusical:asociar_alumno_clase' alu.dni  laClase.id %}">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-plus"></i>
+                                                        </span> 
+                                                      </a> 
+                                                      </div>
+                                                      
+                                                      </div> 
+                                                      
+                                                      {%endfor%}
+                                                  
+                                                  </div>
 
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                  
+                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                              </div>
+                              
+                                          </div>
+                                      </div>
+                                  </div>          
+                            </div>
+                            {% if elAlumno %}
                             <div id="tyutyu">
-                            <div id="nombreAlu">
-                                Alumno: Ninguno seleccionado
+                                <div id="nombreAlu">
+                                    Alumno: {{elAlumno.apellido}}, {{elAlumno.nombre}}
+                                    
+                                </div>
+                                <div id="lopi">
+                                <a href="#" class="btn btn-info btn-circle" id="botonInformacion">
+                                          
+                                        <i class="fas fa-info-circle"></i>
+                                      </a>    
                                 
-                            </div>
-                            <div id="lopi">
-                            <button type="button" class="btn btn-info btn-circle" id="botonInformacion">
-                                      
-                                    <i class="fas fa-info-circle"></i>
-                                  
-                            </button>
-                            </div>
+                                </div>
                             
                             </div>
+                            {% else %}
+                            <div id="tyutyu">
+                                <div id="nombreAlu">
+                                    Alumno: Ninguno seleccionado
+                                    
+                                </div>
+                                <div id="lopi">
+                                    <a href="#" class="btn btn-info btn-circle" id="botonInformacion">
+                                          
+                                        <i class="fas fa-info-circle"></i>
+                                      
+                                    </a>
+                                </div>
+                            
+                            </div>
+                            {% endif %}
 
 
 
 
                     </div>
+                  </div>
+                  {% if elAlumno %}
                     <div id="bloqueSecundario">
                             
                             <div id="temas">
@@ -377,15 +520,67 @@ margin-left: 2px;
                                    <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                           <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de Temas de alalala:</h6>
-                                          <a id="fraseTableBoton" href="#" class="btn btn-primary btn-icon-split">
-                                                          
-                                                                <span class="icon text-white-50">
-                                                                      <i class="fas fa-plus"></i>
-                                                                </span>
-                                                                <span class="text">Asociar Tema</span>
-                                                                
-                                                          
-                                                          </a>
+                                          
+                                          
+                                          <!--aso tema-->      
+
+                                          <div id="addAlumno">
+                                              <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-icon-split" id="fraseTableBoton" data-toggle="modal" data-target=".bs-example-modal-lg5{{laClase.id}}">
+                                                                  <span class="icon text-white-50">
+                                                                        <i class="fas fa-plus"></i>
+                                                                       
+                                                                  </span>
+                                                                  
+                                                                    <span class="text">Asociar Tema</span>
+                                                                  
+                                                    </button>
+                                                    <div class="modal fade bs-example-modal-lg5{{laClase.id}}" id="myModal3{{laClase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                      <div class="modal-dialog modal-lg">
+                                                          <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                  <h4 class="modal-title" id="myModalLabel{{laClase.id}}">Lista de temas disponibles:</h4>
+                                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                          </button>
+                                                                  
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                  <div id="modaldos" style="overflow-y:scroll; height:400px;">
+                                                                    
+                                                                  
+                                                                      {%for tem in temas%}
+                                                                        
+                                                                      <div class="laFilita">
+                                                                        
+                                                                        <p class="nombreLista">{{tem.nombre}}</p> 
+                                                                        <div class="asosiarNombre">
+                                                                         <a href="#">
+                                                                        <span class="icon text-white-50">
+                                                                            <i class="fas fa-plus"></i>
+                                                                        </span> 
+                                                                      </a> 
+                                                                      </div>
+                                                                      
+                                                                      </div> 
+                                                                      
+                                                                      {%endfor%}
+                                                                  
+                                                                  </div>
+                
+                
+                                                              </div>
+                                                              <div class="modal-footer">
+                                                                  
+                                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                              </div>
+                                              
+                                                          </div>
+                                                      </div>
+                                                  </div>          
+                                            </div>
+                                            </div>
+
+                                          <!--finteema-->          
                                         </div>
                                         <div class="card-body">
                                           <div class="table-responsive">
@@ -552,15 +747,65 @@ margin-left: 2px;
                                    <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                           <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de Partituras de alalala:</h6>
-                                          <a id="fraseTableBoton" href="#" class="btn btn-primary btn-icon-split">
-                                                          
+                                          <!--aso partt-->      
+
+                                          <div id="addAlumno">
+                                            <div class="btn-group">
+                                                  <button type="button" class="btn btn-primary btn-icon-split" id="fraseTableBoton" data-toggle="modal" data-target=".bs-example-modal-lg6{{laClase.id}}">
                                                                 <span class="icon text-white-50">
                                                                       <i class="fas fa-plus"></i>
+                                                                     
                                                                 </span>
-                                                                <span class="text">Asociar Partitura</span>
                                                                 
-                                                          
-                                                          </a>
+                                                                  <span class="text">Asociar Partitura</span>
+                                                                
+                                                  </button>
+                                                  <div class="modal fade bs-example-modal-lg6{{laClase.id}}" id="myModal3{{laClase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabel{{laClase.id}}">Lista de partituras disponibles:</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                        </button>
+                                                                
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div id="modaldos" style="overflow-y:scroll; height:400px;">
+                                                                  
+                                                                
+                                                                    {%for par in partiturasTodas%}
+                                                                      
+                                                                    <div class="laFilita">
+                                                                      
+                                                                      <p class="nombreLista">{{par.nombre}}</p> 
+                                                                      <div class="asosiarNombre">
+                                                                       <a href="{% url 'gestionMusical:asociar_alumno_partitura' elAlumno.dni  par.id laClase.id %}">
+                                                                      <span class="icon text-white-50">
+                                                                          <i class="fas fa-plus"></i>
+                                                                      </span> 
+                                                                    </a> 
+                                                                    </div>
+                                                                    
+                                                                    </div> 
+                                                                    
+                                                                    {%endfor%}
+                                                                
+                                                                </div>
+              
+              
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                            
+                                                        </div>
+                                                    </div>
+                                                </div>          
+                                          </div>
+                                          </div>
+
+                                        <!--fin partt-->  
                                         </div>
                                         <div class="card-body">
                                           <div class="table-responsive">
@@ -724,10 +969,16 @@ margin-left: 2px;
                                       </div>
                                    <!--partituras fin--> 
                             </div>
+                            {% else %}
+
+                            {% endif %}
 
 
                     </div>
+
+
                     </center>
+
                 </div>
             </div>
 {% endblock contenidiPagina %}

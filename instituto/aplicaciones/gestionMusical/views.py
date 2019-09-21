@@ -272,6 +272,8 @@ def eliminarClase(request,id):
     return redirect('gestionMusical:clases')
     
 def crearClase(request):
+    
+    
     editacion = 0
     profesTodos = Profesor.objects.filter(estado = True)
     if request.method == 'POST':
@@ -319,7 +321,14 @@ def editarClase(request,id):
 
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
-    return render(request,'una_clase.html',{'laClase':laClase})
+    listAlumnos = list(laClase.alumnoAsociados.all())
+    listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
+    copia = listAlumnosTotal.copy()
+    for a in copia:
+        
+        if listAlumnos.count(a) > 0:
+            listAlumnosTotal.remove(a)
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
 
 def listarmensajes(request):
     clases = Clase.objects.all()
@@ -339,20 +348,43 @@ def eliminarPartitura(request,id):
     return redirect('gestionMusical:partituras')
     
 def crearPartitura(request):
+    editacion = 0
+    especialidadesTodas = list(Especialidad.objects.all())
     if request.method == 'POST':
         partitura_form = PartituraForm(request.POST)
+        
+
         if partitura_form.is_valid():
             partitura_form.save()
+            #obtener especialidades
+            #ir recorriendo especialidades
+            #una espe. partitura. add
+
+
+
+
             return redirect('gestionMusical:partituras')
     else:
         partitura_form =PartituraForm()
-    return render(request,'crear_partitura.html',{'partitura_form':partitura_form})
+    return render(request,'crear_partitura.html',{'partitura_form':partitura_form, 'especialidadesTodas':especialidadesTodas,'editacion':editacion})
 
 def editarPartitura(request,id):
+    editacion = 1
     partitura_form = None
     error = None
+    especialidadesTodas = list(Especialidad.objects.all())
+    espeParti = []
     try:
         partitura = Partitura.objects.get(id =id)
+        lespeParti = list(Partitura.objects.values('especialidadesAcordes').filter(id=id))
+        
+        for e in lespeParti:
+            if e['especialidadesAcordes'] != None:
+                espeParti.append(Especialidad.objects.get(id = e['especialidadesAcordes']))
+        
+        for e in espeParti:
+            especialidadesTodas.remove(e)
+
         if request.method == 'GET':
             partitura_form = PartituraForm(instance = partitura)
         else:
@@ -364,7 +396,7 @@ def editarPartitura(request,id):
         error = e
 
     
-    return render(request,'crear_partituras.html',{'partitura_form':partitura_form,'error':error})
+    return render(request,'crear_partitura.html',{'partitura_form':partitura_form,'error':error,'editacion':editacion,'especialidadesTodas':especialidadesTodas,'espeParti':espeParti})
 
 
 
@@ -425,3 +457,64 @@ def listarinstrumentos(request):
     clases = Clase.objects.all()
     return render(request,'instrumentos.html',{'clases':clases})
 
+def asociarAlumnoClase(request,idA,idC):
+    #asocia
+    laClase = Clase.objects.get(id = idC)
+    laClase.alumnoAsociados.add(Alumno.objects.get(dni = idA, estado=True))
+    laClase.save()
+    listAlumnos = laClase.alumnoAsociados.all()
+    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
+
+def desasociarAlumnoClase(request,idA,idC):
+    #desasocia
+    laClase = Clase.objects.get(id = idC)
+
+    laClase.alumnoAsociados.remove(Alumno.objects.get(dni = idA, estado=True))
+    laClase.save()
+
+    listAlumnos = laClase.alumnoAsociados.all()
+    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
+
+def verAlumnoClase(request,dni,idC):
+    elAlumno = None
+    partiturasTodas = Partitura.objects.all()
+    elAlumno = Alumno.objects.get(dni = dni)
+    laClase = Clase.objects.get(id = idC)
+    listAlumnos = list(laClase.alumnoAsociados.all())
+    listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
+    copia = listAlumnosTotal.copy()
+    for a in copia:       
+        if listAlumnos.count(a) > 0:
+            listAlumnosTotal.remove(a)
+    partituras = []
+    temas = []
+    if elAlumno != None:
+        partituras = elAlumno.partiturasAsociadas.all()
+        temas = elAlumno.temasAsociadas.all()
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partitura':partituras,'temas':temas,'partiturasTodas':partiturasTodas})
+
+
+def asociarPartituraAlumno(request,dni,idP, idC):
+    #asocia
+    elAlumno = Alumno.objects.get(dni = dni)
+    elAlumno.partiturasAsociadas.add(Partitura.objects.get(id = idP))
+    elAlumno.save()
+
+    partiturasTodas = Partitura.objects.all()
+    laClase = Clase.objects.get(id = idC)
+
+    listAlumnos = laClase.alumnoAsociados.all()
+    listAlumnosTotal = Alumno.objects.filter(estado = True) #y no pertenescan a esta clase
+    copia = listAlumnosTotal.copy()
+    for a in copia:       
+        if listAlumnos.count(a) > 0:
+            listAlumnosTotal.remove(a)
+    partituras = []
+    temas = []
+    if elAlumno != None:
+        partituras = elAlumno.partiturasAsociadas.all()
+        temas = elAlumno.temasAsociadas.all()
+
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partitura':partituras,'temas':temas,'partiturasTodas':partiturasTodas})

@@ -148,7 +148,34 @@ background-color: rgb(63, 200, 235);
                       <div class="labelito">
                             <label class="labeNombre" >Descripcion:</label>
                             {{partitura_form.descripcion}} 
-                        </div>
+                      </div>
+                      <div class="labelito" id="tyu">
+                          <label class="labeNombre">Especialidades</label>
+                          <div>
+
+                              
+                              <select id='custom-headers' name="especialidadesAcordes" multiple='multiple'>
+                                  
+                                  
+                                  {% for esp in especialidadesTodas %}
+                                             <option value='{{esp.id}}'>{{esp.nombre}}</option>
+
+                                  {% endfor %}
+
+                                  {% for ep in espeParti%}
+                                              
+                                                
+                                        
+                                              <option value='{{ep.id}}' selected>{{ep.nombre}}</option>
+                                        
+                                  {% endfor %}
+                                  
+                                  
+                                  
+                                </select>
+
+                          </div>
+                      </div>
                       
                       
                       
@@ -201,7 +228,7 @@ background-color: rgb(63, 200, 235);
   <!-- Custom scripts for all pages-->
   <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
   <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-  <script src="{%static 'js/selectMul.js'%}"></script>
+  <script src="{%static 'js/selectMul2.js'%}"></script>
 
 </body>
 

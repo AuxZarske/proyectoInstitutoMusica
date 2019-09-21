@@ -9,7 +9,7 @@ class EspecialidadForm(forms.ModelForm):
 class PartituraForm(forms.ModelForm):
     class Meta:
         model = Partitura
-        fields = ['nombre','compositor','tipoDescripto','nivel','archivoURL','descripcion']
+        fields = ['nombre','compositor','nivel','archivoURL','descripcion','especialidadesAcordes']
 
 
 class TemaForm(forms.ModelForm):
