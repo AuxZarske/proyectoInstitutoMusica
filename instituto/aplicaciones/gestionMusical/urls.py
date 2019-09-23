@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, home, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema
+from django.contrib.auth.decorators import login_required
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema
 
 urlpatterns = [
-    path('',home,name='index'),
+    #path('',home,name='index'),
 
-    path('especialidades/',listarespecialidades,name='especialidades'),
+    path('especialidades/',login_required(listarespecialidades),name='especialidades'),
     path('eliminar_especialidad/<int:id>',eliminarEspecialidad,name='eliminar_especialidad'),
     path('crear_especialidad/',crearEspecialidad,name='crear_especialidad'),
     path('editar_especialidad/<int:id>',editarEspecialidad,name='editar_especialidad'),

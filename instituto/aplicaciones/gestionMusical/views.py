@@ -2,14 +2,16 @@ from django.shortcuts import render,redirect
 from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import View
 
 
 
 
-# Create your views here.
-def home(request):
-    clases = Clase.objects.all()
-    return render(request,'index.html', {'clases':clases})
+class Inicio(View):
+    def get(self,request,*args,**kwargs):
+        clases = Clase.objects.all()
+        return render(request,'index.html',  {'clases':clases})
+
 
 def listarespecialidades(request):
     clases = Clase.objects.all()
