@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
 
   <meta charset="utf-8">
@@ -21,6 +21,20 @@
 
 </head>
 
+<style type="text/css">
+
+button#botonEleccion1{
+  padding: 4px;
+  margin-right: 10%;
+  font-size: 22px;
+}
+button#botonEleccion2{
+  padding: 4px;
+  font-size: 22px;
+}
+
+</style>
+
 <body class="bg-gradient-primary">
 
   <div class="container">
@@ -33,8 +47,8 @@
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+            <div class="row" id="row">
+              
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
@@ -43,10 +57,10 @@
                   <form class="user" method="POST">
                       {%csrf_token%}
                     <div class="form-group">
-                        <!--
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Introdusca su Correo Electronico...">
-                    -->
-                    <input type="text" name="username">
+                        
+                      <input type="email" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Introdusca su Correo Electronico...">
+                    
+                    
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Su Contraseña" name="password">
@@ -58,10 +72,41 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="#">Forgot Password?</a>
+                    <a class="small" href="#">Olvido su Contraseña?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="#">Create an Account!</a>
+                    
+                    <!--modal-->
+                    <div class="btn-group">
+                        <center>
+                            <a class="small" href="#" data-toggle="modal" data-target=".bs-example-modal-lg2">Crear una Cuenta!</a>
+                        </center>
+                        
+                          <div class="modal fade bs-example-modal-lg2" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h4 class="modal-title" id="myModalLabel">Tipo de Cuenta a crear:</h4>
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                  </button>
+                                          
+                                      </div>
+                                      <div class="modal-body">
+                                          <button type="button" href="#" class="btn btn-info btn-icon-split" id="botonEleccion1">Profesor</button>
+                                          <button type="button" href="#" class="btn btn-info btn-icon-split" id="botonEleccion2">Alumno</button>
+                                          
+                                      </div>
+                                         <div class="modal-footer">
+                                          
+                                          <a href="#">
+                                          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </a>
+                                        </div>
+                      
+                                  </div>
+                              </div>
+                        </div>
+                    <!--modal fin-->
                   </div>
                 </div>
               </div>

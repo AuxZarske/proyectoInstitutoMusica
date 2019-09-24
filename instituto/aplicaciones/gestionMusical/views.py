@@ -90,6 +90,7 @@ def crearProfesor(request):
     especialidadesTodas = Especialidad.objects.all()
     
     if request.method == 'POST':
+        
         profesor_form = ProfesorForm(request.POST)
 
         if profesor_form.is_valid():

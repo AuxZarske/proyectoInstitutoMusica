@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 
 
@@ -61,6 +61,7 @@ class Tema(models.Model):
 
 class Usuario (models.Model):
     dni = models.CharField('DNI', primary_key = True, max_length = 8, null = False, blank = False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
     apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
     fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
@@ -84,6 +85,7 @@ class Usuario (models.Model):
 class Profesor(Usuario):
     observaciones = models.TextField('Observaciones del Profesor', null = True, blank = True)
     especialidades = models.ManyToManyField(Especialidad)
+
 
 
     class Meta:

@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'instituto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'todo6',
+        'NAME': 'todo7',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',
