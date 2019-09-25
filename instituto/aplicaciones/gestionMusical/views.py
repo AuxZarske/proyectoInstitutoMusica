@@ -1,3 +1,5 @@
+from django.contrib.auth import login as dj_login, logout, authenticate
+from django.contrib import messages
 from django.shortcuts import render,redirect
 from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema
 from .forms import *
@@ -11,6 +13,82 @@ class Inicio(View):
     def get(self,request,*args,**kwargs):
         clases = Clase.objects.all()
         return render(request,'index.html',  {'clases':clases})
+
+def registrarAlumno(request):
+    especialidadesTodas = Especialidad.objects.all()
+    
+    if request.method == 'POST':
+
+        form = NewUserForm(request.POST)
+        
+        formAlu = AlumnoForm(request.POST)
+
+        print(formAlu.errors.as_data())
+        print(form.is_valid())
+        print(formAlu.is_valid())
+        
+        if form.is_valid() and formAlu.is_valid():
+            user = form.save()
+            alum = formAlu.save(commit=False)
+            alum.user = user
+            alum.save()
+            dj_login(request, user)
+
+
+
+           # permission = Permission.objects.get(name='Can view ') #permiso de home
+            #user.user_permissions.add(permission)
+            #user.save()
+
+            return redirect ('login')
+            
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+        
+    form = NewUserForm
+    alumno_form =AlumnoForm()
+    return render(request, 'registroAlumno.html', context={'form': form,'alumno_form':alumno_form,'especialidadesTodas':especialidadesTodas})
+
+
+def registrarProfesor(request):
+    especialidadesTodas = Especialidad.objects.all()
+    
+    if request.method == 'POST':
+
+        form = NewUserForm(request.POST)
+        
+        formPro = ProfesorForm(request.POST)
+
+        print(formPro.errors.as_data())
+        print(form.is_valid())
+        print(formPro.is_valid())
+        
+        if form.is_valid() and formPro.is_valid():
+            user = form.save()
+            pro = formPro.save(commit=False)
+            pro.user = user
+            pro.save()
+            dj_login(request, user)
+
+
+
+           # permission = Permission.objects.get(name='Can view ') #permiso de home
+            #user.user_permissions.add(permission)
+            #user.save()
+
+            return redirect ('login')
+            
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+        
+    form = NewUserForm
+    profesor_form =ProfesorForm()
+    return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
+
+
+
 
 
 def listarespecialidades(request):

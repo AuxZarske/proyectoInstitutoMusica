@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
 from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema
 
@@ -32,14 +33,14 @@ class UsuarioForm(forms.ModelForm):
 class ProfesorForm(forms.ModelForm):
     class Meta(UsuarioForm.Meta):
         model = Profesor
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones']
+        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','especialidades']
 
 
 
 class AlumnoForm(forms.ModelForm):
     class Meta(UsuarioForm.Meta):
         model = Alumno
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','gustoMusical']
+        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','gustoMusical','especialidadRequerida']
 
 
 

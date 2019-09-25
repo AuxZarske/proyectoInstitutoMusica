@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path,include
-from aplicaciones.gestionMusical.views import Inicio
+from aplicaciones.gestionMusical.views import Inicio, registrarAlumno, registrarProfesor
+
 
 
 urlpatterns = [
@@ -26,5 +27,7 @@ urlpatterns = [
     path('',login_required(Inicio.as_view()), name = 'index'),
     path('accounts/login/', LoginView.as_view(template_name='login.html'), name='login'), 
     path('logout/', LogoutView.as_view(), name='user_logout'),
+    path('registroAlumno/', registrarAlumno, name='registroAlumno'),
+    path('registroProfesor/', registrarProfesor, name='registroProfesor'),
 
 ]

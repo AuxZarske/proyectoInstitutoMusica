@@ -1,0 +1,286 @@
+{% load staticfiles %}
+   
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin 2 - Register</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+  <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+
+</head>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+      $(document).ready(function () {
+          $("#id_email").keyup(function () {
+              var value = $(this).val();
+              $("#id_username").val(value);
+          });
+          $("#id_apellido").keyup(function () {
+              var value = $(this).val();
+              $("#id_first_name").val(value);
+          });
+          $("#id_nombre").keyup(function () {
+              var value = $(this).val();
+              $("#id_last_name").val(value);
+          });
+          $("#id_email").keyup(function () {
+              var value = $(this).val();
+              $("#id_correoElectronico").val(value);
+          });
+      });
+</script>
+
+<script type="text/javascript">
+
+  function boton(num){
+      
+      document.getElementById("custId").value = num;
+  
+  
+  }
+  
+  </script>
+<style type="text/css">
+        
+        input#id_username{
+
+            display: None;
+
+        }
+        input#id_first_name{
+            display: None;
+        }
+        input#id_last_name{
+            display: None;
+        }
+        input#id_correoElectronico{
+            display: None;
+        }
+        input#id_nombre::placeholder{
+              text:"Nombre de Especialidad";
+             
+              
+
+        }
+        input#id_descripcion{
+              placeholder:"Descripcion";
+             
+              
+
+        }
+        button#botonVolver{
+
+float: right;
+border-radius: 43px 43px 43px 43px;
+-moz-border-radius: 43px 43px 43px 43px;
+-webkit-border-radius: 43px 43px 43px 43px;
+border: 3px solid #5d23e6;
+background-color: rgb(63, 200, 235);
+
+}
+        div#cuadrot{
+            
+            margin-top: 10%;
+            padding-right: 23%;
+            padding-left: 23%;
+        }
+        div#llkkt{
+            color: black;
+            background-color: rgb(61, 178, 207);
+            width: 600px;
+            padding: 3%;
+            border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #ccd2d9;
+        }
+        label.labeNombre{
+          vertical-align: top;
+          text-align: left;
+          width: 150px;
+          margin-top: 5px;
+        }
+        label.labeNombreAmplio{
+          vertical-align: top;
+          text-align: left;
+          width: 170px;
+          margin-top: 5px;
+        }
+        div#tyu{
+          border-radius: 43px 43px 43px 43px;
+          -moz-border-radius: 43px 43px 43px 43px;
+          -webkit-border-radius: 43px 43px 43px 43px;
+          border: 3px solid #9bf7f7;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+        }
+        div#observ{
+
+          display: block;
+        }
+
+    </style>
+<body class="bg-gradient-primary">
+<center>
+  <div class="container">
+
+    
+          <div id="cuadrot"></div>
+            <div id="llkkt">
+              <div class="text-center">
+                  
+                  <h1 class="h4 text-gray-900 mb-4">Pre-Inscripcion de profesor!</h1>
+                  
+              </div>
+              <form class="user" method="POST">
+              {% csrf_token %}
+              {% if error %}
+                    
+                    <meta http-equiv="refresh" content="0; URL= {% url 'gestionMusical:error_404'%}">
+              {% else %}
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                         
+                  </div>
+                  
+                </div>
+                
+                <div class="form-group">
+                        {{form.username}}
+                        {{form.first_name}}
+                        {{form.last_name}}
+                        <div class="labelito">
+                                <label class="labeNombre">Correo Electronico:</label>
+                                {{form.email}} 
+                        </div>
+                        <div class="labelito">
+                                <label class="labeNombre">Contraseña:</label>
+                                {{form.password1}}
+                        </div>
+
+                        <div class="labelito">
+                                <label class="labeNombre">Reescriba la Contraseña:</label>
+                                {{form.password2}}
+                        </div>
+
+<br>
+<br>
+{{profesor_form.correoElectronico}}
+                      <div class="labelito">
+                        <label class="labeNombre">DNI:</label>
+                        {{profesor_form.dni}} 
+                      </div>
+                    
+                      <div class="labelito">
+                          <label class="labeNombre" >Apellido:</label>
+                          {{profesor_form.apellido}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre" >Nombre:</label>
+                          {{profesor_form.nombre}} 
+                      </div>
+                      <div class="labelito">
+                          <label  class="labeNombre">Sexo:</label>
+                          {{profesor_form.sexo}} 
+                      </div>
+                      
+                      <div class="labelito">
+                          <label class="labeNombre">Fecha Nacimiento:</label>
+                          {{profesor_form.fechaNac}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Domicilio:</label>
+                          {{profesor_form.domicilio}} 
+                      </div>
+                      <div class="labelito">
+                          <label class="labeNombre">Telefono:</label>
+                          {{profesor_form.telefono}} 
+                      </div>
+                      <div>
+
+                              
+                            <select id='custom-headers' name="especialidades" multiple='multiple'>
+                                
+                                
+                                {% for esp in especialidadesTodas %}
+                                           <option value='{{esp.id}}'>{{esp.nombre}}</option>
+
+                                {% endfor %}
+
+                                
+                                
+                                
+                                
+                              </select>
+
+                        </div>
+                     
+                     
+                        
+                      
+                      
+                <div> 
+                
+                </div>
+                <p> </p>
+                <div>
+                  
+                  
+                    <br>
+            <button type= "sumbit" class="btn btn-primary btn-user btn-block" value="termine" >Registrar
+                    
+            </button>
+            
+            Si ya tienes una cuenta, puedes <a href="/accounts/login/">ingresar</a>
+
+        </div>
+                
+                {% endif %}
+                </form>
+                
+               
+              
+            </div>
+            
+          </div>
+
+          
+          </div>
+            
+          
+        </center>
+        
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{%static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+  <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+  <script src="{%static 'js/selectMul.js'%}"></script>
+  
+
+</body>
+
+</html>

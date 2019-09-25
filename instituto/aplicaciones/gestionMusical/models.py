@@ -61,7 +61,7 @@ class Tema(models.Model):
 
 class Usuario (models.Model):
     dni = models.CharField('DNI', primary_key = True, max_length = 8, null = False, blank = False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
     apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
     fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
@@ -69,7 +69,7 @@ class Usuario (models.Model):
     domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
     telefono = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
-    estado = models.BooleanField('Usuario activo/inactivo', default = True)
+    estado = models.BooleanField('Usuario activo/inactivo', default = False)
     
 
     class Meta:
@@ -95,7 +95,7 @@ class Profesor(Usuario):
 class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = True, blank = True)
     gustoMusical = models.CharField('Musica que prefiere ejecutar el alumno', max_length = 300, null = False, blank = False)
-    conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = False, blank = False)
+    conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = True, blank = True)
     especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING,  null = True, blank = True)
     partiturasAsociadas = models.ManyToManyField(Partitura)
     temasAsociadas = models.ManyToManyField(Tema)
