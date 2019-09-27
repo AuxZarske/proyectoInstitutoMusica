@@ -1,9 +1,10 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno
 
 urlpatterns = [
     #path('',home,name='index'),
+
 
     path('especialidades/',login_required(listarespecialidades),name='especialidades'),
     path('eliminar_especialidad/<int:id>',login_required(eliminarEspecialidad),name='eliminar_especialidad'),
@@ -14,11 +15,13 @@ urlpatterns = [
 
     path('profesores/',login_required(listarprofesores),name='profesores'),
     path('eliminar_profesor/<int:dni>',login_required(eliminarProfesor),name='eliminar_profesor'),
+    path('reivindicar_profesor/<int:dni>',login_required(reivindicarProfesor),name='reivindicar_profesor'),
     path('crear_profesor/',login_required(crearProfesor),name='crear_profesor'),
     path('editar_profesor/<int:dni>',login_required(editarProfesor),name='editar_profesor'),
 
     path('alumnos/',login_required(listaralumnos),name='alumnos'),
     path('eliminar_alumno/<int:dni>',login_required(eliminarAlumno),name='eliminar_alumno'),
+    path('reivindicar_alumno/<int:dni>',login_required(reivindicarAlumno),name='reivindicar_alumno'),
     path('crear_alumno/',login_required(crearAlumno),name='crear_alumno'),
     path('editar_alumno/<int:dni>',login_required(editarAlumno),name='editar_alumno'),
 

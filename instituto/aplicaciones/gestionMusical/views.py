@@ -22,10 +22,13 @@ def registrarAlumno(request):
         form = NewUserForm(request.POST)
         
         formAlu = AlumnoForm(request.POST)
-
-        print(formAlu.errors.as_data())
+        print("comienzo")
+        print(request.POST)
+        print("fin")
         print(form.is_valid())
+        print(form.errors.as_data())
         print(formAlu.is_valid())
+        print(formAlu.errors.as_data())
         
         if form.is_valid() and formAlu.is_valid():
             user = form.save()
@@ -60,15 +63,26 @@ def registrarProfesor(request):
         
         formPro = ProfesorForm(request.POST)
 
-        print(formPro.errors.as_data())
+        print("comienzo")
+        print(request.POST)
+        print("fin")
         print(form.is_valid())
+        print(form.errors.as_data())
         print(formPro.is_valid())
+        print(formPro.errors.as_data())
         
         if form.is_valid() and formPro.is_valid():
             user = form.save()
             pro = formPro.save(commit=False)
             pro.user = user
             pro.save()
+            cosas = request.POST.copy()
+            listaespe = cosas.pop('especialidades')
+
+            for esp in listaespe:
+                
+                pro.especialidades.add(Especialidad.objects.get(id=esp))
+            pro.save() 
             dj_login(request, user)
 
 
@@ -163,6 +177,17 @@ def eliminarProfesor(request,dni):
     profesor.save()
     return redirect('gestionMusical:profesores')
     
+
+
+
+def reivindicarProfesor(request,dni):
+
+    profesor = Profesor.objects.get(dni=dni)
+    
+    profesor.estado = True
+    profesor.save()
+    return redirect('gestionMusical:profesores')
+
 def crearProfesor(request):
     editacion = 0
     especialidadesTodas = Especialidad.objects.all()
@@ -218,23 +243,10 @@ def editarProfesor(request,dni):
             profesor_form = ProfesorForm(instance = profesor)
         else:
             profesor_form = ProfesorForm(request.POST, instance = profesor)
+            print(profesor_form.errors.as_data())
             if profesor_form.is_valid():
                 profesor_form.save()
-                
-                elProfe = Profesor.objects.get(dni = dni)
-                           
-                #eliminar relacion
-                todas = elProfe.especialidades.all()
-                for espec in todas:
-                    elProfe.especialidades.remove(espec)
-                            
-                peticion = request.POST.copy()
-                try:
-                    espp = peticion.pop('especiales')
-                    for e in espp:
-                        elProfe.especialidades.add(e)
-                except:
-                    print("An exception occurred")         
+                       
             return redirect('gestionMusical:profesores')
     except ObjectDoesNotExist as e:
         error = None
@@ -262,6 +274,15 @@ def eliminarAlumno(request,dni):
     alumno = Alumno.objects.get(dni=dni)
     
     alumno.estado = False
+    alumno.save()
+    return redirect('gestionMusical:alumnos')
+
+
+def reivindicarAlumno(request,dni):
+
+    alumno = Alumno.objects.get(dni=dni)
+    
+    alumno.estado = True
     alumno.save()
     return redirect('gestionMusical:alumnos')
     
@@ -311,6 +332,7 @@ def editarAlumno(request,dni):
             alumno_form = AlumnoForm(instance = alumno)
         else:
             alumno_form = AlumnoForm(request.POST, instance = alumno)
+            
             if alumno_form.is_valid():
                 alumno_form.save()
 
@@ -321,7 +343,8 @@ def editarAlumno(request,dni):
                 elAlumno.especialidadRequerida = None
                 elAlumno.save()
                 #obtener la espe seleccionada
-                laEspe = request.POST['especiales']
+                print(request.POST)
+                laEspe = request.POST['especialidadRequerida']
                 
                 if laEspe != '':
                     laEspecialidad = Especialidad.objects.get(id = laEspe)

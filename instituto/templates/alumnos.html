@@ -36,10 +36,16 @@
         a#fraseTableBoton{
               display: inline-block;
               float: right;
+              margin-bottom: 2%;
+              color: black;
              
               
 
         }
+        div#masPlus{
+      margin-left: 2%;
+
+    }
 
         label.col-form-label{
           display: inline-block;
@@ -263,15 +269,250 @@ margin-left: 2px;
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de alumnos que cuenta actualmente:</h6>
-              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_alumno'%}" class="btn btn-primary btn-icon-split">
+              <!--modal-->
+                  
+                    
+    
+              <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg5">
                               
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Añadir Alumno</span>
-                                    
+                  <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                  </span>
+                  <span class="text">Añadir Alumno</span>
+                  
+            
+              </a>
+          
+              <div class="modal fade bs-example-modal-lg5" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="myModalLabel">Lista de Pre-Alumnos Pendientes: </h4>
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                      </button>
                               
-                              </a>
+                          </div>
+                          <div class="modal-body">
+                              <!--lista escrolleable de alumnos, ver, desasociar, asistencia check-->
+                              <div id="" style="overflow-y:scroll; height:400px;">
+                              
+                                  
+
+                                  <!--tabla-->
+                                  <div class="card-body">
+                                      <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                          <thead>
+                                            <tr>
+                                             
+                                              <th>Nombre</th>
+                                              <th>Apellido</th>
+                                              
+                                              
+                                              
+                                             
+                                              
+                                              
+                                              <th>Acciones</th>
+                                              
+                                            </tr>
+                                          </thead>
+                                          
+                                          <tbody>
+                                            {% for alu in alumnos%}
+                                                {%if alu.estado%}
+                                                {%else%}
+                                             
+                                                <tr>
+                                                  
+                                                  <td>{{alu.nombre}}</td>
+                                                  <td>{{alu.apellido}}</td>
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  <td>
+                                                  
+                                                  <center>
+                                                      
+                                                     
+                        
+                                                      <div class="btn-group">
+                                                        <center>
+                                                            <div >
+                                                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{alu.dni}}">
+                                                            
+                                                            <i class="fa fa-eye"></i>
+                                                          
+                                                          </button>
+                                                        </div>
+                                                        </center>
+                                                          <div class="modal fade bs-example-modal-lg{{alu.dni}}" id="myModal{{alu.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                              <div class="modal-dialog modal-lg">
+                                                                  <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                          <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Datos Personales</h4>
+                                                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                                  </button>
+                                                                          
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                          <div class="form-group row">
+                                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">DNI: </label>
+                                                                              <div class="col-sm-10">
+                                                                                {{alu.dni}}
+                                                                              </div>
+                                                                            </div>
+                                                                            <div class="form-group row">
+                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido:</label>
+                                                                                <div class="col-sm-10">
+                                                                                    {{alu.apellido}}
+                                                                                </div>
+                                                                              </div>
+                                                                              <div class="form-group row">
+                                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
+                                                                                  <div class="col-sm-10">
+                                                                                      {{alu.nombre}}
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="form-group row">
+                                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
+                                                                                    <div class="col-sm-10">
+                                                                                        {{alu.sexo}}
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  <div class="form-group row">
+                                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
+                                                                                      <div class="col-sm-10">
+                                                                                          {{alu.fechaNac}}
+                                                                                      </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row">
+                                                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Domicilio:</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            {{alu.domicilio}}
+                                                                                        </div>
+                                                                                      </div>
+                                                                                      <div class="form-group row">
+                                                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Telefono:</label>
+                                                                                          <div class="col-sm-10">
+                                                                                              {{alu.telefono}}
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Correo:</label>
+                                                                                            <div class="col-sm-10">
+                                                                                                {{alu.correoElectronico}}
+                                                                                            </div>
+                                                                                          </div>
+                                                                                          <div class="form-group row">
+                                                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Observaciones:</label>
+                                                                                              <div class="col-sm-10">
+                                                                                                  {{alu.observaciones}}
+                                                                                              </div>
+                                                                                            </div>
+                                                                                            <div class="form-group row">
+                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Gusto Musical:</label>
+                                                                                                <div class="col-sm-10">
+                                                                                                    {{alu.gustoMusical}}
+                                                                                                </div>
+                                                                                              </div>
+                                                                                              <div class="form-group row">
+                                                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Conocimiento Previo:</label>
+                                                                                                  <div class="col-sm-10">
+                                                                                                      {{alu.conocimientoPrevio}}
+                                                                                                  </div>
+                                                                                                </div>
+                        
+                                                                                                <div class="form-group row">
+                                                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Especialidad Requerida:</label>
+                                                                                                    <div class="col-sm-10">
+                                                                                                      {% if alu.especialidadRequerida == None  %}
+                                                                                                           Ninguna Asignada
+                                                                                                     
+                                                                                                      {% else %}
+                                                                                                          {{alu.especialidadRequerida}}
+                                                                                                      {% endif %}
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                          
+                                                                      </div>
+                                                                      <div class="modal-footer">
+                                                                          
+                                                                          <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                                                      </div>
+                                                      
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                        
+                                                          
+                                                      <div class="btn-group" id="masPlus">
+                                                        <center>
+                                                          <button type="button" class="btn btn-warning btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{alu.dni}}">
+                                                              <div id="icon8">
+                                                            <i class="fas fa-plus"></i>
+                                                          </div>
+                                                          </button>
+                                                        </center>
+                                                        
+                                                          <div class="modal fade bs-example-modal-lg2{{alu.dni}}" id="myModal2{{alu.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                              <div class="modal-dialog modal-lg">
+                                                                  <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                          <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion de Eliminacion</h4>
+                                                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                                  </button>
+                                                                          
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                          <h4>Esta seguro de establecer como Alumno al Sr/a {{alu.apellido}} {{alu.nombre}} ???</h4>
+                                                                          
+                                                                      </div>
+                                                                      <div class="modal-footer">
+                                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                          <a href="{% url 'gestionMusical:reivindicar_alumno' alu.dni %}">
+                                                                          <button type="button" class="btn btn-primary" >Confirmar </button>
+                                                                        </a>
+                                                                        </div>
+                                                      
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                  </center>
+                                                
+                                                  </td>
+                                                
+                                                </tr>
+                                                {%endif%}
+                                            {%endfor%}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  
+
+                                  <!--fin tabla-->
+
+
+                                  
+                                  
+                                  
+                                  
+                                 
+                              
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                              
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                          </div>
+                          
+                      </div>
+                  </div>
+              
+            <!--fin modal-->
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -539,6 +780,9 @@ margin-left: 2px;
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  <script src="{%static 'vendor/datatables2/jquery.dataTables2.min.js'%}"></script>
+  <script src="{%static 'vendor/datatables2/dataTables.bootstrap42.min.js'%}"></script>
+  <script src="{%static 'js/demo/datatables-demo2.js'%}"></script>
   {%endblock archivos%}
 </body>
 

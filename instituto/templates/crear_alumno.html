@@ -1,257 +1,328 @@
 {% load staticfiles %}
-   
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>SB Admin 2 - Register</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
-
 </head>
-<script type="text/javascript">
-
-  function boton(num){
-      
-      document.getElementById("custId").value = num;
-  
-  
-  }
-  
-  </script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+      $(document).ready(function () {
+          
+          
+          $("#apellidoIn").keyup(function () {
+              var value = $(this).val();
+              $("#id_apellido").val(value);
+          });
+          $("#nombreIn").keyup(function () {
+              var value = $(this).val();
+              $("#id_nombre").val(value);
+          });
+          
+          
+          $("#inputAddress2").keyup(function () {
+              var value = $(this).val();
+              $("#id_domicilio").val(value);
+          });
+          $("#elTelefono").keyup(function () {
+              var value = $(this).val();
+              $("#id_telefono").val(value);
+          });
+          
+          
+      });
+</script>
 <style type="text/css">
+
+    div#cuadroPrincipal{
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
         
-        input#id_nombre::placeholder{
-              text:"Nombre de Especialidad";
-             
-              
-
-        }
-        input#id_descripcion{
-              placeholder:"Descripcion";
-             
-              
-
-        }
-        button#botonVolver{
-
-float: right;
-border-radius: 43px 43px 43px 43px;
--moz-border-radius: 43px 43px 43px 43px;
--webkit-border-radius: 43px 43px 43px 43px;
-border: 3px solid #5d23e6;
-background-color: rgb(63, 200, 235);
-
-}
-        div#cuadrot{
-            
-            margin-top: 10%;
-            padding-right: 23%;
-            padding-left: 23%;
-        }
-        div#llkkt{
-            color: black;
-            background-color: rgb(61, 178, 207);
-            width: 600px;
-            padding: 3%;
-            border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          border: 3px solid #ccd2d9;
-        }
-        label.labeNombre{
-          vertical-align: top;
-          text-align: left;
-          width: 150px;
-          margin-top: 5px;
-        }
-        label.labeNombreAmplio{
-          vertical-align: top;
-          text-align: left;
-          width: 170px;
-          margin-top: 5px;
-        }
-        div#tyu{
-          border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          border: 3px solid #9bf7f7;
-          margin-top: 10px;
-          margin-bottom: 10px;
-          padding-bottom: 10px;
-        }
-        div#observ{
-
-          display: block;
-        }
-
-    </style>
-<body class="bg-gradient-primary">
-<center>
-  <div class="container">
-
+        padding: 2%;
+        border-radius: 0px 0px 18px 18px;
+    -moz-border-radius: 0px 0px 18px 18px;
+    -webkit-border-radius: 0px 0px 18px 18px;
+    border: 2px solid #e3e6e3;
+    background-color: rgb(255, 255, 255);
+    }
+    div#cuadroCabeza{
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+        margin-top: 4%;
+        padding: 1%;
+        border-radius: 18px 18px 0px 0px;
+    -moz-border-radius: 18px 18px 0px 0px;
+    -webkit-border-radius: 18px 18px 0px 0px;
+    border: 2px solid #e3e6e3;
+    background-color: rgb(255, 255, 255);
+    font-size: 22px;
+        color: rgb(255, 255, 255);
+        border-bottom: 0px;
     
-          <div id="cuadrot"></div>
-            <div id="llkkt">
-              <div class="text-center">
-                  {%if editacion != 1%}
-                  <h1 class="h4 text-gray-900 mb-4">Crear Alumno!</h1>
-                  {%else%}
-                <h1 class="h4 text-gray-900 mb-4">Editar Alumno!</h1>
-                {%endif%}
-              </div>
-              <form class="user" method="POST">
-              {% csrf_token %}
-              {% if error %}
-                    
-                    <meta http-equiv="refresh" content="0; URL= {% url 'gestionMusical:error_404'%}">
-              {% else %}
-                <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                         
-                  </div>
-                  
-                </div>
+        background-color: #4e73df;
+    }
+    
+    body#total{
+        background-color: rgba(238, 236, 236, 0.747);
+    }
+    div#titulon{
+        font-size: 22px;
+        color: black;
+    }
+    label.sub{
+        color: black;
+    }
+    button#salirBoton{
+        float: right;
+
+    }
+    div#cabeza{
+        background-color: #4e73df;
+    }
+    input#id_username{
+    
+    display: None;
+    
+    }
+    input#id_first_name{
+    display: None;
+    }
+    input#id_last_name{
+    display: None;
+    }
+    input#id_email{
+    display: None;
+    }
+    input#id_password1{
+    display: None;
+    }
+    input#id_password2{
+    display: None;
+    }
+    input#id_correoElectronico{
+    display: None;
+    }
+    input#id_dni{
+    display: None;
+    }
+    input#id_apellido{
+    display: None;
+    }
+    input#id_nombre{
+    display: None;
+    }
+    input#id_dni{
+    display: None;
+    }
+    input#id_correoElectronico{
+    display: None;
+    }
+    
+    
+    input#id_domicilio{
+    display: None;
+    }
+    input#id_telefono{
+    display: None;
+    }
+    body#total{
+    background-color: rgba(224, 224, 224, 0.747);
+}
+    
+    
+    </style>
+
+<body id="total">
+    
+        <div id="cuadroCabeza">
+                <strong>Editar alumno: DNI-{{alumno_form.dni.value}}</strong>
+                        
                 
-                <div class="form-group">
-                    {%if editacion != 1%}
-                      <div class="labelito">
-                        <label class="labeNombre">DNI:</label>
-                        {{alumno_form.dni}} 
-                      </div>
-                      
-                      {%endif%}
-                      <div class="labelito">
-                          <label class="labeNombre" >Apellido:</label>
-                          {{alumno_form.apellido}} 
-                      </div>
-                      <div class="labelito">
-                          <label class="labeNombre" >Nombre:</label>
-                          {{alumno_form.nombre}} 
-                      </div>
-                      <div class="labelito">
-                          <label  class="labeNombre">Sexo:</label>
-                          {{alumno_form.sexo}} 
-                      </div>
-                      <div class="labelito">
-                          <label class="labeNombre">Correo Electronico:</label>
-                          {{alumno_form.correoElectronico}} 
-                      </div>
-                      <div class="labelito">
-                          <label class="labeNombre">Fecha Nacimiento:</label>
-                          {{alumno_form.fechaNac}} 
-                      </div>
-                      <div class="labelito">
-                          <label class="labeNombre">Domicilio:</label>
-                          {{alumno_form.domicilio}} 
-                      </div>
-                      <div class="labelito">
-                          <label class="labeNombre">Telefono:</label>
-                          {{alumno_form.telefono}} 
-                      </div>
-                      
-                      <div class="labelito">
-                        <div id="observ"><label  >Observaciones:</label></div>
-                          
-                          {{alumno_form.observaciones}} 
-                      </div>
-                      <div class="labelito">
-                          <div id="observ"><label  >Conocimiento Previo:</label></div>
-                            
-                            {{alumno_form.conocimientoPrevio}} 
-                        </div>
-                        <div class="labelito">
-                            <div id="observ"><label  >Gusto Musical:</label></div>
-                              
-                              {{alumno_form.gustoMusical}} 
-                          </div>
-                      <div class="labelito" id="tyu">
-                          <label class="labeNombreAmplio">Especialidad Deseada:</label>
-                          <div>
-
-                              
-                              <select name="especiales" >
-                                  
-                                  <option value=''>-------</option>
-                                  {% for esp in especialidadesTodas %}
-                                             <option value='{{esp.id}}'>{{esp.nombre}}</option>
-
-                                  {% endfor %}
-                                  {% for espt in espeAlu %}
-                                             <option value='{{espt.id}}'selected>{{espt.nombre}}</option>
-
-                                  {% endfor %}
-                                  
-                                  
-                                  
-                                  
-                                </select>
-
-                          </div>
-                      </div>
-                      
-                <div> 
-                
-                </div>
-                <p> </p>
-                <div>
-                  
-                  {%if editacion != 1%}
-                    <button type= "submit"   class="btn btn-primary btn-user btn-block" value="otro" onclick="boton(1)">Registrar y Cargar Otra
-                            
-                    </button>
-                  {%endif%}
-                    <br>
-            <button type= "sumbit" class="btn btn-primary btn-user btn-block" value="termine" onclick="boton(2)">Registrar y Terminar
-                    
-            </button>
-            <input type="hidden" id="custId" name="custId" value="no cambio">
 
         </div>
+    <div id="cuadroPrincipal">
+
+            
+
+
+            <form class="user" method="POST">
+                    {% csrf_token %}
+
+                        
+
+                        
+
+                        
+
+                    {{alumno_form.dni}}
+                    {{alumno_form.correoElectronico}}
+                        {{alumno_form.apellido}} 
+                        {{alumno_form.nombre}} 
+                        
+                        
+                        {{alumno_form.domicilio}} 
+                        {{alumno_form.telefono}} 
+                        
+                        
+
+
                 
-                {% endif %}
-                </form>
                 
-               
+
+
+                
+
+                
+
+                <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4" class="sub">Apellido</label>
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value={{alumno_form.apellido.value}}>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4" class="sub">Nombre</label>
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value={{alumno_form.nombre.value}}>
+                        </div>
+                </div>
+
+                <div class="form-row">
+                        
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4" class="sub">Sexo Biologico:</label>
+                          <select name="sexo" id="id_sexo" class="form-control">
+                              {% if alumno_form.sexo.value == "Mujer" %}
+
+                              <option >Hombre</option>
+                              <option selected>Mujer</option>
+                              {%else%}
+
+                                <option selected>Hombre</option>
+                                <option>Mujer</option>
+                                {%endif%}
+
+                                
+
+                              </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                                <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
+                                
+                                <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" >
+                                
+                              </div>
+                </div>
+
+
+
+                
+
+                <div class="form-group">
+                  <label for="inputAddress2" class="sub">Direccion</label>
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value={{alumno_form.domicilio.value}}>
+                </div>
+
+                <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4" class="sub">Telefono:</label>
+                            <input type="text" class="form-control" id="elTelefono" value={{alumno_form.telefono.value}} placeholder="Numero telefono">
+                        </div>
+                        
+                </div>
+                <div class="form-group">
+                        <label for="inputAddress2" class="sub">Observaciones:</label>
+                        
+                        <textarea class="form-control" id="id_observaciones" name="observaciones" placeholder="Anotaciones sobre el alumno..." >{{alumno_form.observaciones.value}}</textarea>
+                                
+                 </div>
+                 <div class="form-group">
+                    <label for="inputAddress2" class="sub">Conocimiento Previo:</label>
+                    
+                    <textarea class="form-control" id="id_conocimientoPrevio" name="conocimientoPrevio" placeholder="Conocimientos que pose el alumno previamente..." >{{alumno_form.conocimientoPrevio.value}}</textarea>
+                            
+                  </div>
+                  <div class="form-group">
+                      <label for="inputPassword4" class="sub">Musica Preferida:</label>
+                                <select id="id_gustoMusical" name="gustoMusical" class="form-control">
+                                      <option selected>Rock</option>
+                                      <option>Cumbia</option>
+                                    </select>
+                      
+                      
+                              
+                  </div>
+
+                <div class="form-group">
+                    <label for="inputPassword4" class="sub">Clase a Cursar:</label>
+                    <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control">
+
+                          {% for esp in especialidadesTodas %}
+                                       <option value='{{esp.id}}'>{{esp.nombre}}</option>
+
+                            {% endfor %}
+                            {% for ep in espeAlu%}
+                                              
+                                                
+                                        
+                                              <option value='{{ep.id}}' selected>{{ep.nombre}}</option>
+                                        
+                                  {% endfor %}
+                        </select>
+                        
+                </div>
+
+                
+
+                
+                
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a href="{% url 'gestionMusical:alumnos'%}">
+                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+            </a>
+              </form>
               
             </div>
-            <a href="{% url 'gestionMusical:alumnos'%}">
-                <button id="botonVolver">Volver</button></a>
-          </div>
 
-          
-          </div>
+
+
+    
+              {%block archivos%}
+              <!-- Bootstrap core JavaScript-->
+              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+              <!-- Core plugin JavaScript-->
+              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
             
-          
-        </center>
-        
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
-  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{%static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
-  <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+              <!-- Custom scripts for all pages-->
+              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+            
+              <!-- Page level plugins -->
+              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+            
+              <!-- Page level custom scripts -->
+              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
   <script src="{%static 'js/selectMul.js'%}"></script>
+              {%endblock archivos%} 
 
 </body>
+
+<script type="text/javascript">
+   
+    document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
+   
+
+        
+</script>
 
 </html>

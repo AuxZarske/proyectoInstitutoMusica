@@ -64,6 +64,7 @@ class Usuario (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
     apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
+    
     fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
     sexo = models.CharField('Sexo de la persona', max_length = 50, null = False, blank = False)
     domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
@@ -84,7 +85,7 @@ class Usuario (models.Model):
 
 class Profesor(Usuario):
     observaciones = models.TextField('Observaciones del Profesor', null = True, blank = True)
-    especialidades = models.ManyToManyField(Especialidad)
+    especialidades = models.ManyToManyField(Especialidad, blank = True)
 
 
 

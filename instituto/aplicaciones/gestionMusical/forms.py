@@ -38,6 +38,7 @@ class ProfesorForm(forms.ModelForm):
 
 
 class AlumnoForm(forms.ModelForm):
+    
     class Meta(UsuarioForm.Meta):
         model = Alumno
         fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','gustoMusical','especialidadRequerida']
