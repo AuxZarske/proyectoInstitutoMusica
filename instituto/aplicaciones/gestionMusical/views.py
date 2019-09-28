@@ -382,6 +382,9 @@ def crearClase(request):
     profesTodos = Profesor.objects.filter(estado = True)
     if request.method == 'POST':
         clase_form = ClaseForm(request.POST)
+        print(request.POST) 
+        print(clase_form.is_valid())
+        print(clase_form.errors.as_data())
         if clase_form.is_valid():
 
             clase_form.save()
@@ -456,6 +459,9 @@ def crearPartitura(request):
     especialidadesTodas = list(Especialidad.objects.all())
     if request.method == 'POST':
         partitura_form = PartituraForm(request.POST)
+        print(request.POST) 
+        print(partitura_form.is_valid())
+        print(partitura_form.errors.as_data())
         
 
         if partitura_form.is_valid():
@@ -467,7 +473,11 @@ def crearPartitura(request):
 
 
 
-            return redirect('gestionMusical:partituras')
+            
+            if(request.POST['custId'] == '1'):
+                return redirect('gestionMusical:crear_partitura')
+            else:
+                return redirect('gestionMusical:partituras')
     else:
         partitura_form =PartituraForm()
     return render(request,'crear_partitura.html',{'partitura_form':partitura_form, 'especialidadesTodas':especialidadesTodas,'editacion':editacion})
@@ -528,8 +538,14 @@ def crearTema(request):
     editacion = 0
     if request.method == 'POST':
         tema_form = TemaForm(request.POST)
+        print(request.POST) 
+        print(tema_form.is_valid())
+        print(tema_form.errors.as_data())
         if tema_form.is_valid():
             tema_form.save()
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_tema')
+        else:
             return redirect('gestionMusical:temas')
     else:
         tema_form =TemaForm()
