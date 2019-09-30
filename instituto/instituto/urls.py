@@ -18,6 +18,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path,include
 from aplicaciones.gestionMusical.views import Inicio, registrarAlumno, registrarProfesor
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
@@ -31,3 +33,6 @@ urlpatterns = [
     path('registroProfesor/', registrarProfesor, name='registroProfesor'),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

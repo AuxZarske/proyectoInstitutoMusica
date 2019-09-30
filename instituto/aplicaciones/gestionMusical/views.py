@@ -6,6 +6,18 @@ from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 
+from django.http import HttpResponse
+import time
+from datetime import datetime
+
+from io import BytesIO
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Image
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, A4, mm
+from reportlab.platypus import Table
+from reportlab.lib.enums import TA_CENTER
 
 
 
@@ -13,6 +25,117 @@ class Inicio(View):
     def get(self,request,*args,**kwargs):
         clases = Clase.objects.all()
         return render(request,'index.html',  {'clases':clases})
+
+
+def crearReporteEspecialidades(request):
+    print(request.POST)
+    d = dict(request.POST)
+    caso = 0
+    fechaAnterior = request.POST['fecha1']
+    fechaPosterior = request.POST['fecha2']
+    fechaEntre1 = request.POST['fecha3']
+    fechaEntre2 = request.POST['fecha4']
+    if 'filtrdo' in d:
+        
+        if '11' in list(d['radio']):
+            caso = 1
+        if '22' in list(d['radio']):
+            caso = 2
+        if '33' in list(d['radio']):
+            caso = 3
+    print("fin")
+    print(caso)
+    print(fechaAnterior)
+    print(fechaPosterior)
+    print(fechaEntre1)
+    print(fechaEntre2) 
+    print(d)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment: filename=Listado_especialidades.pdf'
+    
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+    
+    #header
+    c.setLineWidth(.3)
+    c.setFont('Helvetica', 22)
+    c.drawString(30,750,'Todo por Arte')
+    c.setFont('Helvetica', 12)
+
+    
+    if caso == 0 :
+        cadena = "Listado de Todas las especialidades" 
+        c.drawString(30,735,cadena) 
+    if caso == 1 :
+        cadena = "Listado de especialidades anterio a: "+fechaAnterior
+        c.drawString(30,735,cadena) 
+    if caso == 2 :
+        cadena = "Listado de especialidades posterior a: "+fechaPosterior
+        c.drawString(30,735,cadena) 
+    if caso == 3 :
+        cadena = "Listado de especialidades creadas entre: "+fechaEntre1 + " y " + fechaEntre2
+        c.drawString(30,735,cadena) 
+    
+    fecha = str(time.strftime("%d/%m/%y"))
+    c.setFont('Helvetica-Bold',12)
+    c.drawString(480,750,fecha)
+    c.line(460,747,560,747)
+    
+    """estudiantes = [(alumno.nombre,alumno.fecha_nac, alumno.rutina_id, alumno.nivel_id) for alumno in alumnos]"""
+
+    
+    if caso == 0 :
+        especialidades= list(Especialidad.objects.all()) 
+    if caso == 1 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__lt =fechaAnterior  )) 
+    if caso == 2 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__gt =fechaPosterior  ))  
+    if caso == 3 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__range = (fechaEntre1,fechaEntre2)  ))   
+    
+    #Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    styleBH.alignment = TA_CENTER
+    styleBH.fontSize = 10
+    
+    nombre = Paragraph('''Nombre''',styleBH) 
+    
+    fechaCreacion = Paragraph('''Fecha Inicio''',styleBH)
+    
+    
+    data = [[nombre,fechaCreacion]]
+     
+    styles = getSampleStyleSheet()
+    styleN = styles["BodyText"]
+    styleN.alignment = TA_CENTER
+    styleN.fontSize = 7
+     
+    width, height = A4
+    high = 700
+    for espe in especialidades:
+        this_student = [ espe.nombre, espe.fechaCreacion ]
+        data.append(this_student)
+        high = high - 20
+     
+     #table size
+    width, height = A4
+    table = Table(data, colWidths=[60 * mm, 40 * mm])
+    table.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,0), (-1,-1), 0.10, colors.black)]))
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.drawString(30,600,'fin')
+    c.showPage()
+     
+    c.save()
+     
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    
+    return HttpResponse(response, content_type='application/pdf')
 
 def registrarAlumno(request):
     especialidadesTodas = Especialidad.objects.all()
@@ -106,6 +229,8 @@ def registrarProfesor(request):
 
 
 def listarespecialidades(request):
+    if request.method == 'POST':
+        return crearReporteEspecialidades(request)
     clases = Clase.objects.all()
     especialidades = Especialidad.objects.all()
     return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
@@ -462,10 +587,13 @@ def crearPartitura(request):
         print(request.POST) 
         print(partitura_form.is_valid())
         print(partitura_form.errors.as_data())
-        
+        print(request.FILES)
 
         if partitura_form.is_valid():
-            partitura_form.save()
+
+            par = partitura_form.save(commit=False)
+            par.archivo = request.FILES.get('archivo')
+            par.save()
             #obtener especialidades
             #ir recorriendo especialidades
             #una espe. partitura. add
@@ -664,8 +792,5 @@ def desasociarAlumnoTema(request,dni,idT, idC):
     elAlumno = Alumno.objects.get(dni = dni)
     elAlumno.temasAsociadas.remove(Tema.objects.get(id = idT))
     elAlumno.save()
-
-  
-        
-
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
+

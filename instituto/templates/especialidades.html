@@ -26,13 +26,36 @@
 
 </head>
 {%endblock head%}
-
-
+{%block scrip%}
 <script type="text/javascript">
-
+  function mostrar_ocultar(){
+    
+      
+      if(document.getElementById("zonaFiltro").style.display == "none" || document.getElementById("zonaFiltro").style.display == "" ){
+          document.getElementById("zonaFiltro").style.display='block';
+      }
+      else{
+              document.getElementById("zonaFiltro").style.display='none';
+          }
   
+  }
+  function lola(){
+      //alert(document.getElementById("defaultCheckFiltro").checked);
+      if(document.getElementById("defaultCheckFiltro").checked ){
+          document.getElementById("textFiltro").style.display='inline-block';
+          
+      }
+      else{
+              document.getElementById("textFiltro").style.display='none';
+              
+          }
 
-</script>
+  }
+  
+  </script>
+{%endblock scrip%}
+
+
 
 {%block estilos%}
     <style type="text/css">
@@ -48,12 +71,69 @@
               
 
         }
+        div#zonaFiltro{
+          height: 10%;
+          background-color: rgb(255, 255, 255);
+        }
         div.delete{
 
           margin-top: 10px;
         }
         body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+button#botonFiltro{
+  display: inline-block;
+  border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 2px solid #dad7d7;
+background-color: rgb(165, 235, 212);
+}
+div#contenedor{
+
+  border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 2px solid #bdbaba;
+background-color: rgba(255, 251, 235, 0.877);
+height: auto;
+}
+div#textFiltro{
+  display: inline-block;
+  
+  width: 70%;
+  height: auto;
+  display: none;
+}
+div#opcionFiltro{
+  display: inline-block;
+  
+  width: 29%;
+  height: auto;
+}
+input#fecha1{
+  display: inline-block;
+  width: auto;
+}
+input#fecha2{
+  display: inline-block;
+  width: auto;
+}
+input#fecha3{
+  display: inline-block;
+  width: auto;
+}
+input#fecha4{
+  display: inline-block;
+  width: auto;
+}
+div#elCheck{
+  margin-bottom: 10%;
+  text-align: center;
+}
+div#zonaFiltro{
+  display: none;
 }
 
 
@@ -88,6 +168,13 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta actualmente:</h6>
+              
+              
+                <button id="botonFiltro" onclick="mostrar_ocultar()"> 
+                    <i class="fas fa-filter"></i>
+                </button>
+              
+
               <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_especialidad'%}" class="btn btn-primary btn-icon-split">
                               
                                     <span class="icon text-white-50">
@@ -98,6 +185,52 @@
                               
                               </a>
             </div>
+            <form class="user"  method="POST">
+                {% csrf_token %}
+          <div id="zonaFiltro">
+            <div id="contenedor">
+              <div id="textFiltro">
+                <p>Fecha de Creacion</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio" id="exampleRadios1" value="11" checked>
+                    <label class="form-check-label" for="exampleRadios1" style="display: inline-block">
+                      Anterior a:
+                    </label>
+                      
+                    <input type="date" id="fecha1"  class="form-control" name="fecha1" value="2019-07-22" >
+    
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio" id="exampleRadios2" value="22">
+                    <label class="form-check-label" for="exampleRadios2">
+                      Posterior a:
+                    </label>
+                    <input type="date" id="fecha2"  class="form-control" name="fecha2" value="2019-07-22" >
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" name="radio" id="exampleRadios3" value="33">
+                      <label class="form-check-label" for="exampleRadios3">
+                        Entre:
+                      </label>
+                      <input type="date" id="fecha3"  class="form-control" name="fecha3" value="2019-07-22" >
+                      y
+                      <input type="date" id="fecha4"  class="form-control" name="fecha4" value="2019-07-22" >
+                  </div>
+              </div>
+              <div id="opcionFiltro">
+                  <div class="form-check" id="elCheck">
+                      <input class="form-check-input" name="filtrdo" type="checkbox" value="filtro" id="defaultCheckFiltro" onclick="lola()">
+                      <label class="form-check-label" for="defaultCheck1">
+                        Con Filtro
+                      </label>
+                    </div>
+                <a href="#" >
+                    <button type="submit" class="btn btn-dark">Generar Reporte</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
