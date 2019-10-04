@@ -1,11 +1,15 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 
+from django.contrib import messages 
+
+from django.core import serializers
+import json
 from django.http import HttpResponse
 import time
 from datetime import datetime
@@ -18,6 +22,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
+
+import base64
 
 
 
@@ -160,6 +166,8 @@ def registrarAlumno(request):
             alum.save()
             dj_login(request, user)
 
+        
+
 
 
            # permission = Permission.objects.get(name='Can view ') #permiso de home
@@ -171,6 +179,9 @@ def registrarAlumno(request):
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
+            error = form.errors
+            print(error)
+            return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
         
     form = NewUserForm
     alumno_form =AlumnoForm()
@@ -287,7 +298,7 @@ def error(request):
 def listarprofesores(request):
     clases = Clase.objects.all()
     profesores = Profesor.objects.all()
-    
+   
     return render(request,'profesores.html',{'profesores':profesores,'clases':clases})
 
 
@@ -555,11 +566,13 @@ def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
     listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
+    print(listAlumnosTotal)
     copia = listAlumnosTotal.copy()
     for a in copia:
         
         if listAlumnos.count(a) > 0:
             listAlumnosTotal.remove(a)
+    print(listAlumnosTotal)
     return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
 
 def listarmensajes(request):
@@ -567,6 +580,7 @@ def listarmensajes(request):
     return render(request,'mensajes.html',{'clases':clases})
     
 def listarpartituras(request):
+    
     clases = Clase.objects.all()
     partituras =  Partitura.objects.all()
     return render(request,'partituras.html',{'clases':clases,'partituras':partituras})
@@ -574,47 +588,74 @@ def listarpartituras(request):
 
 def eliminarPartitura(request,id):
     partitura = Partitura.objects.get(id=id)
-    
-    
-    partitura.delete()
+    if Alumno.objects.filter(partiturasAsociadas = partitura):
+        messages.error(request, " Error - No se pudo eliminar, Partitura Asocia un alumno")
+    else:
+        partitura.delete()
+        messages.success(request, "Correcta Eliminacion!")
     return redirect('gestionMusical:partituras')
     
 def crearPartitura(request):
     editacion = 0
     especialidadesTodas = list(Especialidad.objects.all())
+    compositores = Compositor.objects.all()
     if request.method == 'POST':
-        partitura_form = PartituraForm(request.POST)
-        print(request.POST) 
-        print(partitura_form.is_valid())
-        print(partitura_form.errors.as_data())
-        print(request.FILES)
+        try:
 
-        if partitura_form.is_valid():
+            partitura_form = PartituraForm(request.POST)
+            
+            
 
-            par = partitura_form.save(commit=False)
-            par.archivo = request.FILES.get('archivo')
-            par.save()
-            #obtener especialidades
-            #ir recorriendo especialidades
-            #una espe. partitura. add
+            if partitura_form.is_valid():
+
+                par = partitura_form.save(commit=False)
+            
+                #agregar especialidades del request 
+                print(request.POST)
+                
+                par.archivo =request.FILES['archivo'].file.read()
+                
+                #par.archivo = request.FILES.get('archivo')
+
+                par.save()
+                cosas = request.POST.copy()
+                listaesp = cosas.pop('especialidadesAcordes')
+                for esp in listaesp:
+                    print(esp)
+                    par.especialidadesAcordes.add(Especialidad.objects.get(id = esp))
+
+                par.save()
+                #obtener especialidades
+                #ir recorriendo especialidades
+                #una espe. partitura. add
+                messages.success(request, "Cargado Correcto!")
+            else:
+                messages.error(request, " Error")
+        except:
+            messages.error(request, " Error")
 
 
 
 
             
-            if(request.POST['custId'] == '1'):
-                return redirect('gestionMusical:crear_partitura')
-            else:
-                return redirect('gestionMusical:partituras')
+        if(request.POST['custId'] == '1'):
+
+            return redirect('gestionMusical:crear_partitura')
+        else:
+            return redirect('gestionMusical:partituras')
+        
     else:
         partitura_form =PartituraForm()
-    return render(request,'crear_partitura.html',{'partitura_form':partitura_form, 'especialidadesTodas':especialidadesTodas,'editacion':editacion})
+        compositor_form = CompositorForm()
+    return render(request,'crear_partitura.html',{'partitura_form':partitura_form,'compositor_form':compositor_form,'compositores':compositores, 'especialidadesTodas':especialidadesTodas,'editacion':editacion})
 
 def editarPartitura(request,id):
     editacion = 1
     partitura_form = None
     error = None
     especialidadesTodas = list(Especialidad.objects.all())
+    compositores = Compositor.objects.all()
+    donCompo = None
     espeParti = []
     try:
         partitura = Partitura.objects.get(id =id)
@@ -629,16 +670,30 @@ def editarPartitura(request,id):
 
         if request.method == 'GET':
             partitura_form = PartituraForm(instance = partitura)
+            elDoc = partitura.archivo
+            print(elDoc)
+            donCompo = partitura.compositor
         else:
+            
             partitura_form = PartituraForm(request.POST, instance = partitura)
             if partitura_form.is_valid():
-                partitura_form.save()
+                par=partitura_form.save()
+                try:
+                    par.archivo =request.FILES['archivo'].file.read()
+                    messages.success(request, "Cargado Correcto!")
+                except:
+                    messages.success(request, "Cargado Correcto!")
+                par.save()
+               
+            else:
+                messages.error(request, " Error - No se pudo cargar")
+                
             return redirect('gestionMusical:partituras')
     except ObjectDoesNotExist as e:
         error = e
 
     
-    return render(request,'crear_partitura.html',{'partitura_form':partitura_form,'error':error,'editacion':editacion,'especialidadesTodas':especialidadesTodas,'espeParti':espeParti})
+    return render(request,'crear_partitura.html',{'partitura_form':partitura_form,'elDoc':elDoc,'donCompo':donCompo,'compositores':compositores,'error':error,'editacion':editacion,'especialidadesTodas':especialidadesTodas,'espeParti':espeParti})
 
 
 
@@ -670,7 +725,10 @@ def crearTema(request):
         print(tema_form.is_valid())
         print(tema_form.errors.as_data())
         if tema_form.is_valid():
-            tema_form.save()
+            tem = tema_form.save(commit=False)
+            tem.archivo = request.FILES.get('archivo')
+            tem.save()
+            
         if(request.POST['custId'] == '1'):
             return redirect('gestionMusical:crear_tema')
         else:
@@ -794,3 +852,26 @@ def desasociarAlumnoTema(request,dni,idT, idC):
     elAlumno.save()
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
 
+def CrearCompo(request):
+    nombre = request.GET['name']
+    print(nombre)
+    listaC = []
+
+    try:
+        if nombre != "":
+            compositor = Compositor.objects.create(nombreIdentificador = nombre)
+            listaC = Compositor.objects.filter(id=compositor.id)
+            messages.success(request, "Cargado Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+    except:
+        #retornar error
+        pass
+        messages.error(request, " Error - No se pudo cargar")
+    
+    
+    data = serializers.serialize('json',listaC,fields=('id','nombreIdentificador'))
+    
+    print(data)
+    return HttpResponse(data, content_type='application/json')
+    

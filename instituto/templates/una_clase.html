@@ -718,7 +718,12 @@ margin-left: 2px;
                                                       <td>{{tema.nombre}}</td>
                                                       
                                                       
-                                                      <td>{{tema.archivoURL}}</td>
+                                                      <td>{%if tema.archivo%}
+                                                                          
+                                                        <a href="{{tema.archivo.url}}" target="_blank">{{tema.nombre}}.doc</a>
+                                                        {%else%}
+                                                        <p>ninguno</p>
+                                                          {%endif%}</td>
                                                       
                                                       
                                                       
@@ -781,7 +786,10 @@ margin-left: 2px;
                                                                                         <div class="form-group row">
                                                                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Archivo:</label>
                                                                                             <div class="col-sm-10">
-                                                                                                {{tema.archivoURL}}
+                                                                                              {%if tema.archivo%}
+                                                                            
+                                                                                              <a href="{{tema.archivo.url}}">imagen</a>
+                                                                                                {%endif%}
                                                                                             </div>
                                                                                           </div>
                                                                                           
@@ -944,7 +952,12 @@ margin-left: 2px;
                                                       <td>{{par.nombre}}</td>
                                                       
                                                       
-                                                      <td>{{par.archivoURL}}</td>
+                                                      <td>{%if par.archivo%}
+                                                                          
+                                                        <a href="{{par.archivo.url}}" target="_blank">{{par.nombre}}.doc</a>
+                                                        {%else%}
+                                                        <p>ninguno</p>
+                                                          {%endif%}</td>
                                                       
                                                       
                                                       
@@ -1008,7 +1021,10 @@ margin-left: 2px;
                                                                                         <div class="form-group row">
                                                                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Archivo:</label>
                                                                                             <div class="col-sm-10">
-                                                                                                {{par.archivoURL}}
+                                                                                              {%if par.archivo%}
+                                                                          
+                                                                                              <a href="{{par.archivo.url}}">imagen</a>
+                                                                                                {%endif%}
                                                                                             </div>
                                                                                           </div>
                                                                                           

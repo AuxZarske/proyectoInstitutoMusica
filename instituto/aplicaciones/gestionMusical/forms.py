@@ -1,23 +1,30 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
-from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor 
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad
         fields = ['nombre','descripcion']
 
+class CompositorForm(forms.ModelForm):
+    class Meta:
+        model = Compositor
+        fields = ['nombreIdentificador']
+
+
+
 class PartituraForm(forms.ModelForm):
     class Meta:
         model = Partitura
-        fields = ['nombre','compositor','nivel','archivo','descripcion','especialidadesAcordes']
+        fields = ['nombre','compositor','nivel','descripcion','especialidadesAcordes']
 
 
 class TemaForm(forms.ModelForm):
     class Meta:
         model = Tema
-        fields = ['nombre','descripcion','nivel','tipo','archivoURL']
+        fields = ['nombre','descripcion','nivel','tipo']
 
 class ClaseForm(forms.ModelForm):
     class Meta:

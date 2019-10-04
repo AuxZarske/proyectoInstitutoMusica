@@ -202,7 +202,12 @@ display: None;
 
 
                 
-                
+                <div>
+                    {%if error != None%}
+                        {{error}}
+                    {%endif%}
+
+                </div>
 
 
                 <div class="form-group">

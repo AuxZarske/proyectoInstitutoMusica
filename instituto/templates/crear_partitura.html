@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load poll_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,16 +13,34 @@
   <!-- Custom styles for this template-->
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+  	
+<link rel="stylesheet" href="{%static 'css/select2.min.css'%}" />
 </head>
 <script type="text/javascript">
 
+    
+    
+    
     function boton(num){
         
         document.getElementById("custId").value = num;
+        if(num == 1){
+            updateDiv();
+        }
+        
+
     
     
+    };
+    function updateDiv()
+    { 
+        $( "#cuadroMensajes" ).load(window.location.href + " #cuadroMensajes" );
+        
+    };
+    function limpiar(){
+
+        document.getElementById("id_nombreIdentificador").value = "";
     }
-    
     </script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -41,6 +60,61 @@
           
           
       });
+      $(document).ready(function(){
+            $('#modalOculto').on('click','#cargar-compositor',function(){
+                    var name = $('#id_nombreIdentificador').val();
+                    
+                    $.get('{% url "gestionMusical:crear_compositor"%}',{name:name},function(data){
+                        console.log(name)
+                        var html = "";
+                        
+                        if (data != ""){
+                            
+                            html += "<option value='"+data[0].pk +"'>"  +data[0].fields.nombreIdentificador+ "</option>";
+                            
+                            $('#country').append(html);
+                            
+                        }
+                        
+                        $(function () {
+                            updateDiv();
+                            limpiar();
+                        });
+                        
+                        
+                        
+                    });
+            });
+
+
+            $("#cargar-compositor").on("click", function() {
+                     
+                window.scrollTo(0, 0);
+            });
+
+            $('input[type="file"]').on('change', function(){
+                var ext = $( this ).val().split('.').pop();
+                if ($( this ).val() != '') {
+                    if(ext == "pdf"){
+                    
+                    if($(this)[0].files[0].size > 1048576){
+                        console.log("El documento excede el tamaño máximo");
+                        $('#modal-title').text('¡Precaución!');
+                        $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
+                        $("#modal-gral").modal();           
+                        $(this).val('');
+                    }else{
+                        $("#modal-gral").hide();
+                    }
+                    }
+                    else
+                    {
+                    $( this ).val('');
+                    alert("Extensión no permitida: " + ext);
+                    }
+                }
+                });
+    });
 </script>
 <style type="text/css">
 
@@ -56,6 +130,10 @@
     border: 2px solid #e3e6e3;
     background-color: rgb(255, 255, 255);
     }
+    .select2-dropdown {
+ top: 22px !important;
+ left: 8px !important;
+}
     div#cuadroCabeza{
         border: 1px solid;
         max-width: 60%;
@@ -77,6 +155,42 @@
     body#total{
         background-color: rgba(238, 236, 236, 0.747);
     }
+    select#country{
+        display: inline-block;
+        width: 70%;
+        
+        
+    }
+    input#txtDoc{
+        padding: 0;
+        padding-top: 1.3%;
+        padding-left: 1.3%;
+    }
+    button#botonAgregar{
+        display: inline-block;
+        margin-left: 2%;
+        width: 200px;
+        font-size: 18px;
+        padding: 0;
+
+        
+        
+    }
+    input#txtDoc{
+        
+        width: 159px;
+    }
+    input#txtDocNuevo{
+        width: 400px;
+        padding: 0;
+        padding-top: 1.3%;
+        padding-left: 1.3%;
+        display: inline-block;
+    }
+    label#label2{
+        display: inline-block;
+    }
+    
     div#titulon{
         font-size: 22px;
         color: black;
@@ -102,11 +216,17 @@
     body#total{
     background-color: rgba(224, 224, 224, 0.747);
 }
+div#cuadroMensajes{
+    font-size: 22px;
+}
+p#msj{
+    font-size: 17px;
+}
     
     
     </style>
 
-<body id="total">
+<body id="total" name="total">
     
         <div id="cuadroCabeza">
                 {%if editacion != 1%}
@@ -121,10 +241,33 @@
 
             
 
+            
+
 
             <form class="user" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
+                    
+                    <div id="cuadroMensajes" >
 
+                            {% if messages %}
+                            {% for message in messages %}
+
+                            {% if message.tags == 'success'%}
+                            <ul class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+                            {% if message.tags == 'error'%}
+                            <ul class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+
+                            {% endfor %}
+                           {% endif %}
+                    </div>
                         
 
                         
@@ -158,18 +301,38 @@
 
                  <div class="form-group">
                     <label for="inputAddress2" class="sub">Compositor de partitura:</label>
-                    {%if editacion != 1%}
-                    <input type="text" class="form-control" id="nombr" name="compositor" placeholder="Nombre de composito..." required>
-                    {%else%}
                     
-                    <input type="text" class="form-control" id="nombr" name="compositor" placeholder="Nombre de compositor..." value="{{partitura_form.compositor.value}}">
-                  {%endif%}
+                    <div class="form-row">
+                        <select id="country" class="form-control" name="compositor" >
+                                    <option value="">Seleccione Compositor</option>
+                                    {%if editacion != 1%}
+
+                                    {%else%}
+                                    <option value='{{donCompo.id}}'selected>{{donCompo.nombreIdentificador}}</option>
+                                    {%endif%}
+
+                            {%for compo in compositores%}
+                                    <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
+                            {%endfor%}
+                            
+                       </select>
+                       
+                       <!--iii-->
+                       <div class="btn-group">
+                        <center>
+                            <button type="button" class="btn btn-info" id="botonAgregar"data-toggle="modal" data-target=".bs-example-modal-lg777"> Agregar Nuevo</button>
+                         </center>
+                   
+                  </div>
+                      <!--iii-->
+                    </div>
+                    
                   </div>
 
                   <div class="form-row">
 
                       <div class="form-group col-md-4">
-                          <label for="inputState">Nivel:</label>
+                          <label for="inputState" style="color: black">Nivel:</label>
                           
                           <select  name ="nivel" class="form-control" required>
                               <option value='facil'>facil</option>
@@ -185,9 +348,16 @@
                       </div>
 
                       <div class="form-group col-md-4">
-                          <label for="inputZip">Documento:</label>
-                          
-                          <input type="file" class="form-control mb-2" name="archivo" id="txtDoc">
+                          <label for="inputZip" style="color: black">Documento:</label>
+                          {%if editacion != 1%}
+                          <input type="file" class="form-control mb-2" name="archivo" id="txtDocNuevo"  accept="application/pdf" required>
+                          {%else%}
+                          <div>
+                                <input type="file" class="form-control mb-2" name="archivo" id="txtDoc" accept="application/pdf"  >
+                                <!--<label for="inputZip" id="label2">Doc: {{elDoc}}</label>-->
+                                <label for="inputZip" id="label2">Documento ya subido!!!</label>
+                          </div>
+                          {%endif%}
                       </div>
 
                   </div>
@@ -195,7 +365,7 @@
 
 
                   <div class="form-group">
-                      <label for="inputAddress" class="sub">Especialidades:</label>
+                      <label for="inputAddress" class="sub"><u> Seleccione las Especialidades practicas de la Partitura:</u></label>
                       <select id='custom-headers' name="especialidadesAcordes" multiple='multiple'>
                               
                               
@@ -248,6 +418,40 @@
 
                 <input type="hidden" id="custId" name="custId" value="no cambio">
               </form>
+
+              <!--pr-->
+              <div class="modal fade bs-example-modal-lg777" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" id="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Agregar Nuevo Compositor</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span aria-hidden="true">×</span>
+                                                                        </button>
+                                
+                            </div>
+
+                            
+                            
+                            <div id="modalOculto">
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="formGroupExampleInput" style="color: black">Nombre de Compositor</label>
+                                                <input type="text" class="form-control" id="id_nombreIdentificador" name="nombreIdentificador" placeholder="Nombre o Identificacion de Compositor..." required>
+                                            </div>                                         
+                                    </div>
+
+                                    <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiar()">Close</button>
+                                        
+                                            <button type="button" class="btn btn-primary" id="cargar-compositor" data-dismiss="modal"  >Cargar</button>
+                                        
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+              </div>
+              <!--pp-->
               
             </div>
 
@@ -266,6 +470,15 @@
             
               <!-- Page level plugins -->
               <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+              </script>
+              <script src="{%static 'js/select2.min.js'%}"></script>
+              <script>
+              $("#country").select2( {
+               placeholder: "Seleccione Compositor",
+               allowClear: true
+               } );
+              </script>
             
               <!-- Page level custom scripts -->
               <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>

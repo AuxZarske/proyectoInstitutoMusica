@@ -122,7 +122,7 @@
             
 
 
-            <form class="user" method="POST">
+            <form class="user" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
 
                         
@@ -195,8 +195,12 @@
 
 
                       <div class="form-group col-md-4">
-                          <label for="inputZip">Documento:</label>
-                          <input type="text" class="form-control mb-2"  name ="archivoURL" value="{{tema_form.archivoURL.value}}">
+                            <label for="inputZip">Documento:</label>
+                            {%if editacion != 1%}
+                            <input type="file" class="form-control mb-2" name="archivo" id="txtDoc">
+                            {%else%}
+                            <input type="file" class="form-control mb-2" name="archivo" id="txtDoc" >
+                            {%endif%}
                       </div>
 
                   </div>

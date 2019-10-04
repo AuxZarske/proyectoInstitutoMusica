@@ -22,15 +22,29 @@ class Especialidad(models.Model):
     def __str__(self):
         return self.nombre
 
+class Compositor(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombreIdentificador = models.CharField('Nombre de compositor', max_length = 150, null = False, blank = False)
+    
+    
+    class Meta:
+        verbose_name = 'Compositor'
+        verbose_name_plural = 'Compositor'
+
+    def __str__(self):
+        return self.nombreIdentificador
+
+
+
 class Partitura(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la partitura', max_length = 100, null = False, blank = False)
-    compositor = models.CharField('compositor de la partitura', max_length = 250, null = False, blank = False)
+    compositor = models.ForeignKey(Compositor, on_delete = models.DO_NOTHING,  null = True, blank = True)
     descripcion = models.TextField('Descripcion', null = False, blank = False)
-    archivo = models.ImageField(upload_to="partitura", null = True)
+    archivo = models.BinaryField(blank=True, null=True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
-    #falta imagen url
-    especialidadesAcordes = models.ManyToManyField(Especialidad)
+    especialidadesAcordes = models.ManyToManyField(Especialidad,  blank = True )
+
    
 
     class Meta:
@@ -40,6 +54,7 @@ class Partitura(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Tema(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre del tema', max_length = 100, null = False, blank = False)
@@ -47,8 +62,8 @@ class Tema(models.Model):
     
     nivel = models.CharField('Nivel del tema', max_length = 100, null = False, blank = False)
     tipo = models.CharField('Tipo de la tema', max_length = 100, null = False, blank = False)
-    archivoURL = models.CharField('url de la tema', max_length = 500, null = False, blank = False)
-    #falta imagen url
+   
+    archivo = models.BinaryField(blank=True, null=True)
    
 
 
@@ -60,7 +75,7 @@ class Tema(models.Model):
         return self.nombre
 
 class Usuario (models.Model):
-    dni = models.CharField('DNI', primary_key = True, max_length = 8, null = False, blank = False)
+    dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
     apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
