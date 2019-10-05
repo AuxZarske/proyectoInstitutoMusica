@@ -583,7 +583,8 @@ def listarpartituras(request):
     
     clases = Clase.objects.all()
     partituras =  Partitura.objects.all()
-    return render(request,'partituras.html',{'clases':clases,'partituras':partituras})
+    compositores = Compositor.objects.all()
+    return render(request,'partituras.html',{'clases':clases,'partituras':partituras,'compositores':compositores})
 
 
 def eliminarPartitura(request,id):
@@ -657,6 +658,7 @@ def editarPartitura(request,id):
     compositores = Compositor.objects.all()
     donCompo = None
     espeParti = []
+    
     try:
         partitura = Partitura.objects.get(id =id)
         lespeParti = list(Partitura.objects.values('especialidadesAcordes').filter(id=id))
@@ -674,19 +676,19 @@ def editarPartitura(request,id):
             print(elDoc)
             donCompo = partitura.compositor
         else:
-            
+            print(request.POST)
             partitura_form = PartituraForm(request.POST, instance = partitura)
             if partitura_form.is_valid():
                 par=partitura_form.save()
                 try:
                     par.archivo =request.FILES['archivo'].file.read()
-                    messages.success(request, "Cargado Correcto!")
+                    messages.success(request, "Editado Correcto!")
                 except:
-                    messages.success(request, "Cargado Correcto!")
+                    messages.success(request, "Editado Correcto!")
                 par.save()
                
             else:
-                messages.error(request, " Error - No se pudo cargar")
+                messages.error(request, " Error - No se pudo Editar")
                 
             return redirect('gestionMusical:partituras')
     except ObjectDoesNotExist as e:

@@ -44,6 +44,22 @@
     </script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+        $(document).ready(function(){
+            function nivelar(jQuery){
+            
+                
+                if("{{editacion}}" == "1"){
+                    
+                    $("#nivel").val("{{partitura_form.nivel.value}}").change()
+                    $("#country").val("{{partitura_form.compositor.value}}").change()
+                }
+            }
+            //Cuando la página esté cargada ejecutará la función resaltar
+            $(document).ready(nivelar);
+        });
+            
+
+
       $(document).ready(function () {
           
           
@@ -70,9 +86,11 @@
                         
                         if (data != ""){
                             
-                            html += "<option value='"+data[0].pk +"'>"  +data[0].fields.nombreIdentificador+ "</option>";
-                            
+                            html += "<option value='"+data[0].pk +"' selected>"  +data[0].fields.nombreIdentificador+ "</option>";
+                            alert(html);
                             $('#country').append(html);
+                            
+                            $("#country").val(data[0].pk).change()
                             
                         }
                         
@@ -305,11 +323,7 @@ p#msj{
                     <div class="form-row">
                         <select id="country" class="form-control" name="compositor" >
                                     <option value="">Seleccione Compositor</option>
-                                    {%if editacion != 1%}
-
-                                    {%else%}
-                                    <option value='{{donCompo.id}}'selected>{{donCompo.nombreIdentificador}}</option>
-                                    {%endif%}
+                                    
 
                             {%for compo in compositores%}
                                     <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
@@ -334,16 +348,14 @@ p#msj{
                       <div class="form-group col-md-4">
                           <label for="inputState" style="color: black">Nivel:</label>
                           
-                          <select  name ="nivel" class="form-control" required>
+                          <select id="nivel" name ="nivel" class="form-control" required>
                               <option value='facil'>facil</option>
                               <option value='medio'>medio</option>
                               <option value='dificil'>dificil</option>
                               
                               
-                              {%if editacion != 1%}
-                                {%else%}
-                              <option value='{{partitura_form.nivel.value}}'selected>{{partitura_form.nivel.value}}</option>
-                              {%endif%}
+                            
+                         
                           </select>
                       </div>
 

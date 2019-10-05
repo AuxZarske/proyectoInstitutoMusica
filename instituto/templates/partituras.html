@@ -43,6 +43,17 @@
         win.document.write('</body></html>');
         layer = jQuery(win.document);
       }
+      function ocultarFiltro(){
+    
+      
+              if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
+                  document.getElementById("contenedorFiltro").style.display='block';
+              }
+              else{
+                      document.getElementById("contenedorFiltro").style.display='none';
+                  }
+
+        }
 </script>
 
 
@@ -83,6 +94,62 @@ margin-left: 2px;
 }
 p#msj{
     font-size: 17px;
+}
+div.derecha{
+  display: inline-block;
+  
+  margin-left: 5%;
+  
+  
+}
+div#contenedorFiltro{
+  padding: 2%;
+  display: block;
+  background-color: antiquewhite;
+}
+div#comboFiltro{
+  
+
+}
+div#zonaInput{
+
+}
+div#zonaBotones{
+  
+  text-align: right;
+}
+button#fil{
+  background-color: aqua;
+  color: black;
+  font-weight: bold;
+}
+button#repo{
+  background-color: aqua;
+  color: black;
+  font-weight: bold;
+}
+button#botonExtra{
+  display: inline-block;
+  background-color: rgb(219, 90, 90);
+  border: 2px solid rgb(32, 32, 32);
+}
+div#elgrando{
+  width: 400px;
+}
+label.izquierda{
+  display: inline-block;
+  margin-left: 5%;
+  
+}
+div.form-group{
+  width: 30%;
+  display: inline-block;
+}
+div#nivell{
+  width: 20%;
+  display: inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
 }
     
     </style>
@@ -308,6 +375,9 @@ p#msj{
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
+                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                  <i class="fas fa-file"></i>
+                </button>
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de partituras que cuenta actualmente:</h6>
               <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_partitura'%}" class="btn btn-primary btn-icon-split">
                               
@@ -319,6 +389,107 @@ p#msj{
                               
                               </a>
             </div>
+
+
+
+            <div id="contenedorFiltro">
+
+           
+              <div id="comboFiltro">
+                  
+                <div id="zonaInput">
+                  <!--3 div-->
+                  <div class="form-group">
+                      <label for="inputAddress2" class="sub" style="color: black">Compositor de partitura:</label>
+                      
+                      <div class="form-row">
+                          <select id="country" class="form-control" name="compositor" >
+                                      <option value="">Seleccione Compositor</option>
+                                     
+  
+                                      {%for compo in compositores%}
+                                      <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
+                                      {%endfor%}
+                              
+                         </select>
+
+                      </div>
+
+                    </div>
+
+                    <div class="form-group" id="nivell">
+                        <label for="inputState" style="color: black">Nivel:</label>
+                          
+                          <select id="nivel" name ="nivel" class="form-control" required>
+                              <option value=''>-----</option>
+                            <option value='facil'>facil</option>
+                              <option value='medio'>medio</option>
+                              <option value='dificil'>dificil</option>
+                              
+                              
+                            
+                         
+                          </select>
+  
+                        </div>
+  
+
+
+
+
+                        <div class="form-group">
+                            <label for="inputAddress2" class="sub">Compositor de partitura:</label>
+                            
+                            <div class="form-row">
+                                <select id="country" class="form-control" name="compositor" >
+                                            <option value="">Seleccione Compositor</option>
+                                           
+        
+                                            {%for compo in compositores%}
+                                            <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
+                                            {%endfor%}
+                                    
+                               </select>
+      
+                            </div>
+      
+                          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      </div>
+
+
+
+                      
+
+                  <!--3dic-->
+                
+                <div id="zonaBotones">
+                  <button class="btn btn-primary" id="fil">Filtrar</button>
+                  <button class="btn btn-primary" id="repo">Generar Reporte</button>
+                </div>
+
+              </div>
+
+            </div>
+
+
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -352,38 +523,10 @@ p#msj{
                                                         <!--iii-->
                                                         <div class="btn-group">
                                                           <center>
-                                                            <a href="" data-toggle="modal" data-target=".bs-example-modal-lg2{{par.id}}">
-                                                              Documento
-                                                            </a>
+                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
                                                           </center>
                                                           
-                                                            <div class="modal fade bs-example-modal-lg2{{par.id}}" id="myModal2{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title" id="myModalLabel{{par.id}}">Documento:</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                                    </button>
-                                                                            
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <h4>{{par.nombre}}, {{par.compositor}}</h4>lkjkljk
-                                                                            <center>
-                                                                            <!--<img src = "data:image/png;base64,{{par.archivo|binary_to_image}}" height="300" width="200">-->
-                                                                            <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
-                                                                            
-                                                                          </center>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                            <a href="#">
-                                                                            <button type="button" class="btn btn-primary" >Descargar</button>
-                                                                          </a>
-                                                                          </div>
-                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                     </center>
                                                         <!--iii-->
                                                         
@@ -412,92 +555,62 @@ p#msj{
                                         </center>
                                           <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                               <div class="modal-dialog modal-lg">
-                                                  <div class="modal-content">
+                                                  <div class="modal-content" id="elgrando">
                                                       <div class="modal-header">
                                                           <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos:</h4>
                                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                   </button>
                                                           
                                                       </div>
-                                                      <div class="modal-body">
+                                                      <div class="modal-body" id="cuerpoModal">
                                                           <div class="form-group row">
-                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Id: </label>
-                                                              <div class="col-sm-10">
+                                                              <label class="izquierda" >Id: </label>
+                                                              <div class="derecha">
                                                                 {{par.id}}
                                                               </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
-                                                                <div class="col-sm-10">
+                                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                <div class="derecha">
                                                                     {{par.nombre}}
                                                                 </div>
                                                               </div>
                                                               <div class="form-group row">
-                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Descripcion:</label>
-                                                                  <div class="col-sm-10">
+                                                                  <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                                  <div class="derecha">
                                                                       {{par.descripcion}}
                                                                   </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nivel:</label>
-                                                                    <div class="col-sm-10">
+                                                                    <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                    <div class="derecha">
                                                                         {{par.nivel}}
                                                                     </div>
                                                                   </div>
                                                                   <div class="form-group row">
-                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Compositor:</label>
-                                                                      <div class="col-sm-10">
+                                                                      <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                                                      <div class="derecha">
                                                                           {{par.compositor}}
                                                                       </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Archivo:</label>
+                                                                        <label for="inputEmail3" class="izquierda">Archivo:</label>
 
-                                                                        <div class="col-sm-10">
+                                                                        <div class="derecha">
                                                                           {%if par.archivo%}
-                                                                          
-                                                                          <!--iii-->
-                                                        <div class="btn-group">
-                                                          <center>
-                                                            <a href="" data-toggle="modal" data-target=".bs-example-modal-lg77{{par.id}}">
-                                                              Documento
-                                                            </a>
-                                                          </center>
+                                                                    
+                                                                           <center>
+                                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
+                                                                           </center>
                                                           
-                                                              <div class="modal fade bs-example-modal-lg77{{par.id}}" id="myModal2{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title" id="myModalLabel{{par.id}}">Documento:</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                                    </button>
-                                                                            
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <h4>{{par.nombre}}, {{par.compositor}}</h4>
-                                                                            <center>
-                                                                            <img src = "data:image/png;base64,{{par.archivo|binary_to_image}}" height="300" width="200">
-                                                                          </center>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                            <a href="#">
-                                                                            <button type="button" class="btn btn-primary" >Descargar</button>
-                                                                          </a>
-                                                                          </div>
-                                                        
-                                                                    </div>
-                                                                </div>
-                                                          </div>
-                                                    </div>
-                                                        <!--iii-->
-
                                                                             {%endif%}
-                                                                        </div>
+                                                                        
                                                                       </div>
+                                                                    </div>
+
                                                                       <div class="form-group row">
-                                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Especialidades:</label>
-                                                                          <div class="col-sm-10">
+                                                                          <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                                                          <div class="derecha">
                                                                               
                                                                               {%for es in par.especialidadesAcordes.all%}
                                                                               
@@ -505,6 +618,7 @@ p#msj{
                                                                               {%endfor%}
                                                                           </div>
                                                                         </div>
+                                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   
