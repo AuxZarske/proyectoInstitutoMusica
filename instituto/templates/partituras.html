@@ -26,7 +26,19 @@
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
 </head>
+
 <script type="text/javascript">
+      function boton(num){
+        
+        document.getElementById("custId").value = num;
+        
+        
+
+    
+    
+    };
+
+
       function elPdf(base64EncodedPDF){
         var objbuilder = '';
         objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
@@ -104,7 +116,7 @@ div.derecha{
 }
 div#contenedorFiltro{
   padding: 2%;
-  display: block;
+  display: none;
   background-color: antiquewhite;
 }
 div#comboFiltro{
@@ -141,16 +153,29 @@ label.izquierda{
   margin-left: 5%;
   
 }
+div.alinealoNomas{
+  text-align: left;
+}
 div.form-group{
   width: 30%;
   display: inline-block;
 }
 div#nivell{
-  width: 20%;
+  width: auto;
   display: inline-block;
   margin-left: 3%;
   margin-right: 3%;
+  
 }
+label#labbel{
+  display: block;
+}
+div#espeNIvel{
+  display: inline-block;
+ 
+  
+}
+
     
     </style>
 {%endblock estilos%}
@@ -345,8 +370,9 @@ div#nivell{
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+          
           <!-- Page Heading -->
+          
           <h1 class="h3 mb-2 text-gray-800">Partituras</h1>
           <p class="mb-4">En la siguiente tabla podra visualizar las partituras que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar uno nuevo al sistema.</p>
 
@@ -391,7 +417,8 @@ div#nivell{
             </div>
 
 
-
+            <form class="user" method="POST">
+                {% csrf_token %}
             <div id="contenedorFiltro">
 
            
@@ -404,7 +431,7 @@ div#nivell{
                       
                       <div class="form-row">
                           <select id="country" class="form-control" name="compositor" >
-                                      <option value="">Seleccione Compositor</option>
+                                      <option value="">-----</option>
                                      
   
                                       {%for compo in compositores%}
@@ -418,10 +445,10 @@ div#nivell{
                     </div>
 
                     <div class="form-group" id="nivell">
-                        <label for="inputState" style="color: black">Nivel:</label>
+                        <label for="inputState" style="color: black" id="labbel">Nivel:</label>
                           
-                          <select id="nivel" name ="nivel" class="form-control" required>
-                              <option value=''>-----</option>
+                          <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
+                              <option value=''>-------</option>
                             <option value='facil'>facil</option>
                               <option value='medio'>medio</option>
                               <option value='dificil'>dificil</option>
@@ -437,19 +464,18 @@ div#nivell{
 
 
 
-                        <div class="form-group">
-                            <label for="inputAddress2" class="sub">Compositor de partitura:</label>
+                        <div class="form-group" id="espeNIvel">
+                            <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
                             
-                            <div class="form-row">
-                                <select id="country" class="form-control" name="compositor" >
-                                            <option value="">Seleccione Compositor</option>
-                                           
-        
-                                            {%for compo in compositores%}
-                                            <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
-                                            {%endfor%}
-                                    
-                               </select>
+                            <div class="form-row" id="espec2">
+                                <select name="espec" id="espec" class="selectpicker" single>
+                                    <option value=''>-------</option>
+                                    {%for e in especialidades%}
+                                    <option value="{{e.id}}">
+                                        {{e}}
+                                    </option>
+                                    {%endfor%}
+                                </select>
       
                             </div>
       
@@ -481,14 +507,15 @@ div#nivell{
                   <!--3dic-->
                 
                 <div id="zonaBotones">
-                  <button class="btn btn-primary" id="fil">Filtrar</button>
-                  <button class="btn btn-primary" id="repo">Generar Reporte</button>
+                <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+                <input type="hidden" id="custId" name="custId" value="no cambio">
+                  <button type="submit" class="btn btn-primary" id="repo" onclick="boton(2)">Generar Reporte</button>
                 </div>
 
               </div>
 
             </div>
-
+          </form>
 
             <div class="card-body">
               <div class="table-responsive">
@@ -509,6 +536,7 @@ div#nivell{
                   </thead>
                   
                   <tbody>
+
                         {% for par in partituras%}
                                                     
                                                  
@@ -563,37 +591,37 @@ div#nivell{
                                                           
                                                       </div>
                                                       <div class="modal-body" id="cuerpoModal">
-                                                          <div class="form-group row">
+                                                          <div class="alinealoNomas">
                                                               <label class="izquierda" >Id: </label>
                                                               <div class="derecha">
                                                                 {{par.id}}
                                                               </div>
                                                             </div>
-                                                            <div class="form-group row">
+                                                            <div class="alinealoNomas">
                                                                 <label for="inputEmail3" class="izquierda">Nombre:</label>
                                                                 <div class="derecha">
                                                                     {{par.nombre}}
                                                                 </div>
                                                               </div>
-                                                              <div class="form-group row">
+                                                              <div class="alinealoNomas">
                                                                   <label for="inputEmail3" class="izquierda">Descripcion:</label>
                                                                   <div class="derecha">
                                                                       {{par.descripcion}}
                                                                   </div>
                                                                 </div>
-                                                                <div class="form-group row">
+                                                                <div class="alinealoNomas">
                                                                     <label for="inputEmail3" class="izquierda">Nivel:</label>
                                                                     <div class="derecha">
                                                                         {{par.nivel}}
                                                                     </div>
                                                                   </div>
-                                                                  <div class="form-group row">
+                                                                  <div class="alinealoNomas">
                                                                       <label for="inputEmail3" class="izquierda">Compositor:</label>
                                                                       <div class="derecha">
                                                                           {{par.compositor}}
                                                                       </div>
                                                                     </div>
-                                                                    <div class="form-group row">
+                                                                    <div class="alinealoNomas">
                                                                         <label for="inputEmail3" class="izquierda">Archivo:</label>
 
                                                                         <div class="derecha">
@@ -608,8 +636,8 @@ div#nivell{
                                                                       </div>
                                                                     </div>
 
-                                                                      <div class="form-group row">
-                                                                          <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                                                      <div class="alinealoNomas">
+                                                                          <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades:</label>
                                                                           <div class="derecha">
                                                                               
                                                                               {%for es in par.especialidadesAcordes.all%}
@@ -737,6 +765,12 @@ div#nivell{
   <!-- Page level plugins -->
   <script src="{%static 'vendor/datatables/jquery.dataTables.min.js'%}"></script>
   <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>

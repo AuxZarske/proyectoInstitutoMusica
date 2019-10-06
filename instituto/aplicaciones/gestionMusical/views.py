@@ -23,6 +23,8 @@ from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
 
+from aplicaciones.gestionMusical.utils import render_to_pdf 
+
 import base64
 
 
@@ -33,115 +35,20 @@ class Inicio(View):
         return render(request,'index.html',  {'clases':clases})
 
 
-def crearReporteEspecialidades(request):
-    print(request.POST)
-    d = dict(request.POST)
-    caso = 0
-    fechaAnterior = request.POST['fecha1']
-    fechaPosterior = request.POST['fecha2']
-    fechaEntre1 = request.POST['fecha3']
-    fechaEntre2 = request.POST['fecha4']
-    if 'filtrdo' in d:
-        
-        if '11' in list(d['radio']):
-            caso = 1
-        if '22' in list(d['radio']):
-            caso = 2
-        if '33' in list(d['radio']):
-            caso = 3
-    print("fin")
-    print(caso)
-    print(fechaAnterior)
-    print(fechaPosterior)
-    print(fechaEntre1)
-    print(fechaEntre2) 
-    print(d)
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment: filename=Listado_especialidades.pdf'
-    
-    buffer = BytesIO()
-    c = canvas.Canvas(buffer, pagesize=A4)
-    
-    #header
-    c.setLineWidth(.3)
-    c.setFont('Helvetica', 22)
-    c.drawString(30,750,'Todo por Arte')
-    c.setFont('Helvetica', 12)
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        d = datetime.today()
+        data = {
+             'today': d, 
+             'amount': 39.99,
+            'customer_name': 'Cooper Mann',
+            'order_id': 1233434,
+        }
+        pdf = render_to_pdf('pdf/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
 
     
-    if caso == 0 :
-        cadena = "Listado de Todas las especialidades" 
-        c.drawString(30,735,cadena) 
-    if caso == 1 :
-        cadena = "Listado de especialidades anterio a: "+fechaAnterior
-        c.drawString(30,735,cadena) 
-    if caso == 2 :
-        cadena = "Listado de especialidades posterior a: "+fechaPosterior
-        c.drawString(30,735,cadena) 
-    if caso == 3 :
-        cadena = "Listado de especialidades creadas entre: "+fechaEntre1 + " y " + fechaEntre2
-        c.drawString(30,735,cadena) 
-    
-    fecha = str(time.strftime("%d/%m/%y"))
-    c.setFont('Helvetica-Bold',12)
-    c.drawString(480,750,fecha)
-    c.line(460,747,560,747)
-    
-    """estudiantes = [(alumno.nombre,alumno.fecha_nac, alumno.rutina_id, alumno.nivel_id) for alumno in alumnos]"""
-
-    
-    if caso == 0 :
-        especialidades= list(Especialidad.objects.all()) 
-    if caso == 1 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__lt =fechaAnterior  )) 
-    if caso == 2 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__gt =fechaPosterior  ))  
-    if caso == 3 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__range = (fechaEntre1,fechaEntre2)  ))   
-    
-    #Table header
-    styles = getSampleStyleSheet()
-    styleBH = styles["Normal"]
-    styleBH.alignment = TA_CENTER
-    styleBH.fontSize = 10
-    
-    nombre = Paragraph('''Nombre''',styleBH) 
-    
-    fechaCreacion = Paragraph('''Fecha Inicio''',styleBH)
-    
-    
-    data = [[nombre,fechaCreacion]]
-     
-    styles = getSampleStyleSheet()
-    styleN = styles["BodyText"]
-    styleN.alignment = TA_CENTER
-    styleN.fontSize = 7
-     
-    width, height = A4
-    high = 700
-    for espe in especialidades:
-        this_student = [ espe.nombre, espe.fechaCreacion ]
-        data.append(this_student)
-        high = high - 20
-     
-     #table size
-    width, height = A4
-    table = Table(data, colWidths=[60 * mm, 40 * mm])
-    table.setStyle(TableStyle([
-        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-        ('BOX', (0,0), (-1,-1), 0.10, colors.black)]))
-    table.wrapOn(c, width, height)
-    table.drawOn(c, 30, high)
-    c.drawString(30,600,'fin')
-    c.showPage()
-     
-    c.save()
-     
-    pdf = buffer.getvalue()
-    buffer.close()
-    response.write(pdf)
-    
-    return HttpResponse(response, content_type='application/pdf')
+      
 
 def registrarAlumno(request):
     especialidadesTodas = Especialidad.objects.all()
@@ -578,13 +485,73 @@ def mostrarClase (request,id):
 def listarmensajes(request):
     clases = Clase.objects.all()
     return render(request,'mensajes.html',{'clases':clases})
+
+def crearFiltro(request):
     
+    composito = request.POST['compositor']
+    nivel = request.POST['nivel']
+    especialidad = request.POST['espec']
+
+    partituras = Partitura.objects.all()
+    print(request.POST)
+    
+
+    
+
+    try:
+        if composito != '' or nivel !="" or especialidad !="" : #los alguno de tres distinto none
+            
+            if composito != '':  
+                if nivel !="":
+                    if especialidad !="":
+                        partituras = Partitura.objects.filter(compositor = composito, nivel = nivel, especialidadesAcordes = especialidad)
+                    else:
+                        partituras = Partitura.objects.filter(compositor = composito, nivel = nivel)
+                else:
+                    if especialidad !="":
+                        partituras = Partitura.objects.filter(compositor = composito, especialidadesAcordes = especialidad)
+                    else:
+                        
+                        partituras = Partitura.objects.filter(compositor = composito)
+
+            if nivel != "":
+                if especialidad !="":
+                    partituras = Partitura.objects.filter(nivel = nivel, especialidadesAcordes = especialidad)
+                else:
+                    partituras = Partitura.objects.filter(nivel = nivel)
+                
+            if especialidad !="": 
+                partituras = Partitura.objects.filter(especialidadesAcordes = especialidad)
+                
+
+
+            
+            messages.success(request, "Filtrado Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo filtrar")
+    except:
+        #retornar error
+        print("error except")
+        messages.error(request, " Error - No se pudo filtrar")
+    
+    return partituras
+
+
+
 def listarpartituras(request):
     
     clases = Clase.objects.all()
     partituras =  Partitura.objects.all()
     compositores = Compositor.objects.all()
-    return render(request,'partituras.html',{'clases':clases,'partituras':partituras,'compositores':compositores})
+    especialidades = Especialidad.objects.all()
+    if request.method == 'POST':
+        if(request.POST['custId'] == '1'):
+            #filrar
+            partituras = crearFiltro(request)
+        else:
+            return redirect('gestionMusical:crearRepoParti')
+
+    return render(request,'partituras.html',{'clases':clases,'especialidades':especialidades,'partituras':partituras,'compositores':compositores})
 
 
 def eliminarPartitura(request,id):
@@ -854,7 +821,7 @@ def desasociarAlumnoTema(request,dni,idT, idC):
     elAlumno.save()
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
 
-def CrearCompo(request):
+def crearCompo(request):
     nombre = request.GET['name']
     print(nombre)
     listaC = []
@@ -876,4 +843,5 @@ def CrearCompo(request):
     
     print(data)
     return HttpResponse(data, content_type='application/json')
-    
+
+
