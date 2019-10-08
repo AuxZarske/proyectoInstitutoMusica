@@ -126,9 +126,23 @@ div#comboFiltro{
 div#zonaInput{
 
 }
+div.dt-buttons btn-group flex-wrap{
+  
+  position: absolute initial;
+  
+}
+div.dataTables_length{
+  display: inline-block;
+  margin-left: 3%;
+}
+div.dataTables_filter{
+  float: right;
+  
+}
 div#zonaBotones{
   
   text-align: right;
+  vertical-align: b
 }
 button#fil{
   background-color: aqua;
@@ -289,8 +303,7 @@ div#espeNIvel{
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
+                    
                   </div>
                   <div class="font-weight-bold">
                     <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
@@ -299,8 +312,7 @@ div#espeNIvel{
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
+                    
                   </div>
                   <div>
                     <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
@@ -308,20 +320,14 @@ div#espeNIvel{
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
+                  
                   <div>
                     <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
+                  
                   <div>
                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
@@ -335,10 +341,7 @@ div#espeNIvel{
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
+              
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
@@ -367,8 +370,8 @@ div#espeNIvel{
         <!-- End of Topbar -->
 
         {%block contenidiPagina%}
-
-        <!-- Begin Page Content -->
+        <input type="hidden" id="inputOculto" value="Joselo Martin">
+        <!-- Begin Page  Content -->
         <div class="container-fluid">
           
           <!-- Page Heading -->
@@ -509,7 +512,7 @@ div#espeNIvel{
                 <div id="zonaBotones">
                 <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
                 <input type="hidden" id="custId" name="custId" value="no cambio">
-                  <button type="submit" class="btn btn-primary" id="repo" onclick="boton(2)">Generar Reporte</button>
+                 
                 </div>
 
               </div>
@@ -523,15 +526,18 @@ div#espeNIvel{
                   <thead>
                     <tr>
                             <th>Nombre</th>
+                            <th style="display: none">Nivel</th>
+                            <th style="display: none">Compocitor</th>  
+                            <th style="display: none">Especialidades</th>                     
                                                   
                                                   
-                                                  
-                            <th>Archivo</th>
+                            <th class="noExport">Archivo</th>
                            
                             
                             
-                            <th>Acciones</th>
-                      
+                            <th class="noExport">Acciones</th>
+                            
+                            
                     </tr>
                   </thead>
                   
@@ -543,6 +549,21 @@ div#espeNIvel{
                                                     <tr>
                                                       
                                                       <td>{{par.nombre}}</td>
+                                                      <td style="display: none">{{par.nivel}}</td>
+                                                      <td style="display: none">{{par.compositor}}</td>
+
+                                                      
+                                                          <td style="display: none">{%for est in par.especialidadesAcordes.all%}
+
+                                                            
+                                                            <p >{{est.nombre}}</p>
+
+                                                            {%endfor%}
+                                                            
+                                                          
+                                                          </td>
+                                                     
+
                                                       
                                                       
                                                       <td>{%if par.archivo%}
@@ -637,7 +658,7 @@ div#espeNIvel{
                                                                     </div>
 
                                                                       <div class="alinealoNomas">
-                                                                          <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades:</label>
+                                                                          <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades para Uso:</label>
                                                                           <div class="derecha">
                                                                               
                                                                               {%for es in par.especialidadesAcordes.all%}
@@ -703,8 +724,10 @@ div#espeNIvel{
                           </center>
                         
                           </td>
+                          
                         
                         </tr>
+
                         
                     {%endfor%}
                   </tbody>
@@ -752,29 +775,47 @@ div#espeNIvel{
     </div>
   </div>
   {%block archivos%}
-  <!-- Bootstrap core JavaScript-->
-  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
-  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+ <!-- Bootstrap core JavaScript-->
+ <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+ <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
+ <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
 
-  <!-- Page level plugins -->
-  <script src="{%static 'vendor/datatables/jquery.dataTables.min.js'%}"></script>
-  <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
+
+
+
+
+ <!-- Bootstrap core JavaScript
+ 
+ <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+ <!-- Core plugin JavaScript
+ <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+ <!-- Custom scripts for all pages
+ <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+
+ <!-- Page level plugins 
+ <script src="{%static 'vendor/datatables/jquery.dataTables.min.js'%}"></script>
+ <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+
+ 
+ <!-- Latest compiled and minified CSS -->
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
-  {%endblock archivos%}
+
+
+ {%endblock archivos%}
 </body>
 
 </html>

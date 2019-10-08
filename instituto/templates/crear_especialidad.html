@@ -88,6 +88,9 @@
         float: right;
 
     }
+    p#msj{
+    font-size: 17px;
+}
     div#cabeza{
         background-color: #4e73df;
     }
@@ -134,14 +137,34 @@
                     
                         {{especialidad_form.descripcion}} 
                         {{especialidad_form.nombre}} 
-  
+                        <div id="cuadroMensajes" >
+
+                                {% if messages %}
+                                {% for message in messages %}
+                  
+                                {% if message.tags == 'success'%}
+                                <ul class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                </ul> 
+                                {%endif%}
+                                {% if message.tags == 'error'%}
+                                <ul class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                </ul> 
+                                {%endif%}
+                  
+                                {% endfor %}
+                               {% endif %}
+                        </div>
 
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Nombre de Especialidad:</label>
                   {%if editacion != 1%}
-                  <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre..." >
+                  <input type="text" class="form-control" id="nom"  style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="Nombre..." required>
                   {%else%}
-                  <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre..." value="{{especialidad_form.nombre.value}}">
+                  <input type="text" class="form-control" id="nom" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Nombre..." value="{{especialidad_form.nombre.value}}"required>
                 {%endif%}
                 </div>
 
@@ -149,9 +172,9 @@
                 <div class="form-group">
                         <label for="inputAddress2" class="sub">Descripcion de la Especialidad::</label>
                         {%if editacion != 1%}
-                        <textarea class="form-control" id="des" name="descripcion" placeholder="Descripcion y detalles de la especialidad..." ></textarea>
+                        <textarea class="form-control" id="des" name="descripcion" placeholder="Descripcion y detalles de la especialidad..." required></textarea>
                         {%else%}
-                        <textarea class="form-control" id="des" name="descripcion" placeholder="Descripcion y detalles de la especialidad..." >{{especialidad_form.descripcion.value}}</textarea>
+                        <textarea class="form-control" id="des" name="descripcion" placeholder="Descripcion y detalles de la especialidad..." required>{{especialidad_form.descripcion.value}}</textarea>
                               {%endif%}  
                  </div>
 

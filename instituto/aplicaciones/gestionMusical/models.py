@@ -43,7 +43,7 @@ class Partitura(models.Model):
     descripcion = models.TextField('Descripcion', null = False, blank = False)
     archivo = models.BinaryField(blank=True, null=True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
-    especialidadesAcordes = models.ManyToManyField(Especialidad,  blank = True )
+    especialidadesAcordes = models.ManyToManyField(Especialidad, null = True, blank = True )
 
    
 

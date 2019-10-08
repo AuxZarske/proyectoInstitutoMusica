@@ -87,7 +87,7 @@
                         if (data != ""){
                             
                             html += "<option value='"+data[0].pk +"' selected>"  +data[0].fields.nombreIdentificador+ "</option>";
-                            alert(html);
+                            
                             $('#country').append(html);
                             
                             $("#country").val(data[0].pk).change()
@@ -300,10 +300,10 @@ p#msj{
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Nombre de partitura:</label>
                   {%if editacion != 1%}
-                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required>
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." required>
                   {%else%}
                   
-                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." value="{{partitura_form.nombre.value}}">
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." value="{{partitura_form.nombre.value}}">
                 {%endif%}
                 </div>
 
@@ -448,7 +448,7 @@ p#msj{
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="formGroupExampleInput" style="color: black">Nombre de Compositor</label>
-                                                <input type="text" class="form-control" id="id_nombreIdentificador" name="nombreIdentificador" placeholder="Nombre o Identificacion de Compositor..." required>
+                                                <input type="text" class="form-control" id="id_nombreIdentificador" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombreIdentificador" placeholder="Nombre o Identificacion de Compositor..." required>
                                             </div>                                         
                                     </div>
 

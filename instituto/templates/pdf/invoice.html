@@ -1,11 +1,12 @@
 {% load staticfiles %}
+{% load poll_extras %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cooperativa de Agua</title>
-    <style>
+    <title>TodoXarte</title>
+    <style type="text/css">
         body {
         /*position: relative;*/
         /*width: 16cm;  */
@@ -18,50 +19,37 @@
         /*font-family: SourceSansPro;*/
         }
 
-        #logo{
-        float: left;
-        margin-top: 1%;
-        margin-left: 2%;
-        margin-right: 2%;
+        div#logo{
+                width: 100px;
+                height: 50px;
+                float: left;
+                
         }
 
-        #imagen{
-        width: 100px;
-        height: 50px;
-        }
+        
 
-        #datos{
-        float: left;
-        margin-top: 0%;
-        margin-left: 2%;
-        margin-right: 2%;
+        div#datos{
+            
+            font-size: 14px;
+            text-align: center;
+            width: auto;
+            
+            
+        
         /*text-align: justify;*/
         }
 
-        #encabezado{
-        text-align: center;
-        margin-left: 5%;
-        margin-right: 44%;
-        font-size: 15px;
+        
+
+        div#fecha{
+        /*position: relative;*/
+        width: auto;
+        font-size: 12px;
+        text-align: right;
+        
+       
         }
 
-        #fecha{
-        /*position: relative;*/
-        float: right;
-        margin-top: -3%;
-        margin-left: 2%;
-        margin-right: 2%;
-        font-size: 14px;
-        }
-
-        #user{
-        /*position: relative;*/
-        float: right;
-        margin-top: 1%;
-        margin-left: 2%;
-        margin-right: -19%;
-        font-size: 10px;
-        }
 
         section{
         clear: left;
@@ -147,6 +135,43 @@
                 text-align: right;
                 line-height: 35px;
             }
+            .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+        .table .table {
+            background-color: #fff;
+        }
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
         /* .page-number {
 	        text-align: right;
 	        color: #fff;
@@ -169,37 +194,58 @@
     </style>
     <body>
         <header>
+            <div>
+                <div id="logo">
+                        <img src="{% static '/img/fff.jpg'%}" width="100" height="50">
+                        
+                </div>
+                <div id="fecha">
+                        <p>Fecha: 01/02/2019</p>
+                        <p>Generado por: Carlos galcogr</p>
+                </div>
+                <div id="datos">
+                        <p>
+                            <b>INSTITUTO MUSICAL "TODO X ARTE"</b><br>Calle. Belgrano 1457, Apostoles - Misiones, Argentina<br>Telefono:(+54)3758 15441600<br>Email:TodoXarte@gmail.com
+                        </p>
+                </div>
 
-        <div id="logo">
-                <img src="{% static '/img/fff.jpg'%}" width="100" height="100">
+                
             </div>
-            <div id="datos">
-                <p id="encabezado">
-                    <b>INSTITUTO MUSICAL "TODO X ARTE"</b><br>Calle. Belgrano 1457, Apostoles - Misiones, Argentina<br>Telefono:(+54)3758 15441600<br>Email:TodoXarte@gmail.com
-                </p>
-            </div>
-
-            <div id="fecha">
-                <p>Fecha: 01/02/2019</p>
-            </div>
-
-            <div id="user">
-                Generado por: Carlos galcogr
-            </div>
+                
 
         </header>
         <br>
         <section>
-                tablas
+                <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Raised</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Customer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sale in sales %}
+                            <tr>
+                                <td>{{ sale.created_at | date:"d/m/Y" }}</td>
+                                <td>{{ sale.product.title }}</td>
+                                <td>{{ sale.quantity }}</td>
+                                <td>&pound;{{ sale.price }}</td>
+                                <td>{{ sale.customer.first_name }} {{ sale.customer.last_name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                
         </section>
         <br>
         <br>
-        <div class="izquierda">
-            <p><strong>Total de registros: </strong> 778</p>
-        </div>
+        <div>Total de registros: </div>
 
         <footer>
-            <div class="page-number"></div>
+            <div class="page-number">1</div>
         </footer>
 
     </body>

@@ -23,7 +23,6 @@ from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
 
-from aplicaciones.gestionMusical.utils import render_to_pdf 
 
 import base64
 
@@ -35,20 +34,7 @@ class Inicio(View):
         return render(request,'index.html',  {'clases':clases})
 
 
-class GeneratePdf(View):
-    def get(self, request, *args, **kwargs):
-        d = datetime.today()
-        data = {
-             'today': d, 
-             'amount': 39.99,
-            'customer_name': 'Cooper Mann',
-            'order_id': 1233434,
-        }
-        pdf = render_to_pdf('pdf/invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-    
-      
+ 
 
 def registrarAlumno(request):
     especialidadesTodas = Especialidad.objects.all()
@@ -143,31 +129,82 @@ def registrarProfesor(request):
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
 
+def fiktroEspecialidad(request):
+    caso = 0
+    error = 0
+    print(request.POST)
+    especialidades = []
+    d = dict(request.POST)
 
+    if 'fecha1' in d:
+        fechaAnterior = request.POST['fecha1']
+        if fechaAnterior != "":
+            caso = 1
+            error += 1
+    if 'fecha2' in d:    
+        fechaPosterior = request.POST['fecha2']
+        if fechaPosterior != "":
+            caso = 2
+            error += 1
+    if 'fecha3' in d and 'fecha4' in d:
+        fechaEntre1 = request.POST['fecha3']
+        fechaEntre2 = request.POST['fecha4']
+        if fechaEntre1 != "" and fechaEntre2 != "":
+            caso = 3
+            error += 1
+
+    if error > 1 or error == 0:
+        messages.error(request, " Error - solo se puede filtrar por un tipo de fecha")
+        return especialidades
+
+    if caso == 0 :
+        especialidades= list(Especialidad.objects.all()) 
+    if caso == 1 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__lt =fechaAnterior  )) 
+    if caso == 2 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__gt =fechaPosterior  ))  
+    if caso == 3 :
+        especialidades= list(Especialidad.objects.filter(fechaCreacion__range = (fechaEntre1,fechaEntre2)  ))
+
+
+    print(caso)
+    messages.success(request, "filtrado Correcto!")
+    return especialidades
 
 
 def listarespecialidades(request):
-    if request.method == 'POST':
-        return crearReporteEspecialidades(request)
     clases = Clase.objects.all()
+    if request.method == 'POST':
+        especialidades = fiktroEspecialidad(request)
+        return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
+    
     especialidades = Especialidad.objects.all()
     return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
 
 
 def eliminarEspecialidad(request,id):
-    especialidad = Especialidad.objects.get(id=id)
     
-    especialidad.estado = False
-    especialidad.save()
+    especialidad = Especialidad.objects.get(id=id)
+    try:
+        especialidad.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarce una especialidad en uso")
     return redirect('gestionMusical:especialidades')
     
 def crearEspecialidad(request):
     editacion = 0
     if request.method == 'POST':
         especialidad_form = EspecialidadForm(request.POST)
-        if especialidad_form.is_valid():
+        nom = request.POST['nombre']
+        if especialidad_form.is_valid() and not (Especialidad.objects.filter(nombre = nom).exists()):
+
             especialidad_form.save()
             print(request.POST)
+            messages.success(request, "Carga Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+
         if(request.POST['custId'] == '1'):
             return redirect('gestionMusical:crear_especialidad')
         else:
@@ -187,8 +224,11 @@ def editarEspecialidad(request,id):
             especialidad_form = EspecialidadForm(instance = especialidad)
         else:
             especialidad_form = EspecialidadForm(request.POST, instance = especialidad)
-            if especialidad_form.is_valid():
+            if especialidad_form.is_valid() :
                 especialidad_form.save()
+                messages.success(request, "Carga Correcto!")
+            else:
+                messages.error(request, " Error - No se pudo cargar")
             
             return redirect('gestionMusical:especialidades')
     except ObjectDoesNotExist as e:
@@ -549,7 +589,7 @@ def listarpartituras(request):
             #filrar
             partituras = crearFiltro(request)
         else:
-            return redirect('gestionMusical:crearRepoParti')
+            pass
 
     return render(request,'partituras.html',{'clases':clases,'especialidades':especialidades,'partituras':partituras,'compositores':compositores})
 
@@ -572,7 +612,7 @@ def crearPartitura(request):
 
             partitura_form = PartituraForm(request.POST)
             
-            
+            print(partitura_form.errors.as_data())
 
             if partitura_form.is_valid():
 
@@ -587,10 +627,13 @@ def crearPartitura(request):
 
                 par.save()
                 cosas = request.POST.copy()
-                listaesp = cosas.pop('especialidadesAcordes')
-                for esp in listaesp:
-                    print(esp)
-                    par.especialidadesAcordes.add(Especialidad.objects.get(id = esp))
+                d = request.POST
+                if 'especialidadesAcordes' in d:
+                    listaesp = cosas.pop('especialidadesAcordes')
+                    for esp in listaesp:
+                        print(esp)
+                        par.especialidadesAcordes.add(Especialidad.objects.get(id = esp))
+                
 
                 par.save()
                 #obtener especialidades
