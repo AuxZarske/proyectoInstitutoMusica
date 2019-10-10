@@ -612,10 +612,6 @@ def listarpartituras(request):
         espec = espec[0]
 
 
-
-
-
-
         #filtro = 'Listado filtrado por:' + str(compo) + ', '+str(nivel)+', '+str(espec )
 
         if(request.POST['custId'] == '1'):
@@ -803,7 +799,49 @@ def editarPartitura(request,id):
 
 def listartemas(request):
     temas = Tema.objects.all()
-    return render(request,'temas.html',{'temas':temas})
+    pedidor = str(request.user.username)
+    pedidor = ''
+    filtro = ''
+
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+
+    if request.method == 'POST':
+        #pide hacer filtrado
+        peticion = request.POST.copy()
+        filtro = ''
+        tipo = peticion.pop('tipo')
+        tipo = tipo[0]
+
+        nivel = peticion.pop('nivel')
+        nivel = nivel[0]
+        try:
+            if tipo != '' or nivel !="":
+                if tipo != '':
+                    if nivel !="":
+                        temas = Tema.objects.filter(nivel = nivel, tipo = tipo)
+                        filtro = 'Listado filtrado Nivel de dificultad: '+str(nivel) + ' y tipo de Tema: '+ str(tipo) 
+                    else:
+                        temas = Tema.objects.filter(tipo = tipo)
+                        filtro = 'Listado filtrado por tipo de tema: '+str(tipo) 
+                else:
+                    if nivel !="":
+                        temas = Tema.objects.filter(nivel = nivel)
+                        filtro = 'Listado filtrado Nivel de dificultad: '+str(nivel) 
+
+                messages.success(request, "Filtrado Correcto!")
+            else:
+                messages.error(request, " Error - No se pudo filtrar")
+        except:
+            messages.error(request, " Error - No se pudo filtrar")
+        
+    
+    return render(request,'temas.html',{'temas':temas,'filtro':filtro,'pedidor':pedidor})
 
 def eliminarTema(request,id):
     tema = Tema.objects.get(id=id) 

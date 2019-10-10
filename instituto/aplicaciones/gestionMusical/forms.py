@@ -40,7 +40,7 @@ class UsuarioForm(forms.ModelForm):
 class ProfesorForm(forms.ModelForm):
     class Meta(UsuarioForm.Meta):
         model = Profesor
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','especialidades']
+        fields = ['dni','nombre','apellido','historiaPrevia','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','especialidades']
 
 
 

@@ -55,7 +55,7 @@ if(template == 2){
   var tipoReporte = "Especialidades";
 }
 if(template == 3){
-
+  var tipoReporte = "Temas";
 }
 if(template == 4){
 
@@ -125,6 +125,11 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [90, 70, 230];
+                }
+                if(template == 3){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [80, 40, 60,230];
                 }
                 
 // Change dataTable layout (Table styling)

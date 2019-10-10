@@ -103,6 +103,7 @@ class Usuario (models.Model):
 class Profesor(Usuario):
     observaciones = models.TextField('Observaciones del Profesor', null = True, blank = True)
     especialidades = models.ManyToManyField(Especialidad, blank = True)
+    historiaPrevia = models.TextField('Observaciones del Profesor', null = True, blank = True)
     objects = models.Manager()
 
 
