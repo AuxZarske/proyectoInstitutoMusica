@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo
-from .views import validate_username_especialidad, validate_username_partitura
+from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema
 urlpatterns = [
     #path('',home,name='index'),
 
@@ -9,6 +9,7 @@ urlpatterns = [
     
     path('validate_username_especialidad/',login_required(validate_username_especialidad),name='validate_username_especialidad'),
     path('validate_username_partitura/',login_required(validate_username_partitura),name='validate_username_partitura'),
+    path('validate_username_tema/',login_required(validate_username_tema),name='validate_username_tema'),
 
     path('especialidades/',login_required(listarespecialidades),name='especialidades'),
     path('eliminar_especialidad/<int:id>',login_required(eliminarEspecialidad),name='eliminar_especialidad'),

@@ -26,7 +26,45 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
       $(document).ready(function () {
-          
+
+        $(document).ready(function(){
+            function nivelar(jQuery){
+            
+                
+                if("{{editacion}}" == "1"){
+                    
+                    $("#tipo").val("{{tema_form.tipo.value}}").change()
+                    $("#nivel").val("{{tema_form.nivel.value}}").change()
+                }
+            }
+            //Cuando la página esté cargada ejecutará la función resaltar
+            $(document).ready(nivelar);
+        });
+
+
+
+        $('input[type="file"]').on('change', function(){
+                var ext = $( this ).val().split('.').pop();
+                if ($( this ).val() != '') {
+                    if(ext == "pdf"){
+                    
+                    if($(this)[0].files[0].size > 1048576){
+                        console.log("El documento excede el tamaño máximo");
+                        $('#modal-title').text('¡Precaución!');
+                        $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
+                        $("#modal-gral").modal();           
+                        $(this).val('');
+                    }else{
+                        $("#modal-gral").hide();
+                    }
+                    }
+                    else
+                    {
+                    $( this ).val('');
+                    alert("Extensión no permitida: " + ext);
+                    }
+                }
+                });
           
           $("#desbr").keyup(function () {
               var value = $(this).val();
@@ -98,6 +136,9 @@
     textarea#id_descripcion{
     display: None;
     }
+    p#msj{
+    font-size: 17px;
+}
     
     body#total{
     background-color: rgba(224, 224, 224, 0.747);
@@ -105,7 +146,30 @@
     
     
     </style>
-
+<script>
+        $(document).ready(function(){
+           $("#nombr").change(function () {
+             var username = $(this).val();
+             
+             $.ajax({
+               
+               url: '{% url "gestionMusical:validate_username_tema" %}',
+               data: {
+                 'username': username
+               },
+               dataType: 'json',
+               
+               success: function (data) {
+                   
+                 if (data.is_taken) {
+                   alert("Ese nombre esta ocupado por otro Tema");
+                 }
+               }
+             });
+       
+           });
+       });
+         </script>
 <body id="total">
     
         <div id="cuadroCabeza">
@@ -134,15 +198,35 @@
                     
                         {{tema_form.descripcion}} 
                         {{tema_form.nombre}} 
-  
+                        <div id="cuadroMensajes" >
+
+                                {% if messages %}
+                                {% for message in messages %}
+    
+                                {% if message.tags == 'success'%}
+                                <ul class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                </ul> 
+                                {%endif%}
+                                {% if message.tags == 'error'%}
+                                <ul class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                </ul> 
+                                {%endif%}
+    
+                                {% endfor %}
+                               {% endif %}
+                        </div>
 
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Nombre de tema:</label>
                   {%if editacion != 1%}
-                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required>
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." required>
                   {%else%}
                   
-                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." value="{{tema_form.nombre.value}}">
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." value="{{tema_form.nombre.value}}">
                 {%endif%}
                 </div>
 
@@ -152,7 +236,7 @@
                         {%if editacion != 1%}
                         <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la tema..." required></textarea>
                         {%else%}
-                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la tema..." >{{tema_form.descripcion.value}}</textarea>
+                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la tema..." required>{{tema_form.descripcion.value}}</textarea>
                               {%endif%}  
                  </div>
 
@@ -161,47 +245,45 @@
                   <div class="form-row">
 
                       <div class="form-group col-md-4">
-                          <label for="inputState">Nivel:</label>
+                          <label for="inputState"style="color: black">Nivel:</label>
                           
-                          <select  name ="nivel" class="form-control" required>
+                          <select  name ="nivel" id="nivel" class="form-control" required>
                               <option value='facil'>facil</option>
                               <option value='medio'>medio</option>
                               <option value='dificil'>dificil</option>
                               
                               
-                              {%if editacion != 1%}
-                                {%else%}
-                              <option value='{{tema_form.nivel.value}}'selected>{{tema_form.nivel.value}}</option>
-                              {%endif%}
+                              
                           </select>
                       </div>
 
                       <div class="form-group col-md-4">
-                          <label for="inputState">Tipo:</label>
+                          <label for="inputState"style="color: black">Tipo:</label>
                           
-                          <select  name ="tipo" class="form-control" required>
+                          <select  name ="tipo" id="tipo" class="form-control" required>
                               <option value='Ejercicio'>Ejercicio</option>
                               <option value='Teoria'>Teoria</option>
                               <option value='Otro'>Otro</option>
                               
                               
-                              {%if editacion != 1%}
-                                {%else%}
-                              <option value='{{tema_form.tipo.value}}'selected>{{tema_form.tipo.value}}</option>
-                              {%endif%}
+                              
                           </select>
                       </div>
 
 
 
                       <div class="form-group col-md-4">
-                            <label for="inputZip">Documento:</label>
+                            <label for="inputZip" style="color: black">Documento:</label>
                             {%if editacion != 1%}
-                            <input type="file" class="form-control mb-2" name="archivo" id="txtDoc">
+                            <input type="file" class="form-control mb-2" name="archivo" id="txtDocNuevo"  accept="application/pdf" required>
                             {%else%}
-                            <input type="file" class="form-control mb-2" name="archivo" id="txtDoc" >
+                            <div>
+                                  <input type="file" class="form-control mb-2" name="archivo" id="txtDoc" accept="application/pdf"  >
+                                  <!--<label for="inputZip" id="label2">Doc: {{elDoc}}</label>-->
+                                  <label for="inputZip" id="label2">Documento ya subido!!!</label>
+                            </div>
                             {%endif%}
-                      </div>
+                        </div>
 
                   </div>
 

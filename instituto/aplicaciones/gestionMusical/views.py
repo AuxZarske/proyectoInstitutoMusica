@@ -51,6 +51,16 @@ def validate_username_partitura(request):
     print(data)
     return JsonResponse(data)
 
+def validate_username_tema(request):
+    nombre = request.GET.get('username', None)
+    data = {
+        'is_taken': Tema.objects.filter(nombre__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    print(data)
+    return JsonResponse(data)
+
 
 class Inicio(View):
     def get(self,request,*args,**kwargs):
@@ -684,7 +694,7 @@ def crearPartitura(request):
             partitura_form = PartituraForm(request.POST)
             
             print(partitura_form.errors.as_data())
-
+            nom = request.POST['nombre']
             if partitura_form.is_valid() and not(Partitura.objects.filter(nombre = nom).exists()):
 
                 par = partitura_form.save(commit=False)
@@ -797,19 +807,25 @@ def listartemas(request):
 
 def eliminarTema(request,id):
     tema = Tema.objects.get(id=id) 
-    tema.delete()
+    if Alumno.objects.filter(temasAsociadas = tema):
+        messages.error(request, " Error - No se pudo eliminar Tema, Asocia un alumno")
+    else:
+        tema.delete()
+        messages.success(request, "Correcta Eliminacion!")
     return redirect('gestionMusical:temas')
     
 def crearTema(request):
     editacion = 0
     if request.method == 'POST':
         tema_form = TemaForm(request.POST)
-        
-        if tema_form.is_valid():
+        nom = request.POST['nombre']
+        if tema_form.is_valid() and not(Tema.objects.filter(nombre = nom).exists()):
             tem = tema_form.save(commit=False)
-            tem.archivo = request.FILES.get('archivo')
+            tem.archivo = request.FILES['archivo'].file.read()
             tem.save()
-            
+            messages.success(request, "Cargado Correcto!")
+        else:
+            messages.error(request, " Error")
         if(request.POST['custId'] == '1'):
             return redirect('gestionMusical:crear_tema')
         else:
@@ -830,9 +846,13 @@ def editarTema(request,id):
             tema_form = TemaForm(request.POST, instance = tema)
             if tema_form.is_valid():
                 tema_form.save()
+                messages.success(request, "Cargado Correcto!")
+            else:
+                messages.error(request, " Error")
             return redirect('gestionMusical:temas')
     except ObjectDoesNotExist as e:
         error = e
+        messages.error(request, " Error")
 
     
     return render(request,'crear_tema.html',{'tema_form':tema_form,'error':error,'editacion':editacion})

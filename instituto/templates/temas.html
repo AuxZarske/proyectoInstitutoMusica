@@ -1,6 +1,6 @@
 {%extends 'index.html'%}
 {% load staticfiles %}
-
+{% load poll_extras %}
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
@@ -25,6 +25,38 @@
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
 </head>
+<script type="text/javascript">
+
+function elPdf(base64EncodedPDF){
+        var objbuilder = '';
+        objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
+        objbuilder += (base64EncodedPDF);
+        objbuilder += ('" type="application/pdf" class="internal">');
+        objbuilder += ('<embed src="data:application/pdf;base64,');
+        objbuilder += (base64EncodedPDF);
+        objbuilder += ('" type="application/pdf" />');
+        objbuilder += ('</object>');
+        var win = window.open("","_blank","titlebar=yes");
+        win.document.title = "My Title";
+        win.document.write('<html><body>');
+        win.document.write(objbuilder);
+        win.document.write('</body></html>');
+        layer = jQuery(win.document);
+      }
+      function ocultarFiltro(){
+    
+      
+    if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
+        document.getElementById("contenedorFiltro").style.display='block';
+    }
+    else{
+            document.getElementById("contenedorFiltro").style.display='none';
+        }
+
+}
+
+
+</script>
 {%endblock head%}
 {%block estilos%}
     <style type="text/css">
@@ -45,11 +77,44 @@
           display: inline-block;
          
         }
+        p#msj{
+    font-size: 17px;
+}
+
+
+label.izquierda{
+  display: inline-block;
+  margin-left: 5%;
+  
+}
+div.alinealoNomas{
+  text-align: left;
+}
+div.derecha{
+  display: inline-block;
+  
+  margin-left: 5%;
+  
+  
+}
         div#icon8{
           padding: 10px;
           width: 40px;
           height: 40px;
         }
+        div#elgrando{
+  width: 400px;
+}
+button#botonExtra{
+  display: inline-block;
+  background-color: rgb(219, 90, 90);
+  border: 2px solid rgb(32, 32, 32);
+}
+div#contenedorFiltro{
+  padding: 2%;
+  display: none;
+  background-color: antiquewhite;
+}
         div#icon7{
           
           width: 100px;
@@ -59,6 +124,13 @@
 
 margin-right: 2px;
 margin-left: 2px;
+}
+div#nivell{
+  width: auto;
+  display: inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
+  
 }
 
     </style>
@@ -254,7 +326,27 @@ margin-left: 2px;
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <div id="cuadroMensajes" >
 
+                {% if messages %}
+                {% for message in messages %}
+
+                {% if message.tags == 'success'%}
+                <ul class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+                {% if message.tags == 'error'%}
+                <ul class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+
+                {% endfor %}
+               {% endif %}
+        </div>
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Temas</h1>
           <p class="mb-4">En la siguiente tabla podra visualizar los temas que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar uno nuevo al sistema.</p>
@@ -262,6 +354,9 @@ margin-left: 2px;
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
+                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                    <i class="fas fa-file"></i>
+                  </button>
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de temas que cuenta actualmente:</h6>
               <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_tema'%}" class="btn btn-primary btn-icon-split">
                               
@@ -273,6 +368,94 @@ margin-left: 2px;
                               
                               </a>
             </div>
+            <!--t-->
+            <form class="user" method="POST">
+                {% csrf_token %}
+            <div id="contenedorFiltro">
+                <input type="hidden" id="filtrado" value="{{filtro}}">
+
+           
+              <div id="comboFiltro">
+                  
+                <div id="zonaInput">
+                  <!--3 div-->
+                  
+
+                    <div class="form-group" id="nivell">
+                        <label for="inputState" style="color: black" id="labbel">Nivel:</label>
+                          
+                          <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
+                              <option value=''>-------</option>
+                              <option value='facil'>facil</option>
+                              <option value='medio'>medio</option>
+                              <option value='dificil'>dificil</option>
+                              
+                              
+                            
+                         
+                          </select>
+  
+                        </div>
+  
+
+
+                        <div class="form-group" id="nivell">
+                            <label for="inputState" style="color: black" id="labbel">Tipo:</label>
+                              
+                              <select id="tipo" name ="tipo" class="selectpicker" style="width: auto" single>
+                                  
+                                  <option value=''>-------</option>
+                                  <option value='Ejercicio'>Ejercicio</option>
+                                   <option value='Teoria'>Teoria</option>
+                                    <option value='Otro'>Otro</option>
+                                  
+                                  
+                                
+                             
+                              </select>
+      
+                            </div>
+
+                       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      </div>
+
+
+
+                      
+
+                  <!--3dic-->
+                
+                <div id="zonaBotones">
+                <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+               
+                <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                <input type="hidden" id="custId" name="custId" value="no cambio">
+                 
+                </div>
+
+              </div>
+
+            </div>
+          </form>
+            <!--t-->
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -300,11 +483,22 @@ margin-left: 2px;
                                                       
                                                       
                                 <td>{%if tema.archivo%}
-                                                                          
-                                    <a href="{{tema.archivo.url}}" target="_blank">{{tema.nombre}}.doc</a>
-                                    {%else%}
-                                    <p>ninguno</p>
-                                      {%endif%}</td>
+                                                          
+                                                         
+                                    <!--iii-->
+                                    <div class="btn-group">
+                                      <center>
+                                          <a href="#" onclick="elPdf('{{tema.archivo|binary_to_image}}')">Documento</a>
+                                      </center>
+                                      
+                                        
+                                
+                                    <!--iii-->
+                                    
+                                      
+                                      {%else%}
+                                      <p>ninguno</p>
+                                        {%endif%}</td>
                           
                           
                           
@@ -326,51 +520,54 @@ margin-left: 2px;
                                         </center>
                                           <div class="modal fade bs-example-modal-lg{{tema.id}}" id="myModal{{tema.id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                               <div class="modal-dialog modal-lg">
-                                                  <div class="modal-content">
+                                                  <div class="modal-content" id="elgrando">
                                                       <div class="modal-header">
                                                           <h4 class="modal-title" id="myModalLabel{{tema.id}}">Datos:</h4>
                                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                   </button>
                                                           
                                                       </div>
-                                                      <div class="modal-body">
-                                                          <div class="form-group row">
-                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Id: </label>
-                                                              <div class="col-sm-10">
+                                                      <div class="modal-body" id="cuerpoModal">
+                                                          <div class="alinealoNomas">
+                                                              <label for="inputEmail3" class="izquierda">Id: </label>
+                                                              <div class="derecha">
                                                                 {{tema.id}}
                                                               </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
-                                                                <div class="col-sm-10">
+                                                            <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                <div class="derecha">
                                                                     {{tema.nombre}}
                                                                 </div>
                                                               </div>
-                                                              <div class="form-group row">
-                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Descripcion:</label>
-                                                                  <div class="col-sm-10">
+                                                              <div class="alinealoNomas">
+                                                                  <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                                  <div class="derecha">
                                                                       {{tema.descripcion}}
                                                                   </div>
                                                                 </div>
-                                                                <div class="form-group row">
-                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nivel:</label>
-                                                                    <div class="col-sm-10">
+                                                                <div class="alinealoNomas">
+                                                                    <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                    <div class="derecha">
                                                                         {{tema.nivel}}
                                                                     </div>
                                                                   </div>
-                                                                  <div class="form-group row">
-                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Tema:</label>
-                                                                      <div class="col-sm-10">
+                                                                  <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Tema:</label>
+                                                                      <div class="derecha">
                                                                           {{tema.tipo}}
                                                                       </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Archivo:</label>
-                                                                        <div class="col-sm-10">
+                                                                    <div class="alinealoNomas">
+                                                                        <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                                                        <div class="derecha">
                                                                             {%if tema.archivo%}
-                                                                            
-                                                                            <a href="{{tema.archivo.url}}">imagen</a>
-                                                                              {%endif%}
+                                                                    
+                                                                           <center>
+                                                                              <a href="#" onclick="elPdf('{{tema.archivo|binary_to_image}}')">Documento</a>
+                                                                           </center>
+                                                          
+                                                                            {%endif%}
                                                                           </div>
                                                                       </div>
                                               </div>
@@ -494,6 +691,11 @@ margin-left: 2px;
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
   {%endblock archivos%}
 </body>
 
