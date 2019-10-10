@@ -3,6 +3,7 @@
 $(document).ready(function () {
   $('#dataTable').DataTable({
     "paging": true,
+    
     "dom":'Blfrtip',
     "buttons": [
       { text: 'PDF',
@@ -35,7 +36,7 @@ var logo = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBA
 // Set page margins [left,top,right,bottom] or [horizontal,vertical]
 // or one number for equal spread
 // It's important to create enough space at the top for a header !!!
-doc.pageMargins = [80,160,60,60];
+doc.pageMargins = [80,190,60,60];
 // Set the font size fot the entire document
 doc.defaultStyle.fontSize = 9;
 // Set the fontsize for the table header
@@ -45,6 +46,20 @@ doc.styles.tableHeader.fontSize = 9;
 // Middle: brandname
 // Right side: A document title
 var usuario = $('#inputOculto').val();
+var template = $('#inputOcultoTemplate').val();
+var filtrado = $('#filtrado').val();
+if(template == 1){
+  var tipoReporte = "Partituras";
+}
+if(template == 2){
+  var tipoReporte = "Especialidades";
+}
+if(template == 3){
+
+}
+if(template == 4){
+
+}
 doc['header']=(function() {
 return {
 columns: [
@@ -54,9 +69,9 @@ width: 100
 },
                   {
 alignment: 'center',
-text:[{text:"INSTITUTO MUSICAL 'TODO X ARTE' \n \n ", bold:true, fontSize:12}, {text:"Calle. Belgrano 1457, Apostoles - Misiones, Argentina \n Teléfono: (+54)3758 15441600 \n Email:TodoXarte@gmail.com \n \n \n" },{text:"Lista de Partituras \n", bold:true, fontSize:15, alignment:'left'},{text:"Filtado por:  \n", alignment:'left'}],
+text:[{text:"INSTITUTO MUSICAL 'TODO X ARTE' \n \n ", bold:true, fontSize:12}, {text:"Calle. Belgrano 1457, Apostoles - Misiones, Argentina \n Teléfono: (+54)3758 15441600 \n Email:TodoXarte@gmail.com \n \n \n" },{text:"Reporte de "+tipoReporte+" \n", bold:true, fontSize:15, alignment:'left'},{text:""+ filtrado, alignment:'left'}],
 fontSize: 10,
-margin: [0,20,0,0]
+margin: [0,30,0,0]
 },
 {
 alignment: 'right',
@@ -92,19 +107,26 @@ margin: 20
 });
             //Funcion que pone cada columna en tamaño *, para que se ajuste automagicamente. cuenta cada <td> del data table y genera array del tipo [*,*,*,..,n] y establece dicho array como width.
                 var colCount = new Array();
-                $("#midatatable").find('tbody tr:first-child td').each(function() {
+                $("#dataTable").find('tbody tr:first-child td').each(function() {
                     if ($(this).attr('colspan')) {
                         for (var j = 1; j <= $(this).attr('colspan'); $j++) {
                             colCount.push('*');
                         }
                     } else { colCount.push('*'); }
                 });
-                //console.log(colCount);
+                console.log(colCount);
                 //colCount.push('*'); //Le pongo uno mas porque tengo un td oculto (el id)
-
-                doc.content[0].table.widths = colCount;
-                //Es equivalente a: 
-                doc.content[0].table.widths = [90, 50, 90, 150];
+                if(template == 1){
+                  doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [90, 50, 90, 150];
+                }
+                if(template == 2){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [90, 70, 230];
+                }
+                
 // Change dataTable layout (Table styling)
 // To use predefined layouts uncomment the line below and comment the custom lines below
 // doc.content[0].layout = 'lightHorizontalLines'; // noBorders , headerLineOnly
@@ -119,6 +141,8 @@ doc.content[0].layout = objLayout;
 }}
 
   ],
+  
+  
     "language": {
       "sProcessing":     "Procesando...",
                   "sLengthMenu":     "Mostrar _MENU_ registros",

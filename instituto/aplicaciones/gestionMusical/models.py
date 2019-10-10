@@ -87,7 +87,7 @@ class Usuario (models.Model):
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
     
-
+    
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
@@ -97,11 +97,13 @@ class Usuario (models.Model):
     def __str__(self):
         return self.nombre
 
+    
+
 
 class Profesor(Usuario):
     observaciones = models.TextField('Observaciones del Profesor', null = True, blank = True)
     especialidades = models.ManyToManyField(Especialidad, blank = True)
-
+    objects = models.Manager()
 
 
     class Meta:

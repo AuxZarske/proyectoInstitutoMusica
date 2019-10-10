@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -22,10 +22,34 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
-
+import dateutil.parser
 
 import base64
+ 
 
+
+
+from django.http import JsonResponse
+
+def validate_username_especialidad(request):
+    nombre = request.GET.get('username', None)
+    data = {
+        'is_taken': Especialidad.objects.filter(nombre__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    print(data)
+    return JsonResponse(data)
+
+def validate_username_partitura(request):
+    nombre = request.GET.get('username', None)
+    data = {
+        'is_taken': Partitura.objects.filter(nombre__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    print(data)
+    return JsonResponse(data)
 
 
 class Inicio(View):
@@ -129,57 +153,70 @@ def registrarProfesor(request):
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
 
-def fiktroEspecialidad(request):
-    caso = 0
-    error = 0
-    print(request.POST)
-    especialidades = []
-    d = dict(request.POST)
-
-    if 'fecha1' in d:
-        fechaAnterior = request.POST['fecha1']
-        if fechaAnterior != "":
-            caso = 1
-            error += 1
-    if 'fecha2' in d:    
-        fechaPosterior = request.POST['fecha2']
-        if fechaPosterior != "":
-            caso = 2
-            error += 1
-    if 'fecha3' in d and 'fecha4' in d:
-        fechaEntre1 = request.POST['fecha3']
-        fechaEntre2 = request.POST['fecha4']
-        if fechaEntre1 != "" and fechaEntre2 != "":
-            caso = 3
-            error += 1
-
-    if error > 1 or error == 0:
-        messages.error(request, " Error - solo se puede filtrar por un tipo de fecha")
-        return especialidades
-
-    if caso == 0 :
-        especialidades= list(Especialidad.objects.all()) 
-    if caso == 1 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__lt =fechaAnterior  )) 
-    if caso == 2 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__gt =fechaPosterior  ))  
-    if caso == 3 :
-        especialidades= list(Especialidad.objects.filter(fechaCreacion__range = (fechaEntre1,fechaEntre2)  ))
-
-
-    print(caso)
-    messages.success(request, "filtrado Correcto!")
-    return especialidades
 
 
 def listarespecialidades(request):
     clases = Clase.objects.all()
+    pedidor = str(request.user.username)
+    filtro = ''
+    pedidor = ''
+
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    print(pedidor)
     if request.method == 'POST':
-        especialidades = fiktroEspecialidad(request)
-        return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
+        caso = 0
+        error = 0
+        especialidades = []
+        d = dict(request.POST)
+        if 'fecha1' in d:
+            fechaAnterior = request.POST['fecha1']
+            if fechaAnterior != "":
+                caso = 1
+                error += 1
+        if 'fecha2' in d:    
+            fechaPosterior = request.POST['fecha2']
+            if fechaPosterior != "":
+                caso = 2
+                error += 1
+        if 'fecha3' in d and 'fecha4' in d:
+            fechaEntre1 = request.POST['fecha3']
+            fechaEntre2 = request.POST['fecha4']
+            if fechaEntre1 != "" and fechaEntre2 != "":
+                caso = 3
+                error += 1
+        if error > 1 or error == 0:
+            messages.error(request, " Error - solo se puede filtrar por un tipo de fecha")
+            return especialidades
+        if caso == 0 :
+            especialidades= list(Especialidad.objects.all()) 
+        if caso == 1 :
+            especialidades= list(Especialidad.objects.filter(fechaCreacion__lt =fechaAnterior  )) 
+            fechaAnterior = dateutil.parser.parse(fechaAnterior)
+            fechaAnterior = fechaAnterior.strftime('%d/%m/%Y')
+            filtro = 'Listado filtrado por Fecha anterior a: '+str(fechaAnterior)
+        if caso == 2 :
+            especialidades= list(Especialidad.objects.filter(fechaCreacion__gt =fechaPosterior  ))  
+            fechaPosterior = dateutil.parser.parse(fechaPosterior)
+            fechaPosterior = fechaPosterior.strftime('%d/%m/%Y')
+            filtro = 'Listado filtrado por Fecha Posterior a: '+str(fechaPosterior)
+        if caso == 3 :
+            especialidades= list(Especialidad.objects.filter(fechaCreacion__range = (fechaEntre1,fechaEntre2)  ))
+            fechaEntre1 = dateutil.parser.parse(fechaEntre1)
+            fechaEntre1 = fechaEntre1.strftime('%d/%m/%Y')
+            fechaEntre2 = dateutil.parser.parse(fechaEntre2)
+            fechaEntre2 = fechaEntre2.strftime('%d/%m/%Y')
+            filtro = 'Listado filtrado por Fecha entra: '+str(fechaEntre1) +'  y  '+str(fechaEntre2)
+        messages.success(request, "filtrado Correcto!")
+        return render(request,'especialidades.html',{'especialidades':especialidades,'filtro':filtro,'pedidor':pedidor, 'clases':clases})
     
     especialidades = Especialidad.objects.all()
-    return render(request,'especialidades.html',{'especialidades':especialidades, 'clases':clases})
+    return render(request,'especialidades.html',{'especialidades':especialidades,'filtro':filtro,'pedidor':pedidor, 'clases':clases})
 
 
 def eliminarEspecialidad(request,id):
@@ -189,7 +226,7 @@ def eliminarEspecialidad(request,id):
         especialidad.delete()
         messages.success(request, "eliminado Correcto!")
     except:
-        messages.error(request, " Error - no puede eliminarce una especialidad en uso")
+        messages.error(request, " Error - no puede eliminarse una especialidad en uso")
     return redirect('gestionMusical:especialidades')
     
 def crearEspecialidad(request):
@@ -526,55 +563,11 @@ def listarmensajes(request):
     clases = Clase.objects.all()
     return render(request,'mensajes.html',{'clases':clases})
 
-def crearFiltro(request):
-    
-    composito = request.POST['compositor']
-    nivel = request.POST['nivel']
-    especialidad = request.POST['espec']
-
-    partituras = Partitura.objects.all()
-    print(request.POST)
-    
 
     
-
-    try:
-        if composito != '' or nivel !="" or especialidad !="" : #los alguno de tres distinto none
-            
-            if composito != '':  
-                if nivel !="":
-                    if especialidad !="":
-                        partituras = Partitura.objects.filter(compositor = composito, nivel = nivel, especialidadesAcordes = especialidad)
-                    else:
-                        partituras = Partitura.objects.filter(compositor = composito, nivel = nivel)
-                else:
-                    if especialidad !="":
-                        partituras = Partitura.objects.filter(compositor = composito, especialidadesAcordes = especialidad)
-                    else:
-                        
-                        partituras = Partitura.objects.filter(compositor = composito)
-
-            if nivel != "":
-                if especialidad !="":
-                    partituras = Partitura.objects.filter(nivel = nivel, especialidadesAcordes = especialidad)
-                else:
-                    partituras = Partitura.objects.filter(nivel = nivel)
-                
-            if especialidad !="": 
-                partituras = Partitura.objects.filter(especialidadesAcordes = especialidad)
-                
-
-
-            
-            messages.success(request, "Filtrado Correcto!")
-        else:
-            messages.error(request, " Error - No se pudo filtrar")
-    except:
-        #retornar error
-        print("error except")
-        messages.error(request, " Error - No se pudo filtrar")
     
-    return partituras
+    
+   
 
 
 
@@ -584,14 +577,92 @@ def listarpartituras(request):
     partituras =  Partitura.objects.all()
     compositores = Compositor.objects.all()
     especialidades = Especialidad.objects.all()
+    peticion = request.POST.copy()
+    filtro = ''
+    pedidor = str(request.user.username)
+    pedidor = ''
+    
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+
     if request.method == 'POST':
+        
+        compo = peticion.pop('compositor')
+        compo = compo[0]
+
+        nivel = peticion.pop('nivel')
+        nivel = nivel[0]
+
+        espec = peticion.pop('espec')
+        espec = espec[0]
+
+
+
+
+
+
+        #filtro = 'Listado filtrado por:' + str(compo) + ', '+str(nivel)+', '+str(espec )
+
         if(request.POST['custId'] == '1'):
             #filrar
-            partituras = crearFiltro(request)
+            composito = request.POST['compositor']
+            nivel = request.POST['nivel']
+            especialidad = request.POST['espec']
+            partituras = Partitura.objects.all()
+            print(request.POST)
+            print(composito)
+            try:
+                if composito != '' or nivel !="" or especialidad !="" : #los alguno de tres distinto none
+                    
+                    if composito != '':  
+                        print("no se inunda mas!!!")
+                        if nivel !="":
+                            if especialidad !="":
+                                partituras = Partitura.objects.filter(compositor = composito, nivel = nivel, especialidadesAcordes = especialidad)
+                                filtro = 'Listado filtrado por: Compositor: ' + str(Compositor.objects.get(id = compo)) + ', Nivel de Dificultad: '+str(nivel)+', Especialidad Relacionada: '+str(Especialidad.objects.get(id = espec) )
+                            else:
+                                partituras = Partitura.objects.filter(compositor = composito, nivel = nivel)
+                                filtro = 'Listado filtrado por: Compositor: ' + str(Compositor.objects.get(id = compo)) + ', Nivel de Dificultad: '+str(nivel)
+                        else:
+                            if especialidad !="":
+                                partituras = Partitura.objects.filter(compositor = composito, especialidadesAcordes = especialidad)
+                                filtro = 'Listado filtrado por: Compositor: ' + str(Compositor.objects.get(id = compo)) + ' , Especialidad Relacionada: '+str(Especialidad.objects.get(id = espec) )
+                            else:
+                                
+                                partituras = Partitura.objects.filter(compositor = composito)
+                                filtro = 'Listado filtrado por: Compositor: ' + str(Compositor.objects.get(id = compo))  
+
+                    else:
+                        if nivel != "":
+                            if especialidad !="":
+                                partituras = Partitura.objects.filter(nivel = nivel, especialidadesAcordes = especialidad)
+                                filtro = 'Listado filtrado por Nivel de Dificultad: '+str(nivel)+', Especialidad Relacionada: '+str(Especialidad.objects.get(id = espec) )
+                            else:
+                                partituras = Partitura.objects.filter(nivel = nivel)
+                                filtro = 'Listado filtrado por Nivel de Dificultad: '+str(nivel)
+                        else:
+                        
+                            if especialidad !="": 
+                                partituras = Partitura.objects.filter(especialidadesAcordes = especialidad)
+                                filtro = 'Listado filtrado por Especialidad Relacionada: '+str(Especialidad.objects.get(id = espec) )
+
+                    messages.success(request, "Filtrado Correcto!")
+                else:
+                    messages.error(request, " Error - No se pudo filtrar")
+            except:
+                #retornar error
+                print("error except")
+                messages.error(request, " Error - No se pudo filtrar")
+            
         else:
             pass
 
-    return render(request,'partituras.html',{'clases':clases,'especialidades':especialidades,'partituras':partituras,'compositores':compositores})
+    return render(request,'partituras.html',{'clases':clases,'filtro':filtro,'pedidor':pedidor,'especialidades':especialidades,'partituras':partituras,'compositores':compositores})
 
 
 def eliminarPartitura(request,id):
@@ -614,7 +685,7 @@ def crearPartitura(request):
             
             print(partitura_form.errors.as_data())
 
-            if partitura_form.is_valid():
+            if partitura_form.is_valid() and not(Partitura.objects.filter(nombre = nom).exists()):
 
                 par = partitura_form.save(commit=False)
             
@@ -733,9 +804,7 @@ def crearTema(request):
     editacion = 0
     if request.method == 'POST':
         tema_form = TemaForm(request.POST)
-        print(request.POST) 
-        print(tema_form.is_valid())
-        print(tema_form.errors.as_data())
+        
         if tema_form.is_valid():
             tem = tema_form.save(commit=False)
             tem.archivo = request.FILES.get('archivo')

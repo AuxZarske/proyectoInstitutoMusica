@@ -370,7 +370,8 @@ div#espeNIvel{
         <!-- End of Topbar -->
 
         {%block contenidiPagina%}
-        <input type="hidden" id="inputOculto" value="Joselo Martin">
+        <input type="hidden" id="inputOculto" value="{{pedidor}}">
+        <input type="hidden" id="inputOcultoTemplate" value="1">
         <!-- Begin Page  Content -->
         <div class="container-fluid">
           
@@ -420,9 +421,13 @@ div#espeNIvel{
             </div>
 
 
+
+            
+
             <form class="user" method="POST">
                 {% csrf_token %}
             <div id="contenedorFiltro">
+                <input type="hidden" id="filtrado" value="{{filtro}}">
 
            
               <div id="comboFiltro">
@@ -511,6 +516,8 @@ div#espeNIvel{
                 
                 <div id="zonaBotones">
                 <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+               
+                <input type="hidden" id="yolo" name="yolo" value="no cambio">
                 <input type="hidden" id="custId" name="custId" value="no cambio">
                  
                 </div>
@@ -526,8 +533,8 @@ div#espeNIvel{
                   <thead>
                     <tr>
                             <th>Nombre</th>
-                            <th style="display: none">Nivel</th>
-                            <th style="display: none">Compocitor</th>  
+                            <th style="display: none">Nivel de Dificultad</th>
+                            <th style="display: none">Compositor</th>  
                             <th style="display: none">Especialidades</th>                     
                                                   
                                                   

@@ -23,6 +23,32 @@
     }
     
     </script>
+
+
+<script>
+        $(document).ready(function(){
+           $("#nombr").change(function () {
+             var username = $(this).val();
+             
+             $.ajax({
+               
+               url: '{% url "gestionMusical:validate_username_partitura" %}',
+               data: {
+                 'username': username
+               },
+               dataType: 'json',
+               
+               success: function (data) {
+                   
+                 if (data.is_taken) {
+                   alert("Ese nombre esta ocupado por otra partitura");
+                 }
+               }
+             });
+       
+           });
+       });
+         </script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
       $(document).ready(function () {
