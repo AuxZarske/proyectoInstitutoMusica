@@ -562,7 +562,7 @@ div#espeNIvel{
                                                     </thead>
                                                     
                                                     <tbody>
-                                                      {% for profe in profesores%}
+                                                      {% for profe in profesoresStandbay%}
                                                           {%if profe.estado%}
                                                           {%else%}
                                                        
@@ -658,7 +658,8 @@ div#espeNIvel{
                                                                                                       <div class="alinealoNomas">
                                                                                                           <label for="inputEmail3" class="izquierda">Especialidades:</label>
                                                                                                           <div class="derecha">
-                                                                                                              {%for es in profe.especialidadesAcordes.all%}
+                                                                                                            
+                                                                                                              {%for es in profe.especialidades.all%}
                                                                               
                                                                                                                 <p> {{es}} </p>
                                                                                                                 {%endfor%}
@@ -748,11 +749,18 @@ div#espeNIvel{
                   <thead>
                     <tr>
                       <th>DNI</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
+
+                      <th style="display: none"> Apellido y Nombre</th>
+                      <th style="display: none">Telefono</th>
+                      <th style="display: none">Fecha de Nacimiento</th>
+                      <th style="display: none">Sexo</th>
+                      <th style="display: none">Correo Electronico</th>
+
+                      <th class="noExport">Nombre</th>
+                      <th class="noExport">Apellido</th>
                       
                       
-                      <th>Correo Electronico</th>
+                      <th class="noExport">Correo Electronico</th>
                      
                       
                       
@@ -762,12 +770,19 @@ div#espeNIvel{
                   </thead>
                   
                   <tbody>
-                    {% for profe in profesores%}
+                    {% for profe in profesoresVivos%}
                         {%if profe.estado%}
                      
                         <tr>
                           <td>{{profe.dni}}</td>
-                          <td>{{profe.nombre}}</td>
+
+                          <td style="display: none">{{profe.apellido}}, {{profe.nombre}}</td>
+                          <td style="display: none">{{profe.telefono}}</td>
+                          <td style="display: none">{{profe.fechaNac}}</td>
+                          <td style="display: none">{{profe.sexo}}</td>
+                          <td style="display: none">{{profe.correoElectronico}}</td>
+
+                          <td >{{profe.nombre}}</td>
                           <td>{{profe.apellido}}</td>
                           
                           <td>{{profe.correoElectronico}}</td>
@@ -857,7 +872,7 @@ div#espeNIvel{
                                                                     <div class="alinealoNomas">
                                                                         <label for="inputEmail3" class="izquierda">Especialidades:</label>
                                                                         <div class="derecha">
-                                                                            {%for es in profe.especialidadesAcordes.all%}
+                                                                            {%for es in profe.especialidades.all%}
                                                                               
                                                                             <p> {{es}} </p>
                                                                             {%endfor%}
@@ -866,7 +881,8 @@ div#espeNIvel{
                                                   
                                               </div>
                                               <div class="modal-footer">
-                                                  
+                                                  <input type="hidden" id="inputOculto" value="{{pedidor}}">
+                                                    <input type="hidden" id="inputOcultoTemplate" value="4">
                                                   <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                               </div>
                               

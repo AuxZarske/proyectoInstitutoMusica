@@ -295,9 +295,50 @@ def error(request):
 
 def listarprofesores(request):
     clases = Clase.objects.all()
-    profesores = Profesor.objects.all()
+    especialidades = Especialidad.objects.all()
+    pedidor = str(request.user.username)
+    filtro = ''
+    pedidor = ''
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    print(pedidor)
+    profesoresVivos = Profesor.objects.filter(estado = True)
+    profesoresStandbay = Profesor.objects.filter(estado = False)
+    if request.method == 'POST':
+        peticion = request.POST.copy()
+        filtro = ''
+        espec = peticion.pop('espec')
+        espec = espec[0]
+
+        nivel = peticion.pop('nivel')
+        nivel = nivel[0]
+        try:
+            if espec != '' or nivel !="":
+                if espec != '':
+                    if nivel !="":
+                        profesoresVivos = Profesor.objects.filter(sexo = nivel, especialidades = espec)
+                        filtro = 'Listado filtrado sexo: '+str(nivel) + ' y especialidad de  Profesor: '+ str(Especialidad.objects.get(id = espec)) 
+                    else:
+                        profesoresVivos = Profesor.objects.filter(especialidades = espec)
+                        filtro = 'Listado filtrado por especialidad del tema: '+str(Especialidad.objects.get(id = espec)) 
+                else:
+                    if nivel !="":
+                        profesoresVivos = Profesor.objects.filter(sexo = nivel)
+                        filtro = 'Listado filtrado sexo: '+str(nivel) 
+
+                messages.success(request, "Filtrado Correcto!")
+            else:
+                messages.error(request, " Error - No se pudo filtrar")
+        except:
+            messages.error(request, " Error - No se pudo filtrar")
+        
    
-    return render(request,'profesores.html',{'profesores':profesores,'clases':clases})
+    return render(request,'profesores.html',{'profesoresVivos':profesoresVivos,'profesoresStandbay':profesoresStandbay,'especialidades':especialidades,'pedidor':pedidor,'filtro':filtro,'clases':clases})
 
 
 

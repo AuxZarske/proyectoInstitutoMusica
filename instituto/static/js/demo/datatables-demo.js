@@ -58,7 +58,7 @@ if(template == 3){
   var tipoReporte = "Temas";
 }
 if(template == 4){
-
+  var tipoReporte = "Profesores";
 }
 doc['header']=(function() {
 return {
@@ -130,6 +130,11 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [80, 40, 60,230];
+                }
+                if(template == 4){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [50, 80, 60,60,40,98];
                 }
                 
 // Change dataTable layout (Table styling)
