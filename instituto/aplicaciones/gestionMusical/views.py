@@ -138,13 +138,17 @@ def registrarProfesor(request):
             pro.user = user
             pro.save()
             cosas = request.POST.copy()
-            listaespe = cosas.pop('especialidades')
+            d = request.POST
+            if 'especialidades' in d:
+                listaespe = cosas.pop('especialidades')
+                for esp in listaespe:
+                    
+                    pro.especialidades.add(Especialidad.objects.get(id=esp))
 
-            for esp in listaespe:
-                
-                pro.especialidades.add(Especialidad.objects.get(id=esp))
             pro.save() 
             dj_login(request, user)
+            messages.success(request, "Registro Correcto!")
+        
 
 
 
@@ -376,10 +380,15 @@ def editarProfesor(request,dni):
             print(profesor_form.errors.as_data())
             if profesor_form.is_valid():
                 profesor_form.save()
+
+                messages.success(request, "Editado Correctamente!")
+            else:
+                messages.error(request, " Error - No se pudo editar")
                        
             return redirect('gestionMusical:profesores')
     except ObjectDoesNotExist as e:
         error = None
+        messages.error(request, " Error - No se pudo editar")
         print(e)
 
     

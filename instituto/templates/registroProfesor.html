@@ -112,6 +112,9 @@
     label.sub{
         color: black;
     }
+    p#msj{
+    font-size: 17px;
+}
     div#cabeza{
         background-color: #4e73df;
     }
@@ -170,6 +173,27 @@
                 
 
         </div>
+        <div id="cuadroMensajes" >
+
+                {% if messages %}
+                {% for message in messages %}
+  
+                {% if message.tags == 'success'%}
+                <ul class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+                {% if message.tags == 'error'%}
+                <ul class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+  
+                {% endfor %}
+               {% endif %}
+        </div>
     <div id="cuadroPrincipal">
 
             
@@ -205,41 +229,42 @@
 
                 <div class="form-group">
                   <label for="inputAddress" class="sub">Correo Electronico:</label>
-                  <input type="email" class="form-control" id="inputEmail4" placeholder="Correo Electronico">
+                  <input type="email" class="form-control" id="inputEmail4" placeholder="Correo Electronico" required>
                   
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Contraseña</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña">
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Re-escriba la Contraseña</label>
-                          <input type="password" class="form-control" id="inputPassword5" placeholder="Contraseña">
+                          <input type="password" class="form-control" id="inputPassword5" placeholder="Contraseña" required>
                         </div>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido">
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre">
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required>
                         </div>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">DNI:</label>
-                            <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento">
+                            <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Sexo Biologico:</label>
-                          <select name="sexo" id="id_sexo" class="form-control">
-                                <option selected>Hombre</option>
+                          <select name="sexo" id="id_sexo" class="form-control" required>
+                                <option selected></option>
+                                <option>Hombre</option>
                                 <option>Mujer</option>
                               </select>
                         </div>
@@ -251,29 +276,30 @@
 
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Direccion</label>
-                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio">
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" required>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" placeholder="Numero telefono">
+                            <input type="text" class="form-control" id="elTelefono" placeholder="Numero telefono" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
-                          <input type="date" id="id_fechaNac"  class="form-control" name="fechaNac" value="2000-07-22" min="1900-01-01" max="2018-01-01">
+                          <input type="date" id="id_fechaNac"  class="form-control" name="fechaNac" value="2000-07-22" min="1900-01-01" max="2018-01-01" required>
                           
                         </div>
                 </div>
 
                 <div class="form-group">
                         <label for="inputAddress2" class="sub">Breve descripcion experiencia previa:</label>
-                        <input type="textarea" class="form-control" id="inputAddress2" placeholder="descripcion...">
+                        
+                        <textarea name="textarea" class="form-control" id="id_historiaPrevia" placeholder="descripcion..." rows="10" cols="50" required></textarea>
                 </div>
 
                 <div class="form-group">
                         <label for="inputAddress" class="sub">Cuales son sus especialidades?:</label>
-                        <select id='custom-headers' name="especialidades" multiple='multiple'>
+                        <select id='custom-headers' name="especialidades" multiple='multiple' >
                                 
                                 
                                 {% for esp in especialidadesTodas %}
@@ -294,6 +320,9 @@
                 
                 
                 <button type="submit" class="btn btn-primary">Cargar Formulario</button>
+                <a href="{% url 'login'%}">
+                        <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+                        </a>
               </form>
             </div>
 
@@ -302,6 +331,13 @@
     
               {%block archivos%}
               <!-- Bootstrap core JavaScript-->
+
+
+
+
+
+
+              
               <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
               <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
               <!-- Core plugin JavaScript-->

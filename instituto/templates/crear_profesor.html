@@ -187,18 +187,18 @@
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{profesor_form.apellido.value}}">
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{profesor_form.apellido.value}}"required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{profesor_form.nombre.value}}">
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{profesor_form.nombre.value}}"required>
                         </div>
                 </div>
 
                 <div class="form-row">
                         
                         <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Sexo Biologico:</label>
+                          <label for="inputPassword4" class="sub" required>Sexo Biologico:</label>
                           <select name="sexo" id="id_sexo" class="form-control">
                               {% if profesor_form.sexo.value == "Mujer" %}
 
@@ -217,7 +217,7 @@
                         <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
                                 
-                                <input type="date" id="id_fechaNac"  class="form-control" value={{profesor_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" >
+                                <input type="date" id="id_fechaNac"  class="form-control" value={{profesor_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" required>
                                 
                               </div>
                 </div>
@@ -228,13 +228,13 @@
 
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Direccion</label>
-                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value="{{profesor_form.domicilio.value}}">
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value="{{profesor_form.domicilio.value}}"required>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" value="{{profesor_form.telefono.value}}" placeholder="Numero telefono">
+                            <input type="text" class="form-control" id="elTelefono" value="{{profesor_form.telefono.value}}" placeholder="Numero telefono" required>
                         </div>
                         
                 </div>

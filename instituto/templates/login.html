@@ -28,6 +28,9 @@ button#botonEleccion1{
   margin-right: 10%;
   font-size: 22px;
 }
+p#msj{
+    font-size: 17px;
+}
 button#botonEleccion2{
   padding: 4px;
   font-size: 22px;
@@ -54,6 +57,27 @@ button#botonEleccion2{
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Inicio de Sesion</h1>
                   </div>
+                  <div id="cuadroMensajes" >
+
+                      {% if messages %}
+                      {% for message in messages %}
+        
+                      {% if message.tags == 'success'%}
+                      <ul class="alert alert-success alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                      </ul> 
+                      {%endif%}
+                      {% if message.tags == 'error'%}
+                      <ul class="alert alert-danger alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                      </ul> 
+                      {%endif%}
+        
+                      {% endfor %}
+                     {% endif %}
+              </div>
                   <form class="user" method="POST">
                       {%csrf_token%}
                     <div class="form-group">

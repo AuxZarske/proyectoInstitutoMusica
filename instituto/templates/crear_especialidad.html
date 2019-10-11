@@ -25,30 +25,7 @@
     </script>
 
 
-<script>
-        $(document).ready(function(){
-           $("#nombr").change(function () {
-             var username = $(this).val();
-             
-             $.ajax({
-               
-               url: '{% url "gestionMusical:validate_username_partitura" %}',
-               data: {
-                 'username': username
-               },
-               dataType: 'json',
-               
-               success: function (data) {
-                   
-                 if (data.is_taken) {
-                   alert("Ese nombre esta ocupado por otra partitura");
-                 }
-               }
-             });
-       
-           });
-       });
-         </script>
+
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
       $(document).ready(function () {
@@ -68,6 +45,31 @@
           
       });
 </script>
+<script>
+        $(document).ready(function(){
+           $("#nom").change(function () {
+               
+             var username = $(this).val();
+             
+             $.ajax({
+               
+               url: '{% url "gestionMusical:validate_username_especialidad" %}',
+               data: {
+                 'username': username
+               },
+               dataType: 'json',
+               
+               success: function (data) {
+                   
+                 if (data.is_taken) {
+                   alert("Ese nombre esta ocupado por otra especialidad");
+                 }
+               }
+             });
+       
+           });
+       });
+         </script>
 <style type="text/css">
 
     div#cuadroPrincipal{
@@ -188,9 +190,9 @@
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Nombre de Especialidad:</label>
                   {%if editacion != 1%}
-                  <input type="text" class="form-control" id="nom"  style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="Nombre..." required>
+                  <input type="text" class="form-control" id="nom" name="nom"  style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="Nombre..." required>
                   {%else%}
-                  <input type="text" class="form-control" id="nom" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Nombre..." value="{{especialidad_form.nombre.value}}"required>
+                  <input type="text" class="form-control" id="nom" name="nom"  style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Nombre..." value="{{especialidad_form.nombre.value}}"required>
                 {%endif%}
                 </div>
 
