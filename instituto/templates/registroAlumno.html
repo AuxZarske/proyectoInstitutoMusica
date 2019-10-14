@@ -12,6 +12,15 @@
   <!-- Custom styles for this template-->
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 </head>
+<script type="text/javascript">
+
+function limpiar(){
+
+        document.getElementById("id_nombreTipo").value = "";
+}
+
+
+</script>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -71,7 +80,29 @@
       });
 </script>
 
+<script>
+        $(document).ready(function(){
+           $("#id_fechaNac").change(function () {
+            var fecha = $(this).val();
+             
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
 
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            if (edad < 18){
+                document.getElementById("datosTutores").style.display = "block";
+            }else{
+                document.getElementById("datosTutores").style.display = "none";
+            }
+       
+           });
+       });
+         </script>
 
 <style type="text/css">
 
@@ -86,6 +117,9 @@ div#cuadroPrincipal{
 -webkit-border-radius: 0px 0px 18px 18px;
 border: 2px solid #e3e6e3;
 background-color: rgb(255, 255, 255);
+}
+div#datosTutores{
+    display: none;
 }
 div#cuadroCabeza{
     border: 1px solid;
@@ -104,7 +138,14 @@ font-size: 22px;
 
     background-color: #4e73df;
 }
-
+div#datosTutores{
+    background-color: bisque;
+    padding: 2%;
+    border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 0px solid #000000;
+}
 body#total{
     background-color: rgba(224, 224, 224, 0.747);
 }
@@ -117,6 +158,14 @@ label.sub{
 }
 div#cabeza{
     background-color: #4e73df;
+}
+select#country{
+    display: inline-block;
+    width: 80%;
+}
+button#agregarMusic{
+    display: inline-block;
+
 }
 input#id_username{
 
@@ -243,16 +292,59 @@ display: None;
                             <label for="inputPassword4" class="sub">DNI:</label>
                             <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento">
                         </div>
+                        
                         <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Sexo Biologico:</label>
-                          <select name="sexo" id="id_sexo" class="form-control">
-                                <option selected>Hombre</option>
-                                <option>Mujer</option>
-                              </select>
-                        </div>
+                            <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
+                            <input type="date" id="id_fechaNac"  class="form-control" name="fechaNac" value="2000-07-22" min="1900-01-01" max="2018-01-01">
+                            
+                          </div>
                 </div>
 
+                <div  id="datosTutores">
+                    <p>Datos de Tutor/a:</p>
+                    
+                        
+                        <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4" class="sub">Apellido</label>
+                                    <input type="text" class="form-control" id="apellidoInTutor" placeholder="Apellido">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="inputPassword4" class="sub">Nombre</label>
+                                  <input type="text" class="form-control" id="nombreInTutor" placeholder="Nombre">
+                                </div>
+                        </div>
+                        <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4" class="sub">DNI:</label>
+                                    <input type="text" class="form-control" id="elDNItutor" placeholder="Numero Documento">
+                                </div>
+                                <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Relacion:</label><br>
+                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                  Padre
+                                                </label>
+                                        </div>
+                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                  Madre
+                                                </label>
+                                        </div>
+                                        <div class="form-check" style="display: inline-block;" >
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                  Otro:
+                                                </label>
+                                                <input type="text" class="form-control">
+                                        </div>
+                                </div>
+                        </div>  
+                        
 
+                </div>
 
                 
 
@@ -267,19 +359,32 @@ display: None;
                             <input type="text" class="form-control" id="elTelefono" placeholder="Numero telefono">
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
-                          <input type="date" id="id_fechaNac"  class="form-control" name="fechaNac" value="2000-07-22" min="1900-01-01" max="2018-01-01">
-                          
-                        </div>
+                            <label for="inputPassword4" class="sub">Sexo Biologico:</label>
+                            <select name="sexo" id="id_sexo" class="form-control">
+                                  <option selected>Hombre</option>
+                                  <option>Mujer</option>
+                                </select>
+                          </div>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="sub">Musica Preferida:</label>
-                                <select id="id_gustoMusical" name="gustoMusical" class="form-control">
-                                      <option selected>Rock</option>
-                                      <option>Cumbia</option>
-                                    </select>
+                                
+                                <select id="country" class="form-control" name="compositor" >
+                                    
+                                    
+
+                                        {%for musi in losTiposMusicas%}
+                                                <option value='{{musi.id}}'>{{musi.nombre}}</option>
+                                        {%endfor%}
+                                        
+                                </select>
+                                <button type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
+                                        <i class="fas fa-plus"></i>
+                                </button>
+
+
                               </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Clase a Cursar:</label>
@@ -293,6 +398,39 @@ display: None;
                         </div>
                 </div>
 
+                <!--pr-->
+              <div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" id="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Agregar Nueva Musica</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span aria-hidden="true">×</span>
+                                                                        </button>
+                                
+                            </div>
+
+                            
+                            
+                            <div id="modalOculto">
+                                    <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="formGroupExampleInput" style="color: black">Nombre de Tipo de Musica:</label>
+                                                <input type="text" class="form-control" id="id_nombreTipo" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombreIdentificador" placeholder="Nombre o Identificacion de Musica..." required>
+                                            </div>                                         
+                                    </div>
+
+                                    <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiar()">Close</button>
+                                        
+                                            <button type="button" class="btn btn-primary" id="cargar-musica" data-dismiss="modal"  >Cargar</button>
+                                        
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+              </div>
+              <!--pp-->
                 
                 
                 <button type="submit" class="btn btn-primary">Cargar Formulario</button>

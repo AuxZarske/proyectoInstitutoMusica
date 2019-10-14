@@ -48,7 +48,7 @@ class AlumnoForm(forms.ModelForm):
     
     class Meta(UsuarioForm.Meta):
         model = Alumno
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','gustoMusical','especialidadRequerida']
+        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','especialidadRequerida']
 
 
 
