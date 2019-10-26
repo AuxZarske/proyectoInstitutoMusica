@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -22,6 +22,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
+
 import dateutil.parser
 
 import base64
@@ -72,47 +73,135 @@ class Inicio(View):
 
 def registrarAlumno(request):
     especialidadesTodas = Especialidad.objects.all()
-    
+    losTiposMusicas = MusicaTipo.objects.all()
+    form = NewUserForm
+    alumno_form =AlumnoForm()
     if request.method == 'POST':
 
         form = NewUserForm(request.POST)
         
         formAlu = AlumnoForm(request.POST)
+        formMusica = MusicaTipoForm(request.POST)
         print("comienzo")
         print(request.POST)
         print("fin")
         print(form.is_valid())
-        print(form.errors.as_data())
+        print(formMusica.errors.as_data())
         print(formAlu.is_valid())
         print(formAlu.errors.as_data())
+        #si es mayor saber
+        edad = 0
+        fecha = request.POST['fechaNac']
         
-        if form.is_valid() and formAlu.is_valid():
-            user = form.save()
-            alum = formAlu.save(commit=False)
-            alum.user = user
-            alum.save()
-            dj_login(request, user)
-
+        fecha = dateutil.parser.parse(fecha)
+        fecha = fecha.strftime('%d/%m/%Y')
+        fecha = datetime.strptime(fecha, '%d/%m/%Y')
+        print(fecha)
+        
+        hoy = datetime.now()      # Tipo: datetime.datetime
+        #hoy = dateutil.parser.parse(hoy)
+        hoy = hoy.strftime('%d/%m/%Y')
+        hoy = datetime.strptime(hoy, '%d/%m/%Y')
+        print(hoy)
+        edad = hoy - fecha  # Tipo resultante: datetime.timedelta
+        edad = edad.days
+        numero = edad / 365
+        
+        print(numero)
+        #crear formulario musicapreferida
+        validamusica = 0
+        variableNum = 0
+        tipoMusic = request.POST['nombreMusica']
+        try:
+            if 0 <= int(tipoMusic) <= 999999:
+                variableNum = 1
+        except ValueError:
+            variableNum = 0
+        print(tipoMusic)
         
 
+        if (not MusicaTipo.objects.filter(nombreMusica = tipoMusic).exists()) and (variableNum == 0 ):
+            laMusica = MusicaTipoForm(request.POST) 
+            print(laMusica.errors.as_data())
+            if laMusica.is_valid():
 
+                
+                validamusica = 1
 
-           # permission = Permission.objects.get(name='Can view ') #permiso de home
-            #user.user_permissions.add(permission)
-            #user.save()
-
-            return redirect ('login')
-            
+            else:
+                for msg in form.error_messages:
+                    messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                error = form.errors
+                print(error)
+                return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
         else:
-            for msg in form.error_messages:
-                messages.error(request, f"{msg}: {form.error_messages[msg]}")
-            error = form.errors
-            print(error)
-            return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
+            tipoMusic = MusicaTipo.objects.get(id = tipoMusic)
+
         
-    form = NewUserForm
-    alumno_form =AlumnoForm()
-    return render(request, 'registroAlumno.html', context={'form': form,'alumno_form':alumno_form,'especialidadesTodas':especialidadesTodas})
+
+
+       
+
+        if int(numero) >= 18:
+            if form.is_valid() and formAlu.is_valid():
+    
+                user = form.save()
+                alum = formAlu.save(commit=False)
+                alum.user = user
+                if validamusica == 1:
+                    tipoMusic = laMusica.save()
+                alum.musica = tipoMusic
+                alum.save()
+
+
+                dj_login(request, user)
+                return redirect ('login')
+                
+            else:
+                for msg in form.error_messages:
+                    messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                error = form.errors
+                print(error)
+                return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
+        else:
+            #crear form tutor y relacion
+            creado = False
+            dniTu = request.POST['dniTutor']
+            creado = Tutor.objects.filter(dniTutor = dniTu).exists()
+            formTutor = TutorForm(request.POST) 
+            
+            print(formTutor.is_valid())
+            print(formTutor.errors.as_data())
+            if form.is_valid() and formAlu.is_valid() and ( formTutor.is_valid() or creado ):
+    
+                user = form.save()
+                alum = formAlu.save(commit=False)
+                if formTutor.is_valid():
+                    tuto = formTutor.save()
+                else:
+                    tuto = Tutor.objects.get(dniTutor = dniTu)
+                alum.user = user
+                if validamusica == 1:
+                    tipoMusic = laMusica.save()
+                alum.musica = tipoMusic
+
+                alum.tutor = tuto
+                alum.save()
+
+                dj_login(request, user)
+                return redirect ('login')
+                
+            else:
+                for msg in form.error_messages:
+                    messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                error = form.errors
+                print(error)
+                return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
+       
+
+
+    
+    return render(request, 'registroAlumno.html', context={'form': form,'alumno_form':alumno_form,'losTiposMusicas':losTiposMusicas,'especialidadesTodas':especialidadesTodas})
 
 
 def registrarProfesor(request):

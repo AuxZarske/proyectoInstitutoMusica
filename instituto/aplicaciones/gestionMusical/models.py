@@ -56,10 +56,10 @@ class Partitura(models.Model):
 
 
 class Tutor(models.Model):
-    dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
-    nombre = models.CharField('Nombre del tutor', max_length = 100, null = False, blank = False)
-    apellido = models.CharField('Apellido del tutor', max_length = 200, null = False, blank = False)
-    tipo = models.CharField('que relacion de tutor es', max_length = 30, null = False, blank = False)
+    dniTutor = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
+    nombreTutor = models.CharField('Nombre del tutor', max_length = 100, null = False, blank = False)
+    apellidoTutor = models.CharField('Apellido del tutor', max_length = 200, null = False, blank = False)
+    tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
 
     class Meta:
         verbose_name = 'Tutor'
@@ -90,7 +90,7 @@ class Tema(models.Model):
 
 class MusicaTipo(models.Model):
     id = models.AutoField(primary_key = True)
-    nombre = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
+    nombreMusica = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
     
     class Meta:
         verbose_name = 'Musica'
@@ -99,7 +99,7 @@ class MusicaTipo(models.Model):
 
 
     def __str__(self):
-        return self.nombre
+        return self.nombreMusica
 
 
 class Usuario (models.Model):
