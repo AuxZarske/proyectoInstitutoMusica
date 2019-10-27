@@ -61,6 +61,40 @@
           width: 100px;
           height: 100px;
         }
+        div.dt-buttons btn-group flex-wrap{
+  
+  position: absolute initial;
+  
+}
+div#elgrando{
+  width: 400px;
+}
+p#msj{
+    font-size: 17px;
+}
+label.izquierda{
+  display: inline-block;
+  margin-left: 5%;
+  
+}
+div.derecha{
+  display: inline-block;
+  
+  margin-left: 5%;
+  
+  
+}
+div.alinealoNomas{
+  text-align: left;
+}
+div.dataTables_length{
+  display: inline-block;
+  margin-left: 3%;
+}
+div.dataTables_filter{
+  float: right;
+  
+}
         div#ere{
 
 margin-right: 2px;
@@ -260,6 +294,27 @@ margin-left: 2px;
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <div id="cuadroMensajes" >
+
+                {% if messages %}
+                {% for message in messages %}
+  
+                {% if message.tags == 'success'%}
+                <ul class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+                {% if message.tags == 'error'%}
+                <ul class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+  
+                {% endfor %}
+               {% endif %}
+        </div>
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Alumnos</h1>
@@ -350,84 +405,84 @@ margin-left: 2px;
                                                         </center>
                                                           <div class="modal fade bs-example-modal-lg{{alu.dni}}" id="myModal{{alu.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
                                                               <div class="modal-dialog modal-lg">
-                                                                  <div class="modal-content">
+                                                                  <div class="modal-content" id="elgrando">
                                                                       <div class="modal-header">
                                                                           <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Datos Personales</h4>
                                                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                                   </button>
                                                                           
                                                                       </div>
-                                                                      <div class="modal-body">
-                                                                          <div class="form-group row">
-                                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">DNI: </label>
-                                                                              <div class="col-sm-10">
+                                                                      <div class="modal-body" id="cuerpoModal">
+                                                                          <div class="alinealoNomas">
+                                                                              <label for="inputEmail3" class="izquierda">DNI: </label>
+                                                                              <div class="derecha">
                                                                                 {{alu.dni}}
                                                                               </div>
                                                                             </div>
-                                                                            <div class="form-group row">
-                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido:</label>
-                                                                                <div class="col-sm-10">
+                                                                            <div class="alinealoNomas">
+                                                                                <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                                                                <div class="derecha">
                                                                                     {{alu.apellido}}
                                                                                 </div>
                                                                               </div>
-                                                                              <div class="form-group row">
-                                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
-                                                                                  <div class="col-sm-10">
+                                                                              <div class="alinealoNomas">
+                                                                                  <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                                  <div class="derecha">
                                                                                       {{alu.nombre}}
                                                                                   </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
-                                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
-                                                                                    <div class="col-sm-10">
+                                                                                <div class="alinealoNomas">
+                                                                                    <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                                                    <div class="derecha">
                                                                                         {{alu.sexo}}
                                                                                     </div>
                                                                                   </div>
-                                                                                  <div class="form-group row">
-                                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
-                                                                                      <div class="col-sm-10">
+                                                                                  <div class="alinealoNomas">
+                                                                                      <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                                                      <div class="derecha">
                                                                                           {{alu.fechaNac}}
                                                                                       </div>
                                                                                     </div>
-                                                                                    <div class="form-group row">
-                                                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Domicilio:</label>
-                                                                                        <div class="col-sm-10">
+                                                                                    <div class="alinealoNomas">
+                                                                                        <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                                                        <div class="derecha">
                                                                                             {{alu.domicilio}}
                                                                                         </div>
                                                                                       </div>
-                                                                                      <div class="form-group row">
-                                                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Telefono:</label>
-                                                                                          <div class="col-sm-10">
+                                                                                      <div class="alinealoNomas">
+                                                                                          <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                                                          <div class="derecha">
                                                                                               {{alu.telefono}}
                                                                                           </div>
                                                                                         </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Correo:</label>
-                                                                                            <div class="col-sm-10">
+                                                                                        <div class="alinealoNomas">
+                                                                                            <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                                                            <div class="derecha">
                                                                                                 {{alu.correoElectronico}}
                                                                                             </div>
                                                                                           </div>
-                                                                                          <div class="form-group row">
-                                                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Observaciones:</label>
-                                                                                              <div class="col-sm-10">
+                                                                                          <div class="alinealoNomas">
+                                                                                              <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                                                                              <div class="derecha">
                                                                                                   {{alu.observaciones}}
                                                                                               </div>
                                                                                             </div>
-                                                                                            <div class="form-group row">
-                                                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Gusto Musical:</label>
-                                                                                                <div class="col-sm-10">
-                                                                                                    {{alu.gustoMusical}}
+                                                                                            <div class="alinealoNomas">
+                                                                                                <label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+                                                                                                <div class="derecha">
+                                                                                                    {{alu.musica}}
                                                                                                 </div>
                                                                                               </div>
-                                                                                              <div class="form-group row">
-                                                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Conocimiento Previo:</label>
-                                                                                                  <div class="col-sm-10">
+                                                                                              <div class="alinealoNomas">
+                                                                                                  <label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
+                                                                                                  <div class="derecha">
                                                                                                       {{alu.conocimientoPrevio}}
                                                                                                   </div>
                                                                                                 </div>
                         
-                                                                                                <div class="form-group row">
-                                                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Especialidad Requerida:</label>
-                                                                                                    <div class="col-sm-10">
+                                                                                                <div class="alinealoNomas">
+                                                                                                    <label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
+                                                                                                    <div class="derecha">
                                                                                                       {% if alu.especialidadRequerida == None  %}
                                                                                                            Ninguna Asignada
                                                                                                      
@@ -436,6 +491,19 @@ margin-left: 2px;
                                                                                                       {% endif %}
                                                                                                     </div>
                                                                                                   </div>
+                                                                                                  <div class="alinealoNomas">
+                                                                                                      <label for="inputEmail3" class="izquierda" style="color: black;">TUTOR:</label>
+                                                                                                      <div class="derecha">
+                                                                                                          
+                                                                                                          {%if alu.tutor%}
+                                                                                                          {{alu.tutor}}
+                                                                                                          <a href="#">mas</a>
+                                                                                                          {%else%} 
+                                                                                                          <p>No registrado / mayor de edad</p>
+                                                                                                          {%endif%}
+                                                                                                      </div>
+                                                                                                    </div>
+
                                                                           
                                                                       </div>
                                                                       <div class="modal-footer">
@@ -564,84 +632,84 @@ margin-left: 2px;
                                 </center>
                                   <div class="modal fade bs-example-modal-lg{{alu.dni}}" id="myModal{{alu.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
-                                          <div class="modal-content">
+                                          <div class="modal-content" id="elgrando">
                                               <div class="modal-header">
                                                   <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Datos Personales</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
-                                              <div class="modal-body">
-                                                  <div class="form-group row">
-                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">DNI: </label>
-                                                      <div class="col-sm-10">
+                                              <div class="modal-body" id="cuerpoModal">
+                                                  <div class="alinealoNomas">
+                                                      <label for="inputEmail3" class="izquierda">DNI: </label>
+                                                      <div class="derecha">
                                                         {{alu.dni}}
                                                       </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido:</label>
-                                                        <div class="col-sm-10">
+                                                    <div class="alinealoNomas">
+                                                        <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                                        <div class="derecha">
                                                             {{alu.apellido}}
                                                         </div>
                                                       </div>
-                                                      <div class="form-group row">
-                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
-                                                          <div class="col-sm-10">
+                                                      <div class="alinealoNomas">
+                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                          <div class="derecha">
                                                               {{alu.nombre}}
                                                           </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
-                                                            <div class="col-sm-10">
+                                                        <div class="alinealoNomas">
+                                                            <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                            <div class="derecha">
                                                                 {{alu.sexo}}
                                                             </div>
                                                           </div>
-                                                          <div class="form-group row">
-                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
-                                                              <div class="col-sm-10">
+                                                          <div class="alinealoNomas">
+                                                              <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                              <div class="derecha">
                                                                   {{alu.fechaNac}}
                                                               </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Domicilio:</label>
-                                                                <div class="col-sm-10">
+                                                            <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                                <div class="derecha">
                                                                     {{alu.domicilio}}
                                                                 </div>
                                                               </div>
-                                                              <div class="form-group row">
-                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Telefono:</label>
-                                                                  <div class="col-sm-10">
+                                                              <div class="alinealoNomas">
+                                                                  <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                                  <div class="derecha">
                                                                       {{alu.telefono}}
                                                                   </div>
                                                                 </div>
-                                                                <div class="form-group row">
-                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Correo:</label>
-                                                                    <div class="col-sm-10">
+                                                                <div class="alinealoNomas">
+                                                                    <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                                    <div class="derecha">
                                                                         {{alu.correoElectronico}}
                                                                     </div>
                                                                   </div>
-                                                                  <div class="form-group row">
-                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Observaciones:</label>
-                                                                      <div class="col-sm-10">
+                                                                  <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                                                      <div class="derecha">
                                                                           {{alu.observaciones}}
                                                                       </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Gusto Musical:</label>
-                                                                        <div class="col-sm-10">
-                                                                            {{alu.gustoMusical}}
+                                                                    <div class="alinealoNomas">
+                                                                        <label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+                                                                        <div class="derecha">
+                                                                            {{alu.musica}}
                                                                         </div>
                                                                       </div>
-                                                                      <div class="form-group row">
-                                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Conocimiento Previo:</label>
-                                                                          <div class="col-sm-10">
+                                                                      <div class="alinealoNomas">
+                                                                          <label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
+                                                                          <div class="derecha">
                                                                               {{alu.conocimientoPrevio}}
                                                                           </div>
                                                                         </div>
 
-                                                                        <div class="form-group row">
-                                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Especialidad Requerida:</label>
-                                                                            <div class="col-sm-10">
+                                                                        <div class="alinealoNomas">
+                                                                            <label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
+                                                                            <div class="derecha">
                                                                               {% if alu.especialidadRequerida == None  %}
                                                                                    Ninguna Asignada
                                                                              
@@ -650,6 +718,18 @@ margin-left: 2px;
                                                                               {% endif %}
                                                                             </div>
                                                                           </div>
+                                                                          <div class="alinealoNomas">
+                                                                              <label for="inputEmail3" class="izquierda" style="color: black;">TUTOR:</label>
+                                                                              <div class="derecha">
+                                                                                  
+                                                                                  {%if alu.tutor%}
+                                                                                  {{alu.tutor}}
+                                                                                  <a href="#">mas</a>
+                                                                                  {%else%} 
+                                                                                  <p>No registrado / mayor de edad</p>
+                                                                                  {%endif%}
+                                                                              </div>
+                                                                            </div>
                                                   
                                               </div>
                                               <div class="modal-footer">
@@ -767,6 +847,7 @@ margin-left: 2px;
   <!-- Bootstrap core JavaScript-->
   <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  
   <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>

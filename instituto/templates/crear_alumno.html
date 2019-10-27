@@ -13,6 +13,22 @@
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
 </head>
+<script type="text/javascript">
+    function Numeros(string){//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+};
+    
+</script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
       $(document).ready(function () {
@@ -26,7 +42,10 @@
               var value = $(this).val();
               $("#id_nombre").val(value);
           });
-          
+          $("#tuOtroTutor").keyup(function () {
+              var value = $(this).val();
+              $("#exampleRadios3").val(value);
+          });
           
           $("#inputAddress2").keyup(function () {
               var value = $(this).val();
@@ -40,6 +59,108 @@
           
       });
 </script>
+<script>
+        $(document).ready(function(){
+
+            
+            
+
+
+
+           $("#id_fechaNac").change(function () {
+            var fecha = $(this).val();
+             
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            if (edad < 18){
+                document.getElementById("datosTutores").style.display = "block";
+                $("#apellidoInTutor").prop('required',true);
+                $("#nombreInTutor").prop('required',true);
+                $("#elDNItutor").prop('required',true);
+                $("#elTelefonoTutor").prop('required',true);
+                
+            }else{
+                document.getElementById("datosTutores").style.display = "none";
+                $("#apellidoInTutor").prop('required',false);
+                $("#nombreInTutor").prop('required',false);
+                $("#elDNItutor").prop('required',false);
+                $("#elTelefonoTutor").prop('required',false);
+            }
+       
+           });
+           $("#exampleRadios1").change(function () {
+               
+            var seleccionado = $(this).val();
+        
+
+            
+                document.getElementById("tuOtroTutor").style.display = "none";
+            
+
+       
+           });
+           $("#exampleRadios2").change(function () {
+               
+               var seleccionado = $(this).val();
+           
+   
+              
+                document.getElementById("tuOtroTutor").style.display = "none";
+               
+   
+          
+              });
+              $("#exampleRadios3").change(function () {
+               
+               var seleccionado = $(this).val();
+               
+                document.getElementById("tuOtroTutor").style.display = "inline-block";
+             
+
+               
+   
+          
+              });
+              $("#exampleRadios3").change(function () {
+                    var fecha = $("#id_fechaNac").val();
+             
+                    var hoy = new Date();
+                    var cumpleanos = new Date(fecha);
+                    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                    var m = hoy.getMonth() - cumpleanos.getMonth();
+ 
+                    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                        edad--;
+                    }
+                    if(edad < 18){
+                        $("#tuOtroTutor").prop('required',true);
+
+
+                    }
+              });
+              $("#exampleRadios2").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
+              });
+              $("#exampleRadios1").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
+              });
+       });
+         </script>
 <style type="text/css">
 
     div#cuadroPrincipal{
@@ -71,7 +192,9 @@
     
         background-color: #4e73df;
     }
-    
+    input#tuOtroTutor{
+    display: none;
+}
     body#total{
         background-color: rgba(238, 236, 236, 0.747);
     }
@@ -94,11 +217,25 @@
     display: None;
     
     }
+    label.sub{
+    color: black;
+}
     input#id_first_name{
     display: None;
     }
+    select#country{
+    display: inline-block;
+    width: 80%;
+}
+button#agregarMusic{
+    display: inline-block;
+
+}
     input#id_last_name{
     display: None;
+    }
+    label#labelMusica{
+        display: block;
     }
     input#id_email{
     display: None;
@@ -112,9 +249,23 @@
     input#id_correoElectronico{
     display: None;
     }
+    a#izqTU{
+        margin-left: 10px;
+    }
     input#id_dni{
     display: None;
     }
+    div#datosTutores{
+    background-color: rgba(212, 250, 228, 0.411);
+    padding: 2%;
+    border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 0px solid #000000;
+}
+div#datosTutores{
+    display: none;
+}
     input#id_apellido{
     display: None;
     }
@@ -187,11 +338,11 @@
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{alumno_form.apellido.value}}">
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{alumno_form.apellido.value}}" required>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{alumno_form.nombre.value}}">
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{alumno_form.nombre.value}}"required>
                         </div>
                 </div>
 
@@ -199,7 +350,7 @@
                         
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Sexo Biologico:</label>
-                          <select name="sexo" id="id_sexo" class="form-control">
+                          <select name="sexo" id="id_sexo" class="form-control" required>
                               {% if alumno_form.sexo.value == "Mujer" %}
 
                               <option >Hombre</option>
@@ -217,10 +368,82 @@
                         <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
                                 
-                                <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" >
+                                <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" required>
                                 
                               </div>
                 </div>
+                <div  id="datosTutores">
+                        <p style="color: black;">Datos de Tutor/a:</p>
+                        
+                            
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Apellido</label>
+                                        <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" placeholder="Apellido" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label for="inputPassword4" class="sub">Nombre</label>
+                                      <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" placeholder="Nombre">
+                                    </div>
+                            </div>
+                            <div class="form-row"> 
+    
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">DNI:</label>
+                                        <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)"  placeholder="Numero Documento">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                            <label for="inputPassword4" class="sub">Telefono del tutor:</label>
+                                            <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono tutor..." >
+                                        </div>
+    
+                                    
+                                    </div>
+                                    <div class="form-row"> 
+                                            <!--jh-->
+                                            <div class="form-group col-md-6" >
+                                        
+                                                    <label for="inputPassword4" class="sub">Relacion:</label><br>
+                                                    <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre" checked>
+                                                            <label class="form-check-label" for="exampleRadios1">
+                                                              Padre
+                                                            </label>
+                                                    </div>
+                                                    <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre" >
+                                                            <label class="form-check-label" for="exampleRadios1">
+                                                              Madre
+                                                            </label>
+                                                    </div>
+                                                    <div class="form-check" style="display: inline-block;" >
+                                                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro" >
+                                                            <label class="form-check-label" for="exampleRadios1">
+                                                              Otro:
+                                                            </label>
+                                                            
+                                                            
+            
+                                                            
+                                                            <input type="text" id="tuOtroTutor" name ="otroTutor" class="form-control" >
+                                                    </div>
+                                            <!---->
+                                            
+                                    </div>
+                                    <div class="form-row">
+                                            <a href="#">
+                                                    <button type="button" id="nuevoTU" class="btn btn-info" onclick="nuevoTutor()">Establecer cambio de Tutor</button>
+                                                </a>
+                                            <a href="#" id="izqTU">
+                                                    <button type="button" id="modificarTU" class="btn btn-info">Modificar datos del Tutor Actual</button>
+                                                </a>
+                                                
+                                    </div>
+    
+                            </div>  
+                            
+    
+                    </div>
 
 
 
@@ -228,13 +451,13 @@
 
                 <div class="form-group">
                   <label for="inputAddress2" class="sub">Direccion</label>
-                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value="{{alumno_form.domicilio.value}}">
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value="{{alumno_form.domicilio.value}}" required>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" value="{{alumno_form.telefono.value}}" placeholder="Numero telefono">
+                            <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)" value="{{alumno_form.telefono.value}}" placeholder="Numero telefono" required>
                         </div>
                         
                 </div>
@@ -251,19 +474,60 @@
                             
                   </div>
                   <div class="form-group">
-                      <label for="inputPassword4" class="sub">Musica Preferida:</label>
-                                <select id="id_gustoMusical" name="gustoMusical" class="form-control">
-                                      <option selected>Rock</option>
-                                      <option>Cumbia</option>
-                                    </select>
+                        <label for="inputPassword4"id="labelMusica" class="sub" >Musica Preferida:</label>
+                                
+                        <select id="country" class="form-control" name="nombreMusica" required>
+                            
+                                {%for musi in losTiposMusicas%}
+                                        
+                                        <option value='{{musi.id}}'>{{musi.nombreMusica}}</option>
+
+                                {%endfor%}
+                                
+                        </select>
+                        <button type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
+                                <i class="fas fa-plus"></i>
+                        </button>
                       
                       
                               
                   </div>
+<!--pr-->
+<div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Agregar Nueva Musica</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span aria-hidden="true">×</span>
+                                                            </button>
+                    
+                </div>
 
+                
+                
+                <div id="modalOculto">
+                        <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput" style="color: black">Nombre de Tipo de Musica:</label>
+                                    <input type="text" class="form-control" id="id_nombreTipo" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="Nombre o Identificacion de Musica..." >
+                                </div>                                         
+                        </div>
+
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiar()">Close</button>
+                            
+                                <button type="button" class="btn btn-primary" id="cargar-musica"  onclick="cargaMusic()">Cargar</button>
+                            
+                        </div>
+                </div>
+
+            </div>
+        </div>
+  </div>
+  <!--pp-->
                 <div class="form-group">
                     <label for="inputPassword4" class="sub">Clase a Cursar:</label>
-                    <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control">
+                    <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control" required>
 
                           {% for esp in especialidadesTodas %}
                                        <option value='{{esp.id}}'>{{esp.nombre}}</option>
@@ -319,8 +583,178 @@
 
 <script type="text/javascript">
    
-    document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
+    document.getElementById("#id_fechaNac").max = new Date().toISOString().split("T")[0];
+    function limpiar(){
+
+document.getElementById("id_nombreTipo").value = "";
+};
+    function cargaMusic(){
+    
+    var nombre = document.getElementById("id_nombreTipo").value;
+    var noExiste = true;
+    var username = nombre;
+    $.ajax({
+            
+            url: '{% url "gestionMusical:validate_username_tipoMusica" %}',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            
+            success: function (data) {
+                
+              if (data.is_taken) {
+                
+                alert("ese nombre ya existe");
+              }else{
+
+                if (nombre != "" ){
+                    optionExtra = "";
+                    
+                
+                    limpiar();
+
+                    $('#myModal2').modal('hide'); 
+
+                    
+                    //cambiar valor al finalizar formulario, de nada al nombre del select
+                    optionExtra += "<option value='"+nombre +"' selected>"  +nombre+ "</option>";
+                    
+                        $("#country").append(optionExtra);
+
+                        $("#country").val(nombre).change();
+                    
+
+                    
+                                    
+            }else{
+                alert("Escriba un nombre nuevo, sino simplemente seleccionelo de la lista: ");
+            }
+              }
+            }
+          });
+    
+
+}
    
+
+        
+</script>
+<script>
+    $(document).ready(function(){
+        
+        $("#country").val("{{idMusicaPreferida}}").change();
+            var fecha = $("#id_fechaNac").val();
+             
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            if (edad < 18){
+                document.getElementById("datosTutores").style.display = "block";
+                $("#apellidoInTutor").prop('required',true);
+                $("#nombreInTutor").prop('required',true);
+                $("#elDNItutor").prop('required',true);
+                $("#elTelefonoTutor").prop('required',true);
+
+                
+                $("#elDNItutor").val('{{tutor_form.dniTutor.value}}');
+                $("#apellidoInTutor").val('{{tutor_form.apellidoTutor.value}}');
+                $("#nombreInTutor").val('{{tutor_form.nombreTutor.value}}');
+                $("#elTelefonoTutor").val('{{tutor_form.telefonoTutor.value}}');
+
+                var tipoTutor = '{{tutor_form.tipo.value}}';
+                if(tipoTutor == 'Madre'){
+                    $("#exampleRadios2").prop("checked", true);
+                }else{
+                    if(tipoTutor == 'Padre'){
+                        $("#exampleRadios1").prop("checked", true);
+                    }else{
+                        $("#exampleRadios3").prop("checked", true);
+                        $("#tuOtroTutor").val('{{tutor_form.tipo.value}}');
+                        document.getElementById("tuOtroTutor").style.display="block";
+                    }
+                }
+                $("#elDNItutor").prop('readonly', true);
+                $("#apellidoInTutor").prop('readonly', true);
+                $("#nombreInTutor").prop('readonly', true);
+                $("#elTelefonoTutor").prop('readonly', true);
+                
+
+                document.getElementById("exampleRadios1").disabled=true;
+                document.getElementById("exampleRadios2").disabled=true;
+                document.getElementById("exampleRadios3").disabled=true;
+                $("#tuOtroTutor").prop('readonly', true);
+
+                
+               
+
+                
+
+
+
+                
+            }else{
+                document.getElementById("datosTutores").style.display = "none";
+                $("#apellidoInTutor").prop('required',false);
+                $("#nombreInTutor").prop('required',false);
+                $("#elDNItutor").prop('required',false);
+                $("#elTelefonoTutor").prop('required',false);
+            }
+
+    });
+</script>
+<script type="text/javascript">
+
+    document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
+
+    function nuevoTutor(){
+                $("#elDNItutor").prop('readonly', false);
+                $("#apellidoInTutor").prop('readonly', false);
+                $("#nombreInTutor").prop('readonly', false);
+                $("#elTelefonoTutor").prop('readonly', false);
+                
+
+                document.getElementById("exampleRadios1").disabled=false;
+                document.getElementById("exampleRadios2").disabled=false;
+                document.getElementById("exampleRadios3").disabled=false;
+                $("#tuOtroTutor").prop('readonly', false);
+
+
+                $("#elDNItutor").val('');
+                $("#apellidoInTutor").val('');
+                $("#nombreInTutor").val('');
+                $("#elTelefonoTutor").val('');
+
+                $("#tuOtroTutor").val('');
+
+                var fecha = $("#id_fechaNac").val();
+             
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            if (edad < 18){
+                document.getElementById("datosTutores").style.display = "block";
+                $("#apellidoInTutor").prop('required',true);
+                $("#nombreInTutor").prop('required',true);
+                $("#elDNItutor").prop('required',true);
+                $("#elTelefonoTutor").prop('required',true);
+
+            
+
+               }
+    }
 
         
 </script>

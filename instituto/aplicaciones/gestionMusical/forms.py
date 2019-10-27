@@ -57,7 +57,7 @@ class AlumnoForm(forms.ModelForm):
 class TutorForm(forms.ModelForm):
     class Meta:
         model = Tutor
-        fields = ['nombreTutor','dniTutor','apellidoTutor','tipo']
+        fields = ['nombreTutor','dniTutor','apellidoTutor','tipo','telefonoTutor']
     
    
 

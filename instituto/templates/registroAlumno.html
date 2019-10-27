@@ -35,28 +35,49 @@ function Numeros(string){//Solo numeros
 function cargaMusic(){
     
     var nombre = document.getElementById("id_nombreTipo").value;
-    if (nombre != ""){
-            optionExtra = "";
+    var noExiste = true;
+    var username = nombre;
+    $.ajax({
             
-           
-            limpiar();
+            url: '{% url "gestionMusical:validate_username_tipoMusica" %}',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            
+            success: function (data) {
+                
+              if (data.is_taken) {
+                
+                alert("ese nombre ya existe");
+              }else{
 
-            $('#myModal2').modal('hide'); 
+                if (nombre != "" ){
+                    optionExtra = "";
+                    
+                
+                    limpiar();
 
-            
-            //cambiar valor al finalizar formulario, de nada al nombre del select
-            optionExtra += "<option value='"+nombre +"' selected>"  +nombre+ "</option>";
-            
-                $("#country").append(optionExtra);
+                    $('#myModal2').modal('hide'); 
 
-                $("#country").val(nombre).change();
-            
+                    
+                    //cambiar valor al finalizar formulario, de nada al nombre del select
+                    optionExtra += "<option value='"+nombre +"' selected>"  +nombre+ "</option>";
+                    
+                        $("#country").append(optionExtra);
 
-            
-                            
-    }else{
-        alert("Escriba un nombre: ");
-    }
+                        $("#country").val(nombre).change();
+                    
+
+                    
+                                    
+            }else{
+                alert("Escriba un nombre nuevo, sino simplemente seleccionelo de la lista: ");
+            }
+              }
+            }
+          });
+    
 
 }
 
@@ -73,6 +94,10 @@ function cargaMusic(){
           $("#apellidoIn").keyup(function () {
               var value = $(this).val();
               $("#id_first_name").val(value);
+          });
+          $("#tuOtroTutor").keyup(function () {
+              var value = $(this).val();
+              $("#exampleRadios3").val(value);
           });
           $("#nombreIn").keyup(function () {
               var value = $(this).val();
@@ -140,11 +165,14 @@ function cargaMusic(){
                 $("#apellidoInTutor").prop('required',true);
                 $("#nombreInTutor").prop('required',true);
                 $("#elDNItutor").prop('required',true);
+                $("#elTelefonoTutor").prop('required',true);
+                
             }else{
                 document.getElementById("datosTutores").style.display = "none";
                 $("#apellidoInTutor").prop('required',false);
                 $("#nombreInTutor").prop('required',false);
                 $("#elDNItutor").prop('required',false);
+                $("#elTelefonoTutor").prop('required',false);
             }
        
            });
@@ -180,6 +208,37 @@ function cargaMusic(){
                
    
           
+              });
+              $("#exampleRadios3").change(function () {
+                    var fecha = $("#id_fechaNac").val();
+             
+                    var hoy = new Date();
+                    var cumpleanos = new Date(fecha);
+                    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                    var m = hoy.getMonth() - cumpleanos.getMonth();
+ 
+                    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                        edad--;
+                    }
+                    if(edad < 18){
+                        $("#tuOtroTutor").prop('required',true);
+
+
+                    }
+              });
+              $("#exampleRadios2").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
+              });
+              $("#exampleRadios1").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
               });
        });
          </script>
@@ -401,38 +460,46 @@ display: None;
 
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4" class="sub">DNI:</label>
-                                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor"   placeholder="Numero Documento">
+                                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)"  placeholder="Numero Documento">
+                                </div>
+                                <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Telefono del tutor:</label>
+                                        <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono tutor..." >
+                                    </div>
+
+                                
+                                </div>
+                                <div class="form-row"> 
+                                        <!--jh-->
+                                        <div class="form-group col-md-6" >
+                                    
+                                                <label for="inputPassword4" class="sub">Relacion:</label><br>
+                                                <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre" checked>
+                                                        <label class="form-check-label" for="exampleRadios1">
+                                                          Padre
+                                                        </label>
+                                                </div>
+                                                <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre" >
+                                                        <label class="form-check-label" for="exampleRadios1">
+                                                          Madre
+                                                        </label>
+                                                </div>
+                                                <div class="form-check" style="display: inline-block;" >
+                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro" >
+                                                        <label class="form-check-label" for="exampleRadios1">
+                                                          Otro:
+                                                        </label>
+                                                        
+                                                        
+        
+                                                        
+                                                        <input type="text" id="tuOtroTutor" name ="otroTutor" class="form-control" >
+                                                </div>
+                                        <!---->
                                 </div>
 
-                                <div class="form-group col-md-6" >
-                                        <label for="inputPassword4" class="sub">Relacion:</label><br>
-                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Padre
-                                                </label>
-                                        </div>
-                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre" >
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Madre
-                                                </label>
-                                        </div>
-                                        <div class="form-check" style="display: inline-block;" >
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro" >
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Otro:
-                                                </label>
-                                                <!--hacer foco, es decir, que value tome valor de otro input con jquery-->
-                                                <!--hacer que al seleccionar este id, el campo sea requerido del otro id-->
-
-                                                <!--probarlo, y continuar con pagina alumnos, clase y prestamos; agregar tablas de manejo extra-->
-                                                
-                                                <!--permisos de acceso a info, arreglo formulario(harcodeo, estilo, alineacion, ortografia)-->
-                                                <!--estadistica, arreglos globales, auditoria-->
-                                                <input type="text" id="tuOtroTutor" name ="otroTutor" class="form-control" >
-                                        </div>
-                                </div>
                         </div>  
                         
 

@@ -60,13 +60,14 @@ class Tutor(models.Model):
     nombreTutor = models.CharField('Nombre del tutor', max_length = 100, null = False, blank = False)
     apellidoTutor = models.CharField('Apellido del tutor', max_length = 200, null = False, blank = False)
     tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
+    telefonoTutor = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
 
     class Meta:
         verbose_name = 'Tutor'
         verbose_name_plural = 'Tutores'
 
     def __str__(self):
-        return self.nombre
+        return self.apellidoTutor + " "+ self.nombreTutor + "  Tel: "+self.telefonoTutor
 
 
 class Tema(models.Model):

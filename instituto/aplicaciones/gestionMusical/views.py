@@ -42,8 +42,20 @@ def validate_username_especialidad(request):
     print(data)
     return JsonResponse(data)
 
+def validate_username_tipoMusica(request):
+    nombre = request.GET.get('username', None)
+    
+    data = {
+        'is_taken': MusicaTipo.objects.filter(nombreMusica__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    print(data)
+    return JsonResponse(data)
+
 def validate_username_partitura(request):
     nombre = request.GET.get('username', None)
+    
     data = {
         'is_taken': Partitura.objects.filter(nombre__iexact=nombre).exists()
     }
@@ -533,6 +545,7 @@ def listaralumnos(request):
     clases = Clase.objects.all()
     alumnos = Alumno.objects.all()
     
+    
     return render(request,'alumnos.html',{'alumnos':alumnos, 'clases':clases})
 
 
@@ -542,8 +555,17 @@ def listaralumnos(request):
 def eliminarAlumno(request,dni):
     alumno = Alumno.objects.get(dni=dni)
     
-    alumno.estado = False
-    alumno.save()
+    #que o este en una clase
+    
+    if not Clase.objects.filter(alumnoAsociados = alumno).exists():
+        alumno.estado = False
+        #desasociar  partituras, temas
+        alumno.partiturasAsociadas.clear()
+        alumno.temasAsociadas.clear()
+        alumno.save()
+        messages.success(request, "Eliminado exitoso!")
+    else:
+        messages.error(request, " Error - El alumno pertenece a una clase actualmente")
     return redirect('gestionMusical:alumnos')
 
 
@@ -586,12 +608,21 @@ def crearAlumno(request):
 
 def editarAlumno(request,dni):
     alumno_form = None
+    tutor_form = None
+    losTiposMusicas = MusicaTipo.objects.all()
     error = None
+    idMusicaPreferida = 0
     editacion = 1
     especialidadesTodas = list(Especialidad.objects.all())
     espeAlu = []
     try:
         alumno = Alumno.objects.get(dni =dni,estado=True)
+        try:
+            tuDni = alumno.tutor.dniTutor
+            elTutor = Tutor.objects.get(dniTutor = tuDni)
+        except:
+            elTutor = None
+        idMusicaPreferida = alumno.musica.id
         if alumno.especialidadRequerida != None:
             espeAlu.append(alumno.especialidadRequerida)
             
@@ -599,37 +630,109 @@ def editarAlumno(request,dni):
             
         if request.method == 'GET':
             alumno_form = AlumnoForm(instance = alumno)
+            tutor_form = TutorForm(instance = elTutor)
         else:
             alumno_form = AlumnoForm(request.POST, instance = alumno)
+            formMusica = MusicaTipoForm(request.POST)
+            edad = 0
+            fecha = request.POST['fechaNac']
             
-            if alumno_form.is_valid():
-                alumno_form.save()
+            fecha = dateutil.parser.parse(fecha)
+            fecha = fecha.strftime('%d/%m/%Y')
+            fecha = datetime.strptime(fecha, '%d/%m/%Y')
+            hoy = datetime.now()      # Tipo: datetime.datetime
+            #hoy = dateutil.parser.parse(hoy)
+            hoy = hoy.strftime('%d/%m/%Y')
+            hoy = datetime.strptime(hoy, '%d/%m/%Y')
+            print(hoy)
+            edad = hoy - fecha  # Tipo resultante: datetime.timedelta
+            edad = edad.days
+            numero = edad / 365
+            validamusica = 0
+            variableNum = 0
+            tipoMusic = request.POST['nombreMusica']
+            try:
+                if 0 <= int(tipoMusic) <= 999999:
+                    variableNum = 1
+            except ValueError:
+                variableNum = 0
 
-                #CONSEGUIR EL ALUMNO,
-                elAlumno = Alumno.objects.get(dni = dni)
+            if (not MusicaTipo.objects.filter(nombreMusica = tipoMusic).exists()) and (variableNum == 0 ):
+                laMusica = MusicaTipoForm(request.POST) 
+                print(laMusica.errors.as_data())
+                if laMusica.is_valid():
 
-                #Poner vacia la relacion
-                elAlumno.especialidadRequerida = None
-                elAlumno.save()
-                #obtener la espe seleccionada
-                print(request.POST)
-                laEspe = request.POST['especialidadRequerida']
-                
-                if laEspe != '':
-                    laEspecialidad = Especialidad.objects.get(id = laEspe)
-                    elAlumno.especialidadRequerida = laEspecialidad
-                    elAlumno.save()
+                    
+                    validamusica = 1
+
                 else:
-                    print("no me dio especialidad alguna")
-                
+                    for msg in form.error_messages:
+                        messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                    error = form.errors
+                    print(error)
+                    return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
+            else:
+                tipoMusic = MusicaTipo.objects.get(id = tipoMusic)
+            
+            if int(numero) >= 18:
+                if alumno_form.is_valid():
+                    alum = alumno_form.save()
+                    if validamusica == 1:
+                        tipoMusic = laMusica.save()
+                    alum.musica = tipoMusic
+                    alum.save()
+
+                    #CONSEGUIR EL ALUMNO,
+                    elAlumno = Alumno.objects.get(dni = dni)
+
+                    #Poner vacia la relacion
+                    elAlumno.especialidadRequerida = None
+                    elAlumno.save()
+                    #obtener la espe seleccionada
+                    print(request.POST)
+                    laEspe = request.POST['especialidadRequerida']
+                    
+                    if laEspe != '':
+                        laEspecialidad = Especialidad.objects.get(id = laEspe)
+                        elAlumno.especialidadRequerida = laEspecialidad
+                        elAlumno.save()
+                        messages.success(request, "Registro Correcto!")
+                    else:
+                        print("no me dio especialidad alguna")
+                        
+                    
+
+                else:
+                    messages.error(request, " Error - No se pudo cargar")
+            else:
+                creado = False
+                dniTu = request.POST['dniTutor']
+                creado = Tutor.objects.filter(dniTutor = dniTu).exists()
+                formTutor = TutorForm(request.POST) 
+                if alumno_form.is_valid() and ( formTutor.is_valid() or creado ):
+                    alum = alumno_form.save()
+                    if formTutor.is_valid():
+                        tuto = formTutor.save()
+                    else:
+                        tuto = Tutor.objects.get(dniTutor = dniTu)
+
+                    if validamusica == 1:
+                        tipoMusic = laMusica.save()
+
+                    alum.musica = tipoMusic
+                    alum.tutor = tuto
+                    alum.save()
+                    messages.success(request, "Registro Correcto!")
+                else:
+                    messages.error(request, " Error - No se pudo cargar")
 
 
             return redirect('gestionMusical:alumnos')
     except ObjectDoesNotExist as e:
         error = e
 
-    
-    return render(request,'crear_alumno.html',{'alumno_form':alumno_form,'error':error,'especialidadesTodas':especialidadesTodas, 'espeAlu':espeAlu,'editacion':editacion})
+    print(idMusicaPreferida)
+    return render(request,'crear_alumno.html',{'alumno_form':alumno_form,"tutor_form":tutor_form,'losTiposMusicas':losTiposMusicas,"idMusicaPreferida":idMusicaPreferida,'error':error,'especialidadesTodas':especialidadesTodas, 'espeAlu':espeAlu,'editacion':editacion})
 
 
 
