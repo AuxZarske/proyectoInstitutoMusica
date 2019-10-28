@@ -42,6 +42,21 @@ def validate_username_especialidad(request):
     print(data)
     return JsonResponse(data)
 
+
+def validate_username_tutorDNI(request):
+    dni = request.GET.get('username', None)
+    data = {
+        'is_taken': Tutor.objects.filter(dniTutor__iexact=dni).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese dni ya esta ocupado.'
+    print(data)
+    return JsonResponse(data)
+
+
+
+
+
 def validate_username_tipoMusica(request):
     nombre = request.GET.get('username', None)
     
@@ -167,6 +182,7 @@ def registrarAlumno(request):
 
 
                 dj_login(request, user)
+                messages.success(request, "Registro Correcto!")
                 return redirect ('login')
                 
             else:
@@ -201,6 +217,7 @@ def registrarAlumno(request):
                 alum.save()
 
                 dj_login(request, user)
+                messages.success(request, "Registro Correcto!")
                 return redirect ('login')
                 
             else:
@@ -269,7 +286,128 @@ def registrarProfesor(request):
 
 def listartutores(request):
     tutores = Tutor.objects.all()
-    return render(request, 'tutores.html', context={'tutores': tutores})
+    pedidor = str(request.user.username)
+    filtro = ''
+    pedidor = ''
+
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    print(filtro)
+    return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro})
+
+def crearTutor(request):
+    editacion = 0
+    if request.method == 'POST':
+        tutor_form = TutorForm(request.POST)
+        
+        if tutor_form.is_valid() :
+
+            tutor_form.save()
+            print(request.POST)
+            messages.success(request, "Carga Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_tutor')
+        else:
+            return redirect('gestionMusical:tutores')
+    else:
+        tutor_form =TutorForm()
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
+
+def crearCompositor(request):
+    editacion = 0
+    if request.method == 'POST':
+        tutor_form = TutorForm(request.POST)
+        
+        if tutor_form.is_valid() :
+
+            tutor_form.save()
+            print(request.POST)
+            messages.success(request, "Carga Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+
+        if(request.POST['custId'] == '1'):
+            return redirect('gestionMusical:crear_tutor')
+        else:
+            return redirect('gestionMusical:tutores')
+    else:
+        tutor_form =TutorForm()
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
+    
+
+def editarTutor(request,dni):
+    editacion = 1
+    tutor_form = None
+    error = None
+    try:
+        tutor = Tutor.objects.get(dniTutor = dni)
+        if request.method == 'GET':
+            tutor_form = TutorForm(instance = tutor)
+        else:
+            tutor_form = TutorForm(request.POST, instance = tutor)
+            if tutor_form.is_valid() :
+                tutor_form.save()
+                messages.success(request, "Carga Correcto!")
+            else:
+                messages.error(request, " Error - No se pudo cargar")
+            
+            return redirect('gestionMusical:tutores')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
+
+def editarCompositor(request,dni):
+    editacion = 1
+    tutor_form = None
+    error = None
+    try:
+        tutor = Tutor.objects.get(dniTutor = dni)
+        if request.method == 'GET':
+            tutor_form = TutorForm(instance = tutor)
+        else:
+            tutor_form = TutorForm(request.POST, instance = tutor)
+            if tutor_form.is_valid() :
+                tutor_form.save()
+                messages.success(request, "Carga Correcto!")
+            else:
+                messages.error(request, " Error - No se pudo cargar")
+            
+            return redirect('gestionMusical:tutores')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
+
+
+def eliminarTutor(request,dni):
+    tutor = Tutor.objects.get(dniTutor = dni)
+    
+    try:
+        tutor.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse un tutor en uso")
+    return redirect('gestionMusical:tutores')
+
+
+def eliminarCompositor(request,id):
+    compo = Compositor.objects.get(id = id)
+    
+    try:
+        compo.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse el compositor esta en uso")
+    return redirect('gestionMusical:compoMusic')
 
 
 def listarcompoMusic(request):
@@ -454,11 +592,14 @@ def listarprofesores(request):
 
 
 def eliminarProfesor(request,dni):
-
-    profesor = Profesor.objects.get(dni=dni)
-    
-    profesor.estado = False
-    profesor.save()
+    try:
+        profesor = Profesor.objects.get(dni=dni)
+        
+        profesor.estado = False
+        profesor.save()
+        messages.success(request, "removido correctamente!")
+    except:
+        messages.error(request, " Error - El profesor no pudo ser removido")
     return redirect('gestionMusical:profesores')
     
 

@@ -106,6 +106,22 @@ div.derecha{
   
   
 }
+button#botonMas{
+  display: inline-block;
+  float:right;
+  padding: 0;
+  padding-right: 7px;
+  vertical-align: middle;
+  margin-right: 2.5%;
+  margin-top: 0.5%;
+  margin-bottom: 1%;
+}
+div#icon8{
+  display: inline-block;
+}
+div#fraseBoton{
+  display: inline-block;
+}
         div#icon8{
           padding: 10px;
           width: 40px;
@@ -123,6 +139,48 @@ div#contenedorFiltro{
   padding: 2%;
   display: none;
   background-color: antiquewhite;
+}
+div#cuerpoTable{
+  background-color: white;
+  border-radius: 23px 23px 23px 23px;
+-moz-border-radius: 23px 23px 23px 23px;
+-webkit-border-radius: 23px 23px 23px 23px;
+}
+div#izq{
+  display: inline-block;
+  background-color: rgb(233, 233, 233);
+  height: 50%;
+  width: 50%;
+  padding: 5px;
+ 
+  border-radius: 23px 23px 23px 23px;
+-moz-border-radius: 23px 23px 23px 23px;
+-webkit-border-radius: 23px 23px 23px 23px;
+vertical-align: top;
+
+}
+label.titulon{
+  font-size: 22px;
+  color: black;
+}
+div.dt-buttons{
+  display: none;
+
+}
+div#bloqueGeneral{
+  vertical-align: top;
+}
+div#dere{
+  display: inline-block;
+  background-color: rgb(230, 230, 230);
+  height: 50%;
+  width: 49%;
+
+  padding: 5px;
+  
+  border-radius: 23px 23px 23px 23px;
+-moz-border-radius: 23px 23px 23px 23px;
+-webkit-border-radius: 23px 23px 23px 23px;
 }
         div#icon7{
           
@@ -383,10 +441,86 @@ div#zonaBotones{
             <div id="bloqueGeneral">
                 <div id="izq">
                     <!--izq-->
+                    <label for="" class="titulon">Compositores:</label>
+                    <button type="button" id="botonMas" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg2777">
+                        <div id="icon8">
+                      <i class="fas fa-plus"> </i>
+                    </div >
+                    <div id="fraseBoton"> Crear Nuevo</div>
+                   
+                    </button>
+                    <!--comienzo-->
+            <div class="card-body" id="cuerpoTable">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>    
+                        <th >Nombre</th>
+                        <th >Acciones</th>
+                      </tr>
+                    </thead>               
+                    <tbody>
+                      {% for com in compositores%}                     
+                          <tr>                          
+                            <td>{{com.nombreIdentificador}}</td>                          
+                            <td>
+                            <center>
+                                       <!---->
+                                       <div class="btn-group">
+                                          <center>
+                                              <button type="button" class="btn btn-danger btn-icon-split" style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg254{{com.id}}">
+                                                  <div id="icon8">
+                                                <i class="fas fa-paint-brush"></i>
+                                              </div><div id="fraseBoton"> Editar</div>
+                                              </button>
+                                            <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{com.id}}">
+                                                <div id="icon8">
+                                              <i class="fas fa-trash"></i>
+                                            </div><div id="fraseBoton"> Eliminar</div>
+                                            </button>
+                                          </center>
+                                          
+                                            <div class="modal fade bs-example-modal-lg2{{com.id}}" id="myModal2{{com.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel{{com.id}}">Confirmacion de Eliminacion</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                    </button>
+                                                            
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h4>Esta seguro de Eliminar al compositor {{com.nombreIdentificador}}  ???</h4>
+                                                            
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <a href="{% url 'gestionMusical:eliminar_compositor' com.id %}">
+                                                            <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                          </a>
+                                                          </div>
+                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       <!---->
+                            </center>
+                            </td>
+                          
+                          </tr>
+                          
+                      {%endfor%}
+                    </tbody>
+                  </table>
+  
+                </div>
+              </div>
+              <!--creo que fin p mas div de cierre-->
                     <!--izq-->
                 </div>
-                <div id="dere">
+                <div id="dere" >
                     <!--der-->
+                    <label for="" class="titulon">Tipos de Musicas:</label>
                     <!--der-->
                 </div>
             </div>

@@ -425,7 +425,7 @@ div#espeNIvel{
                   
                     
     
-                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="#">
+                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="{% url 'gestionMusical:crear_tutor' %}">
                               
                             <span class="icon text-white-50">
                                   <i class="fas fa-plus"></i>
@@ -435,95 +435,7 @@ div#espeNIvel{
                       
                         </a>
 
-                        <form class="user" method="POST">
-                            {% csrf_token %}
-                        <div id="contenedorFiltro">
-                            <input type="hidden" id="filtrado" value="{{filtro}}">
-            
-                       
-                          <div id="comboFiltro">
-                              
-                            <div id="zonaInput">
-                              <!--3 div-->
-                              
-            
-              
-            
-            
-            
-            
-                                    <div class="form-group" id="espeNIvel">
-                                        <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
-                                        
-                                        <div class="form-row" id="espec2">
-                                            <select name="espec" id="espec" class="selectpicker" single>
-                                                <option value=''>-------</option>
-                                                {%for e in especialidades%}
-                                                <option value="{{e.id}}">
-                                                    {{e}}
-                                                </option>
-                                                {%endfor%}
-                                            </select>
-                  
-                                        </div>
-                  
-                                      </div>
-            
-            
-            
-                                      <div class="form-group" id="nivell">
-                                          <label for="inputAddress2" class="sub" style="color: black">Sexo:</label>
-                                          
-                                          <div class="form-row" id="espec2">
-                                              <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
-                                                  <option value=''>-------</option>
-                                                <option value='Hombre'>hombre</option>
-                                                  <option value='Mujer'>mujer</option>
-                                              </select>
-                                                  
-                    
-                                          </div>
-                    
-                                        </div>
-                                      
-                                  
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                                          
-                                  </div>
-            
-            
-            
-                                  
-            
-                              <!--3dic-->
-                            
-                            <div id="zonaBotones">
-                            <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
-                           
-                            <input type="hidden" id="yolo" name="yolo" value="no cambio">
-                            <input type="hidden" id="custId" name="custId" value="no cambio">
-                             
-                            </div>
-            
-                          </div>
-            
-                        </div>
-                      </div>
-                      
-                      </form>
-                    
+                        
                         
                                  
             
@@ -532,27 +444,35 @@ div#espeNIvel{
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>DNI</th>
-
-                      <th> Apellido</th>
                       
-                     
+                        <th style="display: none">D.N.I</th>
+                      <th style="display: none"> Apellido </th>
+                      <th style="display: none"> Nombre</th>
+                      <th class="noExport">Apellido y Nombre</th>
+                      <th> Telefono</th>
                       
                       
-                      <th >Acciones</th>
+                      <th class="noExport">Acciones</th>
                       
                     </tr>
                   </thead>
                   
                   <tbody>
-                    {% for t in tutor%}
+                    {% for t in tutores%}
                         
                      
                         <tr>
-                          <td>{{t.dni}}</td>
+                            <td style="display: none">{{t.dniTutor}}</td>
+                            <td style="display: none">{{t.apellidoTutor}}</td>
+                            <td style="display: none">{{t.nombreTutor}}</td>
+                            <td>{{t.apellidoTutor}}, {{t.nombreTutor}}</td>
+                          <td>{{t.telefonoTutor}}</td>
+                            
+                            
+                            
+                         
 
                           
-                          <td>{{t.apellido}}</td>
                           
                           
                           
@@ -567,18 +487,18 @@ div#espeNIvel{
                               <div class="btn-group">
                                 <center>
                                     <div >
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{t.dni}}">
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{t.dniTutor}}">
                                     
                                     <i class="fa fa-eye"></i>
                                   
                                   </button>
                                 </div>
                                 </center>
-                                  <div class="modal fade bs-example-modal-lg{{t.dni}}" id="myModal{{t.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal fade bs-example-modal-lg{{t.dniTutor}}" id="myModal{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content" id="elgrando">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.dni}}">Datos Personales</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Datos Personales</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
@@ -587,38 +507,50 @@ div#espeNIvel{
                                                   <div class="alinealoNomas">
                                                       <label for="inputEmail3" class="izquierda">DNI: </label>
                                                       <div class="derecha">
-                                                        {{t.dni}}
+                                                        {{t.dniTutor}}
                                                       </div>
                                                     </div>
                                                     <div class="alinealoNomas">
                                                         <label for="inputEmail3" class="izquierda">Apellido:</label>
                                                         <div class="derecha">
-                                                            {{t.apellido}}
+                                                            {{t.apellidoTutor}}
                                                         </div>
                                                       </div>
                                                       <div class="alinealoNomas">
                                                           <label for="inputEmail3" class="izquierda">Nombre:</label>
                                                           <div class="derecha">
-                                                              {{t.nombre}}
+                                                              {{t.nombreTutor}}
                                                           </div>
                                                         </div>
+                                                        <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                                <div class="derecha">
+                                                                    {{t.telefonoTutor}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="alinealoNomas">
+                                                                  <label for="inputEmail3" class="izquierda">Relacion:</label>
+                                                                  <div class="derecha">
+                                                                      {{t.tipo}}
+                                                                  </div>
+                                                                </div>
                                                         
                                                             
                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   <input type="hidden" id="inputOculto" value="{{pedidor}}">
-                                                    <input type="hidden" id="inputOcultoTemplate" value="4">
+                                                    <input type="hidden" id="inputOcultoTemplate" value="6">
                                                   <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                               </div>
-                              
+                                              <input type="hidden" id="filtrado" value="{{filtro}}">
                                           </div>
                                       </div>
                                   </div>
 
                                   <div id="ere">
-                          <!-- <a href="{% url 'gestionMusical:editar_tutor' t.dni %}" class="btn btn-warning btn-icon-split">
-                                 -->
+                            <a href="{% url 'gestionMusical:editar_tutor' t.dniTutor %}" class="btn btn-warning btn-icon-split">
+                                 
                                 <span class="icon text-white-50">
                                       <i class="fas fa-paint-brush"></i>
                                 </span>
@@ -629,29 +561,29 @@ div#espeNIvel{
                               </div>
                               <div class="btn-group">
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.dni}}">
+                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.dniTutor}}">
                                       <div id="icon8">
                                     <i class="fas fa-trash"></i>
                                   </div>
                                   </button>
                                 </center>
                                 
-                                  <div class="modal fade bs-example-modal-lg2{{t.dni}}" id="myModal2{{t.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal fade bs-example-modal-lg2{{t.dniTutor}}" id="myModal2{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.dni}}">Confirmacion de Eliminacion</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Confirmacion de Eliminacion</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar al Tutor {{t.apellido}} {{t.nombre}} ???</h4>
+                                                  <h4>Esta seguro de Eliminar al Tutor {{t.apellidoTutor}} {{t.nombreTutor}} ???</h4>
                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <!--<a href="{% url 'gestionMusical:eliminar_profesor' t.dni %}">-->
+                                                  <a href="{% url 'gestionMusical:eliminar_tutor' t.dniTutor %}">
                                                   <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
                                                 </a>
                                                 </div>

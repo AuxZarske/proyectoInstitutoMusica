@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
-from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica
+from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarCompositor
+from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
     #path('',home,name='index'),
 
@@ -11,6 +12,7 @@ urlpatterns = [
     path('validate_username_partitura/',login_required(validate_username_partitura),name='validate_username_partitura'),
     path('validate_username_tema/',login_required(validate_username_tema),name='validate_username_tema'),
     path('validate_username_tipoMusica/',validate_username_tipoMusica,name='validate_username_tipoMusica'),
+    path('validate_username_tutorDNI/',validate_username_tutorDNI,name='validate_username_tutorDNI'),
 
     path('especialidades/',login_required(listarespecialidades),name='especialidades'),
     path('eliminar_especialidad/<int:id>',login_required(eliminarEspecialidad),name='eliminar_especialidad'),
@@ -33,10 +35,16 @@ urlpatterns = [
 
 
     path('tutores/',login_required(listartutores),name='tutores'),
+    path('eliminar_tutor/<int:dni>',login_required(eliminarTutor),name='eliminar_tutor'),
+    path('crear_tutor/',login_required(crearTutor),name='crear_tutor'),
+    path('editar_tutor/<int:dni>',login_required(editarTutor),name='editar_tutor'),
 
 
 
     path('compoMusic/',login_required(listarcompoMusic),name='compoMusic'),
+    path('eliminar_compositor/<int:id>',login_required(eliminarCompositor),name='eliminar_compositor'),
+    path('crear_compositor/',login_required(crearCompositor),name='crear_compositor'),
+    path('editar_compositor/<int:id>',login_required(editarCompositor),name='editar_Compositor'),
 
 
 

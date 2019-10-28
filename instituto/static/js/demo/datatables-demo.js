@@ -97,6 +97,9 @@ if(template == 4){
 if(template == 5){
   var tipoReporte = "Alumnos";
 }
+if(template == 6){
+  var tipoReporte = "Tutores";
+}
 doc['header']=(function() {
 return {
 columns: [
@@ -177,6 +180,11 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [40, 100, 40,80,100,50];
+                }
+                if(template == 6){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [60, 100, 100,70];
                 }
                 
 // Change dataTable layout (Table styling)
