@@ -36,7 +36,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index'  %}">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -48,10 +48,12 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'index'  %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Inicio</span></a>
       </li>
+
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -61,30 +63,15 @@
         Instituto
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Clases</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Control Clases:</h6>
-            <a class="collapse-item" href="{% url 'gestionMusical:clases'  %}">Ver Clases</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Clases Actuales:</h6>
-            
-            
-            {%for clase in clases%}
-            
-                {%if clase.estado%}
-                     <a class="collapse-item" href="{% url 'gestionMusical:una_clase' clase.id %}">{{clase.nombre}}</a>
-                {%endif%}
-            {%endfor%}
-            
-          </div>
-        </div>
-      </li>
+          <a class="nav-link" href="{% url 'gestionMusical:clases'  %}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Clases</span>
+          </a>
+        </li>
+
+      
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
@@ -112,18 +99,34 @@
           <div class="bg-white py-2 collapse-inner rounded">
             
             <a class="collapse-item" href="{% url 'gestionMusical:alumnos'  %}">Alumnos</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:tutores'  %}">Tutores</a>
             <a class="collapse-item" href="{% url 'gestionMusical:profesores'  %}">Profesores</a>
             
           </div>
         </div>
       </li>
 
-      <!-- Nav Item - Charts -->
+      
+
+
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'gestionMusical:especialidades'  %}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Especialidades</span></a>
-      </li>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="true" aria-controls="collapseOne">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Adicionales</span>
+          </a>
+          <div id="collapseOne3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              
+              <a class="collapse-item" href="{% url 'gestionMusical:especialidades'  %}">Especialidades</a>
+              <a class="collapse-item" href="{% url 'gestionMusical:compoMusic'  %}">Compositores y Musicas</a>
+              
+              
+            </div>
+          </div>
+        </li>
 
       
 

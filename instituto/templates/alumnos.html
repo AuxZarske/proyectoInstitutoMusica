@@ -25,6 +25,20 @@
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
 
 </head>
+<script type="text/javascript">
+
+function ocultarFiltro(){
+    
+      
+    if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
+        document.getElementById("contenedorFiltro").style.display='block';
+    }
+    else{
+            document.getElementById("contenedorFiltro").style.display='none';
+        }
+
+}
+</script>
 {%endblock head%}
 {%block estilos%}
     <style type="text/css">
@@ -84,6 +98,16 @@ div.derecha{
   
   
 }
+button#botonExtra{
+  display: inline-block;
+  background-color: rgb(219, 90, 90);
+  border: 2px solid rgb(32, 32, 32);
+}
+div#contenedorFiltro{
+  padding: 2%;
+  display: none;
+  background-color: antiquewhite;
+}
 div.alinealoNomas{
   text-align: left;
 }
@@ -94,6 +118,17 @@ div.dataTables_length{
 div.dataTables_filter{
   float: right;
   
+}
+div#espeNIvel{
+  display: inline-block;
+  margin-right: 2%;
+}
+div#music{
+  display: inline-block;
+  margin-right: 2%;
+}
+div#edadFiltro{
+  display: inline-block;
 }
         div#ere{
 
@@ -323,6 +358,9 @@ margin-left: 2px;
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
+                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                    <i class="fas fa-file"></i>
+                  </button>
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de alumnos que cuenta actualmente:</h6>
               <!--modal-->
                   
@@ -337,6 +375,116 @@ margin-left: 2px;
                   
             
               </a>
+              <!---->
+              <form class="user" method="POST">
+                  {% csrf_token %}
+              <div id="contenedorFiltro">
+                  <input type="hidden" id="filtrado" value="{{filtro}}">
+  
+             
+                <div id="comboFiltro">
+                    
+                  <div id="zonaInput">
+                    <!--3 div-->
+                    
+  
+    
+  
+  
+  
+  
+                          <div class="form-group" id="espeNIvel">
+                              <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
+                              
+                              <div class="form-row" id="espec2">
+                                  <select name="espec" id="espec" class="form-control" single>
+                                      <option value=''>-------</option>
+                                      {%for e in especialidades%}
+                                      <option value="{{e.id}}">
+                                          {{e}}
+                                      </option>
+                                      {%endfor%}
+                                  </select>
+        
+                              </div>
+        
+                            </div>
+
+
+
+                            <div class="form-group" id="music">
+                                <label for="inputAddress2" class="sub" style="color: black">Musica Preferida:</label>
+                                
+                                <div class="form-row" id="espec2">
+                                    <select name="music" id="music" class="form-control"  single>
+                                        <option value=''>-------</option>
+                                        {%for e in musicasTotales%}
+                                        <option value="{{e.id}}">
+                                            {{e}}
+                                        </option>
+                                        {%endfor%}
+                                    </select>
+          
+                                </div>
+          
+                              </div>
+                              <input type="hidden" id="inputOculto" value="{{pedidor}}">
+                                <input type="hidden" id="inputOcultoTemplate" value="5">
+
+
+
+                              <div class="form-group" id="edadFiltro">
+                                  <label for="inputAddress2" class="sub" style="color: black">Edad:</label>
+                                  
+                                  <div class="form-row" id="espec2">
+                                      <input type="number" class="form-control" name="edadFiltro" min="0" max="150">
+            
+                                  </div>
+            
+                                </div>
+  
+  
+  
+                            
+                            
+                        
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+                                
+                        </div>
+  
+  
+  
+                        
+  
+                    <!--3dic-->
+                  
+                  <div id="zonaBotones">
+                  <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+                 
+                  <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                  <input type="hidden" id="custId" name="custId" value="no cambio">
+                   
+                  </div>
+  
+                </div>
+  
+              </div>
+            </div>
+            
+            </form>
+              <!---->
           
               <div class="modal fade bs-example-modal-lg5" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
@@ -582,21 +730,37 @@ margin-left: 2px;
               
             <!--fin modal-->
             </div>
+
+
+
+
+
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>DNI</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
+
+                      <th style="display: none"> Apellido y Nombre</th>
+                      <th style="display: none">Sexo</th>
+                      <th style="display: none">Fecha de Nacimiento</th>
+                     
+                     
+                      
+                      <th style="display: none">Correo Electronico</th>
+                      <th style="display: none">Telefono</th>
+
+
+                      <th class="noExport">Nombre</th>
+                      <th class="noExport">Apellido</th>
                       
                       
-                      <th>Correo Electronico</th>
+                      <th class="noExport">Correo Electronico</th>
                      
                       
                       
-                      <th>Acciones</th>
+                      <th class="noExport">Acciones</th>
                       
                     </tr>
                   </thead>
@@ -607,6 +771,18 @@ margin-left: 2px;
                      
                         <tr>
                           <td>{{alu.dni}}</td>
+
+                          <td style="display: none">{{alu.apellido}}, {{alu.nombre}}</td>
+                          <td style="display: none">{{alu.sexo}}</td>
+                          <td style="display: none">{{alu.fechaNac}}</td>
+                          <td style="display: none">{{alu.correoElectronico}}</td>
+                          <td style="display: none">{{alu.telefono}}</td>
+                          
+                          
+                          
+
+
+
                           <td>{{alu.nombre}}</td>
                           <td>{{alu.apellido}}</td>
                           

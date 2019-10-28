@@ -13,7 +13,7 @@ import json
 from django.http import HttpResponse
 import time
 from datetime import datetime
-
+from dateutil.relativedelta import relativedelta
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Image
 from reportlab.lib.styles import getSampleStyleSheet
@@ -267,7 +267,15 @@ def registrarProfesor(request):
     profesor_form =ProfesorForm()
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
+def listartutores(request):
+    tutores = Tutor.objects.all()
+    return render(request, 'tutores.html', context={'tutores': tutores})
 
+
+def listarcompoMusic(request):
+    compositores = Compositor.objects.all()
+    musicaTipo = MusicaTipo.objects.all()
+    return render(request, 'compositoresMusicas.html', context={'compositores': compositores,'musicaTipo':musicaTipo})
 
 
 def listarespecialidades(request):
@@ -544,9 +552,76 @@ def editarProfesor(request,dni):
 def listaralumnos(request):
     clases = Clase.objects.all()
     alumnos = Alumno.objects.all()
+    filtro = ''
+    pedidor = ''
+    pedidor = str(request.user.username)
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+
+    musicasTotales = MusicaTipo.objects.all()
+    especialidades = Especialidad.objects.all()
+    if request.method == 'POST':
+        peticion = request.POST.copy()
+        
+        espec = peticion.pop('espec')
+        espec = espec[0]
+
+        music = peticion.pop('music')
+        music = music[0]
+
+        edad = peticion.pop('edadFiltro')
+        edad = edad[0]
+        
+        if True:
+            if edad != "":
+                years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+                years_max = datetime.now() - relativedelta(years=int(edad))
+                print(years_min)
+                print(years_max)
+            if espec != "":
+                if music != "":
+                    if edad != "":
+                        alumnos = Alumno.objects.filter(especialidadRequerida = espec, fechaNac__range = (years_min,years_max), musica = music)
+                        filtro = 'Listado filtrado por, Especialidad: '+Especialidad.objects.get(id=int(espec)).nombre+', Musica Preferida: '+MusicaTipo.objects.get(id=int(music)).nombreMusica+', Edad: '+edad
+                    else:
+                        alumnos = Alumno.objects.filter(especialidadRequerida = espec, musica = music)
+                        filtro = 'Listado filtrado por, Especialidad: '+Especialidad.objects.get(id=int(espec)).nombre+', Musica Preferida: '+MusicaTipo.objects.get(id=int(music)).nombreMusica
+
+                else:
+                    if edad != "":
+                        alumnos = Alumno.objects.filter(especialidadRequerida = espec, fechaNac__range = (years_min,years_max))
+                        filtro = 'Listado filtrado por, Especialidad: '+Especialidad.objects.get(id=int(espec)).nombre+', Edad: '+edad
+                    else:
+                        alumnos = Alumno.objects.filter(especialidadRequerida = espec)
+                        filtro = 'Listado filtrado por, Especialidad: '+Especialidad.objects.get(id=int(espec)).nombre
+            else:
+                if music != "":
+                    if edad != "":
+                        alumnos = Alumno.objects.filter(fechaNac__range = (years_min,years_max), musica = music)
+                        filtro = 'Listado filtrado por, Musica Preferida: '+MusicaTipo.objects.get(id=int(music)).nombreMusica+', Edad: '+edad
+                    else:
+                        alumnos = Alumno.objects.filter(musica = music)
+                        filtro = 'Listado filtrado por, Musica Preferida: '+MusicaTipo.objects.get(id=int(music)).nombreMusica
+
+                else:
+                    if edad != "":
+                        alumnos = Alumno.objects.filter(fechaNac__range = (years_min,years_max))
+                        filtro = 'Listado filtrado por, Edad: '+edad
+                    else:
+                        alumnos = Alumno.objects.all()
+                       
+            messages.success(request, "Filtrado Correcto!")
+        
+            
+
+
     
-    
-    return render(request,'alumnos.html',{'alumnos':alumnos, 'clases':clases})
+    return render(request,'alumnos.html',{'alumnos':alumnos,'filtro':filtro,'pedidor':pedidor,'especialidades':especialidades,'musicasTotales':musicasTotales, 'clases':clases})
 
 
 
@@ -832,7 +907,7 @@ def listarpartituras(request):
     peticion = request.POST.copy()
     filtro = ''
     pedidor = str(request.user.username)
-    pedidor = ''
+    
     
     elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica
 urlpatterns = [
     #path('',home,name='index'),
@@ -30,6 +30,26 @@ urlpatterns = [
     path('reivindicar_alumno/<int:dni>',login_required(reivindicarAlumno),name='reivindicar_alumno'),
     path('crear_alumno/',login_required(crearAlumno),name='crear_alumno'),
     path('editar_alumno/<int:dni>',login_required(editarAlumno),name='editar_alumno'),
+
+
+    path('tutores/',login_required(listartutores),name='tutores'),
+
+
+
+    path('compoMusic/',login_required(listarcompoMusic),name='compoMusic'),
+
+
+
+    
+
+
+
+
+
+
+
+
+
 
     path('clases/',login_required(listarclases),name='clases'),
     path('eliminar_clase/<int:id>',login_required(eliminarClase),name='eliminar_clase'),
