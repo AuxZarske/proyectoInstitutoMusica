@@ -487,14 +487,14 @@ div#zonaBotones{
                                                   </div>
                                                   <div class="modal-body">
                                                       <label for="">Nombre de Compositor</label>
-                                                      <input type="text" id="inputCompoCrear" value="{{com.nombreIdentificador}}">
-                                                      <input type="hidden" value="{{com.id}}">
+                                                      <input type="text" id="inputCompoEditar" value="{{com.nombreIdentificador}}">
+                                                      <input type="hidden" id="idCompo" value="{{com.id}}">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                       
-                                                      <button type="button" class="btn btn-primary" >Confirmar Cambio</button>
+                                                      <button type="button" class="btn btn-primary" id="botonEditarCompo">Confirmar Cambio</button>
                                                     
                                                     </div>
                                   
@@ -855,6 +855,50 @@ div#zonaBotones{
              });
          });
            </script>
+
+
+<script>
+    $(document).ready(function(){
+       $("#botonEditarCompo").click(function () {
+        
+         var username = $("#inputCompoEditar").val();
+         var identificador = $("#idCompo").val();
+         if(username == ""){
+            alert("Por favor ingrese un nombre primero");
+         }else{
+
+         
+         
+         $.ajax({
+           
+           url: '{% url "gestionMusical:editar_composito" %}',
+           data: {
+             'username': username,
+             'identificador': identificador
+           },
+           dataType: 'json',
+           
+           success: function (data) {
+               
+             if (data.is_taken) {
+               alert("Ese nombre ya lo tiene otro compositor ");
+               document.getElementById("inputCompoCrear").value = "";
+             }else{
+              
+              location.reload();
+             }
+           }
+         });
+         
+        }
+       });
+   });
+     </script>
+
+
+
+
+
   {%endblock archivos%}
 </body>
 

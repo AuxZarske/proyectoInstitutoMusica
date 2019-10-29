@@ -348,7 +348,23 @@ def crearCompositor(request):
     return JsonResponse(data)
 
 def editarCompositor(request,dni):
-    
+    nombre = request.GET.get('username', None)
+    identificador = request.GET.get('identificador', None)#arre de aca pa bajo
+    data = {
+        'is_taken': MusicaTipo.objects.filter(nombreMusica__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        music_form = MusicaTipoForm()
+        musicatipo = music_form.save(commit=False)
+        musicatipo.nombreMusica = nombre
+        musicatipo.save()
+        messages.success(request, "Carga Correcto!")
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
 
 def crearMusica(request):
@@ -363,13 +379,8 @@ def crearMusica(request):
         music_form = MusicaTipoForm()
         musicatipo = music_form.save(commit=False)
         musicatipo.nombreMusica = nombre
-        
-
         musicatipo.save()
-           
         messages.success(request, "Carga Correcto!")
-        
-       
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
