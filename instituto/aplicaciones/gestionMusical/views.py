@@ -321,27 +321,68 @@ def crearTutor(request):
         tutor_form =TutorForm()
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
 
+
+
+
 def crearCompositor(request):
-    editacion = 0
-    if request.method == 'POST':
-        tutor_form = TutorForm(request.POST)
-        
-        if tutor_form.is_valid() :
-
-            tutor_form.save()
-            print(request.POST)
-            messages.success(request, "Carga Correcto!")
-        else:
-            messages.error(request, " Error - No se pudo cargar")
-
-        if(request.POST['custId'] == '1'):
-            return redirect('gestionMusical:crear_tutor')
-        else:
-            return redirect('gestionMusical:tutores')
+    nombre = request.GET.get('username', None)
+    data = {
+        'is_taken': Compositor.objects.filter(nombreIdentificador__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
     else:
-        tutor_form =TutorForm()
-    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
+        #crear compositor, ponerle ese nombre
+        compo_form = CompositorForm()
+        compositor = compo_form.save(commit=False)
+        compositor.nombreIdentificador = nombre
+        
+
+        compositor.save()
+           
+        messages.success(request, "Carga Correcto!")
+        
+       
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+
+def editarCompositor(request,dni):
     
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
+
+def crearMusica(request):
+    nombre = request.GET.get('username', None)
+    data = {
+        'is_taken': MusicaTipo.objects.filter(nombreMusica__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        music_form = MusicaTipoForm()
+        musicatipo = music_form.save(commit=False)
+        musicatipo.nombreMusica = nombre
+        
+
+        musicatipo.save()
+           
+        messages.success(request, "Carga Correcto!")
+        
+       
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+      
+
+
+def editarMusica(request,id):
+    
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion}) 
+
+
+
+
 
 def editarTutor(request,dni):
     editacion = 1
@@ -365,27 +406,7 @@ def editarTutor(request,dni):
 
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
 
-def editarCompositor(request,dni):
-    editacion = 1
-    tutor_form = None
-    error = None
-    try:
-        tutor = Tutor.objects.get(dniTutor = dni)
-        if request.method == 'GET':
-            tutor_form = TutorForm(instance = tutor)
-        else:
-            tutor_form = TutorForm(request.POST, instance = tutor)
-            if tutor_form.is_valid() :
-                tutor_form.save()
-                messages.success(request, "Carga Correcto!")
-            else:
-                messages.error(request, " Error - No se pudo cargar")
-            
-            return redirect('gestionMusical:tutores')
-    except ObjectDoesNotExist as e:
-        error = e
 
-    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
 
 
 def eliminarTutor(request,dni):
@@ -397,6 +418,16 @@ def eliminarTutor(request,dni):
     except:
         messages.error(request, " Error - no puede eliminarse un tutor en uso")
     return redirect('gestionMusical:tutores')
+
+def eliminarMusica(request,id):
+    musica = MusicaTipo.objects.get(id = id)
+    
+    try:
+        musica.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse")
+    return redirect('gestionMusical:compoMusic')
 
 
 def eliminarCompositor(request,id):
