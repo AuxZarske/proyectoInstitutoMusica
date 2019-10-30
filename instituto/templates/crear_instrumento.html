@@ -1,0 +1,440 @@
+{% load staticfiles %}
+{% load poll_extras %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+  	
+<link rel="stylesheet" href="{%static 'css/select2.min.css'%}" />
+</head>
+<script type="text/javascript">
+
+    
+    
+    
+    function boton(num){
+        
+        document.getElementById("custId").value = num;
+        if(num == 1){
+            updateDiv();
+        }
+        
+
+    
+    
+    };
+    function updateDiv()
+    { 
+        $( "#cuadroMensajes" ).load(window.location.href + " #cuadroMensajes" );
+        
+    };
+    function limpiar(){
+
+        document.getElementById("id_nombreIdentificador").value = "";
+    }
+    </script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+        $(document).ready(function(){
+            function nivelar(jQuery){
+            
+                
+                if("{{editacion}}" == "1"){
+                    
+                    $("#nivel").val("{{partitura_form.nivel.value}}").change()
+                    $("#country").val("{{partitura_form.compositor.value}}").change()
+                }
+            }
+            //Cuando la página esté cargada ejecutará la función resaltar
+            $(document).ready(nivelar);
+        });
+            
+
+
+      $(document).ready(function () {
+          
+          
+          $("#desbr").keyup(function () {
+              var value = $(this).val();
+              $("#id_descripcion").val(value);
+          });
+          $("#nombr").keyup(function () {
+              var value = $(this).val();
+              $("#id_nombre").val(value);
+          });
+          
+        
+          
+          
+      });
+      $(document).ready(function(){
+            $('#modalOculto').on('click','#cargar-compositor',function(){
+                    var name = $('#id_nombreIdentificador').val();
+                    
+                    $.get('{% url "gestionMusical:crear_compositor"%}',{name:name},function(data){
+                        console.log(name)
+                        var html = "";
+                        
+                        if (data != ""){
+                            
+                            html += "<option value='"+data[0].pk +"' selected>"  +data[0].fields.nombreIdentificador+ "</option>";
+                            
+                            $('#country').append(html);
+                            
+                            $("#country").val(data[0].pk).change()
+                            
+                        }
+                        
+                        $(function () {
+                            updateDiv();
+                            limpiar();
+                        });
+                        
+                        
+                        
+                    });
+            });
+
+
+            $("#cargar-compositor").on("click", function() {
+                     
+                window.scrollTo(0, 0);
+            });
+
+           
+    });
+</script>
+<style type="text/css">
+
+    div#cuadroPrincipal{
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+        
+        padding: 2%;
+        border-radius: 0px 0px 18px 18px;
+    -moz-border-radius: 0px 0px 18px 18px;
+    -webkit-border-radius: 0px 0px 18px 18px;
+    border: 2px solid #e3e6e3;
+    background-color: rgb(255, 255, 255);
+    }
+    .select2-dropdown {
+ top: 22px !important;
+ left: 8px !important;
+}
+    div#cuadroCabeza{
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+        margin-top: 4%;
+        padding: 1%;
+        border-radius: 18px 18px 0px 0px;
+    -moz-border-radius: 18px 18px 0px 0px;
+    -webkit-border-radius: 18px 18px 0px 0px;
+    border: 2px solid #e3e6e3;
+    background-color: rgb(255, 255, 255);
+    font-size: 22px;
+        color: rgb(255, 255, 255);
+        border-bottom: 0px;
+    
+        background-color: #4e73df;
+    }
+    
+    body#total{
+        background-color: rgba(238, 236, 236, 0.747);
+    }
+    select#country{
+        display: inline-block;
+        width: 70%;
+        
+        
+    }
+    input#txtDoc{
+        padding: 0;
+        padding-top: 1.3%;
+        padding-left: 1.3%;
+    }
+    button#botonAgregar{
+        display: inline-block;
+        margin-left: 2%;
+        width: 200px;
+        font-size: 18px;
+        padding: 0;
+
+        
+        
+    }
+    input#txtDoc{
+        
+        width: 159px;
+    }
+    input#txtDocNuevo{
+        width: 400px;
+        padding: 0;
+        padding-top: 1.3%;
+        padding-left: 1.3%;
+        display: inline-block;
+    }
+    label#label2{
+        display: inline-block;
+    }
+    
+    div#titulon{
+        font-size: 22px;
+        color: black;
+    }
+    label.sub{
+        color: black;
+    }
+    button#salirBoton{
+        float: right;
+
+    }
+    div#cabeza{
+        background-color: #4e73df;
+    }
+    
+    input#id_nombre{
+    display: None;
+    }
+    textarea#id_descripcion{
+    display: None;
+    }
+    
+    body#total{
+    background-color: rgba(224, 224, 224, 0.747);
+}
+div#cuadroMensajes{
+    font-size: 22px;
+}
+p#msj{
+    font-size: 17px;
+}
+    
+    
+    </style>
+ 
+<body id="total" name="total">
+    
+        <div id="cuadroCabeza">
+                {%if editacion != 1%}
+                <strong>Crear instrumento: </strong>
+                {%else%}
+                <strong>Editar instrumento: </strong>
+                {%endif%}
+                
+
+        </div>
+    <div id="cuadroPrincipal">
+
+            
+
+            
+
+
+            <form class="user" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div id="cuadroMensajes" >
+
+                            {% if messages %}
+                            {% for message in messages %}
+
+                            {% if message.tags == 'success'%}
+                            <ul class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+                            {% if message.tags == 'error'%}
+                            <ul class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+
+                            {% endfor %}
+                           {% endif %}
+                    </div>
+                        
+
+                        
+
+                        
+
+                    
+                        {{instrumento_form.descripcion}} 
+                        {{instrumento_form.nombre}} 
+  
+
+                <div class="form-group">
+                  <label for="inputAddress2" class="sub">Nombre de instrumento:</label>
+                  {%if editacion != 1%}
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." required>
+                  {%else%}
+                  
+                  <input type="text" class="form-control" id="nombr" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre..." value="{{instrumento_form.nombre.value}}">
+                {%endif%}
+                </div>
+
+               
+                <div class="form-group">
+                        <label for="inputAddress2" class="sub">Descripcion de la instrumento:</label>
+                        {%if editacion != 1%}
+                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la instrumento..." required></textarea>
+                        {%else%}
+                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la instrumento..." required>{{instrumento_form.descripcion.value}}</textarea>
+                              {%endif%}  
+                 </div>
+
+                 
+                    
+                  
+
+                  <div class="form-row">
+
+                      <div class="form-group col-md-4">
+                          <label for="inputState" style="color: black">Color:</label>
+                          
+                          <select id="color" name ="color" class="form-control" required>
+                                {%if editacion != 1%}
+                                <option value=''>------</option>
+                                {%else%}
+                                
+                                {%endif%}
+                              <option value='Amarillo'>Amarillo</option>
+                              <option value='Rojo'>Rojo</option>
+                              <option value='Azul'>Azul</option>
+                              <option value='Verde'>Verde</option>
+                              <option value='Naranja'>Naranja</option>
+                              <option value='Violeta'>Violeta</option>
+                              <option value='AmarillosoVerdoso'>Amarilloso verdoso</option>
+                              <option value='VerdeAzulado'>Verde azulado</option>
+                              <option value='AzulVioláceo'>Azul violáceo</option>
+                              <option value='VioletaRojizo'>Violeta rojizo</option>
+                              <option value='RojoAnaranjado'>Rojo anaranjado</option>
+                              <option value='NaranjaAmarillento'>Naranja amarillento</option>
+                              <option value='Negro'>Negro</option>
+                              <option value='Blanco'>Blanco</option>
+                              <option value='Gris'>Gris</option>
+  
+                         
+                          </select>
+                      </div>
+
+                      <div class="form-group col-md-4">
+                          <label for="inputZip" style="color: black">Documento:</label>
+                          {%if editacion != 1%}
+                          <input type="file" class="form-control mb-2" name="archivo" id="txtDocNuevo"   required>
+                          {%else%}
+                          <div>
+                                <input type="file" class="form-control mb-2" name="archivo" id="txtDoc"   >
+                                <!--<label for="inputZip" id="label2">Doc: {{elDoc}}</label>-->
+                                <label for="inputZip" id="label2">Imagen ya subida!!!</label>
+                          </div>
+                          {%endif%}
+                      </div>
+
+                  </div>
+
+
+
+                 
+                  <div class="form-group col-md-4">
+                        <label for="inputState" style="color: black">Estado:</label>
+                        
+                        <select id="estado" name ="estadoUso" class="form-control" required>
+                              {%if editacion != 1%}
+                              <option value=''>------</option>
+                              {%else%}
+                              
+                              {%endif%}
+                            <option value='Nuevo'>Nuevo</option>
+                            <option value='Viejo'>Viejo</option>
+                            
+                            
+
+                       
+                        </select>
+                    </div>
+                  
+
+                 
+
+                    
+                    
+                  
+
+
+
+                
+
+                 {%if editacion != 1%}
+
+                            <button type="submit" class="btn btn-primary" onclick="boton(1)"> Guardar y Cargar Otra </button>
+                 
+                 {%endif%}
+
+                
+                
+                <button type="submit" class="btn btn-primary" onclick="boton(2)">Guardar </button>
+
+                <a href="{% url 'gestionMusical:partituras'%}">
+                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+                </a>
+
+
+                <input type="hidden" id="custId" name="custId" value="no cambio">
+              </form>
+
+              
+                   
+              
+            </div>
+
+
+
+    
+              {%block archivos%}
+              <!-- Bootstrap core JavaScript-->
+              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+              <!-- Core plugin JavaScript-->
+              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+            
+              <!-- Custom scripts for all pages-->
+              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+            
+              <!-- Page level plugins -->
+              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+              </script>
+              <script src="{%static 'js/select2.min.js'%}"></script>
+              <script>
+              $("#country").select2( {
+               placeholder: "Seleccione Compositor",
+               allowClear: true
+               } );
+              </script>
+            
+              <!-- Page level custom scripts -->
+              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+  <script src="{%static 'js/selectMul2.js'%}"></script>
+              {%endblock archivos%} 
+
+</body>
+
+
+
+</html>

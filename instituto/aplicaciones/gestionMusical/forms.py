@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
-from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo, Instrumento
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
@@ -20,6 +20,10 @@ class PartituraForm(forms.ModelForm):
         model = Partitura
         fields = ['nombre','compositor','nivel','descripcion','especialidadesAcordes']
 
+class InstrumentoForm(forms.ModelForm):
+    class Meta:
+        model = Instrumento
+        fields = ['nombre','descripcion','color','estadoUso']
 
 class TemaForm(forms.ModelForm):
     class Meta:

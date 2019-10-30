@@ -169,6 +169,7 @@ vertical-align: top;
 label.titulon{
   font-size: 22px;
   color: black;
+  margin-left: 20px;
 }
 div.dt-buttons{
   display: none;
@@ -457,6 +458,7 @@ div#zonaBotones{
                    
                     </button>
                     <!--comienzo-->
+                    <br><br>
             <div class="card-body" id="cuerpoTable">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -564,6 +566,7 @@ div#zonaBotones{
                    
                     </button>
                     <!--comienzo-->
+                    <br><br>
             <div class="card-body" id="cuerpoTable">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
@@ -593,14 +596,14 @@ div#zonaBotones{
                                                   </div>
                                                   <div class="modal-body">
                                                       <label for="">Nombre del Tipo de Musica:</label>
-                                                       <input type="text" id="inputMusicaCrear" value="{{com.nombreMusica}}">
-                                                       <input type="hidden" value="{{com.id}}">
+                                                       <input type="text" id="inputMusicEditar" value="{{com.nombreMusica}}">
+                                                       <input type="hidden" id="idMusic" value="{{com.id}}">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                       
-                                                      <button type="button" class="btn btn-primary" >Confirmar Cambio</button>
+                                                      <button type="button" id="botonEditarMusic" class="btn btn-primary" >Confirmar Cambio</button>
                                                     
                                                     </div>
                                   
@@ -896,7 +899,43 @@ div#zonaBotones{
      </script>
 
 
+<script>
+  $(document).ready(function(){
+     $("#botonEditarMusic").click(function () {
+      
+       var username = $("#inputMusicEditar").val();
+       var identificador = $("#idMusic").val();
+       if(username == ""){
+          alert("Por favor ingrese un nombre primero");
+       }else{
 
+       
+       
+       $.ajax({
+         
+         url: '{% url "gestionMusical:editar_musica" %}',
+         data: {
+           'username': username,
+           'identificador': identificador
+         },
+         dataType: 'json',
+         
+         success: function (data) {
+             
+           if (data.is_taken) {
+             alert("Ese nombre ya lo tiene otra musica ");
+             document.getElementById("inputEditarMusic").value = "";
+           }else{
+            
+            location.reload();
+           }
+         }
+       });
+       
+      }
+     });
+ });
+   </script>
 
 
   {%endblock archivos%}

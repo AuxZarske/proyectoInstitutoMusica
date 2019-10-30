@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -300,6 +300,23 @@ def listartutores(request):
     print(filtro)
     return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro})
 
+
+def listarprestamos(request):
+    prestamos = Prestamo.objects.all()
+    pedidor = str(request.user.username)
+    filtro = ''
+    pedidor = ''
+
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    print(filtro)
+    return render(request, 'prestamos.html', context={'prestamos': prestamos,'pedidor':pedidor,'filtro':filtro})
+
 def crearTutor(request):
     editacion = 0
     if request.method == 'POST':
@@ -309,7 +326,7 @@ def crearTutor(request):
 
             tutor_form.save()
             print(request.POST)
-            messages.success(request, "Carga Correcto!")
+            messages.success(request, "Carga Correcta!")
         else:
             messages.error(request, " Error - No se pudo cargar")
 
@@ -328,6 +345,7 @@ def crearCompositor(request):
     nombre = request.GET.get('username', None)
     data = {
         'is_taken': Compositor.objects.filter(nombreIdentificador__iexact=nombre).exists()
+        
     }
     if data['is_taken']:
         data['error_message'] = 'Ese nombre ya esta ocupado.'
@@ -340,32 +358,34 @@ def crearCompositor(request):
 
         compositor.save()
            
-        messages.success(request, "Carga Correcto!")
+        messages.success(request, "Carga Correcta!")
         
        
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
 
-def editarCompositor(request,dni):
+def editarComposito(request):
     nombre = request.GET.get('username', None)
-    identificador = request.GET.get('identificador', None)#arre de aca pa bajo
+    identificador = request.GET.get('identificador', None)
+    
     data = {
-        'is_taken': MusicaTipo.objects.filter(nombreMusica__iexact=nombre).exists()
+        'is_taken': Compositor.objects.exclude(id = identificador).filter(nombreIdentificador__iexact=nombre).exists()
+        
     }
     if data['is_taken']:
         data['error_message'] = 'Ese nombre ya esta ocupado.'
     else:
         #crear compositor, ponerle ese nombre
-        music_form = MusicaTipoForm()
-        musicatipo = music_form.save(commit=False)
-        musicatipo.nombreMusica = nombre
-        musicatipo.save()
-        messages.success(request, "Carga Correcto!")
+        compositor = Compositor.objects.get(id = identificador)
+        compositor.nombreIdentificador = nombre
+        compositor.save()
+           
+        messages.success(request, "Carga Correcta!")
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
-    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
+    
 
 def crearMusica(request):
     nombre = request.GET.get('username', None)
@@ -380,16 +400,33 @@ def crearMusica(request):
         musicatipo = music_form.save(commit=False)
         musicatipo.nombreMusica = nombre
         musicatipo.save()
-        messages.success(request, "Carga Correcto!")
+        messages.success(request, "Carga Correcta!")
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
       
 
 
-def editarMusica(request,id):
+def editarMusica(request):
+    nombre = request.GET.get('username', None)
+    identificador = request.GET.get('identificador', None)
     
-    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion}) 
+    data = {
+        'is_taken': MusicaTipo.objects.exclude(id = identificador).filter(nombreMusica__iexact=nombre).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        musicatipo = MusicaTipo.objects.get(id = identificador)
+        musicatipo.nombreMusica = nombre
+        musicatipo.save()
+           
+        messages.success(request, "Carga Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+    
 
 
 
@@ -407,7 +444,7 @@ def editarTutor(request,dni):
             tutor_form = TutorForm(request.POST, instance = tutor)
             if tutor_form.is_valid() :
                 tutor_form.save()
-                messages.success(request, "Carga Correcto!")
+                messages.success(request, "Carga Correcta!")
             else:
                 messages.error(request, " Error - No se pudo cargar")
             
@@ -541,7 +578,7 @@ def crearEspecialidad(request):
 
             especialidad_form.save()
             print(request.POST)
-            messages.success(request, "Carga Correcto!")
+            messages.success(request, "Carga Correcta!")
         else:
             messages.error(request, " Error - No se pudo cargar")
 
@@ -566,7 +603,7 @@ def editarEspecialidad(request,id):
             especialidad_form = EspecialidadForm(request.POST, instance = especialidad)
             if especialidad_form.is_valid() :
                 especialidad_form.save()
-                messages.success(request, "Carga Correcto!")
+                messages.success(request, "Carga Correcta!")
             else:
                 messages.error(request, " Error - No se pudo cargar")
             
@@ -1179,7 +1216,59 @@ def eliminarPartitura(request,id):
         partitura.delete()
         messages.success(request, "Correcta Eliminacion!")
     return redirect('gestionMusical:partituras')
-    
+
+
+def crearInstrumento(request):
+    editacion = 0
+    if request.method == 'POST':
+        try:#de aca pa abajo modif, para cargar instrumento
+
+            partitura_form = PartituraForm(request.POST)
+            
+            print(partitura_form.errors.as_data())
+            nom = request.POST['nombre']
+            if partitura_form.is_valid() and not(Partitura.objects.filter(nombre = nom).exists()):
+
+                par = partitura_form.save(commit=False)
+            
+                #agregar especialidades del request 
+                print(request.POST)
+                
+                par.archivo =request.FILES['archivo'].file.read()
+                
+                #par.archivo = request.FILES.get('archivo')
+
+                par.save()
+                cosas = request.POST.copy()
+                d = request.POST
+                if 'especialidadesAcordes' in d:
+                    listaesp = cosas.pop('especialidadesAcordes')
+                    for esp in listaesp:
+                        print(esp)
+                        par.especialidadesAcordes.add(Especialidad.objects.get(id = esp))
+                
+
+                par.save()
+                #obtener especialidades
+                #ir recorriendo especialidades
+                #una espe. partitura. add
+                messages.success(request, "Cargado Correcto!")
+            else:
+                messages.error(request, " Error")
+        except:
+            messages.error(request, " Error")
+            
+        if(request.POST['custId'] == '1'):
+
+            return redirect('gestionMusical:crear_partitura')
+        else:
+            return redirect('gestionMusical:partituras')
+        
+    else:
+        instrumento_form =InstrumentoForm()
+        
+    return render(request,'crear_instrumento.html',{'instrumento_form':instrumento_form,'editacion':editacion})
+
 def crearPartitura(request):
     editacion = 0
     especialidadesTodas = list(Especialidad.objects.all())
@@ -1221,10 +1310,6 @@ def crearPartitura(request):
                 messages.error(request, " Error")
         except:
             messages.error(request, " Error")
-
-
-
-
             
         if(request.POST['custId'] == '1'):
 
@@ -1399,8 +1484,20 @@ def editarTema(request,id):
 
 
 def listarinstrumentos(request):
-    clases = Clase.objects.all()
-    return render(request,'instrumentos.html',{'clases':clases})
+    instrumentos = Instrumento.objects.all()
+    pedidor = str(request.user.username)
+    filtro = ''
+    pedidor = ''
+
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+    if not elusuario:
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    if elusuario:
+        elusuario = elusuario[0]
+        pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    print(filtro)
+    return render(request, 'instrumentos.html', context={'instrumentos': instrumentos,'pedidor':pedidor,'filtro':filtro})
 
 def asociarAlumnoClase(request,idA,idC):
     #asocia

@@ -155,10 +155,51 @@ class Alumno(Usuario):
     tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
     
 
-
     class Meta:
         verbose_name = 'Alumno'
         verbose_name_plural = 'Alumnos'
+
+
+
+
+
+
+
+
+class Prestamo(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    
+    class Meta:
+        verbose_name = 'Prestamo'
+        verbose_name_plural = 'Prestamos'
+    
+    def __str__(self):
+        return self.id
+
+
+class Instrumento(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre del instrumento', max_length = 100, null = False, blank = False)
+    descripcion = models.TextField('Descripcion del instrumento', null = False, blank = False)
+    color = models.CharField('color del instrumento', max_length = 100, null = False, blank = False) 
+    estadoUso = models.CharField('estado de uso del instrumento', max_length = 100, null = False, blank = False)
+    fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
+    archivo = models.BinaryField(blank=True, null=True)
+
+
+    class Meta:
+        verbose_name = 'Instrumento'
+        verbose_name_plural = 'Instrumentos'
+    
+    def __str__(self):
+        return self.id
+
+
+
+
+
 
 
 class Clase(models.Model):

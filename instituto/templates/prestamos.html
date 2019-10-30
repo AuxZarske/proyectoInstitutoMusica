@@ -413,24 +413,24 @@ div#espeNIvel{
                {% endif %}
         </div>
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Instrumentos</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los instrumentos que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
+          <h1 class="h3 mb-2 text-gray-800">Tutores</h1>
+          <p class="mb-4">En la siguiente tabla podra visualizar los tutores que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
                 
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de instrumentos que cuenta actualmente:</h6>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de tutores que cuenta actualmente:</h6>
                     <!--modal-->
                   
                     
     
-                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="{% url 'gestionMusical:crear_instrumento' %}">
+                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="{% url 'gestionMusical:crear_tutor' %}">
                               
                             <span class="icon text-white-50">
                                   <i class="fas fa-plus"></i>
                             </span>
-                            <span class="text">Añadir Instrumento</span>
+                            <span class="text">Añadir Tutores</span>
                             
                       
                         </a>
@@ -445,25 +445,37 @@ div#espeNIvel{
                   <thead>
                     <tr>
                       
-                        
-                      <th> Nombre</th>
-                      <th> Color</th>
-                      <th> Estado de Uso</th>
-                      <th >Acciones</th>
+                        <th style="display: none">D.N.I</th>
+                      <th style="display: none"> Apellido </th>
+                      <th style="display: none"> Nombre</th>
+                      <th class="noExport">Apellido y Nombre</th>
+                      <th> Telefono</th>
+                      
+                      
+                      <th class="noExport">Acciones</th>
                       
                     </tr>
                   </thead>
                   
                   <tbody>
-                    {% for t in instrumentos%}
+                    {% for t in tutores%}
                         
                      
                         <tr>
+                            <td style="display: none">{{t.dniTutor}}</td>
+                            <td style="display: none">{{t.apellidoTutor}}</td>
+                            <td style="display: none">{{t.nombreTutor}}</td>
+                            <td>{{t.apellidoTutor}}, {{t.nombreTutor}}</td>
+                          <td>{{t.telefonoTutor}}</td>
                             
-                          <td>{{t.nombre}}</td>
-                          <td>{{t.color}}</td>
-                          <td>{{t.estadoUso}}</td>
+                            
+                            
+                         
 
+                          
+                          
+                          
+                          
                           
                           
                           <td>
@@ -475,66 +487,60 @@ div#espeNIvel{
                               <div class="btn-group">
                                 <center>
                                     <div >
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{t.id}}">
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{t.dniTutor}}">
                                     
                                     <i class="fa fa-eye"></i>
                                   
                                   </button>
                                 </div>
                                 </center>
-                                  <div class="modal fade bs-example-modal-lg{{t.id}}" id="myModal{{t.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal fade bs-example-modal-lg{{t.dniTutor}}" id="myModal{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content" id="elgrando">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.id}}">Datos:</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Datos Personales</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
                                                   <div class="alinealoNomas">
-                                                      <label for="inputEmail3" class="izquierda">Nombre: </label>
+                                                      <label for="inputEmail3" class="izquierda">DNI: </label>
                                                       <div class="derecha">
-                                                        {{t.nombre}}
+                                                        {{t.dniTutor}}
                                                       </div>
                                                     </div>
                                                     <div class="alinealoNomas">
-                                                        <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                        <label for="inputEmail3" class="izquierda">Apellido:</label>
                                                         <div class="derecha">
-                                                            {{t.descripcion}}
+                                                            {{t.apellidoTutor}}
                                                         </div>
                                                       </div>
                                                       <div class="alinealoNomas">
-                                                          <label for="inputEmail3" class="izquierda">Color:</label>
+                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
                                                           <div class="derecha">
-                                                              {{t.color}}
+                                                              {{t.nombreTutor}}
                                                           </div>
                                                         </div>
                                                         <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Estado de uso::</label>
+                                                                <label for="inputEmail3" class="izquierda">Telefono:</label>
                                                                 <div class="derecha">
-                                                                    {{t.estadoUso}}
+                                                                    {{t.telefonoTutor}}
                                                                 </div>
                                                               </div>
                                                               <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Fecha de Carga:</label>
+                                                                  <label for="inputEmail3" class="izquierda">Relacion:</label>
                                                                   <div class="derecha">
-                                                                      {{t.fechaCreacion}}
+                                                                      {{t.tipo}}
                                                                   </div>
                                                                 </div>
-                                                                <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Imagen:</label>
-                                                                    <div class="derecha">
-                                                                        la imagen
-                                                                    </div>
-                                                                  </div>
                                                         
                                                             
                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   <input type="hidden" id="inputOculto" value="{{pedidor}}">
-                                                    <input type="hidden" id="inputOcultoTemplate" value="7">
+                                                    <input type="hidden" id="inputOcultoTemplate" value="6">
                                                   <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                               </div>
                                               <input type="hidden" id="filtrado" value="{{filtro}}">
@@ -543,7 +549,7 @@ div#espeNIvel{
                                   </div>
 
                                   <div id="ere">
-                            <a href="{% url 'gestionMusical:editar_instrumentos' t.id %}" class="btn btn-warning btn-icon-split">
+                            <a href="{% url 'gestionMusical:editar_tutor' t.dniTutor %}" class="btn btn-warning btn-icon-split">
                                  
                                 <span class="icon text-white-50">
                                       <i class="fas fa-paint-brush"></i>
@@ -555,29 +561,29 @@ div#espeNIvel{
                               </div>
                               <div class="btn-group">
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.id}}">
+                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.dniTutor}}">
                                       <div id="icon8">
                                     <i class="fas fa-trash"></i>
                                   </div>
                                   </button>
                                 </center>
                                 
-                                  <div class="modal fade bs-example-modal-lg2{{t.id}}" id="myModal2{{t.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal fade bs-example-modal-lg2{{t.dniTutor}}" id="myModal2{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.id}}">Confirmacion de Eliminacion</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Confirmacion de Eliminacion</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar el instrumento {{t.nombre}} ???</h4>
+                                                  <h4>Esta seguro de Eliminar al Tutor {{t.apellidoTutor}} {{t.nombreTutor}} ???</h4>
                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_instrumentos' t.id %}">
+                                                  <a href="{% url 'gestionMusical:eliminar_tutor' t.dniTutor %}">
                                                   <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
                                                 </a>
                                                 </div>
