@@ -1,6 +1,7 @@
 {%extends 'index.html'%}
-{% load staticfiles %}
 
+{% load staticfiles %}
+{% load poll_extras %}
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
@@ -70,6 +71,10 @@
           -webkit-border-radius: 43px 43px 43px 43px;
           float: right;
 
+    }
+    img#imagenInstrumento{
+        height: 200px;
+        width: 200px;
     }
     div#zonaBotones{
   
@@ -419,7 +424,9 @@ div#espeNIvel{
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                
+                    <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                            <i class="fas fa-file"></i>
+                          </button>
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de instrumentos que cuenta actualmente:</h6>
                     <!--modal-->
                   
@@ -436,7 +443,106 @@ div#espeNIvel{
                         </a>
 
                         
-                        
+                     <!--dsds-->
+                     <form class="user" method="POST">
+                            {% csrf_token %}
+                        <div id="contenedorFiltro">
+                            <input type="hidden" id="filtrado" value="{{filtro}}">
+            
+                       
+                          <div id="comboFiltro">
+                              
+                            <div id="zonaInput">
+                              <!--3 div-->
+                              <div class="form-group" id="color">
+                                    <label for="inputState" style="color: black" id="labbel">Color:</label>
+                                    <select id="color" name ="color" class="form-control" >
+                                          
+                                            <option value=''>------</option>
+                                            
+                                          <option value='Amarillo'>Amarillo</option>
+                                          <option value='Rojo'>Rojo</option>
+                                          <option value='Azul'>Azul</option>
+                                          <option value='Verde'>Verde</option>
+                                          <option value='Naranja'>Naranja</option>
+                                          <option value='Violeta'>Violeta</option>
+                                          <option value='AmarillosoVerdoso'>Amarilloso verdoso</option>
+                                          <option value='VerdeAzulado'>Verde azulado</option>
+                                          <option value='AzulVioláceo'>Azul violáceo</option>
+                                          <option value='VioletaRojizo'>Violeta rojizo</option>
+                                          <option value='RojoAnaranjado'>Rojo anaranjado</option>
+                                          <option value='NaranjaAmarillento'>Naranja amarillento</option>
+                                          <option value='Negro'>Negro</option>
+                                          <option value='Blanco'>Blanco</option>
+                                          <option value='Gris'>Gris</option>
+              
+                                     
+                                      </select>
+              
+                                    </div>
+
+
+
+
+
+
+                                    <div class="form-group" id="color">
+                                            <label for="inputState" style="color: black" id="labbel">Estado de Uso:</label>
+                                            <select id="estado" name ="estadoUso" class="form-control" >
+                                                   
+                                                    <option value=''>------</option>
+                                                    
+                                                  <option value='Nuevo'>Nuevo</option>
+                                                  <option value='Viejo'>Viejo</option>
+                                                  
+                                                  
+                      
+                                             
+                                              </select>
+                      
+                                            </div>
+            
+              
+            
+            
+            
+
+            
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+                                  </div>
+            
+            
+            
+                                  
+            
+                              <!--3dic-->
+                            
+                            <div id="zonaBotones">
+                            <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+                           
+                            <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                            <input type="hidden" id="custId" name="custId" value="no cambio">
+                             
+                            </div>
+            
+                          </div>
+            
+                        </div>
+                      </form>
+                     <!--dsd-->
+
                                  
             
             <div class="card-body">
@@ -449,7 +555,8 @@ div#espeNIvel{
                       <th> Nombre</th>
                       <th> Color</th>
                       <th> Estado de Uso</th>
-                      <th >Acciones</th>
+                      <th style="display: none"> Fecha de Carga</th>
+                      <th class="noExport">Acciones</th>
                       
                     </tr>
                   </thead>
@@ -463,13 +570,13 @@ div#espeNIvel{
                           <td>{{t.nombre}}</td>
                           <td>{{t.color}}</td>
                           <td>{{t.estadoUso}}</td>
-
+                          <th style="display: none"> {{t.fechaCreacion}}</th>
                           
                           
                           <td>
                           
                           <center>
-                              
+                               
                              
 
                               <div class="btn-group">
@@ -511,7 +618,7 @@ div#espeNIvel{
                                                           </div>
                                                         </div>
                                                         <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Estado de uso::</label>
+                                                                <label for="inputEmail3" class="izquierda">Estado de uso:</label>
                                                                 <div class="derecha">
                                                                     {{t.estadoUso}}
                                                                 </div>
@@ -525,7 +632,8 @@ div#espeNIvel{
                                                                 <div class="alinealoNomas">
                                                                     <label for="inputEmail3" class="izquierda">Imagen:</label>
                                                                     <div class="derecha">
-                                                                        la imagen
+                                                                            
+                                                                        <img src="data:image/png;base64, {{t.archivo|binary_to_image}}" alt="" id="imagenInstrumento">
                                                                     </div>
                                                                   </div>
                                                         
@@ -543,7 +651,7 @@ div#espeNIvel{
                                   </div>
 
                                   <div id="ere">
-                            <a href="{% url 'gestionMusical:editar_instrumentos' t.id %}" class="btn btn-warning btn-icon-split">
+                            <a href="{% url 'gestionMusical:editar_instrumento' t.id %}" class="btn btn-warning btn-icon-split">
                                  
                                 <span class="icon text-white-50">
                                       <i class="fas fa-paint-brush"></i>
@@ -577,7 +685,7 @@ div#espeNIvel{
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_instrumentos' t.id %}">
+                                                  <a href="{% url 'gestionMusical:eliminar_instrumento' t.id %}">
                                                   <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
                                                 </a>
                                                 </div>

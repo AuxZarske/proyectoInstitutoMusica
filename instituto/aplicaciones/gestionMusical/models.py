@@ -166,16 +166,6 @@ class Alumno(Usuario):
 
 
 
-class Prestamo(models.Model):
-    
-    id = models.AutoField(primary_key = True)
-    
-    class Meta:
-        verbose_name = 'Prestamo'
-        verbose_name_plural = 'Prestamos'
-    
-    def __str__(self):
-        return self.id
 
 
 class Instrumento(models.Model):
@@ -224,6 +214,23 @@ class Clase(models.Model):
 
 
 
+class Prestamo(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    profesorOtorga = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    observaciones = models.TextField('Observaciones cuando entrega el instrumento', null = True, blank = True)
+    profesorControla = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    fechaCreacion = models.DateField('Fecha de Creacion del prestamo', auto_now=False,auto_now_add=True)
+    alumnoResponsable = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    fechaCierre = models.DateField('Fecha de entrega', null = True, blank = True)
+    estadoPrestamo =  models.BooleanField('estado de prestamo activo/inactivo', default = False)
 
+
+    class Meta:
+        verbose_name = 'Prestamo'
+        verbose_name_plural = 'Prestamos'
+    
+    def __str__(self):
+        return self.id
 
 

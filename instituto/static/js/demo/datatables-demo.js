@@ -152,7 +152,7 @@ margin: 20
                 var colCount = new Array();
                 $("#dataTable").find('tbody tr:first-child td').each(function() {
                     if ($(this).attr('colspan')) {
-                        for (var j = 1; j <= $(this).attr('colspan'); $j++) {
+                        for (var j = 1; j <= $(this).attr('colspan'); j++) {
                             colCount.push('*');
                         }
                     } else { colCount.push('*'); }

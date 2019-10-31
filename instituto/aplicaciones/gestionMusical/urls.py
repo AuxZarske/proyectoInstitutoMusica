@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito
-from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento
+from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
     #path('',home,name='index'),
@@ -80,6 +80,8 @@ urlpatterns = [
 
     path('instrumentos/',login_required(listarinstrumentos),name='instrumentos'),
     path('crear_instrumento/',login_required(crearInstrumento),name='crear_instrumento'),
+    path('editar_instrumento/<int:id>',login_required(editarInstrumento),name='editar_instrumento'),
+    path('eliminar_instrumento/<int:id>',login_required(eliminarInstrumento),name='eliminar_instrumento'),
 
     path('temas/',login_required(listartemas),name='temas'),
     path('eliminar_tema/<int:id>',login_required(eliminarTema),name='eliminar_tema'),

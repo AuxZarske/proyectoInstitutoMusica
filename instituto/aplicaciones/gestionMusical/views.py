@@ -306,6 +306,8 @@ def listarprestamos(request):
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
+    alumnos = Alumno.objects.all()
+    instrumentos = Instrumento.objects.all()
 
     elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
@@ -315,7 +317,7 @@ def listarprestamos(request):
         elusuario = elusuario[0]
         pedidor = elusuario.apellido + ' '+ elusuario.nombre
     print(filtro)
-    return render(request, 'prestamos.html', context={'prestamos': prestamos,'pedidor':pedidor,'filtro':filtro})
+    return render(request, 'prestamos.html', context={'prestamos': prestamos,'instrumentos':instrumentos,'alumnos':alumnos,'pedidor':pedidor,'filtro':filtro})
 
 def crearTutor(request):
     editacion = 0
@@ -1223,35 +1225,19 @@ def crearInstrumento(request):
     if request.method == 'POST':
         try:#de aca pa abajo modif, para cargar instrumento
 
-            partitura_form = PartituraForm(request.POST)
-            
-            print(partitura_form.errors.as_data())
+            instrumento_form = InstrumentoForm(request.POST)
             nom = request.POST['nombre']
-            if partitura_form.is_valid() and not(Partitura.objects.filter(nombre = nom).exists()):
+            if instrumento_form.is_valid() and not(Instrumento.objects.filter(nombre = nom).exists()):
 
-                par = partitura_form.save(commit=False)
+                instru = instrumento_form.save(commit=False)
             
                 #agregar especialidades del request 
                 print(request.POST)
                 
-                par.archivo =request.FILES['archivo'].file.read()
-                
-                #par.archivo = request.FILES.get('archivo')
+                instru.archivo =request.FILES['archivo'].file.read()
 
-                par.save()
-                cosas = request.POST.copy()
-                d = request.POST
-                if 'especialidadesAcordes' in d:
-                    listaesp = cosas.pop('especialidadesAcordes')
-                    for esp in listaesp:
-                        print(esp)
-                        par.especialidadesAcordes.add(Especialidad.objects.get(id = esp))
-                
-
-                par.save()
-                #obtener especialidades
-                #ir recorriendo especialidades
-                #una espe. partitura. add
+                instru.save()
+               
                 messages.success(request, "Cargado Correcto!")
             else:
                 messages.error(request, " Error")
@@ -1260,14 +1246,75 @@ def crearInstrumento(request):
             
         if(request.POST['custId'] == '1'):
 
-            return redirect('gestionMusical:crear_partitura')
+            return redirect('gestionMusical:crear_instrumento')
         else:
-            return redirect('gestionMusical:partituras')
+            return redirect('gestionMusical:instrumentos')
         
     else:
         instrumento_form =InstrumentoForm()
         
     return render(request,'crear_instrumento.html',{'instrumento_form':instrumento_form,'editacion':editacion})
+
+
+
+
+
+
+def editarInstrumento(request,id):
+    editacion = 1
+    instrumento_form = None
+    error = None
+    
+    try:
+        instrumento = Instrumento.objects.get(id =id)
+       
+
+        if request.method == 'GET':
+            instrumento_form = InstrumentoForm(instance = instrumento)
+            elDoc = instrumento.archivo
+            
+        else:
+          
+            instrumento_form = InstrumentoForm(request.POST, instance = instrumento)
+            if instrumento_form.is_valid():
+                instru=instrumento_form.save()
+                try:
+                    instru.archivo =request.FILES['archivo'].file.read() #no cambia img
+                    messages.success(request, "Editado Correcto!")
+                except:
+                    messages.success(request, "Editado Correcto!")
+                instru.save()
+               
+            else:
+                messages.error(request, " Error - No se pudo Editar")
+                
+            return redirect('gestionMusical:instrumentos')
+    except ObjectDoesNotExist as e:
+        error = e
+
+    
+    return render(request,'crear_instrumento.html',{'instrumento_form':instrumento_form,'elDoc':elDoc,'error':error,'editacion':editacion})
+
+
+
+
+def eliminarInstrumento(request,id):
+    try:
+        instrumento = Instrumento.objects.get(id=id)
+        instrumento.delete()
+        messages.success(request, "Correcta Eliminacion!")
+    except:
+        messages.error(request, " Error - No se pudo eliminar ")
+  
+    return redirect('gestionMusical:instrumentos')
+
+
+
+
+
+
+
+
 
 def crearPartitura(request):
     editacion = 0
@@ -1483,11 +1530,14 @@ def editarTema(request,id):
 
 
 
+
+
 def listarinstrumentos(request):
     instrumentos = Instrumento.objects.all()
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
+    peticion = request.POST.copy()
 
     elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
@@ -1497,6 +1547,31 @@ def listarinstrumentos(request):
         elusuario = elusuario[0]
         pedidor = elusuario.apellido + ' '+ elusuario.nombre
     print(filtro)
+    if request.method == 'POST':
+        color = peticion.pop('color')
+        color = color[0]
+
+        estado = peticion.pop('estadoUso')
+        estado = estado[0]
+        if(True):
+            try:
+                if estado:
+                    if color:
+                        instrumentos = Instrumento.objects.filter(estadoUso = estado, color = color)
+                        filtro = 'Listado filtrado por Color: '+str(color) +', y estado de uso: '+str(estado)
+                    else:
+                        instrumentos = Instrumento.objects.filter(estadoUso = estado)
+                        filtro = 'Listado filtrado por estado de uso: '+str(estado)
+                else:
+                    if color:
+                        instrumentos = Instrumento.objects.filter(color = color)
+                        filtro = 'Listado filtrado por Color: '+str(color) 
+                    else:
+                        instrumentos = Instrumento.objects.all()
+                        
+                messages.success(request, "Filtrado Correcto!")
+            except:
+                messages.error(request, " Error - No se pudo filtrar")
     return render(request, 'instrumentos.html', context={'instrumentos': instrumentos,'pedidor':pedidor,'filtro':filtro})
 
 def asociarAlumnoClase(request,idA,idC):
