@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 
 from django.contrib import messages 
-
+from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
 import json
 from django.http import HttpResponse
@@ -26,7 +26,7 @@ from reportlab.lib.enums import TA_CENTER
 import dateutil.parser
 
 import base64
- 
+import psycopg2
 
 
 
@@ -284,24 +284,167 @@ def registrarProfesor(request):
     profesor_form =ProfesorForm()
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
+
+def listarestadisticas(request):
+    
+    preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1).count()
+    preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2).count()
+    preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3).count()
+    preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4).count()
+    preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5).count()
+    preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6).count()
+
+    preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7).count()
+    preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8).count()
+    preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9).count()
+    preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10).count()
+    preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11).count()
+    preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12).count()
+
+    Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1).count()
+    Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2).count()
+    Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3).count()
+    Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4).count()
+    Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5).count()
+    Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6).count()
+
+    Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7).count()
+    Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8).count()
+    Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9).count()
+    Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10).count()
+    Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11).count()
+    Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12).count()
+
+
+
+    return render(request,'estadisticas.html',{'preEnero':preEnero,'preFebrero':preFebrero,'preMarzo':preMarzo,'preAbril':preAbril,'preMayo':preMayo,'preJunio':preJunio,'preJulio':preJulio,'preAgosto':preAgosto,'preSeptiembre':preSeptiembre,'preOctubre':preOctubre,'preNoviembre':preNoviembre,'preDiciembre':preDiciembre,'Enero':Enero,'Febrero':Febrero,'Marzo':Marzo,'Abril':Abril,'Mayo':Mayo,'Junio':Junio,'Julio':Julio,'Agosto':Agosto,'Septiembre':Septiembre,'Octubre':Octubre,'Noviembre':Noviembre,'Diciembre':Diciembre})
+
+
 def listartutores(request):
     tutores = Tutor.objects.all()
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
 
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre
-    print(filtro)
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
     return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro})
 
 
+
+
+def listarAuditoria(request):
+    sesiones = []
+    log = {}
+    logs = []
+    objetoss = []
+    conexion1 = psycopg2.connect(database="todo15", user="postgres", password="1234",port=1234)
+    cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"
+    cursor1.execute(sql)
+    
+    
+    for fila in cursor1.fetchall():       
+        diccionario = {
+            'id':fila['id'], 'accion':fila['login_type'], 'usuario':fila['username'], 'fecha':fila['datetime'], 'ip':fila['remote_ip']}
+        logs.append(diccionario)
+    conexion1.close()
+
+
+    conexion2 = psycopg2.connect(database="todo15", user="postgres", password="1234",port=1234)
+    cursor2=conexion2.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    sql = "select id, event_type, datetime, content_type_id, user_id from easyaudit_crudevent ORDER BY datetime DESC"
+    cursor2.execute(sql)
+    
+    for fila in cursor2.fetchall():       
+        diccionario = {
+            'id':fila['id'],'accion':fila['event_type'], 'fecha':fila['datetime'], 'modelo':fila['content_type_id'], 'fecha':fila['datetime'], 'idUsuario':fila['user_id']}
+        objetoss.append(diccionario)
+    conexion2.close()
+        
+    
+            
+    for o in objetoss:
+        if o.get('accion') == 1:
+            o['accion'] = 'Eliminación'
+            
+        elif o['accion'] == 2:
+            o['accion'] = 'Creación'
+            
+        elif o['accion'] == 3:
+            o['accion'] = 'Modificación'
+
+
+    auxiliar = list(objetoss.copy())
+    for o in auxiliar:
+        if o.get('idUsuario') == None:
+            print("entro if")
+            objetoss.remove(o)
+           
+
+   
+            
+    for o in objetoss:
+        print(o.get('idUsuario'))
+        o['idUsuario'] = User.objects.get(id=o.get('idUsuario')).username
+    
+    objetos = objetoss
+    for o in objetos:
+        o['modelo'] = ContentType.objects.get(id=o.get('modelo')).model
+        o['modelo'] = o.get('modelo').capitalize()
+
+    tablas = ContentType.objects.all()
+    for tabla in tablas:
+        tabla.model =  tabla.model.capitalize()
+    return render(request,'auditoria.html',{'logs':logs,'tablas':tablas, 'objetoss':objetoss})
+
+
+
+
+
+
+
+
+
+
+
 def listarprestamos(request):
+    if request.method == 'POST':
+        
+       
+        
+        prestamo_form = PrestamoForm(request.POST)
+        if prestamo_form.is_valid():
+            try:
+                prestamo = prestamo_form.save(commit=False)
+                prestamo.estadoProfesor = "Entregador"
+                prestamo.estadoPrestamo = True
+                pedidor = str(request.user.username)
+                print(pedidor)
+                elProfe = Profesor.objects.get(correoElectronico = pedidor)
+                prestamo.profesorReferencia = elProfe
+                prestamo.save()
+                messages.success(request, "Registro Correcto!")
+            except:
+                messages.error(request, " Error - No se pudo cargar")
+        else:
+            print(request.POST)
+            print(prestamo_form.errors.as_data())
+            messages.error(request, " Error - No se pudo cargar")
+
+
+
     prestamos = Prestamo.objects.all()
     pedidor = str(request.user.username)
     filtro = ''
@@ -309,15 +452,26 @@ def listarprestamos(request):
     alumnos = Alumno.objects.all()
     instrumentos = Instrumento.objects.all()
 
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre
-    print(filtro)
-    return render(request, 'prestamos.html', context={'prestamos': prestamos,'instrumentos':instrumentos,'alumnos':alumnos,'pedidor':pedidor,'filtro':filtro})
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+        
+
+
+
+    except:
+        pass 
+
+    
+    return render(request, 'prestamos.html', context={'prestamos': prestamos,'instrumentos':instrumentos,'alumnos':alumnos})
 
 def crearTutor(request):
     editacion = 0
@@ -503,14 +657,19 @@ def listarespecialidades(request):
     filtro = ''
     pedidor = ''
 
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre
-    print(pedidor)
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
     if request.method == 'POST':
         caso = 0
         error = 0
@@ -627,14 +786,19 @@ def listarprofesores(request):
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre
-    print(pedidor)
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
     profesoresVivos = Profesor.objects.filter(estado = True)
     profesoresStandbay = Profesor.objects.filter(estado = False)
     if request.method == 'POST':
@@ -777,13 +941,19 @@ def listaralumnos(request):
     filtro = ''
     pedidor = ''
     pedidor = str(request.user.username)
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
 
     musicasTotales = MusicaTipo.objects.all()
     especialidades = Especialidad.objects.all()
@@ -1128,16 +1298,19 @@ def listarpartituras(request):
     especialidades = Especialidad.objects.all()
     peticion = request.POST.copy()
     filtro = ''
-    pedidor = str(request.user.username)
+    try:
+        pedidor = str(request.user.username)
     
     
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
 
     if request.method == 'POST':
         
@@ -1435,13 +1608,19 @@ def listartemas(request):
     pedidor = ''
     filtro = ''
 
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre 
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass  
 
     if request.method == 'POST':
         #pide hacer filtrado
@@ -1539,14 +1718,19 @@ def listarinstrumentos(request):
     pedidor = ''
     peticion = request.POST.copy()
 
-    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
 
-    if not elusuario:
-        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
-    if elusuario:
-        elusuario = elusuario[0]
-        pedidor = elusuario.apellido + ' '+ elusuario.nombre
-    print(filtro)
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
     if request.method == 'POST':
         color = peticion.pop('color')
         color = color[0]

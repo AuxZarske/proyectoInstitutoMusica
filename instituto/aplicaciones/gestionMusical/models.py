@@ -116,7 +116,7 @@ class Usuario (models.Model):
     telefono = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
-    
+    fechaInscripcion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
     
     
     class Meta:
@@ -217,14 +217,15 @@ class Clase(models.Model):
 class Prestamo(models.Model):
     
     id = models.AutoField(primary_key = True)
-    profesorOtorga = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    estadoProfesor = models.CharField('Tipo profe del prestamo', max_length = 100, null = False, blank = False)
     observaciones = models.TextField('Observaciones cuando entrega el instrumento', null = True, blank = True)
-    profesorControla = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    profesorReferencia = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
     fechaCreacion = models.DateField('Fecha de Creacion del prestamo', auto_now=False,auto_now_add=True)
     alumnoResponsable = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    instrumentoPrestado = models.ForeignKey(Instrumento, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     fechaCierre = models.DateField('Fecha de entrega', null = True, blank = True)
     estadoPrestamo =  models.BooleanField('estado de prestamo activo/inactivo', default = False)
-
+    duracionDias = models.IntegerField('duracion de la prestamo', null = False, blank = False, default=1)
 
     class Meta:
         verbose_name = 'Prestamo'

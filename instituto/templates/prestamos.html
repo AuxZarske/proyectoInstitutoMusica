@@ -166,6 +166,9 @@ button#repo{
   color: black;
   font-weight: bold;
 }
+div#edadFiltro{
+  display: inline-block;
+}
 button#botonExtra{
   display: inline-block;
   background-color: rgb(219, 90, 90);
@@ -421,7 +424,8 @@ div#espeNIvel{
                 {% endfor %}
                {% endif %}
         </div>
-
+        <form class="user" method="POST">
+                {% csrf_token %}
         <div id="establecerPrestamo">
                 <h1 class="h3 mb-2 text-gray-800" id="tituloPrestamo">Establecer Prestamo:</h1>
                 <div>
@@ -430,7 +434,7 @@ div#espeNIvel{
                                 <div class="form-group" id="nivell">
                                         <label for="inputState" style="color: black" id="labbel">Responsable:</label>
                                           
-                                        <select id="country" class="form-control" name="alumnoResponsable" >
+                                        <select id="country" class="form-control" name="alumnoResponsable" required>
                                     
                                     
 
@@ -444,7 +448,7 @@ div#espeNIvel{
                                 <div class="form-group" id="nivell">
                                         <label for="inputState" style="color: black" id="labbel">Instrumento:</label>
                                           
-                                        <select id="country2" class="form-control" name="instrumentoPresta" >
+                                        <select id="country2" class="form-control" name="instrumentoPrestado" required>
                                     
                                     
 
@@ -454,8 +458,22 @@ div#espeNIvel{
                                                 
                                            </select>
                                 </div>
+
+
+                                <div class="form-group" id="nivell">
+                                        <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
+                                        
+                                        <div class="form-row" id="edadInput">
+                                            <input type="number" class="form-control" name="duracionDias" min="0" max="10" required>
+                  
+                                        </div>
+                  
+                                      </div>
+
+
+
                                 <div class="form-group" style="vertical-align: bottom;" >
-                                        <button class="btn btn-facebook" style="vertical-align: bottom;">Establecer Prestamo</button>
+                                        <button type="submit" class="btn btn-facebook" style="vertical-align: bottom;">Establecer Prestamo</button>
                                 </div>
 
 
@@ -463,6 +481,7 @@ div#espeNIvel{
                         </div>
                 </div>
         </div>
+        </form>
         <br>
           <br>
           <h1 class="h3 mb-2 text-gray-800">Prestamos</h1>
@@ -593,17 +612,14 @@ div#espeNIvel{
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                            <th>Nombre</th>
-                            <th style="display: none">Nivel de Dificultad</th>
-                            <th style="display: none">Compositor</th>  
-                            <th style="display: none">Especialidades</th>                     
-                                                  
-                                                  
-                            <th class="noExport">Archivo</th>
-                           
+                            <th>Alumno Responsable</th>
+                            <th>Instrumento</th>
                             
+                            <th>Estado de Prestamo</th>
+                                               
+                   
                             
-                            <th class="noExport">Acciones</th>
+                            <th >Acciones</th>
                             
                             
                     </tr>
@@ -611,46 +627,17 @@ div#espeNIvel{
                   
                   <tbody>
 
-                        {% for par in partituras%}
-                                                    
+                        {% for par in prestamos%}
+                                                
                                                  
                                                     <tr>
                                                       
-                                                      <td>{{par.nombre}}</td>
-                                                      <td style="display: none">{{par.nivel}}</td>
-                                                      <td style="display: none">{{par.compositor}}</td>
-
-                                                      
-                                                          <td style="display: none">{%for est in par.especialidadesAcordes.all%}
-
-                                                            
-                                                            <p >{{est.nombre}}</p>
-
-                                                            {%endfor%}
-                                                            
-                                                          
-                                                          </td>
+                                                      <td>{{par.alumnoResponsable}}</td>
+                                                      <td>{{par.instrumentoPrestado.nombre}}</td>
                                                      
+                                                      <td>{{par.estadoPrestamo}}</td>
+                                                      
 
-                                                      
-                                                      
-                                                      <td>{%if par.archivo%}
-                                                          
-                                                         
-                                                        <!--iii-->
-                                                        <div class="btn-group">
-                                                          <center>
-                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
-                                                          </center>
-                                                          
-                                                            
-                                                    </center>
-                                                        <!--iii-->
-                                                        
-                                                          
-                                                          {%else%}
-                                                          <p>ninguno</p>
-                                                            {%endif%}</td> 
                           
                           
                           
@@ -674,67 +661,51 @@ div#espeNIvel{
                                               <div class="modal-dialog modal-lg">
                                                   <div class="modal-content" id="elgrando">
                                                       <div class="modal-header">
-                                                          <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos:</h4>
+                                                          <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos del Prestamo:</h4>
                                                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                   </button>
                                                           
                                                       </div>
                                                       <div class="modal-body" id="cuerpoModal">
-                                                          <div class="alinealoNomas">
-                                                              <label class="izquierda" >Id: </label>
+                                                         <!----> <div class="alinealoNomas">
+                                                              <label class="izquierda" >Numero de Identificacion: </label>
                                                               <div class="derecha">
                                                                 {{par.id}}
                                                               </div>
                                                             </div>
                                                             <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
                                                                 <div class="derecha">
-                                                                    {{par.nombre}}
+                                                                    {{par.alumnoResponsable}}
                                                                 </div>
                                                               </div>
                                                               <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                                  <label for="inputEmail3" class="izquierda">Instrumento:</label>
                                                                   <div class="derecha">
-                                                                      {{par.descripcion}}
+                                                                      {{par.instrumentoPrestado.nombre}}
                                                                   </div>
                                                                 </div>
                                                                 <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                    <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
                                                                     <div class="derecha">
-                                                                        {{par.nivel}}
+                                                                        {{par.fechaCreacion}}
                                                                     </div>
                                                                   </div>
                                                                   <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                                                      <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
                                                                       <div class="derecha">
-                                                                          {{par.compositor}}
+                                                                          {{par.duracionDias}}
                                                                       </div>
                                                                     </div>
                                                                     <div class="alinealoNomas">
-                                                                        <label for="inputEmail3" class="izquierda">Archivo:</label>
-
-                                                                        <div class="derecha">
-                                                                          {%if par.archivo%}
-                                                                    
-                                                                           <center>
-                                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
-                                                                           </center>
-                                                          
-                                                                            {%endif%}
-                                                                        
-                                                                      </div>
-                                                                    </div>
-
-                                                                      <div class="alinealoNomas">
-                                                                          <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades para Uso:</label>
-                                                                          <div class="derecha">
-                                                                              
-                                                                              {%for es in par.especialidadesAcordes.all%}
-                                                                              
-                                                                              <p> {{es}} </p>
-                                                                              {%endfor%}
+                                                                            <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
+                                                                            <div class="derecha">
+                                                                                {{par.estadoPrestamo}}
+                                                                            </div>
                                                                           </div>
-                                                                        </div>
+                                                                    
+
+                                                                      
                                                                    
                                               </div>
                                               <div class="modal-footer">
@@ -768,12 +739,12 @@ div#espeNIvel{
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar la Partitura {{par.nombre}}  ???</h4>
+                                                  <h4>Esta seguro de Eliminar la Partitura  ???</h4>
                                                   
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_partitura' par.id %}">
+                                                  <a href="#">
                                                   <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
                                                 </a>
                                                 </div>

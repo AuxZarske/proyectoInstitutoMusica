@@ -48,7 +48,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index'  %}">
+        <a class="nav-link" href="{% url 'gestionMusical:estadisticas'  %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Inicio</span></a>
       </li>
@@ -200,6 +200,15 @@
           </div>
         </div>
       </li>
+
+
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'gestionMusical:auditoria'  %}">
+            <i class="fas fa-fw fa-pager"></i>
+            <span>Auditoria</span>
+          </a>
+        </li>
 
 
 

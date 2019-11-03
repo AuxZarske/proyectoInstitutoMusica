@@ -103,6 +103,9 @@ if(template == 6){
 if(template == 7){
   var tipoReporte = "Instrumentos";
 }
+if(template == 8){
+  var tipoReporte = "Auditoria";
+}
 doc['header']=(function() {
 return {
 columns: [
@@ -193,6 +196,11 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [100, 100, 100,100];
+                }
+                if(template == 8){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [95, 100, 90,120];
                 }
                 
 // Change dataTable layout (Table styling)
