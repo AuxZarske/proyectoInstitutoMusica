@@ -349,7 +349,7 @@ def listarAuditoria(request):
     log = {}
     logs = []
     objetoss = []
-    conexion1 = psycopg2.connect(database="todo15", user="postgres", password="1234",port=1234)
+    conexion1 = psycopg2.connect(database="todo16", user="postgres", password="1234",port=1234)
     cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"
     cursor1.execute(sql)
@@ -362,14 +362,15 @@ def listarAuditoria(request):
     conexion1.close()
 
 
-    conexion2 = psycopg2.connect(database="todo15", user="postgres", password="1234",port=1234)
+    conexion2 = psycopg2.connect(database="todo16", user="postgres", password="1234",port=1234)
     cursor2=conexion2.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql = "select id, event_type, datetime, content_type_id, user_id from easyaudit_crudevent ORDER BY datetime DESC"
     cursor2.execute(sql)
     
     for fila in cursor2.fetchall():       
         diccionario = {
-            'id':fila['id'],'accion':fila['event_type'], 'fecha':fila['datetime'], 'modelo':fila['content_type_id'], 'fecha':fila['datetime'], 'idUsuario':fila['user_id']}
+            'id':fila['id'],'accion':fila['event_type'], 'fecha':fila['datetime'], 'modelo':fila['content_type_id'], 'fecha':fila['datetime'], 'idUsuario':fila['user_id']
+            }
         objetoss.append(diccionario)
     conexion2.close()
         
@@ -425,14 +426,18 @@ def listarprestamos(request):
        
         
         prestamo_form = PrestamoForm(request.POST)
-        if prestamo_form.is_valid():
+        alu = request.POST['alumnoResponsable']
+        instru = request.POST['instrumentoPrestado']
+        if prestamo_form.is_valid() and not (Prestamo.objects.filter(alumnoResponsable = alu, estadoPrestamo = True).exists()) or not(Prestamo.objects.filter(instrumentoPrestado = instru, estadoPrestamo = True).exists()):
+        
             try:
                 prestamo = prestamo_form.save(commit=False)
                 prestamo.estadoProfesor = "Entregador"
                 prestamo.estadoPrestamo = True
                 pedidor = str(request.user.username)
-                print(pedidor)
+                print("bjb")
                 elProfe = Profesor.objects.get(correoElectronico = pedidor)
+                print(elProfe)
                 prestamo.profesorReferencia = elProfe
                 prestamo.save()
                 messages.success(request, "Registro Correcto!")
@@ -449,8 +454,26 @@ def listarprestamos(request):
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
-    alumnos = Alumno.objects.all()
-    instrumentos = Instrumento.objects.all()
+    aluPres = list(Prestamo.objects.filter( estadoPrestamo = True).values('alumnoResponsable'))
+    instruPres = list(Prestamo.objects.filter( estadoPrestamo = True).values('instrumentoPrestado'))
+
+    print(aluPres)
+    alumnos = list(Alumno.objects.all())
+    print(alumnos)
+    
+    aluPresAUX = aluPres.copy()
+    for e in aluPresAUX:
+        print(e)
+        alumnos.remove(Alumno.objects.get(dni = e['alumnoResponsable']))
+        
+  
+
+    
+    instrumentos = list(Instrumento.objects.all())
+    instruPresAUX = instruPres.copy()
+    for e in instruPresAUX:
+        print(e)
+        instrumentos.remove(Instrumento.objects.get(id = e['instrumentoPrestado']))
 
     try:
         pedidor = str(request.user.username)
@@ -494,8 +517,38 @@ def crearTutor(request):
         tutor_form =TutorForm()
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
 
+def finPrestamo(request):
+    extra = request.GET.get('username', None)
+    iden = request.GET.get('identificador', None)
+    data = {
+        'is_taken': not(Prestamo.objects.filter(id=iden).exists())
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Error no existe el prestamo.'
+        messages.error(request, " Error - No se pudo Cerrar prestamo")
+    else:
+        #crear compositor, ponerle ese nombre
+        try:
+            presta = Prestamo.objects.get(id = iden)
+            presta.estadoProfesor = "Recibido"
+            presta.estadoPrestamo = False
+            pedidor = str(request.user.username)
+            elProfe = Profesor.objects.get(correoElectronico = pedidor)
+            presta.profesorReferencia = elProfe
+            presta.observaciones = extra
+            
+            presta.fechaCierre = datetime.now()
 
-
+            presta.save()
+            messages.success(request, "Carga Correcta!")
+        except:
+            messages.error(request, " Error - No se pudo Cerrar prestamo")
+        
+     
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
 
 def crearCompositor(request):
     nombre = request.GET.get('username', None)

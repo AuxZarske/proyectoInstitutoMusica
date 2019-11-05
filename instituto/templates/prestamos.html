@@ -69,6 +69,7 @@
 </script>
 
 
+
 {%endblock head%}
 {%block estilos%}
     <style type="text/css">
@@ -398,7 +399,7 @@ div#espeNIvel{
 
         {%block contenidiPagina%}
         <input type="hidden" id="inputOculto" value="{{pedidor}}">
-        <input type="hidden" id="inputOcultoTemplate" value="1">
+        <input type="hidden" id="inputOcultoTemplate" value="9">
         <!-- Begin Page  Content -->
         <div class="container-fluid">
           
@@ -506,67 +507,37 @@ div#espeNIvel{
             <form class="user" method="POST">
                 {% csrf_token %}
             <div id="contenedorFiltro">
-                <input type="hidden" id="filtrado" value="{{filtro}}">
+                <input type="hidden" id="filtrado" value="">
 
            
               <div id="comboFiltro">
                   
                 <div id="zonaInput">
                   <!--3 div-->
-                  <div class="form-group">
-                      <label for="inputAddress2" class="sub" style="color: black">Compositor de partitura:</label>
-                      
-                      <div class="form-row">
-                          <select id="" class="form-control" name="compositor" >
-                                      <option value="">-----</option>
-                                     
-  
-                                      {%for compo in compositores%}
-                                      <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
-                                      {%endfor%}
-                              
-                         </select>
+                  
 
-                      </div>
-
-                    </div>
-
-                    <div class="form-group" id="nivell">
-                        <label for="inputState" style="color: black" id="labbel">Nivel:</label>
-                          
-                          <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
-                              <option value=''>-------</option>
-                            <option value='facil'>facil</option>
-                              <option value='medio'>medio</option>
-                              <option value='dificil'>dificil</option>
-                              
-                              
-                            
-                         
-                          </select>
+                  <div class="form-group" id="espeNIvel2">
+                        <label for="inputAddress2" class="sub" style="color: black">Estado del prestamo:</label>
+                        
+                        <div class="form-row" >
+                            <select  id="accion" class="form-control" single>
+                                <option value=''>---</option>
+                                
+                                <option value="Activo">Activo</option>
+                                <option value="Finalizado">Finalizado</option>
+                                
+                                
+                            </select>
   
                         </div>
   
+                      </div>
+  
 
 
 
 
-                        <div class="form-group" id="espeNIvel">
-                            <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
-                            
-                            <div class="form-row" id="espec2">
-                                <select name="espec" id="espec" class="selectpicker" single>
-                                    <option value=''>-------</option>
-                                    {%for e in especialidades%}
-                                    <option value="{{e.id}}">
-                                        {{e}}
-                                    </option>
-                                    {%endfor%}
-                                </select>
-      
-                            </div>
-      
-                          </div>
+                        
 
 
 
@@ -594,7 +565,7 @@ div#espeNIvel{
                   <!--3dic-->
                 
                 <div id="zonaBotones">
-                <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+                <button type="button" class="btn btn-primary"  id="filtrar" >Filtrar</button>
                
                 <input type="hidden" id="yolo" name="yolo" value="no cambio">
                 <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -614,12 +585,14 @@ div#espeNIvel{
                     <tr>
                             <th>Alumno Responsable</th>
                             <th>Instrumento</th>
-                            
+                            <th style="display: none">Fecha Creacion</th>
+                            <th style="display: none">Duracion dias</th>
+
                             <th>Estado de Prestamo</th>
                                                
                    
                             
-                            <th >Acciones</th>
+                            <th class="noExport">Acciones</th>
                             
                             
                     </tr>
@@ -632,10 +605,19 @@ div#espeNIvel{
                                                  
                                                     <tr>
                                                       
-                                                      <td>{{par.alumnoResponsable}}</td>
+                                                      <td>{{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}</td>
                                                       <td>{{par.instrumentoPrestado.nombre}}</td>
+
+                                                      <td style="display: none">{{par.fechaCreacion}}</td>
+                                                      <td style="display: none">{{par.duracionDias}}</td>
                                                      
-                                                      <td>{{par.estadoPrestamo}}</td>
+                                                      <td>
+                                                          {% if par.estadoPrestamo %}
+                                                                Activo
+                                                          {%else%}
+                                                                Finalizado
+                                                          {%endif%}
+                                                      </td>
                                                       
 
                           
@@ -676,7 +658,7 @@ div#espeNIvel{
                                                             <div class="alinealoNomas">
                                                                 <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
                                                                 <div class="derecha">
-                                                                    {{par.alumnoResponsable}}
+                                                                    {{par.alumnoResponsable.apellido}},  {{par.alumnoResponsable.nombre}}
                                                                 </div>
                                                               </div>
                                                               <div class="alinealoNomas">
@@ -700,9 +682,37 @@ div#espeNIvel{
                                                                     <div class="alinealoNomas">
                                                                             <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
                                                                             <div class="derecha">
-                                                                                {{par.estadoPrestamo}}
+                                                                                    {% if par.estadoPrestamo %}
+                                                                                    Activo
+                                                                              {%else%}
+                                                                                    Finalizado
+                                                                              {%endif%}
                                                                             </div>
                                                                           </div>
+                                                                          {%if par.estadoProfesor == "Entregador"%}
+                                                                          <div class="alinealoNomas">
+                                                                                <label for="inputEmail3" class="izquierda">Profesor Responsable del prestamo:</label>
+                                                                                <div class="derecha">
+                                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                                                                </div>
+                                                                              </div>
+                                                                              {%else%}
+
+                                                                              <div class="alinealoNomas">
+                                                                                    <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
+                                                                                    <div class="derecha">
+                                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                                                                    </div>
+                                                                                  </div>
+
+                                                                                  <div class="alinealoNomas">
+                                                                                        <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
+                                                                                        <div class="derecha">
+                                                                                            {{par.observaciones}}
+                                                                                        </div>
+                                                                                      </div>
+
+                                                                                  {%endif%}
                                                                     
 
                                                                       
@@ -722,31 +732,38 @@ div#espeNIvel{
                               </div>
                               <div class="btn-group">
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
-                                      <div id="icon8">
-                                    <i class="fas fa-trash"></i>
-                                  </div>
-                                  </button>
+                                  {%if par.estadoPrestamo%}
+                                  <button type="button" class="btn btn-danger btn-icon-split" style="background-color: seagreen;"  data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
+                                        <div id="icon8">
+                                      <i class="fas fa-window-close"></i>
+                                    </div>
+                                    </button>
+                                  {%endif%}
                                 </center>
                                 
                                   <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Eliminacion</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Finalizacion de Prestamo</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar la Partitura  ???</h4>
-                                                  
+                                                  <h4 style="font-size: 18px;">Esta seguro de Finalizar el prestamo del Instrumento {{par.instrumentoPrestado.nombre}} correspondiente al alumno     {{par.alumnoResponsable.apellido}},  {{par.alumnoResponsable.nombre}} ?</h4>
+                                                  <div class="alinealoNomas">
+                                                        <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
+                                                                
+                                                                <textarea class="form-control" id="id_observacionesP{{par.id}}" name="observaciones" placeholder="Anotaciones sobre el estado de entrega del instrumento..." ></textarea>
+                                                        
+                                                      </div>
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="#">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                                </a>
+                                                  
+                                                  <button type="button"  class="btn btn-primary" onclick="finPrestamo('{{par.id}}','id_observacionesP{{par.id}}')">Confirmar Finalizacion</button>
+                                                
                                                 </div>
                               
                                           </div>
@@ -850,12 +867,131 @@ div#espeNIvel{
  <!-- Latest compiled and minified CSS -->
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<script type="text/javascript">
+  function finPrestamo(id,tex){
+      
+        
+         var identificador = String(id);
+        
+         var username = String(document.getElementById(tex).value);
+         
+         if(username == ""){
+            alert("Por favor ingrese un nombre primero");
+         }else{
 
+         
+         
+         $.ajax({
+           
+           url: '{% url "gestionMusical:fin_Prestamo" %}',
+           data: {
+             'username': username,
+             'identificador':identificador
+           },
+           dataType: 'json',
+           
+           success: function (data) {
+               
+             if (data.is_taken) {
+               alert("Error");
+               
+             }else{
+              
+              location.href="{% url 'gestionMusical:prestamos' %}";
+             }
+           }
+         });
+         
+        }
+      };
+     </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 
 
+         <script>
+                $(document).ready(function() {
+                  var table = $('#dataTable').DataTable();
+              
+                
+              
+                //vuelvo a cargar el datatable
+                      $.fn.dataTable.ext.search.pop(
+                          function( settings, data, dataIndex ) {
+                              if(1){
+                                  return true ;
+                              }
+                              return false ;
+                                 }
+                      );
+                      table.draw() ;
+                  
+              
+              
+              
+              
+                  //un boton con id filtrar
+                  $('#filtrar').click(function(){
+              
+              
+                //aca se obtienen los valores
+              
+                      
+            
+                      var filtro2 = $('#accion').val() ;
+                      console.log(filtro2);
+            
+                      
+                      //no olvidarme de volver a poner (pop) las filas
+                //esto es por si se realizo algun filtro asi se vuelve a cargar el datatable
+                      
+                      $.fn.dataTable.ext.search.pop(
+                          function( settings, data, dataIndex ) {
+                              if(1){
+                                  return true ;
+                              }
+                              return false ;
+                          }
+                      );
+                      table.draw() ;
+              
+                      
+                      if(filtro2 != ""){
+                          var accion = String($('#accion option:selected').val());
+                          
+                      }
+                      
+    
+    
+    
+                      
+                          if(filtro2 != ""){
+                              
+                                var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex){
+                            
+                            
+                              if  ( accion == String(data[2])){
+                                  return true ;
+                                  
+                              }else{
+                                  return false;
+                                  
+                              }
+                          }
+              
+                          $.fn.dataTable.ext.search.push( filtradoTabla )
+                          table.draw()
+                          var nombre = "Filtrado por: Estado de Prestamo "+String(filtro2);
+                          document.getElementById("filtrado").value = nombre;
+                              }
+                      
+              
+                      
+                  }) ;
+                } );
+            </script>
+            
  {%endblock archivos%}
 </body>
 

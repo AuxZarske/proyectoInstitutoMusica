@@ -184,7 +184,7 @@ class Instrumento(models.Model):
         verbose_name_plural = 'Instrumentos'
     
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 
@@ -232,6 +232,6 @@ class Prestamo(models.Model):
         verbose_name_plural = 'Prestamos'
     
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 

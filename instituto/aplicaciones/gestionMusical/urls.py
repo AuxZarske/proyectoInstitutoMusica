@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
-from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas
+from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo
 from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
@@ -42,7 +42,7 @@ urlpatterns = [
 
     path('prestamos/',login_required(listarprestamos),name='prestamos'),
     
-   
+   path('fin_Prestamo/',login_required(finPrestamo),name='fin_Prestamo'),
 
 
 

@@ -106,6 +106,9 @@ if(template == 7){
 if(template == 8){
   var tipoReporte = "Auditoria";
 }
+if(template == 9){
+  var tipoReporte = "Prestamos";
+}
 doc['header']=(function() {
 return {
 columns: [
@@ -171,6 +174,15 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [90, 70, 230];
+                   var table = $("#dataTable").DataTable();//Obtengo la tabla
+                var pageInfo = table.page.info(); //Obtiene el objeto page.info()
+                for (i = 1; i <= pageInfo.recordsDisplay; i++) { //recordsDisplay me devuelve la cantidad de registros mostrados
+                  //El segundo [] es el numero de columna a alinear
+                  
+                  doc.content[0].table.body[i][1].alignment = 'center';
+                  
+                  
+                }; 
                 }
                 if(template == 3){
                   //doc.content[0].table.widths = colCount;
@@ -201,6 +213,20 @@ margin: 20
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
                    doc.content[0].table.widths = [95, 100, 90,120];
+                }
+                if(template == 9){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                   doc.content[0].table.widths = [95, 80, 90,50,55];
+                   var table = $("#midatatable").DataTable();//Obtengo la tabla
+                  var pageInfo = table.page.info(); //Obtiene el objeto page.info()
+                  for (i = 1; i <= pageInfo.recordsDisplay; i++) { //recordsDisplay me devuelve la cantidad de registros mostrados
+                  doc.content[1].table.body[i][5].alignment = 'right'; //El segundo [] es el numero de columna a alinear
+                  doc.content[0].table.body[i][4].alignment = 'right';
+                  doc.content[0].table.body[i][3].alignment = 'right';
+                  doc.content[0].table.body[i][6].alignment = 'center';
+                  doc.content[0].table.body[i][2].alignment = 'center';
+                }; 
                 }
                 
 // Change dataTable layout (Table styling)

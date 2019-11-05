@@ -146,103 +146,7 @@ function cargaMusic(){
       });
 </script>
 
-<script>
-        $(document).ready(function(){
-           
-            ("#id_fechaNac").change(function () {
-            var fecha = $(this).val();
-             
-            var hoy = new Date();
-            var cumpleanos = new Date(fecha);
-            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-            var m = hoy.getMonth() - cumpleanos.getMonth();
 
-            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                edad--;
-            }
-
-            if (edad < 18){
-                document.getElementById("datosTutores").style.display = "block";
-                $("#apellidoInTutor").prop('required',true);
-                $("#nombreInTutor").prop('required',true);
-                $("#elDNItutor").prop('required',true);
-                $("#elTelefonoTutor").prop('required',true);
-                
-            }else{
-                document.getElementById("datosTutores").style.display = "none";
-                $("#apellidoInTutor").prop('required',false);
-                $("#nombreInTutor").prop('required',false);
-                $("#elDNItutor").prop('required',false);
-                $("#elTelefonoTutor").prop('required',false);
-            }
-       
-           });
-           $("#exampleRadios1").change(function () {
-               
-            var seleccionado = $(this).val();
-        
-
-            
-                document.getElementById("tuOtroTutor").style.display = "none";
-            
-
-       
-           });
-           $("#exampleRadios2").change(function () {
-               
-               var seleccionado = $(this).val();
-           
-   
-              
-                document.getElementById("tuOtroTutor").style.display = "none";
-               
-   
-          
-              });
-              $("#exampleRadios3").change(function () {
-               
-               var seleccionado = $(this).val();
-               
-                document.getElementById("tuOtroTutor").style.display = "inline-block";
-             
-
-               
-   
-          
-              });
-              $("#exampleRadios3").change(function () {
-                    var fecha = $("#id_fechaNac").val();
-             
-                    var hoy = new Date();
-                    var cumpleanos = new Date(fecha);
-                    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-                    var m = hoy.getMonth() - cumpleanos.getMonth();
- 
-                    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                        edad--;
-                    }
-                    if(edad < 18){
-                        $("#tuOtroTutor").prop('required',true);
-
-
-                    }
-              });
-              $("#exampleRadios2").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
-
-
-                    
-              });
-              $("#exampleRadios1").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
-
-
-                    
-              });
-       });
-         </script>
 
 <style type="text/css">
 
@@ -547,7 +451,7 @@ display: None;
 
                               </div>
                         <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Clase a Cursar:</label>
+                          <label for="inputPassword4" class="sub">En que desea Especializarce:</label>
                           <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control" required>
 
                                 {% for esp in especialidadesTodas %}
@@ -628,5 +532,101 @@ display: None;
 
         
 </script>
+<script>
+        $(document).ready(function(){
+           
+            $("#id_fechaNac").change(function () {
+            var fecha = $(this).val();
+             
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
 
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            if (edad < 18){
+                document.getElementById("datosTutores").style.display = "block";
+                $("#apellidoInTutor").prop('required',true);
+                $("#nombreInTutor").prop('required',true);
+                $("#elDNItutor").prop('required',true);
+                $("#elTelefonoTutor").prop('required',true);
+                
+            }else{
+                document.getElementById("datosTutores").style.display = "none";
+                $("#apellidoInTutor").prop('required',false);
+                $("#nombreInTutor").prop('required',false);
+                $("#elDNItutor").prop('required',false);
+                $("#elTelefonoTutor").prop('required',false);
+            }
+       
+           });
+           $("#exampleRadios1").change(function () {
+               
+            var seleccionado = $(this).val();
+        
+
+            
+                document.getElementById("tuOtroTutor").style.display = "none";
+            
+
+       
+           });
+           $("#exampleRadios2").change(function () {
+               
+               var seleccionado = $(this).val();
+           
+   
+              
+                document.getElementById("tuOtroTutor").style.display = "none";
+               
+   
+          
+              });
+              $("#exampleRadios3").change(function () {
+               
+               var seleccionado = $(this).val();
+               
+                document.getElementById("tuOtroTutor").style.display = "inline-block";
+             
+
+               
+   
+          
+              });
+              $("#exampleRadios3").change(function () {
+                    var fecha = $("#id_fechaNac").val();
+             
+                    var hoy = new Date();
+                    var cumpleanos = new Date(fecha);
+                    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                    var m = hoy.getMonth() - cumpleanos.getMonth();
+ 
+                    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                        edad--;
+                    }
+                    if(edad < 18){
+                        $("#tuOtroTutor").prop('required',true);
+
+
+                    }
+              });
+              $("#exampleRadios2").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
+              });
+              $("#exampleRadios1").change(function () {
+                    
+                        $("#tuOtroTutor").prop('required',false);
+
+
+                    
+              });
+       });
+         </script>
 </html>
