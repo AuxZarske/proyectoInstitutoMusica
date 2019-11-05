@@ -357,7 +357,223 @@ margin-left: 2px;
                 <div id ="zonaInferior">
                   <!--lista-->
                    <div id="listaAlumnos"> 
-                        s
+                        <button>Lista de Alumnos de Clase:</button>
+                        <!--datatable lista alumnos clase-->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                  <tr>
+                                          <th>Nombre</th>
+                                          <th style="display: none">Nivel de Dificultad</th>
+                                          <th style="display: none">Compositor</th>  
+                                          <th style="display: none">Especialidades</th>                     
+                                                                
+                                                                
+                                          <th class="noExport">Archivo</th>
+                                         
+                                          
+                                          
+                                          <th class="noExport">Acciones</th>
+                                          
+                                          
+                                  </tr>
+                                </thead>
+                                
+                                <tbody>
+              
+                                      {% for par in partituras%}
+                                                                  
+                                                               
+                                                                  <tr>
+                                                                    
+                                                                    <td>{{par.nombre}}</td>
+                                                                    <td style="display: none">{{par.nivel}}</td>
+                                                                    <td style="display: none">{{par.compositor}}</td>
+              
+                                                                    
+                                                                        <td style="display: none">{%for est in par.especialidadesAcordes.all%}
+              
+                                                                          
+                                                                          <p >{{est.nombre}}</p>
+              
+                                                                          {%endfor%}
+                                                                          
+                                                                        
+                                                                        </td>
+                                                                   
+              
+                                                                    
+                                                                    
+                                                                    <td>{%if par.archivo%}
+                                                                        
+                                                                       
+                                                                      <!--iii-->
+                                                                      <div class="btn-group">
+                                                                        <center>
+                                                                            <a href="#" onclick="elPdf('{{par.archivo}}')">Documento</a>
+                                                                        </center>
+                                                                        
+                                                                          
+                                                                  </center>
+                                                                      <!--iii-->
+                                                                      
+                                                                        
+                                                                        {%else%}
+                                                                        <p>ninguno</p>
+                                                                          {%endif%}</td> 
+                                        
+                                        
+                                        
+                                        <td>
+                                        
+                                        <center>
+                                            
+                                           
+              
+                                              <div class="btn-group">
+                                                      <center>
+                                                          <div >
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{par.id}}">
+                                                          
+                                                          <i class="fa fa-eye"></i>
+                                                        
+                                                        </button>
+                                                      </div>
+                                                      </center>
+                                                        <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content" id="elgrando">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos:</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                                </button>
+                                                                        
+                                                                    </div>
+                                                                    <div class="modal-body" id="cuerpoModal">
+                                                                        <div class="alinealoNomas">
+                                                                            <label class="izquierda" >Id: </label>
+                                                                            <div class="derecha">
+                                                                              {{par.id}}
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="alinealoNomas">
+                                                                              <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                              <div class="derecha">
+                                                                                  {{par.nombre}}
+                                                                              </div>
+                                                                            </div>
+                                                                            <div class="alinealoNomas">
+                                                                                <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                                                <div class="derecha">
+                                                                                    {{par.descripcion}}
+                                                                                </div>
+                                                                              </div>
+                                                                              <div class="alinealoNomas">
+                                                                                  <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                                  <div class="derecha">
+                                                                                      {{par.nivel}}
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="alinealoNomas">
+                                                                                    <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                                                                    <div class="derecha">
+                                                                                        {{par.compositor}}
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  <div class="alinealoNomas">
+                                                                                      <label for="inputEmail3" class="izquierda">Archivo:</label>
+              
+                                                                                      <div class="derecha">
+                                                                                        {%if par.archivo%}
+                                                                                  
+                                                                                         <center>
+                                                                                            <a href="#" onclick="elPdf('{{par.archivo}}')">Documento</a>
+                                                                                         </center>
+                                                                        
+                                                                                          {%endif%}
+                                                                                      
+                                                                                    </div>
+                                                                                  </div>
+              
+                                                                                    <div class="alinealoNomas">
+                                                                                        <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades para Uso:</label>
+                                                                                        <div class="derecha">
+                                                                                            
+                                                                                            {%for es in par.especialidadesAcordes.all%}
+                                                                                            
+                                                                                            <p> {{es}} </p>
+                                                                                            {%endfor%}
+                                                                                        </div>
+                                                                                      </div>
+                                                                                 
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                                            </div>
+                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+              
+                                                <div id="ere">
+                                              <a href="{% url 'gestionMusical:editar_partitura' par.id %}" class="btn btn-warning btn-icon-split">
+                                            
+                                              <span class="icon text-white-50">
+                                                    <i class="fas fa-paint-brush"></i>
+                                              </span>
+                                              
+                                              
+                                        
+                                        </a>
+                                            </div>
+                                            <div class="btn-group">
+                                              <center>
+                                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
+                                                    <div id="icon8">
+                                                  <i class="fas fa-trash"></i>
+                                                </div>
+                                                </button>
+                                              </center>
+                                              
+                                                <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Eliminacion</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                                                        </button>
+                                                                
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h4>Esta seguro de Eliminar la Partitura {{par.nombre}}  ???</h4>
+                                                                
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <a href="{% url 'gestionMusical:eliminar_partitura' par.id %}">
+                                                                <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                              </a>
+                                                              </div>
+                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </center>
+                                      
+                                        </td>
+                                        
+                                      
+                                      </tr>
+              
+                                      
+                                  {%endfor%}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                         <!--datatable lista alumnos clase-->
                    </div>
                    <!--Finlista-->
 
