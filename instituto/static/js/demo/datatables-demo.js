@@ -109,6 +109,9 @@ if(template == 8){
 if(template == 9){
   var tipoReporte = "Prestamos";
 }
+if(template == 10){
+  var tipoReporte = "Alumnos de clase";
+}
 doc['header']=(function() {
 return {
 columns: [
@@ -197,7 +200,7 @@ margin: 20
                 if(template == 5){
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
-                   doc.content[0].table.widths = [40, 100, 40,80,100,50];
+                   doc.content[0].table.widths = [60, 100, 40,70,95,45];
                 }
                 if(template == 6){
                   //doc.content[0].table.widths = colCount;
@@ -227,6 +230,11 @@ margin: 20
                   doc.content[0].table.body[i][6].alignment = 'center';
                   doc.content[0].table.body[i][2].alignment = 'center';
                 }; 
+                }
+                if(template == 10){
+                  //doc.content[0].table.widths = colCount;
+                 //Es equivalente a: 
+                 doc.content[0].table.widths = [60, 100, 40,70,95,45];
                 }
                 
 // Change dataTable layout (Table styling)

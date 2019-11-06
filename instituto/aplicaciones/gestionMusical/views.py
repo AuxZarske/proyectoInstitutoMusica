@@ -1321,6 +1321,19 @@ def editarClase(request,id):
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass 
     listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
     print(listAlumnosTotal)
     copia = listAlumnosTotal.copy()
@@ -1329,7 +1342,7 @@ def mostrarClase (request,id):
         if listAlumnos.count(a) > 0:
             listAlumnosTotal.remove(a)
     print(listAlumnosTotal)
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal})
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor})
 
 def listarmensajes(request):
     clases = Clase.objects.all()
