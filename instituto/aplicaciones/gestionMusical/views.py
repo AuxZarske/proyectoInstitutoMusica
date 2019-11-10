@@ -1,11 +1,11 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
-
+from django.http import HttpResponseRedirect
 from django.contrib import messages 
 from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
@@ -594,7 +594,47 @@ def editarComposito(request):
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
-    
+
+def crearRecomendacion(request):
+    nombre = request.GET.get('username', None)
+    descripcion = request.GET.get('descripcion', None)
+    dias = request.GET.get('dias', None)
+    parti = request.GET.get('parti', None)
+    print(parti)
+    alumno = request.GET.get('alumno', None)
+    data = {
+        'is_taken': False
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Error'
+    else:
+        #crear compositor, ponerle ese nombre
+        reco_form = RecomendacionForm()
+        tarea = reco_form.save(commit=False)
+
+        tarea.nombre = nombre
+        tarea.descripcion = descripcion
+        pedidor = str(request.user.username)
+        elProfe = Profesor.objects.get(correoElectronico = pedidor)
+        tarea.profesorReferencia = elProfe
+        elAlu = Alumno.objects.get(dni = alumno)
+        tarea.alumnoReco = elAlu
+        fechita = datetime.now() + relativedelta(days=int(dias))
+        tarea.fechaCierre = fechita
+        tarea.estadoReco = False
+        if parti:
+            tarea.partiMusicReco = Partitura.objects.get(id=parti)
+        else:
+            tarea.partiMusicReco = None
+        
+
+        tarea.save()
+
+        messages.success(request, "Carga Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+
+    print(data)
+    return JsonResponse(data)  
 
 def crearMusica(request):
     nombre = request.GET.get('username', None)
@@ -675,6 +715,18 @@ def eliminarTutor(request,dni):
     except:
         messages.error(request, " Error - no puede eliminarse un tutor en uso")
     return redirect('gestionMusical:tutores')
+
+def eliminarReco(request,id):
+    reco = Recomendacion.objects.get(id = id)
+    
+    try:
+        reco.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse")
+    return redirect('gestionMusical:clases')
+
+
 
 def eliminarMusica(request,id):
     musica = MusicaTipo.objects.get(id = id)
@@ -1844,7 +1896,9 @@ def desasociarAlumnoClase(request,idA,idC):
 def verAlumnoClase(request,dni,idC):
     elAlumno = None
     partiturasTodas = None
+    completoparti = list(Partitura.objects.all())
     temasTodos = None
+    todasRecomendaciones = list(Recomendacion.objects.all())
     try:
         elAlumno = Alumno.objects.get(dni = dni)
     except:
@@ -1873,7 +1927,7 @@ def verAlumnoClase(request,dni,idC):
         for t in temas:
             temasTodos.remove(t)  
         
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos})
+    return render(request,'una_clase.html',{'laClase':laClase,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):

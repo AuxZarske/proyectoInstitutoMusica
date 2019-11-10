@@ -235,3 +235,21 @@ class Prestamo(models.Model):
         return str(self.id)
 
 
+class Recomendacion(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre de la recomendacion', max_length = 100, null = False, blank = False)
+    descripcion = models.TextField('en q consiste la reco de practica', null = False, blank = False)
+    profesorReferencia = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    fechaCreacion = models.DateField('Fecha de Creacion de la recomendacion', auto_now=False,auto_now_add=True)
+    alumnoReco = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    fechaCierre = models.DateField('Fecha de fin', null = True, blank = True)
+    estadoReco =  models.BooleanField('estado de reco activo/inactivo', default = False)
+    partiMusicReco = models.ForeignKey(Partitura, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+
+    class Meta:
+        verbose_name = 'Recomendacion'
+        verbose_name_plural = 'Recomendaciones'
+    
+    def __str__(self):
+        return str(self.id)
