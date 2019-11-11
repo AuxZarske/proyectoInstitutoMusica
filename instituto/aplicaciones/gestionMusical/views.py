@@ -726,7 +726,16 @@ def eliminarReco(request,id):
         messages.error(request, " Error - no puede eliminarse")
     return redirect('gestionMusical:clases')
 
-
+def realizarReco(request,id):
+    reco = Recomendacion.objects.get(id = id)
+    
+    try:
+        reco.estadoReco = True
+        reco.save()
+        messages.success(request, "Correcto!")
+    except:
+        messages.error(request, " Error ")
+    return redirect('gestionMusical:clases')
 
 def eliminarMusica(request,id):
     musica = MusicaTipo.objects.get(id = id)

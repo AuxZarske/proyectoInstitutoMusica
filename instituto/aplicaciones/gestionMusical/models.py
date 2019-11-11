@@ -253,3 +253,19 @@ class Recomendacion(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+class Asistencia(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    fechaCreacion = models.DateField('Fecha de Creacion de la asistencia', auto_now=False,auto_now_add=True)
+    alumnoAsist = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    estadoReco =  models.BooleanField('estado de asistencia activo/inactivo', default = False)
+    claseReferencia = models.ForeignKey(Clase, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    
+
+    class Meta:
+        verbose_name = 'Asistencia'
+        verbose_name_plural = 'Asistencias'
+    
+    def __str__(self):
+        return str(self.id)
