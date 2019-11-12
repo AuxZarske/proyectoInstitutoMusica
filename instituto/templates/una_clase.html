@@ -50,6 +50,7 @@
     
     
     </script>
+    
 <style type="text/css">
     div.eleccion{
         display: inline-block;
@@ -558,29 +559,122 @@ div#datosPersonales{
                                                                     <td style="display: none">{{par.telefono}}</td>
 
                                                                     <td>
+                                                                        <input type="hidden"  id="{{par.dni}}" value="0" />
+
+                                                                      
+
+                                                                        
                                                                           {%for asi in asistenciasHoy%}
 
                                                                               {%if asi.alumnoAsist.dni == par.dni%}
                                                                                       
                                                                                       {%if asi.estadoReco%}
-                                                                                              Asistio
+                                                                                             
+                                                                                              <label style="font-size: 20px;"> Asistio </label>
                                                                                       {%else%}
-                                                                                              Falto
+                                                                                      <label style="font-size: 20px;"> Falto </label>
+                                                                                              
                                                                                       {%endif%}
+                                                                                      <a href="" data-toggle="modal" data-target=".bs-example-modal-lg254C{{asi.id}}"> (editar)</a>
+                                                                                      <script>
+                                                                                              document.getElementById("{{par.dni}}").value = 1;
+                                                                                      
+                                                                                      </script>
+
+
+<!--MMMM-->
+<div class="modal fade bs-example-modal-lg254C{{asi.id}}" id="myModal254C{{asi.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabelC{{asi.id}}">Editar Asistencia</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                        </button>
+                
+            </div>
+            <div class="modal-body">
+                <label for="">Estado de Asistencia</label>
+                <select name="asistio" id="id_asistio{{asi.id}}" class="form-control" required>
+                      {% if asi.estadoReco %}
+
+                          
+                          <option selected>Asistio</option>
+                              <option>Falto</option>
+                          {%else%}
+                          <option >Asistio</option>
+                          <option selected>Falto</option>
+                              
+                              {%endif%}
+                    </select>
+
+                <input type="hidden" id="idAsist" value="{{asist.id}}">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                
+                <button type="button" class="btn btn-primary" onclick="editacion('{{asi.id}}')">Confirmar Cambio</button>
+              
+              </div>
+
+        </div>
+    </div>
+</div>
+ <!--mmm-->
+
+
+                                                                                      
+                                                                                      
+
 
                                                                               {%else%}
+                                                                                      {%if asistenciasHoy.count == forloop.counter %}
 
-                                                                                          es la ultima del for-pongo input
+                                                             
+
+                                                                                      <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
+                                                                                      <div id="macri{{par.dni}}">
+                                                                                        <input type="checkbox" class="elCheck"  name="check[]" value="{{par.dni}}" />Asistencia a Clase
+                                                                                      </div>
+                                                                                      {%endif%}
+
+                                                                                        
+                                                                                        
 
                                                                               {%endif%}
+                                                                             
 
 
                                                                           {%endfor%}
 
+                                                                          {%if asistenciasHoy.count == 0 %}
+
+                                                             
+
+                                                                                      <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
+                                                                                    <div id="macri{{par.dni}}">
+                                                                                        <input type="checkbox"  class="elCheck"  name="check[]" value="{{par.dni}}" />Asistencia a Clase
+                                                                                      </div>                                                                                                  
+                                                                                        {%else%}
+
+                                                                                        <script>
+                                                                                           var num =  document.getElementById("{{par.dni}}").value;
+                                                                                           
+                                                                                           if(num == 1){
+                                                                                            
+                                                                                            document.getElementById("macri{{par.dni}}").style.display="none";
+                                                                                           }
+                                                                                    
+                                                                                    </script>
 
 
-                                                                      <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
-                                                                      <input type="checkbox" class="elCheck"  name="check[]" value="{{par.dni}}" />Asistencia a Clase
+
+                                                                                      {%endif%}
+                                                                          
+
+
+
+                                                                      
                                                                     
                                                                     </td>
 
@@ -2267,7 +2361,44 @@ div#datosPersonales{
      allowClear: true
      } );
     </script>
+<script>
+    
+    function editacion(id) {
+     
+      var username = $("#id_asistio"+id).val();
+     
+      var identificador = id;
+      if(username == ""){
+         alert("Por favor ingrese un nombre primero");
+      }else{
 
+      
+      
+      $.ajax({
+        
+        url: '{% url "gestionMusical:editar_asistencia" %}',
+        data: {
+          'username': username,
+          'identificador': identificador
+        },
+        dataType: 'json',
+        
+        success: function (data) {
+            
+          if (data.is_taken) {
+            alert("Error ");
+            
+          }else{
+           
+           location.reload();
+          }
+        }
+      });
+      
+     }
+   }
+ 
+</script>
 
  <!-- Bootstrap core JavaScript
  

@@ -595,6 +595,33 @@ def editarComposito(request):
     print(data)
     return JsonResponse(data)
 
+def editarAsistencia(request):
+    nombre = request.GET.get('username', None)
+    print(nombre)
+    identificador = request.GET.get('identificador', None)
+    
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Error'
+    else:
+        #crear compositor, ponerle ese nombre
+        asist = Asistencia.objects.get(id = identificador)
+        if nombre =="Falto":
+            asist.estadoReco = False
+        else:
+            asist.estadoReco = True
+        asist.save()
+           
+        messages.success(request, "Edicion Correcta!")
+        data['error_message'] = 'Exito.'
+    print(data)
+    return JsonResponse(data)
+
+    
+
 def crearRecomendacion(request):
     nombre = request.GET.get('username', None)
     descripcion = request.GET.get('descripcion', None)

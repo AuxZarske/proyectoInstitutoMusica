@@ -496,7 +496,7 @@ div#zonaBotones{
                                                   </div>
                                                   <div class="modal-body">
                                                       <label for="">Estado de Asistencia</label>
-                                                      <select name="asistio" id="id_asistio" class="form-control" required>
+                                                      <select name="asistio" id="id_asistio{{asist.id}}" class="form-control" required>
                                                             {% if asist.estadoReco %}
 
                                                                 
@@ -515,7 +515,7 @@ div#zonaBotones{
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                       
-                                                      <button type="button" class="btn btn-primary" id="botonEditarAsist">Confirmar Cambio</button>
+                                                      <button type="button" class="btn btn-primary" onclick="editacion('{{asist.id}}')">Confirmar Cambio</button>
                                                     
                                                     </div>
                                   
@@ -720,11 +720,12 @@ div#zonaBotones{
 
 
 <script>
-    $(document).ready(function(){
-       $("#botonEditarCompo").click(function () {
+    
+       function editacion(id) {
         
-         var username = $("#inputCompoEditar").val();
-         var identificador = $("#idCompo").val();
+         var username = $("#id_asistio"+id).val();
+        
+         var identificador = id;
          if(username == ""){
             alert("Por favor ingrese un nombre primero");
          }else{
@@ -733,7 +734,7 @@ div#zonaBotones{
          
          $.ajax({
            
-           url: '{% url "gestionMusical:editar_composito" %}',
+           url: '{% url "gestionMusical:editar_asistencia" %}',
            data: {
              'username': username,
              'identificador': identificador
@@ -743,8 +744,8 @@ div#zonaBotones{
            success: function (data) {
                
              if (data.is_taken) {
-               alert("Ese nombre ya lo tiene otro compositor ");
-               document.getElementById("inputCompoCrear").value = "";
+               alert("Error ");
+               
              }else{
               
               location.reload();
@@ -753,9 +754,9 @@ div#zonaBotones{
          });
          
         }
-       });
-   });
-     </script>
+      }
+    
+   </script>
 
 
 <script>

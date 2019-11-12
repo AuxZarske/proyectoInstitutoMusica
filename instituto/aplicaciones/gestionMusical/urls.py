@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo
-from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia
+from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
     #path('',home,name='index'),
@@ -51,6 +51,8 @@ urlpatterns = [
     path('eliminar_compositor/<int:id>',login_required(eliminarCompositor),name='eliminar_compositor'),
     path('crear_composito/',login_required(crearCompositor),name='crear_composito'),
     path('editar_composito/',login_required(editarComposito),name='editar_composito'),
+    path('editar_asistencia/',login_required(editarAsistencia),name='editar_asistencia'),
+    
 
     path('eliminar_musica/<int:id>',login_required(eliminarMusica),name='eliminar_musica'),
     path('crear_musica/',login_required(crearMusica),name='crear_musica'),
