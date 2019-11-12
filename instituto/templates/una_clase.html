@@ -372,7 +372,7 @@ div.form-group{
     button#botonLista{
       padding: 0.5%;
       font-size: 18px;
-      background-color: rgb(254, 255, 176);
+      background-color: rgb(176, 223, 255);
       border: 1px solid rgba(255, 182, 99, 0.295);
       border-radius: 25px 25px 25px 25px;
 -moz-border-radius: 25px 25px 25px 25px;
@@ -382,22 +382,26 @@ div.form-group{
       padding: 0.5%;
       margin: 10px;
       margin-left: 0%;
-      background-color: rgb(125, 197, 255);
+      background-color: rgb(182, 253, 255);
       border: 1px solid rgba(255, 182, 99, 0.295);
-      border-radius: 0px 53px 50px 0px;
--moz-border-radius: 0px 53px 50px 0px;
--webkit-border-radius: 0px 53px 50px 0px;
+      
     }
     button#nuevoAsistencia{
       padding: 0.5%;
       margin: 10px;
       margin-left: 0%;
-      background-color: rgb(129, 255, 125);
+      background-color: rgb(182, 253, 255);
       border: 1px solid rgba(255, 182, 99, 0.295);
-      border-radius: 53px 0px 0px 53px;
--moz-border-radius: 53px 0px 0px 53px;
--webkit-border-radius: 53px 0px 0px 53px;
-float: right;
+      
+
+    }
+    button#verTotalAsistencia{
+      padding: 0.5%;
+      margin: 10px;
+      margin-left: 0%;
+      background-color: rgb(182, 253, 255);
+      border: 1px solid rgba(255, 182, 99, 0.295);
+
     }
     
     div.row{
@@ -413,6 +417,12 @@ label.izquierda{
   display: inline-block;
   margin-left: 5%;
   
+  
+}
+input.elCheck{
+
+height: 20px;
+width: 20px;
 }
 div.derecha{
   display: inline-block;
@@ -494,6 +504,9 @@ div#datosPersonales{
 
                 <div id ="zonaInferior">
                   <!--lista-->
+                  
+                  <form class="user" method="POST">
+                      {% csrf_token %}
                    <div id="listaAlumnos"> 
                         <button id="botonLista" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"><strong>Lista de Alumnos de Clase:</strong> <i class="fas fa-chevron-down"></i></button>
                         <div class="collapse in" id="collapseExample">
@@ -506,9 +519,14 @@ div#datosPersonales{
                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                   
                                 <thead>
-                                    <button id="nuevoAlumno" style="display: inline-block;" data-toggle="modal" data-target=".bs-example-modal-lg5"><i class="fas fa-plus" ></i> Añadir Nuevo Alumno a la Clase</button>
-                                    <button id="nuevoAsistencia" style="display: inline-block;">Establecer Asistencia a Clase <i class="fas fa-check"></i> </button>
-                                  <tr>
+                                  <center>
+                                    <button id="nuevoAlumno" type="button" style="display: inline-block;" data-toggle="modal" data-target=".bs-example-modal-lg5"><i class="fas fa-plus" ></i> Añadir Nuevo Alumno a la Clase</button>
+                                    <a href="{% url 'gestionMusical:asistencia_unaClase'  laClase.id %}">
+                                  <button id="verTotalAsistencia" type="button" style="display: inline-block;" ><i class="fas fa-calendar-check" ></i> Ver Asistencias a Clase</button>
+                                </a>
+                                  <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i class="fas fa-check"></i>Establecer Asistencia a Clase  </button>
+                                  </center>  
+                                    <tr>
                                           <th>D.N.I.</th>
                                           <th>Apellido y Nombre</th>
                                           <th style="display: none">Sexo</th>
@@ -538,7 +556,11 @@ div#datosPersonales{
                                                                     <td style="display: none">{{par.fechaNac}}</td>
                                                                     <td style="display: none">{{par.correoElectronico}}</td>
                                                                     <td style="display: none">{{par.telefono}}</td>
-                                                                    <td>asistencia en construccion</td>
+
+                                                                    <td>
+                                                                        <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
+                                                                      <input type="checkbox" class="elCheck"  name="check[]" value="{{par.dni}}" />Asistencia a Clase
+                                                                    </td>
 
                                                                     
               
@@ -623,10 +645,13 @@ div#datosPersonales{
                       </div>
                    </div>
                    </div>
+                  </form>
+                  
                 
                    <!--Finlista-->
                    <div id="accordion" >  
                    <!--zonaA-->
+                  
                    <div id="zonaAlumno"> 
                       <div id="datosPersonales">
                           <h3 style="margin-bottom: 20px;" id="datoAlumno">Datos del Alumno:</h3>

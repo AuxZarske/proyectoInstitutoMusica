@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -1378,10 +1378,45 @@ def editarClase(request,id):
     
     return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error,'editacion':editacion,'profesTodos':profesTodos,'profeCargo':profeCargo})
 
+def asistenciaClase(request,id):
+    unaClase = Clase.objects.get(id = id)
+    lasAsistencias = Asistencia.objects.filter(claseReferencia = unaClase)
+    return render(request,'asistenciaClase.html',{'unaClase':unaClase,'lasAsistencias':lasAsistencias})
 
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
+
+    if request.method == 'POST':
+        print(request.POST)
+        #toma dos listas, alumno, asistencia
+        #recorre la lista alumnos, a cada unp (si no tiene asistencia (para esa clase en ese dia) crea)
+
+        alus = request.POST.getlist('alumnosTabla')
+        asist = request.POST.getlist('check[]')
+         
+        for a in alus:
+            
+            if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
+                if asist.count(a) > 0:
+                    print("crea ")
+                    asit_form = AsistenciaForm()
+                    asistt = asit_form.save(commit=False)
+
+                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                    asistt.estadoReco = True
+                    asistt.claseReferencia = laClase
+                    asistt.save()
+                else:
+                    print("crea ")
+                    asit_form = AsistenciaForm()
+                    asistt = asit_form.save(commit=False)
+
+                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                    asistt.estadoReco = False
+                    asistt.claseReferencia = laClase
+                    asistt.save()
+
     try:
         pedidor = str(request.user.username)
     
@@ -1403,6 +1438,8 @@ def mostrarClase (request,id):
         if listAlumnos.count(a) > 0:
             listAlumnosTotal.remove(a)
     print(listAlumnosTotal)
+    #listAlumnos = listAlumnos.prefetch_related('Asistencia')
+    asistenciasHoy = Asistencia.objects.filter(fechaCreacion = datetime.now(), claseReferencia = laClase)
     return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor})
 
 def listarmensajes(request):
@@ -1907,6 +1944,7 @@ def verAlumnoClase(request,dni,idC):
     partiturasTodas = None
     completoparti = list(Partitura.objects.all())
     temasTodos = None
+    
     todasRecomendaciones = list(Recomendacion.objects.all())
     try:
         elAlumno = Alumno.objects.get(dni = dni)
@@ -1917,10 +1955,40 @@ def verAlumnoClase(request,dni,idC):
     laClase = Clase.objects.get(id = idC)
     listAlumnos = list(laClase.alumnoAsociados.all())
     listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
+    if request.method == 'POST':
+        print(request.POST)
+        #toma dos listas, alumno, asistencia
+        #recorre la lista alumnos, a cada unp (si no tiene asistencia (para esa clase en ese dia) crea)
+
+        alus = request.POST.getlist('alumnosTabla')
+        asist = request.POST.getlist('check[]')
+         
+        for a in alus:
+            
+            if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
+                if asist.count(a) > 0:
+                    print("crea ")
+                    asit_form = AsistenciaForm()
+                    asistt = asit_form.save(commit=False)
+
+                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                    asistt.estadoReco = True
+                    asistt.claseReferencia = laClase
+                    asistt.save()
+                else:
+                    print("crea ")
+                    asit_form = AsistenciaForm()
+                    asistt = asit_form.save(commit=False)
+
+                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                    asistt.estadoReco = False
+                    asistt.claseReferencia = laClase
+                    asistt.save()
     copia = listAlumnosTotal.copy()
     for a in copia:       
         if listAlumnos.count(a) > 0:
             listAlumnosTotal.remove(a)
+
     partituras = []
     temas = []
     if elAlumno != None:
