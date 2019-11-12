@@ -469,7 +469,16 @@ div#zonaBotones{
                           <tr>                          
                             <td>{{asist.alumnoAsist.apellido}} {{asist.alumnoAsist.nombre}}</td> 
                             <td>{{asist.fechaCreacion}}</td>  
-                            <td>{{asist.estadoReco}}</td>                           
+                            <td>{% if asist.estadoReco %}
+
+                                                                
+                                    Asistio
+                                        
+                                    {%else%}
+                                   
+                                   Falto a clases
+                                        
+                                        {%endif%}</td>                           
                             <td>
                             <center>
                                        <!---->
@@ -486,15 +495,27 @@ div#zonaBotones{
                                                       
                                                   </div>
                                                   <div class="modal-body">
-                                                      <label for="">Nombre de Compositor</label>
-                                                      <input type="text" id="inputCompoEditar" value="{{asist.id}}">
-                                                      <input type="hidden" id="idCompo" value="{{asist.id}}">
+                                                      <label for="">Estado de Asistencia</label>
+                                                      <select name="asistio" id="id_asistio" class="form-control" required>
+                                                            {% if asist.estadoReco %}
+
+                                                                
+                                                                <option selected>Asistio</option>
+                                                                    <option>Falto</option>
+                                                                {%else%}
+                                                                <option >Asistio</option>
+                                                                <option selected>Falto</option>
+                                                                    
+                                                                    {%endif%}
+                                                          </select>
+
+                                                      <input type="hidden" id="idAsist" value="{{asist.id}}">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                       
-                                                      <button type="button" class="btn btn-primary" id="botonEditarCompo">Confirmar Cambio</button>
+                                                      <button type="button" class="btn btn-primary" id="botonEditarAsist">Confirmar Cambio</button>
                                                     
                                                     </div>
                                   
@@ -530,7 +551,7 @@ div#zonaBotones{
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            <a href="#">
+                                                            <a href="{% url 'gestionMusical:eliminar_asistencia' asist.id %}">
                                                             <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
                                                           </a>
                                                           </div>

@@ -558,8 +558,30 @@ div#datosPersonales{
                                                                     <td style="display: none">{{par.telefono}}</td>
 
                                                                     <td>
-                                                                        <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
+                                                                          {%for asi in asistenciasHoy%}
+
+                                                                              {%if asi.alumnoAsist.dni == par.dni%}
+                                                                                      
+                                                                                      {%if asi.estadoReco%}
+                                                                                              Asistio
+                                                                                      {%else%}
+                                                                                              Falto
+                                                                                      {%endif%}
+
+                                                                              {%else%}
+
+                                                                                          es la ultima del for-pongo input
+
+                                                                              {%endif%}
+
+
+                                                                          {%endfor%}
+
+
+
+                                                                      <input type="hidden"  name="alumnosTabla" value="{{par.dni}}" />
                                                                       <input type="checkbox" class="elCheck"  name="check[]" value="{{par.dni}}" />Asistencia a Clase
+                                                                    
                                                                     </td>
 
                                                                     

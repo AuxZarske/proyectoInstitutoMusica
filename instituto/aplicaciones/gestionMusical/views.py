@@ -716,6 +716,16 @@ def eliminarTutor(request,dni):
         messages.error(request, " Error - no puede eliminarse un tutor en uso")
     return redirect('gestionMusical:tutores')
 
+def eliminarAsistencia(request, id):
+    asis = Asistencia.objects.get(id = id)
+    num = asis.claseReferencia.id
+    try:
+        asis.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse")
+    return asistenciaClase(request, num)
+
 def eliminarReco(request,id):
     reco = Recomendacion.objects.get(id = id)
     
@@ -1440,7 +1450,8 @@ def mostrarClase (request,id):
     print(listAlumnosTotal)
     #listAlumnos = listAlumnos.prefetch_related('Asistencia')
     asistenciasHoy = Asistencia.objects.filter(fechaCreacion = datetime.now(), claseReferencia = laClase)
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor})
+
+    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
 def listarmensajes(request):
     clases = Clase.objects.all()
@@ -2003,8 +2014,8 @@ def verAlumnoClase(request,dni,idC):
         temasTodos = list(Tema.objects.all())
         for t in temas:
             temasTodos.remove(t)  
-        
-    return render(request,'una_clase.html',{'laClase':laClase,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti})
+    asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, fechaCreacion = datetime.now()) 
+    return render(request,'una_clase.html',{'laClase':laClase,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):
