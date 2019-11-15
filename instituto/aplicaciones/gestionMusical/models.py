@@ -153,6 +153,7 @@ class Alumno(Usuario):
     temasAsociadas = models.ManyToManyField(Tema)
     musica = models.ForeignKey(MusicaTipo, on_delete = models.DO_NOTHING,  null = True, blank = True)
     tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     
 
     class Meta:
@@ -201,6 +202,9 @@ class Clase(models.Model):
     horaInicio = models.CharField('hora de inicio',max_length=50) 
     duracion = models.IntegerField('duracion de la clase', null = False, blank = False, default=0)
     alumnoAsociados = models.ManyToManyField(Alumno, default = None)
+    especialidadesDar = models.ManyToManyField(Especialidad, default = None)
+    cupo = models.IntegerField('cupo clase', null = False, blank = False, default=0)
+    nivel = models.CharField('Nivel de la clase', max_length = 50, null = False, blank = False)
     profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
     
     

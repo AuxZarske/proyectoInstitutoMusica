@@ -412,27 +412,10 @@ display: None;
 
                 
 
-                <div class="form-group">
-                  <label for="inputAddress2" class="sub">Direccion</label>
-                  <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" required>
-                </div>
+               
 
                 <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Sexo:</label>
-                            <select name="sexo" id="id_sexo" class="form-control" required>
-                                  <option selected>Hombre</option>
-                                  <option>Mujer</option>
-                                </select>
-                          </div>
-                </div>
-
-                <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                                 <label for="inputPassword4" class="sub">Musica Preferida:</label>
                                 
                                 <select id="country" class="form-control" name="nombreMusica" required>
@@ -450,7 +433,7 @@ display: None;
 
 
                               </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                           <label for="inputPassword4" class="sub">En que desea Especializarce:</label>
                           <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control" required>
 
@@ -460,7 +443,34 @@ display: None;
                                   {% endfor %}
                               </select>
                         </div>
+                        <div class="form-group col-md-4">
+                                <label for="inputPassword4" class="sub">Nivel Actual en la Especialidad:</label>
+                                <select id="id_especialidadnivel" name="nivel" class="form-control" required>
+                                        <option value='Principiante'>Principiante</option>
+                                        <option value='Medio'>Medio</option>
+                                        <option value='Avanzado'>Avanzado</option>
+                                      
+                                    </select>
+                              </div>
                 </div>
+                <div class="form-group">
+                        <label for="inputAddress2" class="sub">Direccion</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" required>
+                      </div>
+      
+                      <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  <label for="inputPassword4" class="sub">Telefono:</label>
+                                  <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono" required>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <label for="inputPassword4" class="sub">Sexo:</label>
+                                  <select name="sexo" id="id_sexo" class="form-control" required>
+                                        <option selected>Hombre</option>
+                                        <option>Mujer</option>
+                                      </select>
+                                </div>
+                      </div>
 
                 <!--pr-->
               <div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">

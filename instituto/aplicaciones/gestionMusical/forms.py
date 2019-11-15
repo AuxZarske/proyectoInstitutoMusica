@@ -36,7 +36,7 @@ class TemaForm(forms.ModelForm):
 class ClaseForm(forms.ModelForm):
     class Meta:
         model = Clase
-        fields = ['nombre','descripcion','diaSemanal','horaInicio','duracion','profesorCargo']
+        fields = ['nombre','descripcion','diaSemanal','horaInicio','duracion','profesorCargo','nivel','especialidadesDar','cupo']
 
 
 class UsuarioForm(forms.ModelForm):
@@ -59,7 +59,7 @@ class AlumnoForm(forms.ModelForm):
     
     class Meta(UsuarioForm.Meta):
         model = Alumno
-        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','especialidadRequerida']
+        fields = ['dni','nombre','apellido','fechaNac','sexo','domicilio','telefono','correoElectronico','observaciones','conocimientoPrevio','especialidadRequerida','nivel']
 
 class TutorForm(forms.ModelForm):
     class Meta:

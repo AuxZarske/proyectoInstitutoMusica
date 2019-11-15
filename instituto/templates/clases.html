@@ -43,7 +43,29 @@
               
 
         }
-        
+        div.alinealoNomas{
+  text-align: left;
+}
+p#msj{
+    font-size: 17px;
+}
+div#elgrando{
+  width: 400px;
+}
+label.izquierda{
+  display: inline-block;
+  margin-left: 5%;
+  
+}
+div.derecha{
+  display: inline-block;
+  
+  margin-left: 5%;
+  
+  
+}
+
+
         label.col-form-label{
           display: inline-block;
          
@@ -260,6 +282,27 @@ margin-left: 2px;
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <div id="cuadroMensajes" >
+
+                {% if messages %}
+                {% for message in messages %}
+  
+                {% if message.tags == 'success'%}
+                <ul class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+                {% if message.tags == 'error'%}
+                <ul class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                </ul> 
+                {%endif%}
+  
+                {% endfor %}
+               {% endif %}
+        </div>
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Clases</h1>
@@ -326,62 +369,85 @@ margin-left: 2px;
                                   </center>
                                     <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
+                                            <div class="modal-content" id="elgrando">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
                                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                             </button>
                                                     
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">ID: </label>
-                                                        <div class="col-sm-10">
+                                                <div class="modal-body" id="cuerpoModal">
+                                                    <div class="alinealoNomas">
+                                                        <label for="inputEmail3" class="izquierda">ID: </label>
+                                                        <div class="derecha">
                                                           {{clase.id}}
                                                         </div>
                                                       </div>
-                                                      <div class="form-group row">
-                                                          <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre:</label>
-                                                          <div class="col-sm-10">
+                                                      <div class="alinealoNomas">
+                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                          <div class="derecha">
                                                               
                                                               {{clase.nombre}}
                                                           </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Descripcion:</label>
-                                                            <div class="col-sm-10">
+                                                        <div class="alinealoNomas">
+                                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                                            <div class="derecha">
                                                                 {{clase.descripcion}}
                                                             </div>
                                                           </div>
-                                                          <div class="form-group row">
-                                                              <label for="inputEmail3" class="col-sm-2 col-form-label">Dia Semanal:</label>
-                                                              <div class="col-sm-10">
+                                                          <div class="alinealoNomas">
+                                                              <label for="inputEmail3" class="izquierda">Dia Semanal:</label>
+                                                              <div class="derecha">
                                                                   {{clase.diaSemanal}}
                                                               </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Hora Inicio:</label>
-                                                                <div class="col-sm-10">
+                                                            <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Hora Inicio:</label>
+                                                                <div class="derecha">
                                                                     {{clase.horaInicio}}
                                                                 </div>
                                                               </div>
-                                                              <div class="form-group row">
-                                                                  <label for="inputEmail3" class="col-sm-2 col-form-label">Duracion:</label>
-                                                                  <div class="col-sm-10">
+                                                              <div class="alinealoNomas">
+                                                                  <label for="inputEmail3" class="izquierda">Duracion:</label>
+                                                                  <div class="derecha">
                                                                       {{clase.duracion}}
                                                                   </div>
                                                                 </div>
-                                                                <div class="form-group row">
-                                                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Profesor a Cargo:</label>
-                                                                    <div class="col-sm-10">
-                                                                        {{clase.profesorCargo}}
+                                                                <div class="alinealoNomas">
+                                                                    <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                                                    <div class="derecha">
+                                                                        {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}} 
                                                                     </div>
                                                                   </div>
-                                                                  <div class="form-group row">
-                                                                      <label for="inputEmail3" class="col-sm-2 col-form-label">Alumnos:</label>
-                                                                      <div class="col-sm-10">
-                                                                          {{clase.alumnoAsociados.all}}
+                                                                  <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Alumnos:</label>
+                                                                      <div class="derecha">
+                                                                        {%for a in clase.alumnoAsociados.all%}
+                                                                            {{a.apellido}} {{a.nombre}};
+                                                                        {%endfor%}
+                                                                          
                                                                       </div>
+                                                                      <div class="alinealoNomas">
+                                                                          <label for="inputEmail3" class="izquierda">Cupo:</label>
+                                                                          <div class="derecha">
+                                                                              {{clase.cupo}} 
+                                                                          </div>
+                                                                        </div>
+                                                                        <div class="alinealoNomas">
+                                                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                            <div class="derecha">
+                                                                                {{clase.nivel}}  
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="alinealoNomas">
+                                                                              <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                                                              <div class="derecha">
+                                                                                  {%for c in clase.especialidadesDar.all%}
+                                                                                        {{c.nombre}} ;
+                                                                                    {%endfor%}
+                                                                              </div>
+                                                                            </div>
                                                                     </div>
                                                                     
                                                     
@@ -425,6 +491,7 @@ margin-left: 2px;
                                           </div>
                                           <div class="modal-body">
                                               <h4>Esta seguro de Eliminar la clase {{clase.nombre}}  ???</h4>
+                                              <h4>SE BORRARAN LAS ASISTENCIAS PERTENECIENTES A LA CLASE</h4>
                                               
                                           </div>
                                           <div class="modal-footer">

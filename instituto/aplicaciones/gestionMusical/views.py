@@ -1183,7 +1183,10 @@ def eliminarAlumno(request,dni):
         alumno.save()
         messages.success(request, "Eliminado exitoso!")
     else:
-        messages.error(request, " Error - El alumno pertenece a una clase actualmente")
+        
+        nombreClase = list(Clase.objects.filter(alumnoAsociados = alumno))[0]
+        frase = "Error - El alumno pertenece a una clase actualmente: " + str(nombreClase.nombre)
+        messages.error(request, frase)
     return redirect('gestionMusical:alumnos')
 
 
@@ -1193,6 +1196,32 @@ def reivindicarAlumno(request,dni):
     
     alumno.estado = True
     alumno.save()
+    #aca agregarlo al ggrupo de alumnos
+    espe = alumno.especialidadRequerida
+    nive = alumno.nivel
+    #buscar una clase
+    if Clase.objects.filter(especialidadesDar = espe, nivel = nive).exists():
+        
+        clasesEspecNiv = list(Clase.objects.filter(especialidadesDar = espe, nivel = nive))
+        for c in clasesEspecNiv:
+            print(c.nombre)
+            cantAlu = list(c.alumnoAsociados.all())
+            print(len(cantAlu))
+
+            if int(c.cupo) > int(len(cantAlu)):
+                #agrego llamar a fncion
+                laClase = Clase.objects.get(id = c.id)
+                laClase.alumnoAsociados.add(alumno)
+                laClase.save()
+                #mensaje bien
+                fraseee = "Se agrego el alumno a la clase: " + laClase.nombre
+                messages.success(request, fraseee)
+                return redirect('gestionMusical:alumnos')
+                
+        
+
+    messages.error(request, "Se agrego el alumno al Instituto, pero No se logro encontrar una clase con las caracteristicas correctas para el alumno")   
+        #no se logro encontrar una clase con las caracteristicas correctas para el alumno
     return redirect('gestionMusical:alumnos')
     
 def crearAlumno(request):
@@ -1362,13 +1391,27 @@ def listarclases(request):
 
 def eliminarClase(request,id):
     clase = Clase.objects.get(id=id)
-    clase.delete()
+    listaAsistenias = list(Asistencia.objects.filter(claseReferencia = clase))
+    listaAlumnosC = []
+    for x in clase.alumnoAsociados.all():
+        listaAlumnosC.append(x)
+    if len(listaAlumnosC) == 0 :
+        for asis in listaAsistenias:
+            asis.delete()
+        clase.delete()
+        messages.success(request, "Borrado Correcto!")
+    else:
+        print("errororlro")
+        messages.error(request, " Error - No se pudo borrar la clase")
+
     return redirect('gestionMusical:clases')
     
 def crearClase(request):
     
     
     editacion = 0
+    especialidadest = None
+    especialidadest =  Especialidad.objects.all()
     profesTodos = Profesor.objects.filter(estado = True)
     if request.method == 'POST':
         clase_form = ClaseForm(request.POST)
@@ -1380,13 +1423,18 @@ def crearClase(request):
             clase_form.save()
 
             if(request.POST['custId'] == '1'):
+                messages.success(request, "Filtrado Correcto!")
                 return redirect('gestionMusical:crear_clase')
             else:
-                return redirect('gestionMusical:clases')   
+                messages.success(request, "Filtrado Correcto!")
+                return redirect('gestionMusical:clases') 
+        else:
+            messages.error(request, " Error - No se pudo filtrar")  
 
     else:
         clase_form =ClaseForm()
-    return render(request,'crear_clase.html',{'clase_form':clase_form,'editacion':editacion,'profesTodos':profesTodos})
+        
+    return render(request,'crear_clase.html',{'clase_form':clase_form,'editacion':editacion,'profesTodos':profesTodos, 'especialidadest':especialidadest})
 
 def editarClase(request,id):
     clase_form = None
@@ -1407,10 +1455,11 @@ def editarClase(request,id):
             clase_form = ClaseForm(request.POST, instance = clase)
             if clase_form.is_valid():
                 clase_form.save()
-
+            messages.success(request, "Correcto!")
             return redirect('gestionMusical:clases')
     except ObjectDoesNotExist as e:
         error = e
+        messages.error(request, " Error")
 
     
     return render(request,'crear_clase.html',{'clase_form':clase_form,'error':error,'editacion':editacion,'profesTodos':profesTodos,'profeCargo':profeCargo})

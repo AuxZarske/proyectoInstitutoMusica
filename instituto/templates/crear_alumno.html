@@ -543,6 +543,39 @@ div#datosTutores{
                         </select>
                         
                 </div>
+               
+                <div class="form-group">
+                        <label for="inputPassword4" class="sub">Nivel actual en la especialidad:</label>
+                        <select id="id_nivel" name="nivel" class="form-control" required>
+                                {%if editacion == 1%}
+                                <option value='Principiante' selected>Principiante</option>
+                                <option value='Medio'>Medio</option>
+                                <option value='Avanzado'>Avanzado</option>
+                                {%else%}
+                                {%if alumno_form.nivel.value == "Principiante"%}
+                                    <option value='Principiante' selected>Principiante</option>
+                                    <option value='Medio'>Medio</option>
+                                    <option value='Avanzado'>Avanzado</option>
+
+                                    {%endif%}
+                                    {%if alumno_form.nivel.value == "Medio"%}
+                                    <option value='Principiante'>Principiante</option>
+                                    <option value='Medio'selected>Medio</option>
+                                    <option value='Avanzado'>Avanzado</option>
+
+                                    {%endif%}
+                                    {%if alumno_form.nivel.value == "Avanzado"%}
+                                    <option value='Principiante'>Principiante</option>
+                                    <option value='Medio'>Medio</option>
+                                    <option value='Avanzado'selected>Avanzado</option>
+                                    
+
+                                    {%endif%}
+                                    {%endif%}
+                              
+                            </select>
+                            
+                    </div>
 
                 
 

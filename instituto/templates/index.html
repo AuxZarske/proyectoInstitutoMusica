@@ -33,6 +33,7 @@
   <div id="wrapper">
     {%block sidebar%}
     <!-- Sidebar -->
+    {%if perms.instituto.view_clase %}
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -48,7 +49,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'gestionMusical:estadisticas'  %}">
+        <a class="nav-link" href="{% url 'index'  %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Inicio</span></a>
       </li>
@@ -127,6 +128,14 @@
             </div>
           </div>
         </li>
+
+         <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'gestionMusical:estadisticas'  %}">
+            <i class="fas fa-fw fa-chart-bar"></i>
+            <span>Estadisticas</span></a>
+        </li>
+  
 
       
 
@@ -222,8 +231,13 @@
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
+      
 
     </ul>
+    {%else%}
+
+      {%endif%}
+    
     <!-- End of Sidebar -->
   {%endblock sidebar%}
     <!-- Content Wrapper -->
@@ -234,11 +248,14 @@
         {%block barra%}
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+            {%if perms.instituto.view_clase %}
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
+          {%else%}
+
+      {%endif%}
 
           <!-- Topbar Search 
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -258,9 +275,7 @@
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
+              
               <!-- Dropdown - Messages -->
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
