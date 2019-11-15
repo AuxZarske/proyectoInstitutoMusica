@@ -8,6 +8,8 @@ from django.views.generic import View
 from django.http import HttpResponseRedirect
 from django.contrib import messages 
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.decorators import permission_required
 from django.core import serializers
 import json
 from django.http import HttpResponse
@@ -1169,7 +1171,7 @@ def listaralumnos(request):
 
 
 
-
+@permission_required("gestionMusical.view_clase")
 def eliminarAlumno(request,dni):
     alumno = Alumno.objects.get(dni=dni)
     
@@ -1181,6 +1183,13 @@ def eliminarAlumno(request,dni):
         alumno.partiturasAsociadas.clear()
         alumno.temasAsociadas.clear()
         alumno.save()
+        #aca agregarlo al ggrupo de alumnos
+        userA = User.objects.get(username = alumno.correoElectronico)
+        my_group = Group.objects.get(name='alumno') 
+
+        my_group.user_set.remove(userA)
+    
+    #fin
         messages.success(request, "Eliminado exitoso!")
     else:
         
@@ -1197,6 +1206,11 @@ def reivindicarAlumno(request,dni):
     alumno.estado = True
     alumno.save()
     #aca agregarlo al ggrupo de alumnos
+    userA = User.objects.get(username = alumno.correoElectronico)
+    my_group = Group.objects.get(name='alumno') 
+    my_group.user_set.add(userA)
+    
+    #fin
     espe = alumno.especialidadRequerida
     nive = alumno.nivel
     #buscar una clase
