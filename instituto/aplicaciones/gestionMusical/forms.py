@@ -21,7 +21,7 @@ class PrestamoForm(forms.ModelForm):
 class PartituraForm(forms.ModelForm):
     class Meta:
         model = Partitura
-        fields = ['nombre','compositor','nivel','descripcion','especialidadesAcordes']
+        fields = ['nombre','compositor','nivel','descripcion','especialidadesAcordes','musicaElecciones']
 
 class InstrumentoForm(forms.ModelForm):
     class Meta:

@@ -1483,10 +1483,37 @@ def asistenciaClase(request,id):
     lasAsistencias = Asistencia.objects.filter(claseReferencia = unaClase)
     return render(request,'asistenciaClase.html',{'unaClase':unaClase,'lasAsistencias':lasAsistencias})
 
+def switch_demo(argument):
+    switcher = {
+        1: "Lunes",
+        2: "Martes",
+        3: "Miercoles",
+        4: "Jueves",
+        5: "Viernes",
+        6: "Sabado",
+        7: "Domingo"
+        
+    }
+    return switcher.get(argument,"Ninguno")
+
+
+def queDiaEsHoy():
+    hoy = datetime.now()
+
+    num = hoy.weekday()
+    print(hoy.weekday())
+    tal = num + 1
+    print(tal)
+    return switch_demo(tal)
+
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
-
+    habilitado = 0
+    print(laClase.diaSemanal)
+    print(queDiaEsHoy())
+    if laClase.diaSemanal == queDiaEsHoy():
+        habilitado = 1
     if request.method == 'POST':
         print(request.POST)
         #toma dos listas, alumno, asistencia
@@ -1541,7 +1568,7 @@ def mostrarClase (request,id):
     #listAlumnos = listAlumnos.prefetch_related('Asistencia')
     asistenciasHoy = Asistencia.objects.filter(fechaCreacion = datetime.now(), claseReferencia = laClase)
 
-    return render(request,'una_clase.html',{'laClase':laClase,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
+    return render(request,'una_clase.html',{'laClase':laClase,'habilitado':habilitado,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
 def listarmensajes(request):
     clases = Clase.objects.all()
@@ -2042,6 +2069,7 @@ def desasociarAlumnoClase(request,idA,idC):
 
 def verAlumnoClase(request,dni,idC):
     elAlumno = None
+    partiturasInteligentes = None
     partiturasTodas = None
     completoparti = list(Partitura.objects.all())
     temasTodos = None
@@ -2054,6 +2082,11 @@ def verAlumnoClase(request,dni,idC):
         elAlumno = None
 
     laClase = Clase.objects.get(id = idC)
+    habilitado = 0
+    print(laClase.diaSemanal)
+    print(queDiaEsHoy())
+    if laClase.diaSemanal == queDiaEsHoy():
+        habilitado = 1
     listAlumnos = list(laClase.alumnoAsociados.all())
     listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
     if request.method == 'POST':
@@ -2105,7 +2138,12 @@ def verAlumnoClase(request,dni,idC):
         for t in temas:
             temasTodos.remove(t)  
     asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, fechaCreacion = datetime.now()) 
-    return render(request,'una_clase.html',{'laClase':laClase,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
+    
+    for p in partiturasTodas:
+        if True:
+            pass
+    #partiturasInteligentes 
+    return render(request,'una_clase.html',{'laClase':laClase,'partiturasInteligentes':partiturasInteligentes,'habilitado':habilitado,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):

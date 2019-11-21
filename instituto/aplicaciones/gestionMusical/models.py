@@ -23,6 +23,19 @@ class Especialidad(models.Model):
     def __str__(self):
         return self.nombre
 
+class MusicaTipo(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombreMusica = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
+    
+    class Meta:
+        verbose_name = 'Musica'
+        verbose_name_plural = 'Musicas'
+        
+
+
+    def __str__(self):
+        return self.nombreMusica
+
 class Compositor(models.Model):
     id = models.AutoField(primary_key = True)
     nombreIdentificador = models.CharField('Nombre de compositor', max_length = 150, null = False, blank = False)
@@ -40,7 +53,8 @@ class Compositor(models.Model):
 class Partitura(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la partitura', max_length = 100, null = False, blank = False)
-    compositor = models.ForeignKey(Compositor, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    compositor = models.ManyToManyField(Compositor, blank = True )
+    musicaElecciones = models.ManyToManyField(MusicaTipo, blank = True )
     descripcion = models.TextField('Descripcion', null = False, blank = False)
     archivo = models.BinaryField(blank=True, null=True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
@@ -90,18 +104,7 @@ class Tema(models.Model):
     def __str__(self):
         return self.nombre
 
-class MusicaTipo(models.Model):
-    id = models.AutoField(primary_key = True)
-    nombreMusica = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
-    
-    class Meta:
-        verbose_name = 'Musica'
-        verbose_name_plural = 'Musicas'
-        
 
-
-    def __str__(self):
-        return self.nombreMusica
 
 
 class Usuario (models.Model):

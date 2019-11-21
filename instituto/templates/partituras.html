@@ -644,11 +644,21 @@ div#espeNIvel{
                                                                     </div>
                                                                   </div>
                                                                   <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                                                      <label for="inputEmail3" class="izquierda">Genero Musical:</label>
                                                                       <div class="derecha">
-                                                                          {{par.compositor}}
+                                                                        {%for p in par.musicaElecciones.all%}
+                                                                          {{p}};
+                                                                          {%endfor%}
                                                                       </div>
                                                                     </div>
+                                                                    <div class="alinealoNomas">
+                                                                        <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                                                        <div class="derecha">
+                                                                          {%for p in par.compositor.all%}
+                                                                            {{p}};
+                                                                            {%endfor%}
+                                                                        </div>
+                                                                      </div>
                                                                     <div class="alinealoNomas">
                                                                         <label for="inputEmail3" class="izquierda">Archivo:</label>
 
