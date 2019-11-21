@@ -33,7 +33,7 @@
   <div id="wrapper">
     {%block sidebar%}
     <!-- Sidebar -->
-    {%if perms.gestionMusical.view_clase %}
+    {%if perms.gestionMusical.es_Profesor or perms.gestionMusical.es_Alumno or perms.gestionMusical.es_Director or user.is_staff%}
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->

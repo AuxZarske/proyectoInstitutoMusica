@@ -637,31 +637,39 @@ def crearRecomendacion(request):
     if data['is_taken']:
         data['error_message'] = 'Error'
     else:
-        #crear compositor, ponerle ese nombre
-        reco_form = RecomendacionForm()
-        tarea = reco_form.save(commit=False)
+        try:
+            #crear compositor, ponerle ese nombre
+            reco_form = RecomendacionForm()
+            tarea = reco_form.save(commit=False)
 
-        tarea.nombre = nombre
-        tarea.descripcion = descripcion
-        pedidor = str(request.user.username)
-        elProfe = Profesor.objects.get(correoElectronico = pedidor)
-        tarea.profesorReferencia = elProfe
-        elAlu = Alumno.objects.get(dni = alumno)
-        tarea.alumnoReco = elAlu
-        fechita = datetime.now() + relativedelta(days=int(dias))
-        tarea.fechaCierre = fechita
-        tarea.estadoReco = False
-        if parti:
-            tarea.partiMusicReco = Partitura.objects.get(id=parti)
-        else:
-            tarea.partiMusicReco = None
-        
+            tarea.nombre = nombre
+            tarea.descripcion = descripcion
+            pedidor = str(request.user.username)
+            
+            elProfe = Profesor.objects.get(correoElectronico = pedidor)
+            
 
-        tarea.save()
+            tarea.profesorReferencia = elProfe
+            elAlu = Alumno.objects.get(dni = alumno)
+            tarea.alumnoReco = elAlu
+            fechita = datetime.now() + relativedelta(days=int(dias))
+            tarea.fechaCierre = fechita
+            tarea.estadoReco = False
+            if parti:
+                tarea.partiMusicReco = Partitura.objects.get(id=parti)
+            else:
+                tarea.partiMusicReco = None
+            
 
-        messages.success(request, "Carga Correcta!")
-        data['error_message'] = 'creado exitosamente.'
+            tarea.save()
 
+
+            messages.success(request, "Carga Correcta!")
+            
+            data['error_message'] = 'creado exitosamente.'
+        except:
+            messages.error(request, " Error - No se pudo subir, no tiene permiso")
+            #error
     print(data)
     return JsonResponse(data)  
 
@@ -1171,7 +1179,7 @@ def listaralumnos(request):
 
 
 
-@permission_required("gestionMusical.view_clase")
+
 def eliminarAlumno(request,dni):
     alumno = Alumno.objects.get(dni=dni)
     
@@ -1184,10 +1192,7 @@ def eliminarAlumno(request,dni):
         alumno.temasAsociadas.clear()
         alumno.save()
         #aca agregarlo al ggrupo de alumnos
-        userA = User.objects.get(username = alumno.correoElectronico)
-        my_group = Group.objects.get(name='alumno') 
-
-        my_group.user_set.remove(userA)
+       
     
     #fin
         messages.success(request, "Eliminado exitoso!")
@@ -1206,9 +1211,7 @@ def reivindicarAlumno(request,dni):
     alumno.estado = True
     alumno.save()
     #aca agregarlo al ggrupo de alumnos
-    userA = User.objects.get(username = alumno.correoElectronico)
-    my_group = Group.objects.get(name='alumno') 
-    my_group.user_set.add(userA)
+    
     
     #fin
     espe = alumno.especialidadRequerida
@@ -1794,7 +1797,7 @@ def crearPartitura(request):
             nom = request.POST['nombre']
             if partitura_form.is_valid() and not(Partitura.objects.filter(nombre = nom).exists()):
 
-                par = partitura_form.save(commit=False)
+                par = partitura_form.save()
             
                 #agregar especialidades del request 
                 print(request.POST)
@@ -2068,8 +2071,9 @@ def desasociarAlumnoClase(request,idA,idC):
     return redirect('gestionMusical:ver_alumno_clase',idA,idC)
 
 def verAlumnoClase(request,dni,idC):
+    
     elAlumno = None
-    partiturasInteligentes = None
+    partiturasInteligentes = []
     partiturasTodas = None
     completoparti = list(Partitura.objects.all())
     temasTodos = None
@@ -2082,67 +2086,77 @@ def verAlumnoClase(request,dni,idC):
         elAlumno = None
 
     laClase = Clase.objects.get(id = idC)
-    habilitado = 0
-    print(laClase.diaSemanal)
-    print(queDiaEsHoy())
-    if laClase.diaSemanal == queDiaEsHoy():
-        habilitado = 1
-    listAlumnos = list(laClase.alumnoAsociados.all())
-    listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
-    if request.method == 'POST':
-        print(request.POST)
-        #toma dos listas, alumno, asistencia
-        #recorre la lista alumnos, a cada unp (si no tiene asistencia (para esa clase en ese dia) crea)
+    try:
+        habilitado = 0
+        print(laClase.diaSemanal)
+        print(queDiaEsHoy())
+        if laClase.diaSemanal == queDiaEsHoy():
+            habilitado = 1
+        listAlumnos = list(laClase.alumnoAsociados.all())
+        listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
+        if request.method == 'POST':
+            print(request.POST)
+            #toma dos listas, alumno, asistencia
+            #recorre la lista alumnos, a cada unp (si no tiene asistencia (para esa clase en ese dia) crea)
 
-        alus = request.POST.getlist('alumnosTabla')
-        asist = request.POST.getlist('check[]')
-         
-        for a in alus:
+            alus = request.POST.getlist('alumnosTabla')
+            asist = request.POST.getlist('check[]')
             
-            if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
-                if asist.count(a) > 0:
-                    print("crea ")
-                    asit_form = AsistenciaForm()
-                    asistt = asit_form.save(commit=False)
+            for a in alus:
+                
+                if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
+                    if asist.count(a) > 0:
+                        print("crea ")
+                        asit_form = AsistenciaForm()
+                        asistt = asit_form.save(commit=False)
 
-                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
-                    asistt.estadoReco = True
-                    asistt.claseReferencia = laClase
-                    asistt.save()
-                else:
-                    print("crea ")
-                    asit_form = AsistenciaForm()
-                    asistt = asit_form.save(commit=False)
+                        asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                        asistt.estadoReco = True
+                        asistt.claseReferencia = laClase
+                        asistt.save()
+                    else:
+                        print("crea ")
+                        asit_form = AsistenciaForm()
+                        asistt = asit_form.save(commit=False)
 
-                    asistt.alumnoAsist = Alumno.objects.get(dni=a)
-                    asistt.estadoReco = False
-                    asistt.claseReferencia = laClase
-                    asistt.save()
-    copia = listAlumnosTotal.copy()
-    for a in copia:       
-        if listAlumnos.count(a) > 0:
-            listAlumnosTotal.remove(a)
+                        asistt.alumnoAsist = Alumno.objects.get(dni=a)
+                        asistt.estadoReco = False
+                        asistt.claseReferencia = laClase
+                        asistt.save()
+        copia = listAlumnosTotal.copy()
+        for a in copia:       
+            if listAlumnos.count(a) > 0:
+                listAlumnosTotal.remove(a)
 
-    partituras = []
-    temas = []
-    if elAlumno != None:
+        partituras = []
+        temas = []
+        if elAlumno != None:
+            
+            partituras = list(elAlumno.partiturasAsociadas.all())
+            temas = list(elAlumno.temasAsociadas.all()) 
+
+            partiturasTodas = list(Partitura.objects.all())
+            for r in partituras:
+                partiturasTodas.remove(r)
+
+            temasTodos = list(Tema.objects.all())
+            for t in temas:
+                temasTodos.remove(t)  
+        asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, fechaCreacion = datetime.now()) 
+        #elAlumno
+        for p in partiturasTodas:
+            
+            
+            if list(p.especialidadesAcordes.all()).count(elAlumno.especialidadRequerida) > 0:
+                print("coincide especialidad")
+                if p.nivel == elAlumno.nivel:
+                    if list(p.musicaElecciones.all()).count(elAlumno.musica) > 0:
+                        partiturasInteligentes.append(p)
+                print(p)
+        #partiturasInteligentes 
+    except:
         
-        partituras = list(elAlumno.partiturasAsociadas.all())
-        temas = list(elAlumno.temasAsociadas.all()) 
-
-        partiturasTodas = list(Partitura.objects.all())
-        for r in partituras:
-            partiturasTodas.remove(r)
-
-        temasTodos = list(Tema.objects.all())
-        for t in temas:
-            temasTodos.remove(t)  
-    asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, fechaCreacion = datetime.now()) 
-    
-    for p in partiturasTodas:
-        if True:
-            pass
-    #partiturasInteligentes 
+        return render(request,'una_clase.html',{'laClase':laClase})
     return render(request,'una_clase.html',{'laClase':laClase,'partiturasInteligentes':partiturasInteligentes,'habilitado':habilitado,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
 
 

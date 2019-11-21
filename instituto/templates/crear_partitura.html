@@ -374,9 +374,10 @@ p#msj{
                           <label for="inputState" style="color: black">Nivel:</label>
                           
                           <select id="nivel" name ="nivel" class="form-control" required>
-                              <option value='facil'>facil</option>
-                              <option value='medio'>medio</option>
-                              <option value='dificil'>dificil</option>
+                              <option value='Principiante'>Principiante</option>
+                              <option value='Medio'>Medio</option>
+                              <option value='Avanzado'>Avanzado</option>
+                              
                               
                               
                             
@@ -424,7 +425,7 @@ p#msj{
               <div class="form-group">
 
                     <label for="inputState">Genero Musical:</label>
-                    <select name="musicaElecciones"  class="selectpicker" multiple data-live-search="true" required>
+                    <select name="musicaElecciones"  class="selectpicker" multiple data-live-search="true" >
                             
                                 {%for music in partitura_form.musicaElecciones%}
                                 
