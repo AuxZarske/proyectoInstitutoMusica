@@ -126,6 +126,7 @@ class Usuario (models.Model):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         abstract = True
+         
 
 
     def __str__(self):
@@ -139,12 +140,12 @@ class Profesor(Usuario):
     especialidades = models.ManyToManyField(Especialidad, blank = True)
     historiaPrevia = models.TextField('Observaciones del Profesor', null = True, blank = True)
     objects = models.Manager()
-
+    
 
     class Meta:
         verbose_name = 'Profesor'
         verbose_name_plural = 'Profesores'
-
+        permissions = (("es_profesor", "es profesor"),("es_pre_profesor", "es pre profesor"),("es_director", "es director"))  
 
 
 class Alumno(Usuario):
@@ -157,12 +158,12 @@ class Alumno(Usuario):
     musica = models.ForeignKey(MusicaTipo, on_delete = models.DO_NOTHING,  null = True, blank = True)
     tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
-    
+     
 
     class Meta:
         verbose_name = 'Alumno'
         verbose_name_plural = 'Alumnos'
-
+        permissions = (("es_alumno", "es alumno"),("es_pre_alumno", "es pre alumno")) 
 
 
 

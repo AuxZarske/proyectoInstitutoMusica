@@ -185,6 +185,12 @@ def registrarAlumno(request):
 
                 dj_login(request, user)
                 messages.success(request, "Registro Correcto!")
+                usuario = User.objects.get(username = alum.correoElectronico) 
+                permission = Permission.objects.get(name='es pre alumno') #permiso de home
+                
+               
+                usuario.user_permissions.add(permission)
+                usuario.save()
                 return redirect ('login')
                 
             else:
@@ -220,6 +226,12 @@ def registrarAlumno(request):
 
                 dj_login(request, user)
                 messages.success(request, "Registro Correcto!")
+                usuario = User.objects.get(username = alum.correoElectronico) 
+                permission = Permission.objects.get(name='es pre alumno') #permiso de home
+                
+               
+                usuario.user_permissions.add(permission)
+                usuario.save()
                 return redirect ('login')
                 
             else:
@@ -268,6 +280,12 @@ def registrarProfesor(request):
             pro.save() 
             dj_login(request, user)
             messages.success(request, "Registro Correcto!")
+            usuario = User.objects.get(username = pro.correoElectronico) 
+            permission = Permission.objects.get(name='es pre profesor') #permiso de home
+            
+            
+            usuario.user_permissions.add(permission)
+            usuario.save()
         
 
 
@@ -1003,6 +1021,12 @@ def eliminarProfesor(request,dni):
         
         profesor.estado = False
         profesor.save()
+        usuario = User.objects.get(username = profesor.correoElectronico) 
+        permission = Permission.objects.get(name='es profesor') #permiso de home
+        usuario.user_permissions.remove(permission)
+        permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
+        usuario.user_permissions.add(permission2)
+        usuario.save()
         messages.success(request, "removido correctamente!")
     except:
         messages.error(request, " Error - El profesor no pudo ser removido")
@@ -1017,6 +1041,12 @@ def reivindicarProfesor(request,dni):
     
     profesor.estado = True
     profesor.save()
+    usuario = User.objects.get(username = profesor.correoElectronico) 
+    permission = Permission.objects.get(name='es profesor') #permiso de home
+    usuario.user_permissions.add(permission)
+    permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
+    usuario.user_permissions.remove(permission2)
+    usuario.save()
     return redirect('gestionMusical:profesores')
 
 def crearProfesor(request):
@@ -1192,6 +1222,12 @@ def eliminarAlumno(request,dni):
         alumno.temasAsociadas.clear()
         alumno.save()
         #aca agregarlo al ggrupo de alumnos
+        usuario = User.objects.get(username = alumno.correoElectronico) 
+        permission = Permission.objects.get(name='es alumno') #permiso de home
+        usuario.user_permissions.remove(permission)
+        permission2 = Permission.objects.get(name='es pre alumno') #permiso de home
+        usuario.user_permissions.add(permission2)
+        usuario.save()
        
     
     #fin
@@ -1211,7 +1247,12 @@ def reivindicarAlumno(request,dni):
     alumno.estado = True
     alumno.save()
     #aca agregarlo al ggrupo de alumnos
-    
+    usuario = User.objects.get(username = alumno.correoElectronico) 
+    permission = Permission.objects.get(name='es alumno') #permiso de home
+    permission2 = Permission.objects.get(name='es pre alumno') #permiso de home
+    usuario.user_permissions.add(permission)
+    usuario.user_permissions.remove(permission2)
+    usuario.save()
     
     #fin
     espe = alumno.especialidadRequerida
