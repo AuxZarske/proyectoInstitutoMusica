@@ -1444,6 +1444,21 @@ def editarAlumno(request,dni):
 
 def listarclases(request):
     clases = Clase.objects.all()
+     
+    return render(request,'clases.html',{'clases':clases})
+
+def listarclasesProfe(request):
+    pedidor = str(request.user.username)
+    elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+    elusuario = elusuario[0]
+    clases = Clase.objects.filter(profesorCargo = elusuario)
+    return render(request,'clases.html',{'clases':clases})
+
+def listarclasesAlumno(request):
+    pedidor = str(request.user.username)
+    elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+    elusuario = elusuario[0]
+    clases = Clase.objects.filter(alumnoAsociados = elusuario)
     return render(request,'clases.html',{'clases':clases})
 
 

@@ -63,7 +63,7 @@
       <div class="sidebar-heading">
         Instituto
       </div>
-
+      {%if  perms.gestionMusical.es_director %}
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
           <a class="nav-link" href="{% url 'gestionMusical:clases'  %}">
@@ -71,7 +71,25 @@
             <span>Clases</span>
           </a>
         </li>
-
+          {%else%}
+          {%if  perms.gestionMusical.es_profesor %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'gestionMusical:clasesProfe'  %}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Clases</span>
+          </a>
+        </li>
+        {%else%}
+        {%if  perms.gestionMusical.es_alumno %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'gestionMusical:clasesAlumno'  %}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Clases</span>
+          </a>
+        </li>
+        {%endif%}
+        {%endif%}
+        {%endif%}
       
 
       <!-- Nav Item - Utilities Collapse Menu -->

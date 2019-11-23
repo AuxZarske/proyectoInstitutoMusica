@@ -209,7 +209,7 @@ class Clase(models.Model):
     especialidadesDar = models.ManyToManyField(Especialidad, default = None)
     cupo = models.IntegerField('cupo clase', null = False, blank = False, default=0)
     nivel = models.CharField('Nivel de la clase', max_length = 50, null = False, blank = False)
-    profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     
     
     
