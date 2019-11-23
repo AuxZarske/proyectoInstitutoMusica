@@ -365,7 +365,7 @@ margin-left: 2px;
               <!--modal-->
                   
                     
-    
+              {%if  perms.gestionMusical.es_director %}
               <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg5">
                               
                   <span class="icon text-white-50">
@@ -375,6 +375,7 @@ margin-left: 2px;
                   
             
               </a>
+              {%endif%}
               <!---->
               <form class="user" method="POST">
                   {% csrf_token %}
@@ -485,7 +486,7 @@ margin-left: 2px;
             
             </form>
               <!---->
-          
+              {%if  perms.gestionMusical.es_director %}
               <div class="modal fade bs-example-modal-lg5" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                       <div class="modal-content">
@@ -736,6 +737,7 @@ margin-left: 2px;
               
             <!--fin modal-->
             </div>
+            {%endif%}
 
 
 
@@ -941,6 +943,7 @@ margin-left: 2px;
                           </a>
                               </div>
                               <div class="btn-group">
+                                  {%if  perms.gestionMusical.es_director %}
                                 <center>
                                   <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{alu.dni}}">
                                       <div id="icon8">
@@ -972,6 +975,7 @@ margin-left: 2px;
                                           </div>
                                       </div>
                                   </div>
+                                  {%endif%}
                           </center>
                         
                           </td>

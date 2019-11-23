@@ -583,7 +583,7 @@
 
   <div id="zonaInferior">
     <!--lista-->
-
+    {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
     <form class="user" method="POST">
       {% csrf_token %}
       <div id="listaAlumnos">
@@ -860,7 +860,7 @@
         </div>
       </div>
     </form>
-
+{%endif%}
 
     <!--Finlista-->
     <div id="accordion">
@@ -868,6 +868,7 @@
 
       <div id="zonaAlumno">
         <div id="datosPersonales">
+            {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
           <h3 style="margin-bottom: 20px;" id="datoAlumno">Datos del Alumno:</h3>
           {% if elAlumno %}
 
@@ -1058,6 +1059,19 @@
             </div>
           </center>
           {%endif%}
+          {%else%}
+
+          {%if  perms.gestionMusical.es_alumno%}
+          {%if elAlumno.sexo == "Masculino"%}
+          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenido a Clases {{elAlumno.apellido}} {{elAlumno.nombre}}:</h3>
+          {%else%}
+          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenida a Clases {{elAlumno.apellido}} {{elAlumno.nombre}}:</h3>
+          {%endif%}
+          <p style="margin-left: 20px;">Aqui podra ver las los ejercicio, temas y partituras anexadas por su profesor de clase.</p>
+          <p style="margin-left: 20px;"> Ademas de las recomendacion practicas como tarea para el hogar.</p>
+          {%endif%}
+          {%endif%}
+
           {% if elAlumno %}
           <div id="barraTresTablas">
             <div id="barraSeleccionTable">
@@ -1085,6 +1099,7 @@
 
                     <div id="addAlumno">
                       <div class="btn-group">
+                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                         <button type="button" class="btn btn-primary btn-icon-split" id="fraseTableBoton"
                           data-toggle="modal" data-target=".bs-example-modal-lg5{{laClase.id}}">
                           <span class="icon text-white-50">
@@ -1095,6 +1110,7 @@
                           <span class="text">Asociar Tema</span>
 
                         </button>
+                        {%endif%}
                         <div class="modal fade bs-example-modal-lg5{{laClase.id}}" id="myModal3{{laClase.id}}"
                           tabindex="-1" role="dialog" aria-hidden="true">
                           <div class="modal-dialog modal-lg">
@@ -1453,6 +1469,7 @@
                                   </a>
                                 </div>
                                 <div class="btn-group">
+                                    {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                   <center>
                                     <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                       data-target=".bs-example-modal-lg12{{tema.id}}">
@@ -1461,6 +1478,7 @@
                                       </div>
                                     </button>
                                   </center>
+                                  {%endif%}
 
                                   <div class="modal fade bs-example-modal-lg12{{tema.id}}" id="myModal2{{tema.id}}"
                                     tabindex="-1" role="dialog" aria-hidden="true">
@@ -1518,6 +1536,7 @@
 
                     <div id="addAlumno">
                       <div class="btn-group">
+                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                         <button type="button" class="btn btn-info btn-icon-split" id="fraseTableBoton2"
                           data-toggle="modal" data-target=".bs-example-modal-lg6132{{laClase.id}}"
                           style="margin-right: 10px;">
@@ -1529,6 +1548,7 @@
 
 
                         </button>
+                        {%endif%}
                         <!--modal copy-->
 
                         <div class="modal fade bs-example-modal-lg6132{{laClase.id}}" id="myModal3{{laClase.id}}"
@@ -1810,7 +1830,7 @@
                         <!--fin partt-->
 
                         <!--modal ccopy-->
-
+                        {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                         <button type="button" class="btn btn-primary btn-icon-split" id="fraseTableBoton"
                           data-toggle="modal" data-target=".bs-example-modal-lg6{{laClase.id}}">
                           <span class="icon text-white-50">
@@ -1821,6 +1841,7 @@
                           <span class="text">Asociar Partitura</span>
 
                         </button>
+                        {%endif%}
                         <div class="modal fade bs-example-modal-lg6{{laClase.id}}" id="myModal3{{laClase.id}}"
                           tabindex="-1" role="dialog" aria-hidden="true">
                           <div class="modal-dialog modal-lg">
@@ -2238,12 +2259,14 @@
                                 </div>
                                 <div class="btn-group">
                                   <center>
+                                      {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                     <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                       data-target=".bs-example-modal-lg2{{par.id}}">
                                       <div id="icon8">
                                         <i class="fas fa-trash"></i>
                                       </div>
                                     </button>
+                                    {%endif%}
                                   </center>
 
                                   <div class="modal fade bs-example-modal-lg2{{par.id}}" id="myModal2{{par.id}}"
@@ -2302,7 +2325,7 @@
                   <!--modal-->
 
 
-
+                  {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                   <a id="fraseTableBoton" class="btn btn-primary btn-icon-split" data-toggle="modal"
                     data-target=".bs-example-modal-lg2777">
 
@@ -2313,6 +2336,7 @@
 
 
                   </a>
+                  {%endif%}
 
 
 
@@ -2469,12 +2493,14 @@
                                   {%endif%}
                                   <div class="btn-group">
                                     <center>
+                                        {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                       <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                         data-target=".bs-example-modal-lg255{{t.id}}">
                                         <div id="icon8">
                                           <i class="fas fa-trash"></i>
                                         </div>
                                       </button>
+                                      {%endif%}
                                     </center>
 
                                     <div class="modal fade bs-example-modal-lg255{{t.id}}" id="myModal255{{t.id}}"
@@ -2935,13 +2961,15 @@
       }
 
     </script>
-
+<script src="{%static 'js/sb-admin-2.min.js'%}"></script>
     <!-- Bootstrap core JavaScript
- 
  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+<script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+ 
 
  <!-- Core plugin JavaScript
- <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+ 
 
  <!-- Custom scripts for all pages
  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>

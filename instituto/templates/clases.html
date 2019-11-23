@@ -306,8 +306,20 @@ margin-left: 2px;
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Clases</h1>
+          {%if  perms.gestionMusical.es_director %}
           <p class="mb-4">En la siguiente tabla podra visualizar las clases que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar una nueva al sistema.</p>
-
+          <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
+          {%else%}
+          {%if  perms.gestionMusical.es_profesor%}
+          <p class="mb-4">En la siguiente tabla podra visualizar las clases que dicta en la institucion actualmente; editarla o visualizar la informacion correspondiente</p>
+          <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
+          {%else%}
+          {%if  perms.gestionMusical.es_alumno%}
+          <p class="mb-4">En la siguiente tabla podra visualizar las clases a las que asiste en la institucion actualmente. </p>
+          <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
+          {%endif%}
+          {%endif%}
+          {%endif%}
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -346,8 +358,14 @@ margin-left: 2px;
                       
                         <tr>
                           <td>{{clase.id}}</td>
+                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                           <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
-                          
+                          {%else%}
+                          {%if  perms.gestionMusical.es_alumno%}
+                          <td><a href="{% url 'gestionMusical:ver_alumno_clase' 0 clase.id %}">{{clase.nombre}}</a></td>
+                          {%endif%}
+
+                          {%endif%}
                           <td>{{clase.diaSemanal}}</td>
                           <td>{{clase.horaInicio}}</td>
                          

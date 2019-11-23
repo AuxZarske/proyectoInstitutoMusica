@@ -707,6 +707,7 @@ div#espeNIvel{
                           </a>
                               </div>
                               <div class="btn-group">
+                                  {%if  perms.gestionMusical.es_director %}
                                 <center>
                                   <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
                                       <div id="icon8">
@@ -738,6 +739,7 @@ div#espeNIvel{
                                           </div>
                                       </div>
                                   </div>
+                                  {%endif%}
                           </center>
                         
                           </td>

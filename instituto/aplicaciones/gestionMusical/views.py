@@ -2136,11 +2136,19 @@ def verAlumnoClase(request,dni,idC):
     
     todasRecomendaciones = list(Recomendacion.objects.all())
     try:
-        elAlumno = Alumno.objects.get(dni = dni)
+        if dni == 0:
+            print(request.user.username )
+            correo = request.user.username 
+            print(correo) 
+            elAlumno = list(Alumno.objects.filter(correoElectronico = correo))
+            elAlumno = elAlumno[0]
+        else:
+            print("jj33iji")
+            elAlumno = Alumno.objects.get(dni = dni)
     except:
         print("jjiji")
-        elAlumno = None
-
+        
+    print(elAlumno.apellido)
     laClase = Clase.objects.get(id = idC)
     try:
         habilitado = 0
