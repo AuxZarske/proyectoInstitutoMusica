@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
-from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno
+from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno, crearHorario
 from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
@@ -86,6 +86,8 @@ urlpatterns = [
 
     path('mensajes/',login_required(listarmensajes),name='mensajes'),
     path('estadisticas/',login_required(listarestadisticas),name='estadisticas'),
+
+    path('crear_horario/',login_required(crearHorario),name='crear_horario'),
 
     path('auditoria/',login_required(listarAuditoria),name='auditoria'),
 

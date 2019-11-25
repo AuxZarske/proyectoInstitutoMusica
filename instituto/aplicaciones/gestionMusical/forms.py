@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
-from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
@@ -33,10 +33,15 @@ class TemaForm(forms.ModelForm):
         model = Tema
         fields = ['nombre','descripcion','nivel','tipo']
 
+class HorarioForm(forms.ModelForm):
+    class Meta:
+        model = Horario
+        fields = ['diaSemanal','horario_inicio','horario_final']
+
 class ClaseForm(forms.ModelForm):
     class Meta:
         model = Clase
-        fields = ['nombre','descripcion','diaSemanal','horaInicio','duracion','profesorCargo','nivel','especialidadesDar','cupo']
+        fields = ['nombre','descripcion','profesorCargo','nivel','especialidadesDar','cupo']
 
 
 class UsuarioForm(forms.ModelForm):

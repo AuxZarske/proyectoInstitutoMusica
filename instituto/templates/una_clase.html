@@ -462,6 +462,13 @@
 
 
   }
+  button#pasadaAsistencia{
+    padding: 0.5%;
+    margin: 10px;
+    margin-left: 0%;
+    background-color: rgb(182, 253, 255);
+    border: 1px solid rgba(255, 182, 99, 0.295);
+  }
 
   button#verTotalAsistencia {
     padding: 0.5%;
@@ -559,6 +566,9 @@
     -webkit-border-radius: 31px 31px 31px 31px;
 
   }
+  p#msj{
+    font-size: 17px;
+}
 
   select#country {
     display: inline-block;
@@ -580,6 +590,29 @@
     </center>
 
   </div>
+
+
+  <div id="cuadroMensajes" >
+
+      {% if messages %}
+      {% for message in messages %}
+
+      {% if message.tags == 'success'%}
+      <ul class="alert alert-success alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+      </ul> 
+      {%endif%}
+      {% if message.tags == 'error'%}
+      <ul class="alert alert-danger alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+      </ul> 
+      {%endif%}
+
+      {% endfor %}
+     {% endif %}
+</div>
 
   <div id="zonaInferior">
     <!--lista-->
@@ -609,8 +642,100 @@
                               class="fas fa-calendar-check"></i> Ver Asistencias a Clase</button>
                         </a>
                         <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i
-                            class="fas fa-check"></i>Establecer Asistencia a Clase </button>
+                            class="fas fa-check"></i>Establecer Asistencias marcadas</button>
+                            <button id="pasadaAsistencia" type="button" style="display: inline-block;" data-toggle="modal"
+                          data-target=".bs-example-modal-lg6347"><i class="fas fa-arrow-circle-down"></i> Establecer Asistencia Pasada
+                          </button>
                       </center>
+
+
+
+
+
+                       <!--MMMM-->
+                       <div class="modal fade bs-example-modal-lg6347" id="myModal6347"
+                       tabindex="-1" role="dialog" aria-hidden="true">
+                       <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h4 class="modal-title" id="myModalLabel6347">Establecer una asistencia pasada a la fecha de clase:</h4>
+                             <button type="button" class="close" data-dismiss="modal"><span
+                                 aria-hidden="true">×</span>
+                             </button>
+
+                           </div>
+                           <div class="modal-body">
+                             <div class="form-row">
+                              <label for="inputAddress2" class="sub">Alumno:</label>
+                              <select  class="selectpicker" single data-live-search="true" id="alumnoPas" required  >
+                                    
+                                    
+
+                                  {%for al in listAlumnos%}
+                                  
+                                  <option value='{{al.dni}}'>{{al.apellido}} {{al.nombre}}</option>
+                                  {%endfor%}
+                                  
+                             </select>
+                            </div>
+                            <br>
+                            <div class="form-row">
+
+                                <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
+                                <select  class="selectpicker" single  id="alumnoPasEstado" required  >
+                                      
+                                      
+  
+                                   
+                                    <option value='Asistio'>Asistio</option>
+                                    <option value='Falto'>Falto</option>
+                                    
+                                    
+                               </select>
+                            </div>
+                            <br>
+                            <div class="form-row">
+
+                                <label for="inputAddress2" class="sub">Fecha de Clase:</label>
+                                <select  class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required  >
+                                      
+                                      
+  
+                                    {%for pas in horariosClsesPas%}
+                                    
+                                    <option value='{{pas.id}}'>{{pas.dia}} {{pas.hora}}</option>
+                                    {%endfor%}
+                                    
+                               </select>
+
+
+                            </div>
+
+
+
+                             
+
+                             
+
+                           </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                             <button type="button" class="btn btn-primary"
+                               >Confirmar</button>
+
+                           </div>
+
+                         </div>
+                       </div>
+                     </div>
+                     <!--mmm-->
+
+
+
+
+
+
                       <tr>
                         <th>D.N.I.</th>
                         <th>Apellido y Nombre</th>
@@ -709,6 +834,10 @@
                             </div>
                           </div>
                           <!--mmm-->
+
+
+
+
 
 
 

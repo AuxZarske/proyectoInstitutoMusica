@@ -14,6 +14,7 @@ from django.core import serializers
 import json
 from django.http import HttpResponse
 import time
+from datetime import date
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from io import BytesIO
@@ -609,6 +610,34 @@ def editarComposito(request):
         compositor = Compositor.objects.get(id = identificador)
         compositor.nombreIdentificador = nombre
         compositor.save()
+           
+        messages.success(request, "Carga Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+
+def crearHorario(request):
+    dia = request.GET.get('dia', None)
+    hora = request.GET.get('hora', None)
+    duracion = request.GET.get('duracion', None)
+    print(dia)
+    print(hora)
+    print(duracion)
+    print("holl")
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        horario_fiorm = HorarioForm()
+        hs = horario_fiorm.save(commit=False)
+        hs.diaSemanal = dia
+        hs.horario_inicio = hora
+        hs.horario_final = duracion
+        hs.save()
            
         messages.success(request, "Carga Correcta!")
         data['error_message'] = 'creado exitosamente.'
@@ -1565,6 +1594,27 @@ def queDiaEsHoy():
     print(tal)
     return switch_demo(tal)
 
+def marcaAsistencia(request):
+    nombre = request.GET.get('username', None)
+    identificador = request.GET.get('identificador', None)
+    
+    data = {
+        'is_taken': Compositor.objects.exclude(id = identificador).filter(nombreIdentificador__iexact=nombre).exists()
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        compositor = Compositor.objects.get(id = identificador)
+        compositor.nombreIdentificador = nombre
+        compositor.save()
+           
+        messages.success(request, "Carga Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
@@ -1584,6 +1634,10 @@ def mostrarClase (request,id):
         for a in alus:
             
             if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
+                
+                correo = request.user.username
+                elProfe = list(Profesor.objects.filter(correoElectronico = correo))
+                elProfe = elProfe[0]
                 if asist.count(a) > 0:
                     print("crea ")
                     asit_form = AsistenciaForm()
@@ -1591,6 +1645,8 @@ def mostrarClase (request,id):
 
                     asistt.alumnoAsist = Alumno.objects.get(dni=a)
                     asistt.estadoReco = True
+                    asistt.fechaCreacion = datetime.now()
+                    asistt.profesorReferencia = elProfe
                     asistt.claseReferencia = laClase
                     asistt.save()
                 else:
@@ -1600,6 +1656,8 @@ def mostrarClase (request,id):
 
                     asistt.alumnoAsist = Alumno.objects.get(dni=a)
                     asistt.estadoReco = False
+                    asistt.fechaCreacion = date.today()
+                    asistt.profesorReferencia = elProfe
                     asistt.claseReferencia = laClase
                     asistt.save()
 
@@ -2111,20 +2169,28 @@ def listarinstrumentos(request):
 
 def asociarAlumnoClase(request,idA,idC):
     #asocia
-    laClase = Clase.objects.get(id = idC)
-    laClase.alumnoAsociados.add(Alumno.objects.get(dni = idA, estado=True))
-    laClase.save()
-    idA = 0
-    return redirect('gestionMusical:ver_alumno_clase',idA,idC)
+    try:
+        laClase = Clase.objects.get(id = idC)
+        laClase.alumnoAsociados.add(Alumno.objects.get(dni = idA, estado=True))
+        laClase.save()
+        idA = 0
+        messages.success(request, "El alumno fue asociado a la clase exitosamente!")
+    except:
+        messages.error(request, " Error - No se pudo asociar al alumno de la clase, intente de nuevo mas tarde...")
+    return mostrarClase(request, idC)
 
 def desasociarAlumnoClase(request,idA,idC):
     #desasocia
-    laClase = Clase.objects.get(id = idC)
+    try:
+        laClase = Clase.objects.get(id = idC)
 
-    laClase.alumnoAsociados.remove(Alumno.objects.get(dni = idA, estado=True))
-    laClase.save()
-    idA = 0
-    return redirect('gestionMusical:ver_alumno_clase',idA,idC)
+        laClase.alumnoAsociados.remove(Alumno.objects.get(dni = idA, estado=True))
+        laClase.save()
+        idA = 0
+        messages.success(request, "El alumno fue desasociado de la clase exitosamente!")
+    except:
+        messages.error(request, " Error - No se pudo desasociar al alumno de la clase, intente de nuevo mas tarde...")
+    return mostrarClase(request, idC)
 
 def verAlumnoClase(request,dni,idC):
     
@@ -2148,7 +2214,7 @@ def verAlumnoClase(request,dni,idC):
     except:
         print("jjiji")
         
-    print(elAlumno.apellido)
+    
     laClase = Clase.objects.get(id = idC)
     try:
         habilitado = 0
@@ -2275,7 +2341,7 @@ def crearCompo(request):
             messages.error(request, " Error - No se pudo cargar")
     except:
         #retornar error
-        pass
+        
         messages.error(request, " Error - No se pudo cargar")
     
     

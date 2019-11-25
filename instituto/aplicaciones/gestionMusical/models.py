@@ -192,8 +192,19 @@ class Instrumento(models.Model):
         return str(self.id)
 
 
+class Horario(models.Model):
+    id = models.AutoField(primary_key = True)
+    diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
+    horario_inicio = models.TimeField(blank = False, null = True)
+    horario_final = models.TimeField(blank = False, null = True)
+    
 
-
+    class Meta:
+        verbose_name = 'horario'
+        verbose_name_plural = 'horario'
+    
+    def __str__(self):
+        return str(self.id)
 
 
 
@@ -202,13 +213,12 @@ class Clase(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la clase', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
-    diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
-    horaInicio = models.CharField('hora de inicio',max_length=50) 
-    duracion = models.IntegerField('duracion de la clase', null = False, blank = False, default=0)
+    horarios = models.ManyToManyField(Horario, default = None)
     alumnoAsociados = models.ManyToManyField(Alumno, default = None)
     especialidadesDar = models.ManyToManyField(Especialidad, default = None)
     cupo = models.IntegerField('cupo clase', null = False, blank = False, default=0)
     nivel = models.CharField('Nivel de la clase', max_length = 50, null = False, blank = False)
+    historica =  models.BooleanField('estado de clase en tiempo activo/inactivo', default = False)
     profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     
     
@@ -265,11 +275,11 @@ class Recomendacion(models.Model):
 class Asistencia(models.Model):
     
     id = models.AutoField(primary_key = True)
-    fechaCreacion = models.DateField('Fecha de Creacion de la asistencia', auto_now=False,auto_now_add=True)
+    fechaCreacion = models.DateField('Fecha de Creacion de la asistencia')
     alumnoAsist = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     estadoReco =  models.BooleanField('estado de asistencia activo/inactivo', default = False)
     claseReferencia = models.ForeignKey(Clase, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
-    
+    profesorReferencia = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
 
     class Meta:
         verbose_name = 'Asistencia'
