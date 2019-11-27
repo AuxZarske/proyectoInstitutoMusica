@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -17,7 +18,9 @@
 
   <!-- Custom fonts for this template -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
@@ -28,170 +31,186 @@
 </head>
 
 <script type="text/javascript">
-      function boton(num){
-        
-        document.getElementById("custId").value = num;
-        
-        
+  function boton(num) {
 
-    
-    
-    };
+    document.getElementById("custId").value = num;
 
 
-      function elPdf(base64EncodedPDF){
-        var objbuilder = '';
-        objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
-        objbuilder += (base64EncodedPDF);
-        objbuilder += ('" type="application/pdf" class="internal">');
-        objbuilder += ('<embed src="data:application/pdf;base64,');
-        objbuilder += (base64EncodedPDF);
-        objbuilder += ('" type="application/pdf" />');
-        objbuilder += ('</object>');
-        var win = window.open("","_blank","titlebar=yes");
-        win.document.title = "My Title";
-        win.document.write('<html><body>');
-        win.document.write(objbuilder);
-        win.document.write('</body></html>');
-        layer = jQuery(win.document);
-      }
-      function ocultarFiltro(){
-    
-      
-              if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
-                  document.getElementById("contenedorFiltro").style.display='block';
-              }
-              else{
-                      document.getElementById("contenedorFiltro").style.display='none';
-                  }
 
-        }
+
+
+  };
+
+
+  function elPdf(base64EncodedPDF) {
+    var objbuilder = '';
+    objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
+    objbuilder += (base64EncodedPDF);
+    objbuilder += ('" type="application/pdf" class="internal">');
+    objbuilder += ('<embed src="data:application/pdf;base64,');
+    objbuilder += (base64EncodedPDF);
+    objbuilder += ('" type="application/pdf" />');
+    objbuilder += ('</object>');
+    var win = window.open("", "_blank", "titlebar=yes");
+    win.document.title = "My Title";
+    win.document.write('<html><body>');
+    win.document.write(objbuilder);
+    win.document.write('</body></html>');
+    layer = jQuery(win.document);
+  }
+  function ocultarFiltro() {
+
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
+
+  }
 </script>
 
 
 {%endblock head%}
 {%block estilos%}
-    <style type="text/css">
-        h6#fraseTable{
-            display: inline-block;
-            
+<style type="text/css">
+  h6#fraseTable {
+    display: inline-block;
 
-        }
-        a#fraseTableBoton{
-              display: inline-block;
-              float: right;
-             
-              
 
-        }
+  }
 
-        label.col-form-label{
-          display: inline-block;
-         
-        }
-        div#icon8{
-          padding: 10px;
-          width: 40px;
-          height: 40px;
-        }
-        div#icon7{
-          
-          width: 100px;
-          height: 100px;
-        }
-        div#ere{
+  a#fraseTableBoton {
+    display: inline-block;
+    float: right;
 
-margin-right: 2px;
-margin-left: 2px;
-}
-p#msj{
+
+
+  }
+
+  label.col-form-label {
+    display: inline-block;
+
+  }
+
+  div#icon8 {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  div#icon7 {
+
+    width: 100px;
+    height: 100px;
+  }
+
+  div#ere {
+
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  p#msj {
     font-size: 17px;
-}
-div.derecha{
-  display: inline-block;
-  
-  margin-left: 5%;
-  
-  
-}
-div#contenedorFiltro{
-  padding: 2%;
-  display: none;
-  background-color: antiquewhite;
-}
-div#comboFiltro{
-  
+  }
 
-}
-div#zonaInput{
+  div.derecha {
+    display: inline-block;
 
-}
-div.dt-buttons btn-group flex-wrap{
-  
-  position: absolute initial;
-  
-}
-div.dataTables_length{
-  display: inline-block;
-  margin-left: 3%;
-}
-div.dataTables_filter{
-  float: right;
-  
-}
-div#zonaBotones{
-  
-  text-align: right;
-  vertical-align: b
-}
-button#fil{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#repo{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#botonExtra{
-  display: inline-block;
-  background-color: rgb(219, 90, 90);
-  border: 2px solid rgb(32, 32, 32);
-}
-div#elgrando{
-  width: 400px;
-}
-label.izquierda{
-  display: inline-block;
-  margin-left: 5%;
-  
-}
-div.alinealoNomas{
-  text-align: left;
-}
-div.form-group{
-  width: 30%;
-  display: inline-block;
-}
-div#nivell{
-  width: auto;
-  display: inline-block;
-  margin-left: 3%;
-  margin-right: 3%;
-  
-}
-label#labbel{
-  display: block;
-}
-div#espeNIvel{
-  display: inline-block;
- 
-  
-}
+    margin-left: 5%;
 
-    
-    </style>
+
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  div#comboFiltro {}
+
+  div#zonaInput {}
+
+  div.dt-buttons btn-group flex-wrap {
+
+    position: absolute initial;
+
+  }
+
+  div.dataTables_length {
+    display: inline-block;
+    margin-left: 3%;
+  }
+
+  div.dataTables_filter {
+    float: right;
+
+  }
+
+  div#zonaBotones {
+
+    text-align: right;
+    vertical-align: b
+  }
+
+  button#fil {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#repo {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#botonExtra {
+    display: inline-block;
+    background-color: rgb(219, 90, 90);
+    border: 2px solid rgb(32, 32, 32);
+  }
+
+  div#elgrando {
+    width: 400px;
+  }
+
+  label.izquierda {
+    display: inline-block;
+    margin-left: 5%;
+
+  }
+
+  div.alinealoNomas {
+    text-align: left;
+  }
+
+  div.form-group {
+    width: 30%;
+    display: inline-block;
+  }
+
+  div#nivell {
+    width: auto;
+    display: inline-block;
+    margin-left: 3%;
+    margin-right: 3%;
+
+  }
+
+  label#labbel {
+    display: block;
+  }
+
+  div#espeNIvel {
+    display: inline-block;
+
+
+  }
+</style>
 {%endblock estilos%}
 
 
@@ -199,7 +218,7 @@ div#espeNIvel{
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -215,21 +234,24 @@ div#espeNIvel{
             <i class="fa fa-bars"></i>
           </button>
 
-          
+
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -242,13 +264,15 @@ div#espeNIvel{
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
@@ -291,45 +315,51 @@ div#espeNIvel{
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="dropdown-list-image mr-3">
-                    
+
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="dropdown-list-image mr-3">
-                    
+
                   </div>
                   <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                  
+
                   <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                  
+
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -341,7 +371,7 @@ div#espeNIvel{
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              
+
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
@@ -374,380 +404,395 @@ div#espeNIvel{
         <input type="hidden" id="inputOcultoTemplate" value="1">
         <!-- Begin Page  Content -->
         <div class="container-fluid">
-          
+
           <!-- Page Heading -->
-          
+
           <h1 class="h3 mb-2 text-gray-800">Partituras</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar las partituras que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar uno nuevo al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar las partituras que cuenta la institucion actualmente;
+            editar o eliminar alguno. Ademas de insertar uno nuevo al sistema.</p>
 
-          <div id="cuadroMensajes" >
+          <div id="cuadroMensajes">
 
-              {% if messages %}
-              {% for message in messages %}
+            {% if messages %}
+            {% for message in messages %}
 
-              {% if message.tags == 'success'%}
-              <ul class="alert alert-success alert-dismissible">
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-              </ul> 
-              {%endif%}
-              {% if message.tags == 'error'%}
-              <ul class="alert alert-danger alert-dismissible">
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-              </ul> 
-              {%endif%}
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
 
-              {% endfor %}
-             {% endif %}
-      </div>
+            {% endfor %}
+            {% endif %}
+          </div>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                  <i class="fas fa-file"></i>
-                </button>
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de partituras que cuenta actualmente:</h6>
-              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_partitura'%}" class="btn btn-primary btn-icon-split">
-                              
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Añadir Partitura</span>
-                                    
-                              
-                              </a>
+              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                <i class="fas fa-file"></i>
+              </button>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de partituras que cuenta
+                actualmente:</h6>
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_partitura'%}"
+                class="btn btn-primary btn-icon-split">
+
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Añadir Partitura</span>
+
+
+              </a>
             </div>
 
 
 
-            
+
 
             <form class="user" method="POST">
-                {% csrf_token %}
-            <div id="contenedorFiltro">
+              {% csrf_token %}
+              <div id="contenedorFiltro">
                 <input type="hidden" id="filtrado" value="{{filtro}}">
 
-           
-              <div id="comboFiltro">
-                  
-                <div id="zonaInput">
-                  <!--3 div-->
-                  <div class="form-group">
+
+                <div id="comboFiltro">
+
+                  <div id="zonaInput">
+                    <!--3 div-->
+                    <div class="form-group">
                       <label for="inputAddress2" class="sub" style="color: black">Compositor de partitura:</label>
-                      
+
                       <div class="form-row">
-                          <select id="country" class="form-control" name="compositor" >
-                                      <option value="">-----</option>
-                                     
-  
-                                      {%for compo in compositores%}
-                                      <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
-                                      {%endfor%}
-                              
-                         </select>
+                        <select id="country" class="form-control" name="compositor">
+                          <option value="">-----</option>
+
+
+                          {%for compo in compositores%}
+                          <option value='{{compo.id}}'>{{compo.nombreIdentificador}}</option>
+                          {%endfor%}
+
+                        </select>
 
                       </div>
 
                     </div>
 
                     <div class="form-group" id="nivell">
-                        <label for="inputState" style="color: black" id="labbel">Nivel:</label>
-                          
-                          <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
-                              <option value=''>-------</option>
-                            <option value='facil'>facil</option>
-                              <option value='medio'>medio</option>
-                              <option value='dificil'>dificil</option>
-                              
-                              
-                            
-                         
-                          </select>
-  
-                        </div>
-  
+                      <label for="inputState" style="color: black" id="labbel">Nivel:</label>
+
+                      <select id="nivel" name="nivel" class="selectpicker" style="width: auto" single>
+                        <option value=''>-------</option>
+                        <option value='facil'>facil</option>
+                        <option value='medio'>medio</option>
+                        <option value='dificil'>dificil</option>
 
 
 
 
-                        <div class="form-group" id="espeNIvel">
-                            <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
-                            
-                            <div class="form-row" id="espec2">
-                                <select name="espec" id="espec" class="selectpicker" single>
-                                    <option value=''>-------</option>
-                                    {%for e in especialidades%}
-                                    <option value="{{e.id}}">
-                                        {{e}}
-                                    </option>
-                                    {%endfor%}
-                                </select>
-      
-                            </div>
-      
-                          </div>
+                      </select>
+
+                    </div>
 
 
 
 
 
+                    <div class="form-group" id="espeNIvel">
+                      <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
 
-
-
-
-
-
-
-
-
-
-
-
+                      <div class="form-row" id="espec2">
+                        <select name="espec" id="espec" class="selectpicker" single>
+                          <option value=''>-------</option>
+                          {%for e in especialidades%}
+                          <option value="{{e.id}}">
+                            {{e}}
+                          </option>
+                          {%endfor%}
+                        </select>
 
                       </div>
 
+                    </div>
 
 
-                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+
+
+
+
 
                   <!--3dic-->
-                
-                <div id="zonaBotones">
-                <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
-               
-                <input type="hidden" id="yolo" name="yolo" value="no cambio">
-                <input type="hidden" id="custId" name="custId" value="no cambio">
-                 
+
+                  <div id="zonaBotones">
+                    <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+
+                    <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                    <input type="hidden" id="custId" name="custId" value="no cambio">
+
+                  </div>
+
                 </div>
 
               </div>
-
-            </div>
-          </form>
+            </form>
 
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                            <th>Nombre</th>
-                            <th style="display: none">Nivel de Dificultad</th>
-                            <th style="display: none">Compositor</th>  
-                            <th style="display: none">Especialidades</th>                     
-                                                  
-                                                  
-                            <th class="noExport">Archivo</th>
-                           
-                            
-                            
-                            <th class="noExport">Acciones</th>
-                            
-                            
+                      <th>Nombre</th>
+                      <th style="display: none">Nivel de Dificultad</th>
+                      <th style="display: none">Compositor</th>
+                      <th style="display: none">Especialidades</th>
+
+
+                      <th class="noExport">Archivo</th>
+
+
+
+                      <th class="noExport">Acciones</th>
+
+
                     </tr>
                   </thead>
-                  
+
                   <tbody>
 
-                        {% for par in partituras%}
-                                                    
-                                                 
-                                                    <tr>
-                                                      
-                                                      <td>{{par.nombre}}</td>
-                                                      <td style="display: none">{{par.nivel}}</td>
-                                                      <td style="display: none">{{par.compositor}}</td>
+                    {% for par in partituras%}
 
-                                                      
-                                                          <td style="display: none">{%for est in par.especialidadesAcordes.all%}
 
-                                                            
-                                                            <p >{{est.nombre}}</p>
+                    <tr>
 
-                                                            {%endfor%}
-                                                            
-                                                          
-                                                          </td>
-                                                     
+                      <td>{{par.nombre}}</td>
+                      <td style="display: none">{{par.nivel}}</td>
+                      <td style="display: none">{{par.compositor}}</td>
 
-                                                      
-                                                      
-                                                      <td>{%if par.archivo%}
-                                                          
-                                                         
-                                                        <!--iii-->
-                                                        <div class="btn-group">
-                                                          <center>
-                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
-                                                          </center>
-                                                          
-                                                            
-                                                    </center>
-                                                        <!--iii-->
-                                                        
-                                                          
-                                                          {%else%}
-                                                          <p>ninguno</p>
-                                                            {%endif%}</td> 
-                          
-                          
-                          
-                          <td>
-                          
+
+                      <td style="display: none">{%for est in par.especialidadesAcordes.all%}
+
+
+                        <p>{{est.nombre}}</p>
+
+                        {%endfor%}
+
+
+                      </td>
+
+
+
+
+                      <td>{%if par.archivo%}
+
+
+                        <!--iii-->
+                        <div class="btn-group">
                           <center>
-                              
-                             
+                            <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
+                          </center>
 
-                                <div class="btn-group">
-                                        <center>
-                                            <div >
-                                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{par.id}}">
-                                            
-                                            <i class="fa fa-eye"></i>
-                                          
-                                          </button>
-                                        </div>
-                                        </center>
-                                          <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                              <div class="modal-dialog modal-lg">
-                                                  <div class="modal-content" id="elgrando">
-                                                      <div class="modal-header">
-                                                          <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos:</h4>
-                                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                  </button>
-                                                          
-                                                      </div>
-                                                      <div class="modal-body" id="cuerpoModal">
-                                                          <div class="alinealoNomas">
-                                                              <label class="izquierda" >Id: </label>
-                                                              <div class="derecha">
-                                                                {{par.id}}
-                                                              </div>
-                                                            </div>
-                                                            <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                                                <div class="derecha">
-                                                                    {{par.nombre}}
-                                                                </div>
-                                                              </div>
-                                                              <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                                                  <div class="derecha">
-                                                                      {{par.descripcion}}
-                                                                  </div>
-                                                                </div>
-                                                                <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Nivel:</label>
-                                                                    <div class="derecha">
-                                                                        {{par.nivel}}
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Genero Musical:</label>
-                                                                      <div class="derecha">
-                                                                        {%for p in par.musicaElecciones.all%}
-                                                                          {{p}};
-                                                                          {%endfor%}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                        <label for="inputEmail3" class="izquierda">Compositor:</label>
-                                                                        <div class="derecha">
-                                                                          {%for p in par.compositor.all%}
-                                                                            {{p}};
-                                                                            {%endfor%}
-                                                                        </div>
-                                                                      </div>
-                                                                    <div class="alinealoNomas">
-                                                                        <label for="inputEmail3" class="izquierda">Archivo:</label>
 
-                                                                        <div class="derecha">
-                                                                          {%if par.archivo%}
-                                                                    
-                                                                           <center>
-                                                                              <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
-                                                                           </center>
-                                                          
-                                                                            {%endif%}
-                                                                        
-                                                                      </div>
-                                                                    </div>
+                          </center>
+                          <!--iii-->
 
-                                                                      <div class="alinealoNomas">
-                                                                          <label for="inputEmail3" class="izquierda" style="vertical-align: top">Especialidades para Uso:</label>
-                                                                          <div class="derecha">
-                                                                              
-                                                                              {%for es in par.especialidadesAcordes.all%}
-                                                                              
-                                                                              <p> {{es}} </p>
-                                                                              {%endfor%}
-                                                                          </div>
-                                                                        </div>
-                                                                   
-                                              </div>
-                                              <div class="modal-footer">
-                                                  
-                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                              </div>
-                              
-                                          </div>
+
+                          {%else%}
+                          <p>ninguno</p>
+                          {%endif%}
+                      </td>
+
+
+
+                      <td>
+
+                        <center>
+
+
+
+                          <div class="btn-group">
+                            <center>
+                              <div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg{{par.id}}">
+
+                                  <i class="fa fa-eye"></i>
+
+                                </button>
+                              </div>
+                            </center>
+                            <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1"
+                              role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="elgrando">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos:</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">×</span>
+                                    </button>
+
+                                  </div>
+                                  <div class="modal-body" id="cuerpoModal">
+                                    <div class="alinealoNomas">
+                                      <label class="izquierda">Id: </label>
+                                      <div class="derecha">
+                                        {{par.id}}
                                       </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <div class="derecha">
+                                        {{par.nombre}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                      <div class="derecha">
+                                        {{par.descripcion}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                      <div class="derecha">
+                                        {{par.nivel}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Genero Musical:</label>
+                                      <div class="derecha">
+                                        {%for p in par.musicaElecciones.all%}
+                                        {{p}};
+                                        {%endfor%}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                      <div class="derecha">
+                                        {%for p in par.compositor.all%}
+                                        {{p}};
+                                        {%endfor%}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Archivo:</label>
+
+                                      <div class="derecha">
+                                        {%if par.archivo%}
+
+                                        <center>
+                                          <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
+                                        </center>
+
+                                        {%endif%}
+
+                                      </div>
+                                    </div>
+
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda"
+                                        style="vertical-align: top">Especialidades para Uso:</label>
+                                      <div class="derecha">
+
+                                        {%for es in par.especialidadesAcordes.all%}
+
+                                        <p> {{es}} </p>
+                                        {%endfor%}
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                   </div>
 
-                                  <div id="ere">
-                                <a href="{% url 'gestionMusical:editar_partitura' par.id %}" class="btn btn-warning btn-icon-split">
-                              
-                                <span class="icon text-white-50">
-                                      <i class="fas fa-paint-brush"></i>
-                                </span>
-                                
-                                
-                          
-                          </a>
+                                </div>
                               </div>
-                              <div class="btn-group">
-                                  {%if  perms.gestionMusical.es_director %}
-                                <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
-                                      <div id="icon8">
+                            </div>
+
+                            <div id="ere">
+                              <a href="{% url 'gestionMusical:editar_partitura' par.id %}"
+                                class="btn btn-warning btn-icon-split">
+
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-paint-brush"></i>
+                                </span>
+
+
+
+                              </a>
+                            </div>
+                            <div class="btn-group">
+                              {%if  perms.gestionMusical.es_director %}
+                              <center>
+                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg23{{par.id}}">
+                                  <div id="icon8">
                                     <i class="fas fa-trash"></i>
                                   </div>
-                                  </button>
-                                </center>
-                                
-                                  <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                          <div class="modal-content">
-                                              <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Eliminacion</h4>
-                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                          </button>
-                                                  
-                                              </div>
-                                              <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar la Partitura {{par.nombre}}  ???</h4>
-                                                  
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_partitura' par.id %}">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                                </a>
-                                                </div>
-                              
-                                          </div>
-                                      </div>
-                                  </div>
-                                  {%endif%}
-                          </center>
-                        
-                          </td>
-                          
-                        
-                        </tr>
+                                </button>
+                              </center>
 
-                        
+                              <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}"
+                                tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Eliminacion
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body">
+                                      <h4>Esta seguro de Eliminar la Partitura {{par.nombre}} ???</h4>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a href="{% url 'gestionMusical:eliminar_partitura' par.id %}">
+                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                      </a>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              {%endif%}
+                        </center>
+
+                      </td>
+
+
+                    </tr>
+
+
                     {%endfor%}
                   </tbody>
                 </table>
@@ -762,7 +807,7 @@ div#espeNIvel{
       </div>
       <!-- End of Main Content -->
 
-    
+
 
     </div>
     <!-- End of Content Wrapper -->
@@ -776,7 +821,8 @@ div#espeNIvel{
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -794,15 +840,15 @@ div#espeNIvel{
     </div>
   </div>
   {%block archivos%}
- <!-- Bootstrap core JavaScript-->
- <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
- <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
- <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+  <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
 
 
 
@@ -810,7 +856,7 @@ div#espeNIvel{
 
 
 
- <!-- Bootstrap core JavaScript
+  <!-- Bootstrap core JavaScript
  
  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 
@@ -826,15 +872,15 @@ div#espeNIvel{
 
  
  <!-- Latest compiled and minified CSS -->
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 
 
- {%endblock archivos%}
+  {%endblock archivos%}
 </body>
 
 </html>

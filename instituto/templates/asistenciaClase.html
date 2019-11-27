@@ -459,8 +459,11 @@ div#zonaBotones{
                     <thead>
                       <tr>    
                         <th >Alumno</th>
+                        <th >Clase y horario</th>
                         <th >Fecha de asistencia</th>
                         <th >Estado de Asistencia</th>
+                        <th >Profesor</th>
+                        
                         <th >Acciones</th>
                       </tr>
                     </thead>               
@@ -468,7 +471,8 @@ div#zonaBotones{
                       {% for asist in lasAsistencias%}                     
                           <tr>                          
                             <td>{{asist.alumnoAsist.apellido}} {{asist.alumnoAsist.nombre}}</td> 
-                            <td>{{asist.fechaCreacion}}</td>  
+                            <td>{{asist.claseReferencia.nombre}} - {{asist.horario}}</td>  
+                            <td>{{asist.creada}}</td>  
                             <td>{% if asist.estadoReco %}
 
                                                                 
@@ -478,8 +482,10 @@ div#zonaBotones{
                                    
                                    Falto a clases
                                         
-                                        {%endif%}</td>                           
+                                        {%endif%}</td>    
+                                        <td>{{asist.profesorReferencia.apellido}} {{asist.profesorReferencia.nombre}}</td>                       
                             <td>
+                              
                             <center>
                                        <!---->
                                        <div class="btn-group">

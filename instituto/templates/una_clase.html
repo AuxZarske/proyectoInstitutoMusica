@@ -369,7 +369,11 @@
   div.dt-buttons btn-group flex-wrap {
 
     position: absolute initial;
+    background-color: brown;
 
+  }
+  button.btn-secondary{
+    background-color: #ff004b;
   }
 
   div.dataTables_length {
@@ -445,37 +449,60 @@
   }
 
   button#nuevoAlumno {
+   
     padding: 0.5%;
     margin: 10px;
     margin-left: 0%;
-    background-color: rgb(182, 253, 255);
+    background-color: #28a745;
+    color: white;
     border: 1px solid rgba(255, 182, 99, 0.295);
+    border-radius: 31px 31px 31px 31px;
+    -moz-border-radius: 31px 31px 31px 31px;
+    -webkit-border-radius: 31px 31px 31px 31px;
 
+  }
+  div#cosaArriba{
+    float:right;
   }
 
   button#nuevoAsistencia {
     padding: 0.5%;
+    
     margin: 10px;
     margin-left: 0%;
-    background-color: rgb(182, 253, 255);
+    background-color: #ffc107;
     border: 1px solid rgba(255, 182, 99, 0.295);
+    border-radius: 31px 31px 31px 31px;
+    -moz-border-radius: 31px 31px 31px 31px;
+    -webkit-border-radius: 31px 31px 31px 31px;
+    float:right;
 
 
   }
   button#pasadaAsistencia{
     padding: 0.5%;
     margin: 10px;
+    
     margin-left: 0%;
-    background-color: rgb(182, 253, 255);
+    background-color: #ffc107;
     border: 1px solid rgba(255, 182, 99, 0.295);
+    border-radius: 31px 31px 31px 31px;
+    -moz-border-radius: 31px 31px 31px 31px;
+    -webkit-border-radius: 31px 31px 31px 31px;
+    float:right;
   }
 
   button#verTotalAsistencia {
     padding: 0.5%;
     margin: 10px;
+    
     margin-left: 0%;
-    background-color: rgb(182, 253, 255);
+    background-color: #ffc107;
     border: 1px solid rgba(255, 182, 99, 0.295);
+    border-radius: 31px 31px 31px 31px;
+    -moz-border-radius: 31px 31px 31px 31px;
+    -webkit-border-radius: 31px 31px 31px 31px;
+    float:right;
 
   }
 
@@ -497,6 +524,12 @@
 
 
   }
+  input#id_fechaPasada{
+    width: 30%;
+  }
+  div.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 40%;
+}
 
   input.elCheck {
 
@@ -633,103 +666,31 @@
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
                     <thead>
-                      <center>
+                      
                         <button id="nuevoAlumno" type="button" style="display: inline-block;" data-toggle="modal"
-                          data-target=".bs-example-modal-lg5"><i class="fas fa-plus"></i> Añadir Nuevo Alumno a la
-                          Clase</button>
-                        <a href="{% url 'gestionMusical:asistencia_unaClase'  laClase.id %}">
+                          data-target=".bs-example-modal-lg5"><i class="fas fa-plus"></i> Añadir Alumno</button>
+                       
+                          <a href="{% url 'gestionMusical:asistencia_unaClase'  laClase.id %}">
                           <button id="verTotalAsistencia" type="button" style="display: inline-block;"><i
-                              class="fas fa-calendar-check"></i> Ver Asistencias a Clase</button>
+                              class="fas fa-calendar-check"></i> Ver Asistencias</button>
                         </a>
-                        <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i
-                            class="fas fa-check"></i>Establecer Asistencias marcadas</button>
-                            <button id="pasadaAsistencia" type="button" style="display: inline-block;" data-toggle="modal"
+
+                        <button id="pasadaAsistencia" type="button" style="display: inline-block;" data-toggle="modal"
                           data-target=".bs-example-modal-lg6347"><i class="fas fa-arrow-circle-down"></i> Establecer Asistencia Pasada
                           </button>
-                      </center>
+
+                        <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i
+                            class="fas fa-check"></i>Establecer Asistencias marcadas</button>
+
+
+                            
+                       
 
 
 
 
 
-                       <!--MMMM-->
-                       <div class="modal fade bs-example-modal-lg6347" id="myModal6347"
-                       tabindex="-1" role="dialog" aria-hidden="true">
-                       <div class="modal-dialog modal-lg">
-                         <div class="modal-content">
-                           <div class="modal-header">
-                             <h4 class="modal-title" id="myModalLabel6347">Establecer una asistencia pasada a la fecha de clase:</h4>
-                             <button type="button" class="close" data-dismiss="modal"><span
-                                 aria-hidden="true">×</span>
-                             </button>
-
-                           </div>
-                           <div class="modal-body">
-                             <div class="form-row">
-                              <label for="inputAddress2" class="sub">Alumno:</label>
-                              <select  class="selectpicker" single data-live-search="true" id="alumnoPas" required  >
-                                    
-                                    
-
-                                  {%for al in listAlumnos%}
-                                  
-                                  <option value='{{al.dni}}'>{{al.apellido}} {{al.nombre}}</option>
-                                  {%endfor%}
-                                  
-                             </select>
-                            </div>
-                            <br>
-                            <div class="form-row">
-
-                                <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
-                                <select  class="selectpicker" single  id="alumnoPasEstado" required  >
-                                      
-                                      
-  
-                                   
-                                    <option value='Asistio'>Asistio</option>
-                                    <option value='Falto'>Falto</option>
-                                    
-                                    
-                               </select>
-                            </div>
-                            <br>
-                            <div class="form-row">
-
-                                <label for="inputAddress2" class="sub">Fecha de Clase:</label>
-                                <select  class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required  >
-                                      
-                                      
-  
-                                    {%for pas in horariosClsesPas%}
-                                    
-                                    <option value='{{pas.id}}'>{{pas.dia}} {{pas.hora}}</option>
-                                    {%endfor%}
-                                    
-                               </select>
-
-
-                            </div>
-
-
-
-                             
-
-                             
-
-                           </div>
-                           <div class="modal-footer">
-                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                             <button type="button" class="btn btn-primary"
-                               >Confirmar</button>
-
-                           </div>
-
-                         </div>
-                       </div>
-                     </div>
-                     <!--mmm-->
+                       
 
 
 
@@ -865,7 +826,7 @@
 
                           {%endfor%}
 
-                          {%if asistenciasHoy.count == 0 %}
+                          {%if not asistenciasHoy %}
 
 
 
@@ -896,7 +857,7 @@
 
 
                           {%else%}
-                          No es dia de Clase
+                          No es horario de Clase
                           {%endif%}
                         </td>
 
@@ -990,6 +951,91 @@
       </div>
     </form>
 {%endif%}
+<!--MMMM-->
+<div class="modal fade bs-example-modal-lg6347" id="myModal6347"
+tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel6347">Establecer una asistencia pasada a la fecha de clase:</h4>
+      <button type="button" class="close" data-dismiss="modal"><span
+          aria-hidden="true">×</span>
+      </button>
+
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+       <label for="inputAddress2" class="sub">Alumno:</label>
+       <select  class="selectpicker" single data-live-search="true" id="alumnoPas" required  >
+             
+             
+
+           {%for al in listAlumnos%}
+           
+           <option value='{{al.dni}}'>{{al.apellido}} {{al.nombre}}</option>
+           {%endfor%}
+           
+      </select>
+     </div>
+     <br>
+     <div class="form-row">
+
+         <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
+         <select  class="selectpicker" single  id="alumnoPasEstado" required  >
+               
+               
+
+            
+             <option value='Asistio'>Asistio</option>
+             <option value='Falto'>Falto</option>
+             
+             
+        </select>
+     </div>
+     <br>
+     <div class="form-row">
+        <label for="inputAddress2" class="sub">Fecha de Asistencia:</label>
+        <input type="date" id="id_fechaPasada"  class="form-control" name="fechaPasada" value="2019-07-22" min="20-01-01" max="2020-01-01" required>
+
+     </div>
+
+     <br>
+     <div class="form-row">
+
+         <label for="inputAddress2" class="sub">Horario de Clase:</label>
+         <select  class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required  >
+               
+               
+
+            {%for h in laClase.horarios.all%}
+                                                                
+            <option value='{{h.id}}'>{{h.diaSemanal}}  Desde {{h.horario_inicio}} Hasta {{h.horario_final}} </option>
+            {%endfor%}
+             
+        </select>
+
+
+     </div>
+
+
+
+      
+
+      
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      <button type="button" id="botonCargaPasada" class="btn btn-primary"
+        >Confirmar</button>
+
+    </div>
+
+  </div>
+</div>
+</div>
+<!--mmm-->
 
     <!--Finlista-->
     <div id="accordion">
@@ -3117,6 +3163,52 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <script>
       $(document).ready(function () {
+
+
+
+        
+
+        $("#botonCargaPasada").click(function () {
+
+          var alumno = $("#alumnoPas").val();
+          var asistencia = $("#alumnoPasEstado").val();
+          var fecha = $("#id_fechaPasada").val();
+          var horario = $("#alumnoPasFecha").val();
+          var clase = "{{laClase.id}}"
+
+          if (alumno == "" || asistencia == "" || fecha == "" || horario == "") {
+            alert("Por favor complete todos los campos");
+
+          } else {
+
+          $.ajax({
+
+              url: '{% url "gestionMusical:crear_asistenciaPasada" %}',
+              data: {
+                'alumno': alumno,
+                'asistencia': asistencia,
+                'fecha': fecha,
+                'clase':clase,
+                'horario': horario
+              },
+              dataType: 'json',
+
+              success: function (data) {
+
+                if (data.is_taken) {
+                  alert("Ese nombre ya lo tiene otro tipo de musica ");
+                  document.getElementById("inputMusicaCrear").value = "";
+                } else {
+
+                  location.reload();
+                }
+              }
+              });
+            }
+
+
+        });
+
         $("#botonCrearReco").click(function () {
 
           var username = $("#inputRecoCrear").val();
@@ -3161,6 +3253,12 @@
         });
       });
     </script>
+    <script type="text/javascript">
+
+      document.getElementById("id_fechaPasada").max = new Date().toISOString().split("T")[0];
+  
+          
+  </script>
 
 
     {%endblock archivos%}

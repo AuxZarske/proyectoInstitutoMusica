@@ -204,13 +204,14 @@ class Horario(models.Model):
         verbose_name_plural = 'horario'
     
     def __str__(self):
-        return str(self.id)
+        return str(self.diaSemanal) + "  Desde "+str(self.horario_inicio)+" Hasta "+str(self.horario_final)
 
 
 
 class Clase(models.Model):
     
     id = models.AutoField(primary_key = True)
+    creadaClase = models.DateField('Fecha de Creacion de la asistencia', auto_now=False,auto_now_add=True, null=True, blank = True)
     nombre = models.CharField('Nombre de la clase', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la clase', null = False, blank = False)
     horarios = models.ManyToManyField(Horario, default = None)
@@ -275,7 +276,8 @@ class Recomendacion(models.Model):
 class Asistencia(models.Model):
     
     id = models.AutoField(primary_key = True)
-    fechaCreacion = models.DateField('Fecha de Creacion de la asistencia')
+    creada = models.DateField('Fecha de Creacion de la asistencia', auto_now=False,auto_now_add=True, null=True, blank = True)
+    horario = models.ForeignKey(Horario, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     alumnoAsist = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     estadoReco =  models.BooleanField('estado de asistencia activo/inactivo', default = False)
     claseReferencia = models.ForeignKey(Clase, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)

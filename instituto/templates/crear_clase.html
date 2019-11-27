@@ -94,6 +94,9 @@
                                         font-size: 22px;
                                         color: black;
                                     }
+                                    p#msj{
+    font-size: 17px;
+}
                                     label.sub{
                                         color: black;
                                     }
@@ -130,7 +133,33 @@
                                                 
                                 
                                         </div>
+
+
+
+
+                                        
                                     <div id="cuadroPrincipal">
+                                            <div id="cuadroMensajes" >
+
+                                                    {% if messages %}
+                                                    {% for message in messages %}
+                                      
+                                                    {% if message.tags == 'success'%}
+                                                    <ul class="alert alert-success alert-dismissible">
+                                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                                    </ul> 
+                                                    {%endif%}
+                                                    {% if message.tags == 'error'%}
+                                                    <ul class="alert alert-danger alert-dismissible">
+                                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                                                    </ul> 
+                                                    {%endif%}
+                                      
+                                                    {% endfor %}
+                                                   {% endif %}
+                                            </div>
                                 
                                             
                                 
@@ -161,7 +190,7 @@
                                 
                                                
                                                 <div class="form-group">
-                                                        <label for="inputAddress2" class="sub">Descripcion de la clase::</label>
+                                                        <label for="inputAddress2" class="sub">Descripcion de la clase:</label>
                                                         {%if editacion != 1%}
                                                         <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la clase..." required></textarea>
                                                         {%else%}
@@ -170,17 +199,25 @@
                                                  </div>
 
                                                  <div class="form-group">
-                                                        <label for="inputAddress2" class="sub">Horarios de Clase:</label>
+                                                        <label for="inputAddress2" class="sub">Horarios de Clase: </label>
                                                         
                                                         <div class="form-row">
                                                             <div style="width: 50%;">
-                                                            <select  class="selectpicker" multiple data-live-search="true" name="horariosClase"  required  >
+                                                            <select  class="selectpicker" multiple data-live-search="true" name="horarios"  required  >
                                                                         
                                                                         
-                                    
-                                                                {%for h in horrios%}
-                                                                {{h}}
+                                                                    {%if editacion != 1%}
+                                                                {%for h in horarios%}
+                                                                
+                                                                <option value='{{h.id}}'>{{h.diaSemanal}}  Desde {{h.horario_inicio}} Hasta {{h.horario_final}} </option>
                                                                 {%endfor%}
+                                                                {%else%}
+                                                                        {%for h in clase_form.horarios%}
+                                                                        {{h}}
+                                                                        
+
+                                                                        {%endfor%}
+                                                                {%endif%}
                                                                 
                                                            </select>
                                                         </div>
@@ -434,7 +471,10 @@
                success: function (data) {
                    
                  if (data.is_taken) {
-                   alert("Error al crear el horario");
+                   alert("Error al crear el horario - El horario ya existe");
+                 }else{
+
+                    location.reload(true);
                  }
                }
              });

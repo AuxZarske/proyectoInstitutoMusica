@@ -1,0 +1,1 @@
+- [ ] controles, errores, mas add

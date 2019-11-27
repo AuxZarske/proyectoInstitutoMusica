@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -616,6 +616,92 @@ def editarComposito(request):
     print(data)
     return JsonResponse(data)
 
+def switch_demo(argument):
+    switcher = {
+        1: "Lunes",
+        2: "Martes",
+        3: "Miercoles",
+        4: "Jueves",
+        5: "Viernes",
+        6: "Sabado",
+        7: "Domingo"
+        
+    }
+    return switcher.get(argument,"Ninguno")
+
+def crearAsistenciaPasada(request):
+    alumno = request.GET.get('alumno', None)
+    asistencia = request.GET.get('asistencia', None)
+    fecha = request.GET.get('fecha', None)
+   
+  
+    fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+    horario = request.GET.get('horario', None)
+    clase = request.GET.get('clase', None)
+    print(alumno)
+    print(asistencia)
+    print(fecha)
+    print(horario)
+    print(clase)
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        dia = datetime.now().day
+        mes = datetime.now().month
+        ano = datetime.now().year
+        laClase = Clase.objects.get(id = int(clase))
+        hor = Horario.objects.get(id = int(horario))
+        a = Alumno.objects.get(dni = int(alumno))
+        if Asistencia.objects.filter(claseReferencia = laClase, alumnoAsist = a, creada__day = dia, creada__month = mes, creada__year = ano, horario = hor).exists():
+            data['error_message'] = 'existe'
+            data = {
+                    'is_taken': True
+        
+            }
+            messages.error(request, " Error - La asistencia ye esta creada, puede modificarla desde la tabla de asistencias")
+            print(data)
+            return JsonResponse(data)
+
+        else:
+            print(hor.diaSemanal)
+            num = date(fecha.year,fecha.month, fecha.day).isoweekday()
+            if hor.diaSemanal ==  switch_demo(num) :
+                
+                asist_form = AsistenciaForm()
+                at = asist_form.save(commit=False)
+                pedidor = str(request.user.username)
+
+                profe = Profesor.objects.get(correoElectronico = pedidor)
+                at.horario = Horario.objects.get(id = horario)
+                at.alumnoAsist = a
+                if asistencia == "Asistio":
+                    at.estadoReco = True
+                
+                at.claseReferencia = laClase
+                at.profesorReferencia = profe
+                
+                at.save()
+           
+                messages.success(request, "Carga Correcta de asistencia!")
+                data['error_message'] = 'creado exitosamente.'
+            else:
+                data['error_message'] = 'fechaMal'
+                data = {
+                    'is_taken': True
+        
+                }
+                messages.error(request, " Error - No coincide la fecha con el horario de clase")
+                print(data)
+                return JsonResponse(data)
+    print(data)
+    return JsonResponse(data)
+
+
 def crearHorario(request):
     dia = request.GET.get('dia', None)
     hora = request.GET.get('hora', None)
@@ -632,12 +718,22 @@ def crearHorario(request):
         data['error_message'] = 'Ese nombre ya esta ocupado.'
     else:
         #crear compositor, ponerle ese nombre
-        horario_fiorm = HorarioForm()
-        hs = horario_fiorm.save(commit=False)
-        hs.diaSemanal = dia
-        hs.horario_inicio = hora
-        hs.horario_final = duracion
-        hs.save()
+        if Horario.objects.filter(diaSemanal = dia, horario_inicio = hora, horario_final = duracion ).exists():
+            data['error_message'] = 'existe'
+            data = {
+                    'is_taken': True
+        
+            }
+            print(data)
+            return JsonResponse(data)
+
+        else:
+            horario_fiorm = HorarioForm()
+            hs = horario_fiorm.save(commit=False)
+            hs.diaSemanal = dia
+            hs.horario_inicio = hora
+            hs.horario_final = duracion
+            hs.save()
            
         messages.success(request, "Carga Correcta!")
         data['error_message'] = 'creado exitosamente.'
@@ -1507,7 +1603,30 @@ def eliminarClase(request,id):
         messages.error(request, " Error - No se pudo borrar la clase")
 
     return redirect('gestionMusical:clases')
-    
+
+
+def solapan(horarios):
+    hs = []
+    for h in horarios:
+        h = Horario.objects.get(id = int(h))
+        hs.append(h)
+    print(hs)
+    for h in hs:
+        listaV = []
+        listaV = hs.copy()
+        listaV.remove(h)
+        for tt in listaV:
+            if h.diaSemanal == tt.diaSemanal:
+                if h.horario_inicio<tt.horario_final and h.horario_final>tt.horario_inicio:
+                    print("crash")
+                    return True
+
+
+
+
+        
+    return False
+
 def crearClase(request):
     
     
@@ -1515,28 +1634,35 @@ def crearClase(request):
     especialidadest = None
     especialidadest =  Especialidad.objects.all()
     profesTodos = Profesor.objects.filter(estado = True)
+    horarios = Horario.objects.all()
+    
     if request.method == 'POST':
         clase_form = ClaseForm(request.POST)
         print(request.POST) 
         print(clase_form.is_valid())
         print(clase_form.errors.as_data())
-        if clase_form.is_valid():
+        cosas = request.POST.copy()
+        horariost = []
+        horariost = list(cosas.pop('horarios'))
+        
+        if clase_form.is_valid() and not solapan(horariost):
 
             clase_form.save()
 
             if(request.POST['custId'] == '1'):
-                messages.success(request, "Filtrado Correcto!")
+                messages.success(request, "Creado Correctamente!")
                 return redirect('gestionMusical:crear_clase')
             else:
-                messages.success(request, "Filtrado Correcto!")
+                messages.success(request, "Creado Correctamente!")
                 return redirect('gestionMusical:clases') 
         else:
-            messages.error(request, " Error - No se pudo filtrar")  
+            messages.error(request, " Error - No se pudo crear, el horario marcado se solapa con otro")  
 
     else:
         clase_form =ClaseForm()
+        print(horarios)
         
-    return render(request,'crear_clase.html',{'clase_form':clase_form,'editacion':editacion,'profesTodos':profesTodos, 'especialidadest':especialidadest})
+    return render(request,'crear_clase.html',{'clase_form':clase_form,'editacion':editacion,'horarios':horarios,'profesTodos':profesTodos, 'especialidadest':especialidadest})
 
 def editarClase(request,id):
     clase_form = None
@@ -1555,9 +1681,15 @@ def editarClase(request,id):
             clase_form = ClaseForm(instance = clase)
         else:
             clase_form = ClaseForm(request.POST, instance = clase)
-            if clase_form.is_valid():
+            cosas = request.POST.copy()
+            horariost = []
+            horariost = list(cosas.pop('horarios'))
+            
+            if clase_form.is_valid() and not solapan(horariost):
                 clase_form.save()
-            messages.success(request, "Correcto!")
+                messages.success(request, "Correcto!")
+            else:
+                messages.error(request, " Error, el horario marcado se solapa con otro" )
             return redirect('gestionMusical:clases')
     except ObjectDoesNotExist as e:
         error = e
@@ -1571,18 +1703,7 @@ def asistenciaClase(request,id):
     lasAsistencias = Asistencia.objects.filter(claseReferencia = unaClase)
     return render(request,'asistenciaClase.html',{'unaClase':unaClase,'lasAsistencias':lasAsistencias})
 
-def switch_demo(argument):
-    switcher = {
-        1: "Lunes",
-        2: "Martes",
-        3: "Miercoles",
-        4: "Jueves",
-        5: "Viernes",
-        6: "Sabado",
-        7: "Domingo"
-        
-    }
-    return switcher.get(argument,"Ninguno")
+
 
 
 def queDiaEsHoy():
@@ -1615,13 +1736,51 @@ def marcaAsistencia(request):
     print(data)
     return JsonResponse(data)
 
+
+def horarioActualClase(c):
+    #horario obj, que sea de la clase y coincida con el horio de ahora
+    listaAux = list(c.horarios.all())
+    posible = None
+    hora = time.strftime("%X")
+    hora = datetime.strptime(hora,"%H:%M:%S").time()
+    for h in listaAux:
+        if h.diaSemanal == queDiaEsHoy():
+            if h.horario_inicio < hora:
+                posible = h
+                if h.horario_final > hora: 
+                    return h
+
+    
+
+
+
+    return posible
+
+
+
+
+def laClaseEsHoy(c):
+    
+    hoy = queDiaEsHoy()
+    hora = time.strftime("%X")
+    hora = datetime.strptime(hora,"%H:%M:%S").time()
+    listaClase = []
+    listaClase = c.horarios.all() 
+    for h in listaClase:
+        if h.diaSemanal == hoy:
+            print( h.horario_inicio)
+            print(hora)
+            if h.horario_inicio < hora and h.horario_final > hora: 
+                return True
+    return False
+
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
     habilitado = 0
-    print(laClase.diaSemanal)
-    print(queDiaEsHoy())
-    if laClase.diaSemanal == queDiaEsHoy():
+    
+    
+    if laClaseEsHoy(laClase):
         habilitado = 1
     if request.method == 'POST':
         print(request.POST)
@@ -1633,7 +1792,7 @@ def mostrarClase (request,id):
          
         for a in alus:
             
-            if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, fechaCreacion = datetime.now()  ).exists():
+            if not Asistencia.objects.filter(alumnoAsist = a, claseReferencia = laClase, creada__day = dia, creada__month = mes, creada__year = ano, horario = horarioActualClase(laClase) ).exists():
                 
                 correo = request.user.username
                 elProfe = list(Profesor.objects.filter(correoElectronico = correo))
@@ -1648,6 +1807,7 @@ def mostrarClase (request,id):
                     asistt.fechaCreacion = datetime.now()
                     asistt.profesorReferencia = elProfe
                     asistt.claseReferencia = laClase
+                    asistt.horario = horarioActualClase(laClase)
                     asistt.save()
                 else:
                     print("crea ")
@@ -1683,8 +1843,14 @@ def mostrarClase (request,id):
             listAlumnosTotal.remove(a)
     print(listAlumnosTotal)
     #listAlumnos = listAlumnos.prefetch_related('Asistencia')
-    asistenciasHoy = Asistencia.objects.filter(fechaCreacion = datetime.now(), claseReferencia = laClase)
-
+    asistenciasHoy = list(Asistencia.objects.filter( claseReferencia = laClase))
+    tata = asistenciasHoy.copy()
+    aux = []
+    print(habilitado)
+    for a in tata:
+        if laClaseEsHoy(a.claseReferencia):
+            aux.append(a)
+    asistenciasHoy = aux
     return render(request,'una_clase.html',{'laClase':laClase,'habilitado':habilitado,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
 def listarmensajes(request):
@@ -2209,18 +2375,20 @@ def verAlumnoClase(request,dni,idC):
             elAlumno = list(Alumno.objects.filter(correoElectronico = correo))
             elAlumno = elAlumno[0]
         else:
-            print("jj33iji")
+            
             elAlumno = Alumno.objects.get(dni = dni)
+            
     except:
         print("jjiji")
         
     
     laClase = Clase.objects.get(id = idC)
+    print("jjhj")
     try:
+        print("jj33iji")
         habilitado = 0
-        print(laClase.diaSemanal)
-        print(queDiaEsHoy())
-        if laClase.diaSemanal == queDiaEsHoy():
+        
+        if laClaseEsHoy(laClase):
             habilitado = 1
         listAlumnos = list(laClase.alumnoAsociados.all())
         listAlumnosTotal = list(Alumno.objects.filter(estado = True)) #y no pertenescan a esta clase
@@ -2257,23 +2425,30 @@ def verAlumnoClase(request,dni,idC):
         for a in copia:       
             if listAlumnos.count(a) > 0:
                 listAlumnosTotal.remove(a)
-
+        
         partituras = []
         temas = []
         if elAlumno != None:
             
             partituras = list(elAlumno.partiturasAsociadas.all())
             temas = list(elAlumno.temasAsociadas.all()) 
-
+            
             partiturasTodas = list(Partitura.objects.all())
-            for r in partituras:
-                partiturasTodas.remove(r)
+            
 
+            for r in partituras:
+                
+                partiturasTodas.remove(r)
+            
             temasTodos = list(Tema.objects.all())
             for t in temas:
-                temasTodos.remove(t)  
-        asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, fechaCreacion = datetime.now()) 
+                temasTodos.remove(t) 
+        dia = datetime.now().day
+        mes = datetime.now().month
+        ano = datetime.now().year
+        asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, creada__day = dia, creada__month = mes, creada__year = ano, horario = horarioActualClase(laClase)) 
         #elAlumno
+        
         for p in partiturasTodas:
             
             

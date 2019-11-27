@@ -344,8 +344,8 @@ margin-left: 2px;
                       <th>#</th>
                       <th>Nombre de Clase</th>
                       
-                      <th>diaSemanal</th>
-                      <th>horaInicio</th>
+                      <th>Horarios</th>
+                      
                       
                       <th>Acciones</th>
                       
@@ -366,8 +366,11 @@ margin-left: 2px;
                           {%endif%}
 
                           {%endif%}
-                          <td>{{clase.diaSemanal}}</td>
-                          <td>{{clase.horaInicio}}</td>
+                          
+                          <td>{% for h in clase.horarios.all%}
+                              <label>{{h}}</label><br>
+                              {%endfor%}
+                          </td>
                          
                           
                           
@@ -416,24 +419,7 @@ margin-left: 2px;
                                                                 {{clase.descripcion}}
                                                             </div>
                                                           </div>
-                                                          <div class="alinealoNomas">
-                                                              <label for="inputEmail3" class="izquierda">Dia Semanal:</label>
-                                                              <div class="derecha">
-                                                                  {{clase.diaSemanal}}
-                                                              </div>
-                                                            </div>
-                                                            <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Hora Inicio:</label>
-                                                                <div class="derecha">
-                                                                    {{clase.horaInicio}}
-                                                                </div>
-                                                              </div>
-                                                              <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Duracion:</label>
-                                                                  <div class="derecha">
-                                                                      {{clase.duracion}}
-                                                                  </div>
-                                                                </div>
+                                                         
                                                                 <div class="alinealoNomas">
                                                                     <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
                                                                     <div class="derecha">

@@ -41,7 +41,7 @@ class HorarioForm(forms.ModelForm):
 class ClaseForm(forms.ModelForm):
     class Meta:
         model = Clase
-        fields = ['nombre','descripcion','profesorCargo','nivel','especialidadesDar','cupo']
+        fields = ['nombre','descripcion','profesorCargo','nivel','especialidadesDar','cupo','horarios']
 
 
 class UsuarioForm(forms.ModelForm):
