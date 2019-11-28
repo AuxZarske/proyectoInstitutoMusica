@@ -1,0 +1,102 @@
+{%extends 'index.html'%}
+
+{%block contenidiPagina%}
+            <style type="text/css">
+                    div#contenedorTotal{
+                        width: 70%;
+                    }
+                    div#encabezadoColorado{
+                        border: 1px solid;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 4%;
+    padding: 1%;
+    border-radius: 18px 18px 0px 0px;
+-moz-border-radius: 18px 18px 0px 0px;
+-webkit-border-radius: 18px 18px 0px 0px;
+border: 2px solid #e3e6e3;
+background-color: rgb(255, 255, 255);
+font-size: 22px;
+    color: rgb(255, 255, 255);
+    border-bottom: 0px;
+
+    background-color: #4e73df;
+                    }
+                    div#contenidoEditable{
+                       
+                        border: 1px solid;
+    max-width: 100%;
+    margin: 0 auto;
+    
+    padding: 2%;
+    border-radius: 0px 0px 18px 18px;
+-moz-border-radius: 0px 0px 18px 18px;
+-webkit-border-radius: 0px 0px 18px 18px;
+border: 2px solid #e3e6e3;
+background-color: rgb(255, 255, 255);
+}
+div#contennedorTop{
+    height: 30%;
+    border: solid 1px black;
+    
+}
+div#foto{
+    display: inline-block;
+    width: 30%;
+    border: solid 1px black;
+    vertical-align: top;
+}
+div#botonesTop{
+    display: inline-block;
+    width: 60%;
+    border: solid 1px black;
+}
+button#b1{
+    display: block;
+    margin: 1.2%;
+}
+button#b2{
+    display: block;
+    margin: 1.7%;
+}
+button#b3{
+    display: block;
+    margin: 1.2%;
+}
+button.bobo{
+    background-color: #ffc107;
+    border: 1px solid rgba(255, 182, 99, 0.295);
+    border-radius: 31px 31px 31px 31px;
+    -moz-border-radius: 31px 31px 31px 31px;
+    -webkit-border-radius: 31px 31px 31px 31px;
+}
+                    
+            </style>
+            <div>
+                <h1>Editar Perfil:</h1>
+                <center>
+                    <div id="contenedorTotal">
+                        <div id="encabezadoColorado">Alumno/Profesor Zarske Arnol </div>
+                        <div id="contenidoEditable">
+                            <div id="contennedorTop">
+                                <div id="foto">
+                                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/120x120">
+                                </div>
+                                <div id="botonesTop">
+                                    <button id="b1" class="bobo">nose ni idea</button>
+                                    <button id="b2" class="bobo">Establecer foto de perfil</button>
+                                    <button id="b3" class="bobo">Cambiar Contraseña</button>
+                                </div>
+                            </div>
+                            <div id="datosEdicion">fgfgf</div>
+                            <div id="botonesDown">tttt</div>
+                        </div>
+
+                    </div>
+
+                </center>
+
+
+
+            </div>
+{% endblock contenidiPagina %}

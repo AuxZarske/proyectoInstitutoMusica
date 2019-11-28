@@ -1774,6 +1774,11 @@ def laClaseEsHoy(c):
                 return True
     return False
 
+def editarUsuario(request):
+    error = None
+    return render(request,'perfil.html',{'error':error})
+
+
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
@@ -1782,6 +1787,8 @@ def mostrarClase (request,id):
     
     if laClaseEsHoy(laClase):
         habilitado = 1
+    print(habilitado)
+    print(laClase)
     if request.method == 'POST':
         print(request.POST)
         #toma dos listas, alumno, asistencia
@@ -1789,6 +1796,9 @@ def mostrarClase (request,id):
 
         alus = request.POST.getlist('alumnosTabla')
         asist = request.POST.getlist('check[]')
+        dia = datetime.now().day
+        mes = datetime.now().month
+        ano = datetime.now().year
          
         for a in alus:
             
@@ -1842,15 +1852,12 @@ def mostrarClase (request,id):
         if listAlumnos.count(a) > 0:
             listAlumnosTotal.remove(a)
     print(listAlumnosTotal)
+    dia = datetime.now().day
+    mes = datetime.now().month
+    ano = datetime.now().year
     #listAlumnos = listAlumnos.prefetch_related('Asistencia')
-    asistenciasHoy = list(Asistencia.objects.filter( claseReferencia = laClase))
-    tata = asistenciasHoy.copy()
-    aux = []
+    asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, creada__day = dia, creada__month = mes, creada__year = ano, horario = horarioActualClase(laClase)) 
     print(habilitado)
-    for a in tata:
-        if laClaseEsHoy(a.claseReferencia):
-            aux.append(a)
-    asistenciasHoy = aux
     return render(request,'una_clase.html',{'laClase':laClase,'habilitado':habilitado,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
 def listarmensajes(request):
