@@ -702,6 +702,138 @@ def crearAsistenciaPasada(request):
     return JsonResponse(data)
 
 
+def editarIndividuo(request):
+    apellido = request.GET.get('apellido', None)
+    nombre = request.GET.get('nombre', None)
+    telefono = request.GET.get('telefono', None)
+    sexo = request.GET.get('sexo', None)
+    elUsuario = None
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        
+        pedidor = str(request.user.username)
+
+
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elUsuario = elusuario[0]
+
+
+        elUsuario.nombre = nombre
+        elUsuario.apellido = apellido
+        elUsuario.telefono = telefono
+        elUsuario.sexo = sexo
+
+        elUsuario.save()
+
+        messages.success(request, "Edicion Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+       
+        
+        
+    print(data)
+    return JsonResponse(data)
+
+def editarIndividuoAlumno(request):
+    country = request.GET.get('country', None)
+    espealu = request.GET.get('espealu', None)
+    id_especialidadnivel = request.GET.get('id_especialidadnivel', None)
+   
+    elUsuario = None
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        
+        pedidor = str(request.user.username)
+
+
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elUsuario = elusuario[0]
+
+
+        
+        elUsuario.nivel = id_especialidadnivel
+        elUsuario.musica = country
+        elUsuario.especialidadRequerida = espealu
+
+        elUsuario.save()
+
+        messages.success(request, "Edicion Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+       
+        
+        
+    print(data)
+    return JsonResponse(data)
+
+def editarIndividuoProfesor(request):
+  
+    
+    historia = request.GET.get('historia', None)
+    print(request.GET)
+    elUsuario = None
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        
+        pedidor = str(request.user.username)
+
+
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elUsuario = elusuario[0]
+
+
+        
+        try:
+            elUsuario.especialidades.clear()
+            peticion = request.GET.copy()
+            espp = peticion.pop('espepro[]')
+            for e in espp:
+                elUsuario.especialidades.add(e)
+        except:
+            print("An exception occurred")
+        
+        elUsuario.historiaPrevia = historia
+        
+
+        elUsuario.save()
+
+        messages.success(request, "Edicion Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+       
+        
+        
+    print(data)
+    return JsonResponse(data)
+
+
 def crearHorario(request):
     dia = request.GET.get('dia', None)
     hora = request.GET.get('hora', None)
@@ -1776,7 +1908,58 @@ def laClaseEsHoy(c):
 
 def editarUsuario(request):
     error = None
-    return render(request,'perfil.html',{'error':error})
+    individuo = None
+    losTiposMusicas = None
+    aespecialidadesDar = None
+    espeNoPro= []
+    iguales = False
+    if request.method == 'POST':
+        usernam = request.user.username
+        passV = request.POST.get('inputPassword4', None)
+        nuevapass = request.POST.get('inputPassword6', None)
+        nuevapassVer = request.POST.get('inputPassword8', None)
+        user = authenticate(username=usernam, password=passV)
+        if nuevapass == nuevapassVer:
+            iguales = True
+        if (user is not None) and iguales:
+            # A backend authenticated the credentials
+            u = User.objects.get(username=usernam)
+            u.set_password(nuevapass)
+            u.save()
+            messages.success(request, "Registro Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+            # No backend authenticated the credentials
+
+        return render(request,'perfil.html',{'error':error,'aespecialidadesDar':aespecialidadesDar,'losTiposMusicas':losTiposMusicas,'espeNoPro':espeNoPro,'individuo':individuo})
+
+
+    pedidor = str(request.user.username)
+
+
+    elusuario = list(Profesor.objects.filter(correoElectronico = pedidor))
+
+    if not elusuario:
+        elusuario = list(Alumno.objects.filter(correoElectronico = pedidor))
+        losTiposMusicas = MusicaTipo.objects.all()
+        aespecialidadesDar = Especialidad.objects.all()
+    else:
+        listaep = list(elusuario[0].especialidades.all())
+        
+        espeNoPro = list(Especialidad.objects.all()) 
+        ccc = espeNoPro.copy()
+        for e in ccc:
+            if list(elusuario[0].especialidades.all()).count(e) > 0 :
+                espeNoPro.remove(e)
+        
+
+
+    if elusuario:
+        elusuario = elusuario[0]
+        individuo = elusuario
+    
+    
+    return render(request,'perfil.html',{'error':error,'aespecialidadesDar':aespecialidadesDar,'losTiposMusicas':losTiposMusicas,'espeNoPro':espeNoPro,'individuo':individuo})
 
 
 def mostrarClase (request,id):

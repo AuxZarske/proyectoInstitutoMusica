@@ -194,13 +194,13 @@
                           <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{profesor_form.nombre.value}}"required>
                         </div>
                 </div>
-
+                
                 <div class="form-row">
                         
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub" required>Sexo:</label>
                           <select name="sexo" id="id_sexo" class="form-control">
-                              {% if profesor_form.sexo.value == "Mujer" %}
+                              {% if profesor_form.sexo == "Femenino" %}
 
                               <option >Masculino</option>
                               <option selected>Femenino</option>
@@ -242,7 +242,7 @@
                         <label for="inputAddress2" class="sub">Observaciones:</label>
                         
                         <textarea class="form-control" id="id_observaciones" name="observaciones" placeholder="Anotaciones sobre el profesor..." >{{profesor_form.observaciones.value}}</textarea>
-                                
+                        <input type="hidden" name="historiaPrevia" class="form-control" id="elh" value="{{profesor_form.historiaPrevia.value}}" >      
                  </div>
 
                 <div class="form-group">

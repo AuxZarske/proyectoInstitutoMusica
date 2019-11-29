@@ -1,102 +1,611 @@
+
 {%extends 'index.html'%}
-
+{% load staticfiles %}
 {%block contenidiPagina%}
-            <style type="text/css">
-                    div#contenedorTotal{
-                        width: 70%;
-                    }
-                    div#encabezadoColorado{
-                        border: 1px solid;
-    max-width: 100%;
-    margin: 0 auto;
-    margin-top: 4%;
-    padding: 1%;
-    border-radius: 18px 18px 0px 0px;
--moz-border-radius: 18px 18px 0px 0px;
--webkit-border-radius: 18px 18px 0px 0px;
-border: 2px solid #e3e6e3;
-background-color: rgb(255, 255, 255);
-font-size: 22px;
-    color: rgb(255, 255, 255);
-    border-bottom: 0px;
 
-    background-color: #4e73df;
-                    }
-                    div#contenidoEditable{
-                       
-                        border: 1px solid;
-    max-width: 100%;
-    margin: 0 auto;
-    
-    padding: 2%;
-    border-radius: 0px 0px 18px 18px;
--moz-border-radius: 0px 0px 18px 18px;
--webkit-border-radius: 0px 0px 18px 18px;
-border: 2px solid #e3e6e3;
-background-color: rgb(255, 255, 255);
+
+<style type="text/css">
+    div#contenedorTotal {
+        width: 70%;
+    }
+
+    div#encabezadoColorado {
+        border: 1px solid;
+        max-width: 100%;
+        margin: 0 auto;
+        margin-top: 4%;
+        padding: 1%;
+        border-radius: 18px 18px 0px 0px;
+        -moz-border-radius: 18px 18px 0px 0px;
+        -webkit-border-radius: 18px 18px 0px 0px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+        font-size: 22px;
+        color: rgb(255, 255, 255);
+        border-bottom: 0px;
+
+        background-color: #4e73df;
+    }
+
+    div#contenidoEditable {
+
+        border: 1px solid;
+        max-width: 100%;
+        margin: 0 auto;
+
+        padding: 2%;
+        border-radius: 0px 0px 18px 18px;
+        -moz-border-radius: 0px 0px 18px 18px;
+        -webkit-border-radius: 0px 0px 18px 18px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+    }
+
+    div#contennedorTop {
+        height: 30%;
+
+
+    }
+
+    div#foto {
+        display: inline-block;
+        width: 30%;
+
+        vertical-align: top;
+    }
+
+    div#botonesTop {
+        display: inline-block;
+        width: 60%;
+
+        text-align: left;
+    }
+
+    div.card-body {
+        text-align: left;
+    }
+
+    .bootstrap-select>.dropdown-toggle.bs-placeholder,
+    .bootstrap-select>.dropdown-toggle.bs-placeholder:active,
+    .bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+    .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+        color: #999;
+        width: 230%;
+    }
+
+    button#b1 {
+        display: block;
+        margin: 1.2%;
+    }
+
+    button#b2 {
+        display: block;
+        margin: 1.2%;
+    }
+
+    button#b3 {
+        display: block;
+        margin: 1.2%;
+    }
+
+    button.bobo {
+        background-color: #90e2ce;
+        padding: 1.5%;
+        margin-left: 3%;
+        margin-right: 3%;
+        border: 1px solid rgba(255, 182, 99, 0.295);
+        border-radius: 31px 31px 31px 31px;
+        -moz-border-radius: 31px 31px 31px 31px;
+        -webkit-border-radius: 31px 31px 31px 31px;
+    }
+
+    select#country {
+        display: inline-block;
+        width: 80%;
+    }
+
+    button#b1c {
+        font-size: 20px;
+    }
+
+    button#b2c {
+        font-size: 20px;
+    }
+    p#msj{
+    font-size: 17px;
 }
-div#contennedorTop{
-    height: 30%;
-    border: solid 1px black;
-    
-}
-div#foto{
-    display: inline-block;
-    width: 30%;
-    border: solid 1px black;
-    vertical-align: top;
-}
-div#botonesTop{
-    display: inline-block;
-    width: 60%;
-    border: solid 1px black;
-}
-button#b1{
-    display: block;
-    margin: 1.2%;
-}
-button#b2{
-    display: block;
-    margin: 1.7%;
-}
-button#b3{
-    display: block;
-    margin: 1.2%;
-}
-button.bobo{
-    background-color: #ffc107;
-    border: 1px solid rgba(255, 182, 99, 0.295);
-    border-radius: 31px 31px 31px 31px;
-    -moz-border-radius: 31px 31px 31px 31px;
-    -webkit-border-radius: 31px 31px 31px 31px;
-}
-                    
-            </style>
-            <div>
-                <h1>Editar Perfil:</h1>
-                <center>
-                    <div id="contenedorTotal">
-                        <div id="encabezadoColorado">Alumno/Profesor Zarske Arnol </div>
-                        <div id="contenidoEditable">
-                            <div id="contennedorTop">
-                                <div id="foto">
-                                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/120x120">
-                                </div>
-                                <div id="botonesTop">
-                                    <button id="b1" class="bobo">nose ni idea</button>
-                                    <button id="b2" class="bobo">Establecer foto de perfil</button>
-                                    <button id="b3" class="bobo">Cambiar Contraseña</button>
-                                </div>
-                            </div>
-                            <div id="datosEdicion">fgfgf</div>
-                            <div id="botonesDown">tttt</div>
-                        </div>
+
+    button#b3c {
+        font-size: 20px;
+    }
+</style>
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<div>
+    <h1>Perfil de usuario:</h1>
+    <center>
+        <div id="contenedorTotal">
+                {%if  perms.gestionMusical.es_alumno %}
+            <div id="encabezadoColorado">Alumno - {{individuo.apellido}} {{individuo.nombre}} </div>
+            {%else%}
+            <div id="encabezadoColorado">Profesor - {{individuo.apellido}} {{individuo.nombre}} </div>
+
+            {%endif%}
+            <div id="contenidoEditable">
+                    <div id="cuadroMensajes" >
+
+                            {% if messages %}
+                            {% for message in messages %}
+                      
+                            {% if message.tags == 'success'%}
+                            <ul class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+                            {% if message.tags == 'error'%}
+                            <ul class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
+                            </ul> 
+                            {%endif%}
+                      
+                            {% endfor %}
+                           {% endif %}
+                      </div>
+                <div id="contennedorTop">
+                    <div id="foto">
+                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/120x120">
+                    </div>
+                    <div id="botonesTop">
+
+                        <button id="b2" class="bobo">Establecer foto de perfil</button>
+                        <button id="b3" class="bobo" type="button"  data-toggle="modal"
+                        data-target=".bs-example-modal-lg6347">Cambiar Contraseña</button>
+                        <a href="#tema1">
+                            <button id="b1"  class="bobo"  type="button" data-toggle="collapse"
+                            data-target="#datosEdicionPersonal"  aria-expanded="false"
+                            aria-controls="collapseOne">Editar datos</button>
+                        </a>
 
                     </div>
+                </div>
 
-                </center>
+                <!--MMMM-->
+                <form class="user" method="POST">
+                        {% csrf_token %}
+<div class="modal fade bs-example-modal-lg6347" id="myModal6347"
+tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel6347">Establecer nueva Contraseña:</h4>
+      <button type="button" class="close" data-dismiss="modal"><span
+          aria-hidden="true">×</span>
+      </button>
+
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+       <label for="inputAddress2" class="sub">Actual Contraseña:</label>
+       <input type="password" class="form-control" name="inputPassword4" placeholder="Contraseña" required>
+     </div>
+     <br>
+     <div class="form-row">
+
+         <label for="inputAddress2" class="sub">Nueva Contraseña:</label>
+         <input type="password" class="form-control" name="inputPassword6" placeholder="Contraseña Nueva" required>
+     </div>
+     <br>
+     
+
+     <br>
+     <div class="form-row">
+
+         <label for="inputAddress2" class="sub">Repita la nueva Contraseña:</label>
+         <input type="password" class="form-control" name="inputPassword8" placeholder=" Confirme Contraseña Nueva" required>
 
 
+     </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      <button type="submit"  class="btn btn-primary"
+        >Confirmar</button>
+
+    </div>
+
+  </div>
+</div>
+</div>
+<!--mmm-->
+                </form>
+
+
+                <br>
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#datosEdicionPersonal" id="b1c" aria-expanded="false"
+                                    aria-controls="collapseOne">
+                                    Datos de usuario
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="datosEdicionPersonal" class="collapse" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                                <!---->
+                                <A name="tema1">Tema 1</a>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Apellido</label>
+                                        <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{individuo.apellido}}"
+                                            required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Nombre</label>
+                                        <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{individuo.nombre}}"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row" name="tema1">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Telefono:</label>
+                                        <input type="text" class="form-control" id="elTelefono" value="{{individuo.telefono}}"
+                                            placeholder="Numero telefono" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4" class="sub">Sexo:</label>
+                                        <select name="sexo" id="id_sexo" class="form-control" required>
+                                                {% if individuo.sexo == "Femenino" %}
+
+                                                <option >Masculino</option>
+                                                <option selected>Femenino</option>
+                                                {%else%}
+                  
+                                                  <option selected>Masculino</option>
+                                                  <option>Femenino</option>
+                                                  {%endif%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <A name="tema1"></a>
+                                <div class="botonZona">
+                                        <button id="GuardarUser" class="btn btn-primary">Guardar</button>
+                                </div>
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#datosAdicionalesAlumno" id="b2c" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    Datos Adicionales
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="datosAdicionalesAlumno" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                                <!---->
+                                <div class="form-group col-md-4">
+                                        <label for="inputState">Especialidad:</label>
+                                        <select name="especialidadesDar" id="espepro" class="selectpicker" multiple
+                                            data-live-search="true" required>
+    
+                                            {% for esp in individuo.especialidades.all %}
+                                           <option value='{{esp.id}}' selected>{{esp.nombre}}</option>
+
+                                {% endfor %}
+                                {% for ep in espeNoPro%}
+                                              
+                                                
+                                        
+                                              <option value='{{ep.id}}' >{{ep.nombre}}</option>
+                                        
+                                  {% endfor %}
+    
+                                        </select>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="inputAddress2" class="sub">Breve descripcion experiencia previa:</label>
+
+                                    <textarea name="textarea" class="form-control" id="id_historiaPrevia"
+                                        placeholder="Descripcion..." rows="5" cols="50" required>{{individuo.historiaPrevia}}</textarea>
+                                </div>
+
+                                
+                                <!---->
+                                <div class="botonZona">
+                                        <button id="GuardarAddProfe" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#datosAdicionalesProfe" id="b3c" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    Datos Adicionales
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="datosAdicionalesProfe" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group col-md-10">
+                                    <label for="inputPassword4" class="sub">Musica Preferida:</label>
+
+                                    <select id="country" class="form-control" name="nombreMusica" required>
+                                            {%for musi in losTiposMusicas%}
+                                        
+                                            <option value='{{musi.id}}'>{{musi.nombreMusica}}</option>
+    
+                                    {%endfor%}
+                                    <script>
+                                            $("#country").val("{{individuo.musica.id}}").change();
+                                        </script>
+
+                                    </select>
+                                    <button type="button" id="agregarMusic" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg787">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+
+
+                                </div>
+                                <div class="form-group col-md-10">
+                                    <label for="inputPassword4" style="display: block;" class="sub">En que desea
+                                        Especializarce:</label>
+                                    <select name="especialidadesDar" id="espealu" class="selectpicker" single
+                                        data-live-search="true" required>
+
+                                        {%for espec in aespecialidadesDar%}
+
+                                        <option value='{{espec.id}}'>{{espec.nombre}}</option>
+                                        
+
+                                        {%endfor%}
+
+                                    </select>
+                                    <script>
+                                            $("#espealu").val("{{individuo.especialidadRequerida.id}}").change();
+                                        </script>
+                                </div>
+                                
+                                <div class="form-group col-md-10">
+                                    <label for="inputPassword4" class="sub">Nivel Actual en la Especialidad:</label>
+                                    <select id="id_especialidadnivel" name="nivel" class="form-control" required>
+                                        <option value='Principiante'>Principiante</option>
+                                        <option value='Medio'>Medio</option>
+                                        <option value='Avanzado'>Avanzado</option>
+
+                                    </select>
+                                    
+                                    <script>
+                                        $("#id_especialidadnivel").val("{{individuo.nivel}}").change();
+                                    </script>
+                                </div>
+                                <div class="botonZona">
+                                        <button id="GuardarAddAlu" class="btn btn-primary">Guardar</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </center>
+
+
+
+</div>
+
+<!--pr-->
+<div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Agregar Nueva Musica</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span
+                        aria-hidden="true">×</span>
+                </button>
 
             </div>
+
+
+
+            <div id="modalOculto">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" style="color: black">Nombre de Tipo de Musica:</label>
+                        <input type="text" class="form-control" id="id_nombreTipo" style="text-transform:uppercase;"
+                            onkeyup="javascript:this.value=this.value.toUpperCase();"
+                            placeholder="Nombre o Identificacion de Musica...">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="limpiar()">Close</button>
+
+                    <button type="button" class="btn btn-primary" id="cargar-musica"
+                        onclick="cargaMusic()">Cargar</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--pp-->
+
+<script>
+        $(document).ready(function () {
+            $("#GuardarUser").click(function () {
+                var apellido = $("#apellidoIn").val();
+                var nombre = $("#nombreIn").val();
+                var telefono = $("#elTelefono").val();
+                var sexo = $("#id_sexo").val();
+
+                if (apellido == "" || nombre == "" || telefono == "" || sexo == "") {
+                    alert("Complete todos los campos");
+                }else{
+                $.ajax({
+
+                    url: '{% url "gestionMusical:editar_individuo" %}',
+                    data: {
+                        'apellido': apellido,
+                        'nombre': nombre,
+                        'telefono': telefono,
+                        'sexo': sexo
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        if (data.is_taken) {
+                            alert("Error al editar");
+                        } else {
+
+                            location.reload(true);
+                        }
+                    }
+                });}
+
+            });
+           
+            $("#GuardarAddProfe").click(function () {
+                var espepro = $("#espepro").val();
+                var historia = $("#id_historiaPrevia").val();
+                
+
+                if (espepro == "" || historia == "" ) {
+                    alert("Complete todos los campos");
+                }else{
+                $.ajax({
+
+                    url: '{% url "gestionMusical:editar_individuoPro" %}',
+                    data: {
+                        'espepro': espepro,
+                        'historia': historia
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        if (data.is_taken) {
+                            alert("Error al editar");
+                        } else {
+
+                            location.reload(true);
+                        }
+                    }
+                });}
+
+            });
+            $("#GuardarAddAlu").click(function () {
+                var country = $("#country").val();
+                var espealu = $("#espealu").val();
+                var id_especialidadnivel = $("#id_especialidadnivel").val();
+                
+
+                if ( country == "" || telefono == "" || sexo == "") {
+                    alert("Complete todos los campos");
+                }else{
+                $.ajax({
+
+                    url: '{% url "gestionMusical:editar_individuoAlu" %}',
+                    data: {
+                        'country': country,
+                        'espealu': espealu,                    
+                        'id_especialidadnivel': id_especialidadnivel
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        if (data.is_taken) {
+                            alert("Error al editar");
+                        } else {
+
+                            location.reload(true);
+                        }
+                    }
+                });}
+
+            });
+        });
+        function limpiar(){
+
+document.getElementById("id_nombreTipo").value = "";
+};
+        function cargaMusic(){
+    
+    var nombre = document.getElementById("id_nombreTipo").value;
+    var noExiste = true;
+    var username = nombre;
+    $.ajax({
+            
+            url: '{% url "gestionMusical:validate_username_tipoMusica" %}',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            
+            success: function (data) {
+                
+              if (data.is_taken) {
+                
+                alert("ese nombre ya existe");
+              }else{
+
+                if (nombre != "" ){
+                    optionExtra = "";
+                    
+                    
+                    limpiar();
+                    
+                    $('#myModal2').modal('hide'); 
+                    
+                    
+                    //cambiar valor al finalizar formulario, de nada al nombre del select
+                    optionExtra += "<option value='"+nombre +"' selected>"  +nombre+ "</option>";
+                    
+                        $("#country").append(optionExtra);
+
+                        $("#country").val(nombre).change();
+                    
+
+                    
+                                    
+            }else{
+                alert("Escriba un nombre nuevo, sino simplemente seleccionelo de la lista: ");
+            }
+              }
+            }
+          });
+    
+
+}
+    </script>
+
 {% endblock contenidiPagina %}

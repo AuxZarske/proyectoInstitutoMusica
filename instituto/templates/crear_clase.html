@@ -1,487 +1,182 @@
-                         {% load staticfiles %}
-                                <!DOCTYPE html>
-                                <html lang="en">
-                                <head>
-                                    <meta charset="UTF-8">
-                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-                                    <title>Document</title>
-                                    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-                                  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-                                
-                                  <!-- Custom styles for this template-->
-                                  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-                                  <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
-                                </head>
-                                <script type="text/javascript">
-                                
-                                    function boton(num){
-                                        
-                                        document.getElementById("custId").value = num;
-                                    
-                                    
-                                    }
-                                    
-                                    </script>
-                                <script src="http://code.jquery.com/jquery-latest.js"></script>
-                                <script>
-                                      $(document).ready(function () {
-                                          
-                                          
-                                          $("#desbr").keyup(function () {
-                                              var value = $(this).val();
-                                              $("#id_descripcion").val(value);
-                                          });
-                                          $("#nombr").keyup(function () {
-                                              var value = $(this).val();
-                                              $("#id_nombre").val(value);
-                                          });
-                                          
-                                        
-                                          
-                                          
-                                      });
-                                </script>
-                                <style type="text/css">
-                                
-                                    div#cuadroPrincipal{
-                                        border: 1px solid;
-                                        max-width: 60%;
-                                        margin: 0 auto;
-                                        
-                                        padding: 2%;
-                                        border-radius: 0px 0px 18px 18px;
-                                    -moz-border-radius: 0px 0px 18px 18px;
-                                    -webkit-border-radius: 0px 0px 18px 18px;
-                                    border: 2px solid #e3e6e3;
-                                    background-color: rgb(255, 255, 255);
-                                    }
-                                    div#cuadroCabeza{
-                                        border: 1px solid;
-                                        max-width: 60%;
-                                        margin: 0 auto;
-                                        margin-top: 4%;
-                                        padding: 1%;
-                                        border-radius: 18px 18px 0px 0px;
-                                    -moz-border-radius: 18px 18px 0px 0px;
-                                    -webkit-border-radius: 18px 18px 0px 0px;
-                                    border: 2px solid #e3e6e3;
-                                    background-color: rgb(255, 255, 255);
-                                    font-size: 22px;
-                                        color: rgb(255, 255, 255);
-                                        border-bottom: 0px;
-                                    
-                                        background-color: #4e73df;
-                                    }
-                                    
-                                    body#total{
-                                        background-color: rgba(238, 236, 236, 0.747);
-                                    }
-                                    button#botonAgregarhorario{
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+</head>
+<script type="text/javascript">
+
+    function boton(num) {
+
+        document.getElementById("custId").value = num;
+
+
+    }
+
+</script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        $("#desbr").keyup(function () {
+            var value = $(this).val();
+            $("#id_descripcion").val(value);
+        });
+        $("#nombr").keyup(function () {
+            var value = $(this).val();
+            $("#id_nombre").val(value);
+        });
+
+
+
+
+    });
+</script>
+<style type="text/css">
+    div#cuadroPrincipal {
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+
+        padding: 2%;
+        border-radius: 0px 0px 18px 18px;
+        -moz-border-radius: 0px 0px 18px 18px;
+        -webkit-border-radius: 0px 0px 18px 18px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+    }
+
+    div#cuadroCabeza {
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+        margin-top: 4%;
+        padding: 1%;
+        border-radius: 18px 18px 0px 0px;
+        -moz-border-radius: 18px 18px 0px 0px;
+        -webkit-border-radius: 18px 18px 0px 0px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+        font-size: 22px;
+        color: rgb(255, 255, 255);
+        border-bottom: 0px;
+
+        background-color: #4e73df;
+    }
+
+    body#total {
+        background-color: rgba(238, 236, 236, 0.747);
+    }
+
+    button#botonAgregarhorario {
         display: inline-block;
         margin-left: 2%;
         width: 200px;
         font-size: 18px;
         padding: 0;
 
-        
-        
+
+
     }
-    div.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+
+    div.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
         width: 100%;
     }
-                                    div#titulon{
-                                        font-size: 22px;
-                                        color: black;
-                                    }
-                                    p#msj{
-    font-size: 17px;
-}
-                                    label.sub{
-                                        color: black;
-                                    }
-                                    button#salirBoton{
-                                        float: right;
-                                
-                                    }
-                                    div#cabeza{
-                                        background-color: #4e73df;
-                                    }
-                                    
-                                    input#id_nombre{
-                                    display: None;
-                                    }
-                                    textarea#id_descripcion{
-                                    display: None;
-                                    }
-                                    
-                                    body#total{
-                                    background-color: rgba(224, 224, 224, 0.747);
-                                }
-                                    
-                                    
-                                    </style>
-                                
-                                <body id="total">
-                                    
-                                        <div id="cuadroCabeza">
-                                                {%if editacion != 1%}
-                                                <strong>Crear Clase: </strong>
-                                                {%else%}
-                                                <strong>Editar Clase: </strong>
-                                                {%endif%}
-                                                
-                                
-                                        </div>
+
+    div#titulon {
+        font-size: 22px;
+        color: black;
+    }
+
+    p#msj {
+        font-size: 17px;
+    }
+
+    label.sub {
+        color: black;
+    }
+
+    button#salirBoton {
+        float: right;
+
+    }
+
+    div#cabeza {
+        background-color: #4e73df;
+    }
+
+    input#id_nombre {
+        display: None;
+    }
+
+    textarea#id_descripcion {
+        display: None;
+    }
+
+    body#total {
+        background-color: rgba(224, 224, 224, 0.747);
+    }
+</style>
+
+<body id="total">
+
+    <div id="cuadroCabeza">
+        {%if editacion != 1%}
+        <strong>Crear Clase: </strong>
+        {%else%}
+        <strong>Editar Clase: </strong>
+        {%endif%}
+
+
+    </div>
 
 
 
 
-                                        
-                                    <div id="cuadroPrincipal">
-                                            <div id="cuadroMensajes" >
 
-                                                    {% if messages %}
-                                                    {% for message in messages %}
-                                      
-                                                    {% if message.tags == 'success'%}
-                                                    <ul class="alert alert-success alert-dismissible">
-                                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                                                    </ul> 
-                                                    {%endif%}
-                                                    {% if message.tags == 'error'%}
-                                                    <ul class="alert alert-danger alert-dismissible">
-                                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                                                    </ul> 
-                                                    {%endif%}
-                                      
-                                                    {% endfor %}
-                                                   {% endif %}
-                                            </div>
-                                
-                                            
-                                
-                                
-                                            <form class="user" method="POST">
-                                                    {% csrf_token %}
-                                
-                                                        
-                                
-                                                        
-                                
-                                                        
-                                
-                                                    
-                                                        {{clase_form.descripcion}} 
-                                                        {{clase_form.nombre}} 
-                                  
-                                
-                                                <div class="form-group">
-                                                  <label for="inputAddress2" class="sub">Nombre de clase:</label>
-                                                  {%if editacion != 1%}
-                                                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required>
-                                                  {%else%}
-                                                  
-                                                  <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." value="{{clase_form.nombre.value}}">
-                                                {%endif%}
-                                                </div>
-                                
-                                               
-                                                <div class="form-group">
-                                                        <label for="inputAddress2" class="sub">Descripcion de la clase:</label>
-                                                        {%if editacion != 1%}
-                                                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la clase..." required></textarea>
-                                                        {%else%}
-                                                        <textarea class="form-control" id="desbr" name="descripcion" placeholder="Descripcion y detalles de la clase..." >{{clase_form.descripcion.value}}</textarea>
-                                                              {%endif%}  
-                                                 </div>
+    <div id="cuadroPrincipal">
+        <div id="cuadroMensajes">
 
-                                                 <div class="form-group">
-                                                        <label for="inputAddress2" class="sub">Horarios de Clase: </label>
-                                                        
-                                                        <div class="form-row">
-                                                            <div style="width: 50%;">
-                                                            <select  class="selectpicker" multiple data-live-search="true" name="horarios"  required  >
-                                                                        
-                                                                        
-                                                                    {%if editacion != 1%}
-                                                                {%for h in horarios%}
-                                                                
-                                                                <option value='{{h.id}}'>{{h.diaSemanal}}  Desde {{h.horario_inicio}} Hasta {{h.horario_final}} </option>
-                                                                {%endfor%}
-                                                                {%else%}
-                                                                        {%for h in clase_form.horarios%}
-                                                                        {{h}}
-                                                                        
+            {% if messages %}
+            {% for message in messages %}
 
-                                                                        {%endfor%}
-                                                                {%endif%}
-                                                                
-                                                           </select>
-                                                        </div>
-                                                           <!--iii-->
-                                                           <div class="btn-group">
-                                                            <center>
-                                                                <button type="button" class="btn btn-info" id="botonAgregarhorario" data-toggle="modal" data-target=".bs-example-modal-lg77732"> Agregar Nuevo</button>
-                                                             </center>
-                                                       
-                                                      </div>
-                                                          <!--iii-->
-                                                        </div>
-                                                        
-                                                      </div>
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+                </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+                </p>
+            </ul>
+            {%endif%}
 
-                                                       <!--MMMM-->
-                       <div class="modal fade bs-example-modal-lg77732" id="myModal77732"
-                       tabindex="-1" role="dialog" aria-hidden="true">
-                       <div class="modal-dialog modal-lg">
-                         <div class="modal-content">
-                           <div class="modal-header">
-                             <h4 class="modal-title" id="myModalLabel77732">Establecer un nuevo horario para la clase:</h4>
-                             <button type="button" class="close" data-dismiss="modal"><span
-                                 aria-hidden="true">×</span>
-                             </button>
-
-                           </div>
-                           <div class="modal-body">
+            {% endfor %}
+            {% endif %}
+        </div>
 
 
 
 
-                                <div class="form-row">
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputState">Dia de Semana:</label>
-                                            
-                                            <select id="diasema" name ="diaSemanal" class="form-control" required>
-                                                <option value='Lunes'>Lunes</option>
-                                                <option value='Martes'>Martes</option>
-                                                <option value='Miercoles'>Miercoles</option>
-                                                <option value='Jueves'>Jueves</option>
-                                                <option value='Viernes'>Viernes</option>
-                                                <option value='Sabado'>Sabado</option>
-                                                <option value='Domingo'>Domingo</option>
-                                                
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputZip">Hora Inicio:</label>
-                                            <input type="time" class="form-control mb-2" id="horaini"  name ="horaInicio" value={{clase_form.horaInicio.value}}>
-                                        </div>
-
-
-                                        <div class="form-group col-md-4">
-                                            <label for="inputState">Duracion:</label>
-                                            <input type="time" class="form-control mb-2" id="inputDuracion"  name ="horaFin" value={{clase_form.horaFin.value}}>
-                                        </div>
-
-                                        
-                                        
-                                      </div>
-                             
-
-                            
-
-                           </div>
-                           <div class="modal-footer">
-                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                             <button type="button" class="btn btn-primary" id="botonconfirhs"
-                               >Confirmar</button>
-
-                           </div>
-
-                         </div>
-                       </div>
-                     </div>
-                     <!--mmm-->
-
-                                                 
-
-                                                  <div class="form-row"> 
-                                                        <div class="form-group col-md-4">  
-                                                                <label for="inputZip">Cupo de clase:</label>
-                                                                {%if editacion != 1%}
-                                                                <input type="number" class="form-control mb-2"  name ="cupo" min="1" max="99">
-                                                                {%else%}
-                                                                <input type="number" class="form-control mb-2" value="{{clase_form.cupo.value}}"  name ="cupo" min="1" max="99">
-                                                                    
-                                                                {%endif%}
-                                                            </div>  
-                                                            
-                                                            <div class="form-group col-md-4">  
-                                                                    <label for="inputState">Especialidad de Clase:</label>
-                                                                    <select name="especialidadesDar"   class="selectpicker" multiple data-live-search="true" required>
-                                                                            
-                                                                                {%for espec in clase_form.especialidadesDar%}
-                                                                                
-                                                                                    
-                                                                                    {{espec}}
-                                                                                    
-                                                                                {%endfor%}
-                                                                           
-                                                                            </select>
-                                                                </div> 
-                                                                <div class="form-group col-md-4">  
-                                                                        <label for="inputState">Nivel de Clase:</label>
-                                                                        <select id="inputNivel" class="form-control" name ="nivel" required>
-                                                                                {%if editacion != 1%}
-                                                                            <option value='Principiante'>Principiante</option>
-                                                                            <option value='Medio'>Medio</option>
-                                                                            <option value='Avanzado'>Avanzado</option>
-                                                                                {%else%}
-                                                                            {%if clase_form.nivel.value == "Principiante"%}
-                                                                            <option value='Principiante' selected>Principiante</option>
-                                                                            <option value='Medio'>Medio</option>
-                                                                            <option value='Avanzado'>Avanzado</option>
-
-                                                                            {%endif%}
-                                                                            {%if clase_form.nivel.value == "Medio"%}
-                                                                            <option value='Principiante'>Principiante</option>
-                                                                            <option value='Medio'selected>Medio</option>
-                                                                            <option value='Avanzado'>Avanzado</option>
-
-                                                                            {%endif%}
-                                                                            {%if clase_form.nivel.value == "Avanzado"%}
-                                                                            <option value='Principiante'>Principiante</option>
-                                                                            <option value='Medio'>Medio</option>
-                                                                            <option value='Avanzado'selected>Avanzado</option>
-                                                                            
-
-                                                                            {%endif%}
-                                                                            {%endif%}
-                                                                            
-                
-                                                                            
-                
-                                                                            
-                                                                        </select>
-                                                                    </div> 
-
-                                                    
-                                                  </div>
-
-
-                                                 <div class="form-group">
-                                                    <label for="inputAddress2" class="sub">Profesor a Cargo:</label>
-                                                    {%if editacion != 1%}
-                                                    <select class="form-control" name="profesorCargo" id="id_profesorCargo" required>
-                                                        <option value='' >------</option>
-                                                        {% for esp in profesTodos %}
-                                                                   <option value='{{esp.dni}}'>{{esp.nombre}}</option>
-                      
-                                                        {% endfor %}
-
-
-                                                    </select>
-                                                    {%else%}
-                                                    <select class="form-control" name="profesorCargo" id="id_profesorCargo" required>
-                                  
-                                                        <option value=''>------</option>
-                                                        {% for esp in profesTodos %}
-                                                                   <option value='{{esp.dni}}'>{{esp.nombre}}</option>
-                      
-                                                        {% endfor %}
-                                                        {% for espt in profeCargo %}
-                                                                   <option value='{{espt.dni}}'selected>{{espt.nombre}}</option>
-                      
-                                                        {% endfor %}
-                                                        
-                                                        
-                                                        
-                                                        
-                                                      </select>
-                                                  {%endif%}
-                                                  </div>
-                                
-                                                
-                                
-                                                 {%if editacion != 1%}
-                                
-                                                            <button type="submit" class="btn btn-primary" onclick="boton(1)"> Guardar y Cargar Otra </button>
-                                                 
-                                                 {%endif%}
-                                
-                                                
-                                                
-                                                <button type="submit" class="btn btn-primary" onclick="boton(2)">Guardar </button>
-                                
-                                                <a href="{% url 'gestionMusical:clases'%}">
-                                                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
-                                                </a>
-                                
-                                
-                                                <input type="hidden" id="custId" name="custId" value="no cambio">
-                                              </form>
-                                              
-                                            </div>
-                                
-                                
-                                
-                                    
-                                              {%block archivos%}
-                                              <!-- Bootstrap core JavaScript-->
-                                              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-                                              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-                                              <!-- Core plugin JavaScript-->
-                                              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-                                            
-                                              <!-- Custom scripts for all pages-->
-                                              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-                                            
-                                              <!-- Page level plugins -->
-                                              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-                                            
-                                              <!-- Page level custom scripts -->
-                                              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-                                              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-                                              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-                                  <script src="{%static 'js/selectMul.js'%}"></script>
-                                  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
-
-
-
-<script>
-        $(document).ready(function(){
-           $("#botonconfirhs").click(function () {
-             var dia = $("#diasema").val();
-             var hora = $("#horaini").val();
-             var duracion = $("#inputDuracion").val();
- 
-             if(dia == "" || hora == "" || duracion == ""){
-                 alert("Complete todos los campos");
-             }
-             $.ajax({
-               
-               url: '{% url "gestionMusical:crear_horario" %}',
-               data: {
-                 'dia': dia,
-                 'hora': hora,
-                 'duracion': duracion
-               },
-               dataType: 'json',
-               
-               success: function (data) {
-                   
-                 if (data.is_taken) {
-                   alert("Error al crear el horario - El horario ya existe");
-                 }else{
-
-                    location.reload(true);
-                 }
-               }
-             });
-       
-           });
-       });
-         </script>
+        <form class="user" method="POST">
+            {% csrf_token %}
 
 
 
@@ -490,12 +185,334 @@
 
 
 
-                                              {%endblock archivos%} 
-                                
-                                </body>
-                                
-                                
-                                
-                                </html>
+            {{clase_form.descripcion}}
+            {{clase_form.nombre}}
 
-                          
+
+            <div class="form-group">
+                <label for="inputAddress2" class="sub">Nombre de clase:</label>
+                {%if editacion != 1%}
+                <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required>
+                {%else%}
+
+                <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..."
+                    value="{{clase_form.nombre.value}}">
+                {%endif%}
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress2" class="sub">Descripcion de la clase:</label>
+                {%if editacion != 1%}
+                <textarea class="form-control" id="desbr" name="descripcion"
+                    placeholder="Descripcion y detalles de la clase..." required></textarea>
+                {%else%}
+                <textarea class="form-control" id="desbr" name="descripcion"
+                    placeholder="Descripcion y detalles de la clase...">{{clase_form.descripcion.value}}</textarea>
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress2" class="sub">Horarios de Clase: </label>
+
+                <div class="form-row">
+                    <div style="width: 50%;">
+                        <select class="selectpicker" multiple data-live-search="true" name="horarios" required>
+
+
+                            {%if editacion != 1%}
+                            {%for h in horarios%}
+
+                            <option value='{{h.id}}'>{{h.diaSemanal}} Desde {{h.horario_inicio}} Hasta
+                                {{h.horario_final}} </option>
+                            {%endfor%}
+                            {%else%}
+                            {%for h in clase_form.horarios%}
+                            {{h}}
+
+
+                            {%endfor%}
+                            {%endif%}
+
+                        </select>
+                    </div>
+                    <!--iii-->
+                    <div class="btn-group">
+                        <center>
+                            <button type="button" class="btn btn-info" id="botonAgregarhorario" data-toggle="modal"
+                                data-target=".bs-example-modal-lg77732"> Agregar Nuevo</button>
+                        </center>
+
+                    </div>
+                    <!--iii-->
+                </div>
+
+            </div>
+
+            <!--MMMM-->
+            <div class="modal fade bs-example-modal-lg77732" id="myModal77732" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel77732">Establecer un nuevo horario para la clase:
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                            </button>
+
+                        </div>
+                        <div class="modal-body">
+
+
+
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Dia de Semana:</label>
+
+                                    <select id="diasema" name="diaSemanal" class="form-control" required>
+                                        <option value='Lunes'>Lunes</option>
+                                        <option value='Martes'>Martes</option>
+                                        <option value='Miercoles'>Miercoles</option>
+                                        <option value='Jueves'>Jueves</option>
+                                        <option value='Viernes'>Viernes</option>
+                                        <option value='Sabado'>Sabado</option>
+                                        <option value='Domingo'>Domingo</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="inputZip">Hora Inicio:</label>
+                                    <input type="time" class="form-control mb-2" id="horaini" name="horaInicio"
+                                        value={{clase_form.horaInicio.value}}>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Duracion:</label>
+                                    <input type="time" class="form-control mb-2" id="inputDuracion" name="horaFin"
+                                        value={{clase_form.horaFin.value}}>
+                                </div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="button" class="btn btn-primary" id="botonconfirhs">Confirmar</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--mmm-->
+
+
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputZip">Cupo de clase:</label>
+                    {%if editacion != 1%}
+                    <input type="number" class="form-control mb-2" name="cupo" min="1" max="99">
+                    {%else%}
+                    <input type="number" class="form-control mb-2" value="{{clase_form.cupo.value}}" name="cupo" min="1"
+                        max="99">
+
+                    {%endif%}
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="inputState">Especialidad de Clase:</label>
+                    <select name="especialidadesDar" class="selectpicker" multiple data-live-search="true" required>
+
+                        {%for espec in clase_form.especialidadesDar%}
+
+
+                        {{espec}}
+
+                        {%endfor%}
+
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Nivel de Clase:</label>
+                    <select id="inputNivel" class="form-control" name="nivel" required>
+                        {%if editacion != 1%}
+                        <option value='Principiante'>Principiante</option>
+                        <option value='Medio'>Medio</option>
+                        <option value='Avanzado'>Avanzado</option>
+                        {%else%}
+                        {%if clase_form.nivel.value == "Principiante"%}
+                        <option value='Principiante' selected>Principiante</option>
+                        <option value='Medio'>Medio</option>
+                        <option value='Avanzado'>Avanzado</option>
+
+                        {%endif%}
+                        {%if clase_form.nivel.value == "Medio"%}
+                        <option value='Principiante'>Principiante</option>
+                        <option value='Medio' selected>Medio</option>
+                        <option value='Avanzado'>Avanzado</option>
+
+                        {%endif%}
+                        {%if clase_form.nivel.value == "Avanzado"%}
+                        <option value='Principiante'>Principiante</option>
+                        <option value='Medio'>Medio</option>
+                        <option value='Avanzado' selected>Avanzado</option>
+
+
+                        {%endif%}
+                        {%endif%}
+
+
+
+
+
+                    </select>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress2" class="sub">Profesor a Cargo:</label>
+                {%if editacion != 1%}
+                <select class="form-control" name="profesorCargo" id="id_profesorCargo" required>
+                    <option value=''>------</option>
+                    {% for esp in profesTodos %}
+                    <option value='{{esp.dni}}'>{{esp.nombre}}</option>
+
+                    {% endfor %}
+
+
+                </select>
+                {%else%}
+                <select class="form-control" name="profesorCargo" id="id_profesorCargo" required>
+
+                    <option value=''>------</option>
+                    {% for esp in profesTodos %}
+                    <option value='{{esp.dni}}'>{{esp.nombre}}</option>
+
+                    {% endfor %}
+                    {% for espt in profeCargo %}
+                    <option value='{{espt.dni}}' selected>{{espt.nombre}}</option>
+
+                    {% endfor %}
+
+
+
+
+                </select>
+                {%endif%}
+            </div>
+
+
+
+            {%if editacion != 1%}
+
+            <button type="submit" class="btn btn-primary" onclick="boton(1)"> Guardar y Cargar Otra </button>
+
+            {%endif%}
+
+
+
+            <button type="submit" class="btn btn-primary" onclick="boton(2)">Guardar </button>
+
+            <a href="{% url 'gestionMusical:clases'%}">
+                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+            </a>
+
+
+            <input type="hidden" id="custId" name="custId" value="no cambio">
+        </form>
+
+    </div>
+
+
+
+
+    {%block archivos%}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+    <script src="{%static 'js/selectMul.js'%}"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#botonconfirhs").click(function () {
+                var dia = $("#diasema").val();
+                var hora = $("#horaini").val();
+                var duracion = $("#inputDuracion").val();
+
+                if (dia == "" || hora == "" || duracion == "") {
+                    alert("Complete todos los campos");
+                }
+                $.ajax({
+
+                    url: '{% url "gestionMusical:crear_horario" %}',
+                    data: {
+                        'dia': dia,
+                        'hora': hora,
+                        'duracion': duracion
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        if (data.is_taken) {
+                            alert("Error al crear el horario - El horario ya existe");
+                        } else {
+
+                            location.reload(true);
+                        }
+                    }
+                });
+
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+    {%endblock archivos%}
+
+</body>
+
+
+
+</html>
