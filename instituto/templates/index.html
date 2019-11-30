@@ -25,7 +25,16 @@
 
 {%endblock scrip%}
 {%block estilos%}
+<style type="text/css">
+  h1#tituloni{
+    font-size: 105px;
+  }
+  div#parrafos{
+    font-size: 25px;
+  }
 
+
+</style>
 {%endblock estilos%}
 <body id="page-top">
 
@@ -33,7 +42,11 @@
   <div id="wrapper">
     {%block sidebar%}
     <!-- Sidebar -->
-    {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
+    {%if perms.gestionMusical.es_pre_alumno%}
+
+    {%else%}
+   
+    {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff %}
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -130,7 +143,7 @@
       
 
 
-      {%if perms.gestionMusical.es_director  %}
+      {%if perms.gestionMusical.es_director and not perms.gestionMusical.es_alumno  %}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -214,20 +227,20 @@
       </div>
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-tools"></i>
-          <span>Configuracion</span>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-tools"></i>
+            <span>Configuracion</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+            <h6 class="collapse-header">Gestion:</h6>
+            <a class="collapse-item" href="{% url 'gestionMusical:confInstituto'  %}">Datos de Instituto</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:configTodo'  %}">Configuracion General</a>
+            {%if perms.gestionMusical.es_director and perms.gestionMusical.es_alumno %}
             <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
+            <h6 class="collapse-header">Usuarios:</h6>
+            <a class="collapse-item" href="{% url 'gestionMusical:configDirectores'  %}">Gestion Director</a>
+            {%endif%}
           </div>
         </div>
       </li>
@@ -249,6 +262,9 @@
       <hr class="sidebar-divider d-none d-md-block">
       {%endif%}
         {%endif%}
+        {%if perms.gestionMusical.es_profesor%}
+
+        {%else%}
         {%if perms.gestionMusical.es_alumno and not is_staff %}
           <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -259,7 +275,7 @@
           <div id="collapseOne73" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               
-              <a class="collapse-item" href="#">Prestamos</a>
+              <a class="collapse-item" href="{% url 'gestionMusical:prestamos'  %}">Prestamos</a>
               
               
               
@@ -268,6 +284,7 @@
         </li>
         <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
+      {%endif%}
         {%endif%}
 
       <!-- Sidebar Toggler (Sidebar) -->
@@ -280,9 +297,10 @@
     {%else%}
 
       {%endif%}
+      {%endif%}
       {%endblock sidebar%}
     <!-- End of Sidebar -->
-  
+    
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -299,7 +317,14 @@
           {%else%}
 
       {%endif%}
-
+      {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
+      {%else%}
+      {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
+      <a href="{% url 'index'  %}">
+<button class="btn btn-primary"> Inicio</button>
+</a>
+{%endif%}
+{%endif%}
           <!-- Topbar Search 
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
@@ -334,7 +359,9 @@
               </div>
             </li>
 
-            
+            {%if perms.gestionMusical.es_pre_alumno%}
+
+    {%else%}
              
             {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
             <!-- Nav Item - Messages -->
@@ -342,12 +369,12 @@
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-dangenter"></span>
               </a>
               
               <!-- Dropdown - Messages -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
+                <h6 dropdown-header">
                   Message Center
                 </h6>
                
@@ -355,23 +382,43 @@
               </div>
 
             </li>
- {%endif%}
+{%endif%}
+{%endif%}
             <div class="topbar-divider d-none d-sm-block"></div>
             
              <!-- Nav Item - User Information -->
              <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                  <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                    {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                    {%else%}
+                    
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
+                  {%endif%}
+                  <img class="img-profile rounded-circle" src="https://source.unsplash.com/rPOmLGwai2w/60x60">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
+                    <a class="dropdown-item"  data-toggle="modal"
+                    data-target=".bs-example-modal-lg6347">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Cambiar Contraseña
+                      </a>
+                      <div class="dropdown-divider"></div>
+
+
+                      
+
+    {%else%}
                   <a class="dropdown-item" href="{% url 'gestionMusical:editar_usuario'  %}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Ver Perfil
                   </a>
-                  
                   <div class="dropdown-divider"></div>
+                  {%endif%}
+                  
+                  
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Cerrar Sesion
@@ -386,7 +433,21 @@
       
       <div class = "container-fluid">
       {%block contenidiPagina%}
+      {% if  perms.gestionMusical.es_pre_profesor and perms.gestionMusical.es_pre_alumno %}
+      <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'gestionMusical:configDirectores'  %}">
+      {%else%}
+      {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
+          <h1 id="tituloni">Bienvenido</h1>
+          <div id="parrafos">
+          <p>"Su pre-inscripcion fue correcta, actualmente no podra acceder a las funciones del sistema hasta que los datos de su pre-inscripcion sean verificados por un superior del Instituto {nombre instituto}"</p>
+          <p>Para lo cual debera dirigirse al mismo en el horario de {horarioInstituto}, ubicado en {direccionInstituto}</p>
+          <p>Muchas Gracias</p>
+        </div>
+      {%else%}
             <p>bienvenido {{ user.username | upper}}</p>
+      {%endif%}
+      {%endif%}
+
       {% endblock contenidiPagina %}
       </div>
       

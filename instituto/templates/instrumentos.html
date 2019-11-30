@@ -431,7 +431,7 @@ div#espeNIvel{
                     <!--modal-->
                   
                     
-    
+                    {%if perms.gestionMusical.es_director %}
                         <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="{% url 'gestionMusical:crear_instrumento' %}">
                               
                             <span class="icon text-white-50">
@@ -441,6 +441,7 @@ div#espeNIvel{
                             
                       
                         </a>
+                        {%endif%}
 
                         
                      <!--dsds-->

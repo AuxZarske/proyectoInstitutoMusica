@@ -425,6 +425,7 @@ div#espeNIvel{
                 {% endfor %}
                {% endif %}
         </div>
+        {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_director %}
         <form class="user" method="POST">
                 {% csrf_token %}
         <div id="establecerPrestamo">
@@ -483,11 +484,15 @@ div#espeNIvel{
                 </div>
         </div>
         </form>
+        {%endif%}
         <br>
           <br>
           <h1 class="h3 mb-2 text-gray-800">Prestamos</h1>
+          {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_director %}
           <p class="mb-4">En la siguiente tabla podra visualizar los prestamos actuales y pasados que han sido otorgados. Podra ver los detalles de los mismos y proceder a finalizar un prestamo si el material es devuelto</p>
-
+          {%else%}
+          <p class="mb-4">En la siguiente tabla podra visualizar los prestamos actuales y pasados que han sido otorgados; con el fin de mantener un control de los mismos. </p>
+          {%endif%}
          
 
           <!-- DataTales Example -->
@@ -846,7 +851,7 @@ div#espeNIvel{
                } );
               </script>
 
-
+<script src="{%static 'js/sb-admin-2.min.js'%}"></script>
 
 
  <!-- Bootstrap core JavaScript

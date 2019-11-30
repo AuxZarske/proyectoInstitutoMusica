@@ -121,15 +121,14 @@
 </style>
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <div>
-    <h1>Perfil de usuario:</h1>
+    <h1>Configuracion de Instituto:</h1>
     <center>
         <div id="contenedorTotal">
-                {%if  perms.gestionMusical.es_alumno %}
-            <div id="encabezadoColorado">Alumno - {{individuo.apellido}} {{individuo.nombre}} </div>
-            {%else%}
-            <div id="encabezadoColorado">Profesor - {{individuo.apellido}} {{individuo.nombre}} </div>
-
-            {%endif%}
+               
+            <div id="encabezadoColorado">Datos Actuales/Editables</div>
+            
+            
+            
             <div id="contenidoEditable">
                     <div id="cuadroMensajes" >
 
@@ -153,96 +152,9 @@
                            {% endif %}
                       </div>
                 <div id="contennedorTop">
-                    <div id="foto">
-                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/rPOmLGwai2w/120x120">
-                    </div>
-                    <div id="botonesTop">
-
-                        <button id="b2" class="bobo">Establecer foto de perfil</button>
-                        <button id="b3" class="bobo" type="button"  data-toggle="modal"
-                        data-target=".bs-example-modal-lg6347">Cambiar Contraseña</button>
-                        <a href="#tema1">
-                            <button id="b1"  class="bobo"  type="button" data-toggle="collapse"
-                            data-target="#datosEdicionPersonal"  aria-expanded="false"
-                            aria-controls="collapseOne">Editar datos</button>
-                        </a>
-
-                    </div>
-                </div>
-
-                <!--MMMM-->
-                <form class="user" method="POST">
-                        {% csrf_token %}
-<div class="modal fade bs-example-modal-lg6347" id="myModal6347"
-tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel6347">Establecer nueva Contraseña:</h4>
-      <button type="button" class="close" data-dismiss="modal"><span
-          aria-hidden="true">×</span>
-      </button>
-
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-       <label for="inputAddress2" class="sub">Actual Contraseña:</label>
-       <input type="password" class="form-control" name="inputPassword4" placeholder="Contraseña" required>
-     </div>
-     <br>
-     <div class="form-row">
-
-         <label for="inputAddress2" class="sub">Nueva Contraseña:</label>
-         <input type="password" class="form-control" name="inputPassword6" placeholder="Contraseña Nueva" required>
-     </div>
-     <br>
-     
-
-     <br>
-     <div class="form-row">
-
-         <label for="inputAddress2" class="sub">Repita la nueva Contraseña:</label>
-         <input type="password" class="form-control" name="inputPassword8" placeholder=" Confirme Contraseña Nueva" required>
-
-
-     </div>
-
-
-
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-      <button type="submit"  class="btn btn-primary"
-        >Confirmar</button>
-
-    </div>
-
-  </div>
-</div>
-</div>
-<!--mmm-->
-                </form>
-
-
-                <br>
-                <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse"
-                                    data-target="#datosEdicionPersonal" id="b1c" aria-expanded="false"
-                                    aria-controls="collapseOne">
-                                    Datos de usuario
-                                </button>
-                            </h2>
-                        </div>
-
-                        <div id="datosEdicionPersonal" class="collapse" aria-labelledby="headingOne"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
+                        <div class="card-body">
                                 <!---->
-                                <A name="tema1">Tema 1</a>
+                               
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputPassword4" class="sub">Apellido</label>
@@ -277,152 +189,43 @@ tabindex="-1" role="dialog" aria-hidden="true">
                                         </select>
                                     </div>
                                 </div>
-                                <A name="tema1"></a>
-                                <div class="botonZona">
-                                        <button id="GuardarUser" class="btn btn-primary">Guardar</button>
-                                </div>
-                                <!---->
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_director %}
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                    data-target="#datosAdicionalesAlumno" id="b2c" aria-expanded="false"
-                                    aria-controls="collapseTwo">
-                                    Datos Adicionales
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="datosAdicionalesAlumno" class="collapse" aria-labelledby="headingTwo"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <!---->
-                                <div class="form-group col-md-4">
-                                        <label for="inputState">Especialidad:</label>
-                                        <select name="especialidadesDar" id="espepro" class="selectpicker" multiple
-                                            data-live-search="true" required>
+                                <div class="form-row" name="tema1">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4" class="sub">Telefono:</label>
+                                            <input type="text" class="form-control" id="elTelefono" value="{{individuo.telefono}}"
+                                                placeholder="Numero telefono" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4" class="sub">Sexo:</label>
+                                            <select name="sexo" id="id_sexo" class="form-control" required>
+                                                    {% if individuo.sexo == "Femenino" %}
     
-                                            {% for esp in individuo.especialidades.all %}
-                                           <option value='{{esp.id}}' selected>{{esp.nombre}}</option>
-
-                                {% endfor %}
-                                {% for ep in espeNoPro%}
-                                              
-                                                
-                                        
-                                              <option value='{{ep.id}}' >{{ep.nombre}}</option>
-                                        
-                                  {% endfor %}
-    
-                                        </select>
+                                                    <option >Masculino</option>
+                                                    <option selected>Femenino</option>
+                                                    {%else%}
+                      
+                                                      <option selected>Masculino</option>
+                                                      <option>Femenino</option>
+                                                      {%endif%}
+                                            </select>
+                                        </div>
                                     </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2" class="sub">Breve descripcion experiencia previa:</label>
-
-                                    <textarea name="textarea" class="form-control" id="id_historiaPrevia"
-                                        placeholder="Descripcion..." rows="5" cols="50" required>{{individuo.historiaPrevia}}</textarea>
-                                </div>
-
                                 
+                                <div class="botonZona">
+                                        <button id="GuardarEdicion" class="btn btn-primary">Guardar</button>
+                                </div>
                                 <!---->
-                                <div class="botonZona">
-                                        <button id="GuardarAddProfe" class="btn btn-primary">Guardar</button>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    {%else%}
-                    {%if perms.gestionMusical.es_alumno or perms.gestionMusical.es_pre_alumno%}
-                    <br>
-                    <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                    data-target="#datosAdicionalesProfe" id="b3c" aria-expanded="false"
-                                    aria-controls="collapseThree">
-                                    Datos Adicionales
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="datosAdicionalesProfe" class="collapse" aria-labelledby="headingThree"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="form-group col-md-10">
-                                    <label for="inputPassword4" class="sub">Musica Preferida:</label>
-
-                                    <select id="country" class="form-control" name="nombreMusica" required>
-                                            {%for musi in losTiposMusicas%}
-                                        
-                                            <option value='{{musi.id}}'>{{musi.nombreMusica}}</option>
-    
-                                    {%endfor%}
-                                    <script>
-                                            $("#country").val("{{individuo.musica.id}}").change();
-                                        </script>
-
-                                    </select>
-                                    <button type="button" id="agregarMusic" data-toggle="modal"
-                                        data-target=".bs-example-modal-lg787">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
 
 
-                                </div>
-                                <div class="form-group col-md-10">
-                                    <label for="inputPassword4" style="display: block;" class="sub">En que desea
-                                        Especializarce:</label>
-                                    <select name="especialidadesDar" id="espealu" class="selectpicker" single
-                                        data-live-search="true" required>
 
-                                        {%for espec in aespecialidadesDar%}
-
-                                        <option value='{{espec.id}}'>{{espec.nombre}}</option>
-                                        
-
-                                        {%endfor%}
-
-                                    </select>
-                                    <script>
-                                            $("#espealu").val("{{individuo.especialidadRequerida.id}}").change();
-                                        </script>
-                                </div>
-                                
-                                <div class="form-group col-md-10">
-                                    <label for="inputPassword4" class="sub">Nivel Actual en la Especialidad:</label>
-                                    <select id="id_especialidadnivel" name="nivel" class="form-control" required>
-                                        <option value='Principiante'>Principiante</option>
-                                        <option value='Medio'>Medio</option>
-                                        <option value='Avanzado'>Avanzado</option>
-
-                                    </select>
-                                    
-                                    <script>
-                                        $("#id_especialidadnivel").val("{{individuo.nivel}}").change();
-                                    </script>
-                                </div>
-                                <div class="botonZona">
-                                        <button id="GuardarAddAlu" class="btn btn-primary">Guardar</button>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    {%endif%}
-                    {%endif%}
                 </div>
-            </div>
 
-        </div>
-
-    </center>
+                
 
 
-
-</div>
+                <br>
+                
 
 <!--pr-->
 <div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">

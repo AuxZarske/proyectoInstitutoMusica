@@ -370,7 +370,7 @@ def listarAuditoria(request):
     log = {}
     logs = []
     objetoss = []
-    conexion1 = psycopg2.connect(database="todo16", user="postgres", password="1234",port=1234)
+    conexion1 = psycopg2.connect(database="todo17", user="postgres", password="1234",port=1234)
     cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"
     cursor1.execute(sql)
@@ -383,7 +383,7 @@ def listarAuditoria(request):
     conexion1.close()
 
 
-    conexion2 = psycopg2.connect(database="todo16", user="postgres", password="1234",port=1234)
+    conexion2 = psycopg2.connect(database="todo17", user="postgres", password="1234",port=1234)
     cursor2=conexion2.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql = "select id, event_type, datetime, content_type_id, user_id from easyaudit_crudevent ORDER BY datetime DESC"
     cursor2.execute(sql)
@@ -391,7 +391,7 @@ def listarAuditoria(request):
     for fila in cursor2.fetchall():       
         diccionario = {
             'id':fila['id'],'accion':fila['event_type'], 'fecha':fila['datetime'], 'modelo':fila['content_type_id'], 'fecha':fila['datetime'], 'idUsuario':fila['user_id']
-            }
+        }
         objetoss.append(diccionario)
     conexion2.close()
         
@@ -1696,12 +1696,52 @@ def editarAlumno(request,dni):
     print(idMusicaPreferida)
     return render(request,'crear_alumno.html',{'alumno_form':alumno_form,"tutor_form":tutor_form,'losTiposMusicas':losTiposMusicas,"idMusicaPreferida":idMusicaPreferida,'error':error,'especialidadesTodas':especialidadesTodas, 'espeAlu':espeAlu,'editacion':editacion})
 
+def configInstituto(request):
+    clases = Clase.objects.all()
+    return render(request,'confInsti.html',{'clases':clases})
 
+def configTodo(request):
+    clases = Clase.objects.all()
+    return render(request,'configtodo.html',{'clases':clases})
+
+def configDirectores(request):
+    profesoresStandbay = Profesor.objects.all()
+    error = None
+    #mandar pre rofesores
+    if request.method == 'POST':
+        usernam = request.user.username
+        passV = request.POST.get('inputPassword4', None)
+        nuevapass = request.POST.get('inputPassword6', None)
+        nuevapassVer = request.POST.get('inputPassword8', None)
+        user = authenticate(username=usernam, password=passV)
+        if nuevapass == nuevapassVer:
+            iguales = True
+        if (user is not None) and iguales:
+            # A backend authenticated the credentials
+            u = User.objects.get(username=usernam)
+            u.set_password(nuevapass)
+            u.save()
+            messages.success(request, "Registro Correcto!")
+        else:
+            messages.error(request, " Error - No se pudo cargar")
+            # No backend authenticated the credentials
+
+    return render(request,'configdirectores.html',{'error':error,'profesoresStandbay':profesoresStandbay})
+
+def establecerDirecto(request, dni):
+    profesor = Profesor.objects.get(dni=dni)
+
+    usuario = User.objects.get(username = profesor.correoElectronico) 
+    permission = Permission.objects.get(name='es director') #permiso de home
+    usuario.user_permissions.add(permission)
+    permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
+    usuario.user_permissions.remove(permission2)
+    usuario.save()
+    return render(request,'login.html')
 
 
 def listarclases(request):
     clases = Clase.objects.all()
-     
     return render(request,'clases.html',{'clases':clases})
 
 def listarclasesProfe(request):
