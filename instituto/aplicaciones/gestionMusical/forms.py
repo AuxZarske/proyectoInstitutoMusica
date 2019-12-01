@@ -1,11 +1,16 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission
-from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario
+from .models import Especialidad, Profesor, Usuario, Alumno, Clase, Partitura, Tema, Compositor, Tutor, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, InstitutoDato
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad
+        fields = ['nombre','descripcion']
+
+class RolForm(forms.ModelForm):
+    class Meta:
+        model = Rol
         fields = ['nombre','descripcion']
 
 class CompositorForm(forms.ModelForm):
@@ -22,6 +27,11 @@ class PartituraForm(forms.ModelForm):
     class Meta:
         model = Partitura
         fields = ['nombre','compositor','nivel','descripcion','especialidadesAcordes','musicaElecciones']
+
+class InstitutoForm(forms.ModelForm):
+    class Meta:
+        model = InstitutoDato
+        fields = ['nombre','telefono','correoElectronico','domicilio','horario']
 
 class InstrumentoForm(forms.ModelForm):
     class Meta:

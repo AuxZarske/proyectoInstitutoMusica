@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -10,8 +11,10 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Todo Por Arte</title>
-
+  
+  
+  <title id="titulll">Todo Por Arte</title>
+  
   <!-- Custom fonts for this template-->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -54,7 +57,12 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">TODO<sup>x</sup>ARTE</div>
+        
+       
+        <div class="sidebar-brand-text mx-3" id="tidosti">TODO<sup>x</sup>ARTE</div>
+
+        
+  
       </a>
 
       <!-- Divider -->
@@ -439,8 +447,9 @@
       {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
           <h1 id="tituloni">Bienvenido</h1>
           <div id="parrafos">
-          <p>"Su pre-inscripcion fue correcta, actualmente no podra acceder a las funciones del sistema hasta que los datos de su pre-inscripcion sean verificados por un superior del Instituto {nombre instituto}"</p>
-          <p>Para lo cual debera dirigirse al mismo en el horario de {horarioInstituto}, ubicado en {direccionInstituto}</p>
+          <p>"Su pre-inscripcion fue correcta, actualmente no podra acceder a las funciones del sistema hasta que los datos de su pre-inscripcion sean verificados por un superior del Instituto {{insti.nombre}}"</p>
+          <p>Para lo cual debera dirigirse al mismo en el horario de {{insti.horario}}, ubicado en {{insti.domicilio}}</p>
+          <p>Para mas informacion contactarce al Tel: {{insti.telefono}};  o por correo electronico {{insti.correoElectronico}}</p>
           <p>Muchas Gracias</p>
         </div>
       {%else%}
@@ -456,7 +465,11 @@
       <footer class="sticky-footer bg-white" style="margin-top: 11%;">
           <div class="container my-auto" >
             <div class="copyright text-center my-auto">
-              <span>Copyright &copy; TodoXarte 2019</span>
+              
+              
+              <span id="copycopy">Copyright &copy; TodoXarte 2019</span>
+  
+              
             </div>
           </div>
         </footer>
@@ -518,7 +531,66 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
     <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+    
   {%endblock archivos%}
+  {%block archivos2%}
+  <script>
+      
+      var insti = 0;
+      var nomInsti = "";
+      var desInsti = "";
+  var telInsti = "";
+  var correoInsti = "";
+  var logoInsti;
+  function nombreii(){
+    return nomInsti
+  }
+  function direcii(){
+    return desInsti;
+  }
+  function teliii(){
+    return telInsti;
+  }
+  function correii(){
+    return correoInsti;
+  }
+  function archiii(){
+    return logoInsti;
+  }
+      $.ajax({
+      
+      url: '{% url "gestionMusical:obtenerInfo" %}',
+      data: {
+          
+          'insti': insti
+      },
+      dataType: 'json',
+      
+      success: function (data) {
+      
+          if (data.is_taken) {
+              alert("Error al obtener datos del Instituto");
+          } else {
+            nomInsti = data.nombre;
+            desInsti = data.direccion;
+            telInsti = data.telefono;
+            correoInsti = data.correo;
+            logoInsti = data.archivo;
+             
+              document.getElementById('tidosti').innerHTML = data.nombre;
+              
+              
+              var nombre = "Copyright &copy;   "+data.nombre+ "   2019";
+              document.getElementById('copycopy').innerHTML = nombre;
+              document.getElementById('titulll').innerHTML = data.nombre;
+              
+              
+          }
+      }
+      });
+      
+      </script>
+      {%endblock archivos2%}
 </body>
 
 </html>

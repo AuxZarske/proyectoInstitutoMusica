@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno, crearHorario, crearAsistenciaPasada, editarUsuario, editarIndividuo, editarIndividuoAlumno, editarIndividuoProfesor, configInstituto, configTodo, configDirectores
-from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto
+from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI
 urlpatterns = [
     #path('',home,name='index'),
@@ -28,7 +28,8 @@ urlpatterns = [
     path('crear_profesor/',login_required(crearProfesor),name='crear_profesor'),
     path('editar_profesor/<int:dni>',login_required(editarProfesor),name='editar_profesor'),
     path('establecer_director/<int:dni>',login_required(establecerDirecto),name='establecer_director'),
-
+    path('eliminar_director/<int:dni>',login_required(eliminarDirector),name='eliminar_director'),
+    
     path('alumnos/',login_required(listaralumnos),name='alumnos'),
     path('eliminar_alumno/<int:dni>',login_required(eliminarAlumno),name='eliminar_alumno'),
     path('reivindicar_alumno/<int:dni>',login_required(reivindicarAlumno),name='reivindicar_alumno'),
@@ -94,7 +95,8 @@ urlpatterns = [
     path('configTodo/',login_required(configTodo),name='configTodo'),
     path('configDirectores/',login_required(configDirectores),name='configDirectores'),
 
-
+    path('obtenerInfo/',login_required(obtenerInfo),name='obtenerInfo'),
+    path('generar_instituto/',login_required(configInstituto),name='generar_instituto'),
     path('estadisticas/',login_required(listarestadisticas),name='estadisticas'),
 
     path('crear_horario/',login_required(crearHorario),name='crear_horario'),

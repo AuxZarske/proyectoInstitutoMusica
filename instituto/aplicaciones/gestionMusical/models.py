@@ -104,15 +104,24 @@ class Tema(models.Model):
     def __str__(self):
         return self.nombre
 
+class Rol (models.Model):
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre del rol', max_length = 100, null = False, blank = False)
+    descripcion = models.TextField('Descripcion del rol', null = True, blank = True)
 
+    class Meta:
+        verbose_name = 'Rol'
+        verbose_name_plural = 'Roles'
 
+    def __str__(self):
+        return self.nombre
 
 class Usuario (models.Model):
     dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     nombre = models.CharField('Nombre del usuario', max_length = 100, null = False, blank = False)
     apellido = models.CharField('Apellido del usuario', max_length = 200, null = False, blank = False)
-    
+    rol = models.ForeignKey(Rol, on_delete = models.DO_NOTHING,  null = True, blank = True)
     fechaNac = models.DateField('Fecha de Nacimiento', null = False, blank = False)
     sexo = models.CharField('Sexo de la persona', max_length = 50, null = False, blank = False)
     domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
@@ -168,7 +177,23 @@ class Alumno(Usuario):
 
 
 
+class InstitutoDato(models.Model):
+    
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre del instituto', max_length = 15, null = False, blank = False)
+    telefono = models.CharField('telefono', max_length = 20, null = False, blank = False)
+    correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
+    domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
+    horario = models.CharField('horario', max_length = 100, null = False, blank = False)
+    archivo = models.BinaryField(blank=True, null=True)
 
+
+    class Meta:
+        verbose_name = 'InstitutoDato'
+        verbose_name_plural = 'InstitutoDato'
+    
+    def __str__(self):
+        return str(self.id)
 
 
 

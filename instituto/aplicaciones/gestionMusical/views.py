@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -30,7 +30,21 @@ import dateutil.parser
 
 import base64
 import psycopg2
+import os
+import base64
 
+def image_as_base64(image_file, format='png'):
+    """
+    :param `image_file` for the complete path of image.
+    :param `format` is format for image, eg: `png` or `jpg`.
+    """
+    if not os.path.isfile(image_file):
+        return None
+    
+    encoded_string = ''
+    with open(image_file, 'rb') as img_f:
+        encoded_string = base64.b64encode(img_f.read())
+    return 'data:image/%s;base64,%s' % (format, encoded_string)
 
 
 from django.http import JsonResponse
@@ -92,14 +106,57 @@ def validate_username_tema(request):
     print(data)
     return JsonResponse(data)
 
+def obtenerInsti():
+    insti = None
+    insti = list(InstitutoDato.objects.all())
+    if len(insti) > 0:
+        insti = insti[0]
+    datosi = insti
+    return datosi
 
 class Inicio(View):
     def get(self,request,*args,**kwargs):
         clases = Clase.objects.all()
-        return render(request,'index.html',  {'clases':clases})
+        insti = obtenerInsti() 
+        return render(request,'index.html',  {'clases':clases,'insti':insti})
 
 
- 
+def obtenerInfo(request):
+    insti = obtenerInsti() 
+    if insti == None:
+        data = {
+            'is_taken': True
+        }
+        return JsonResponse(data)
+    nombre = insti.nombre
+    telefono= insti.telefono
+    correo= insti.correoElectronico
+    direccion= insti.domicilio
+    horario= insti.horario
+    
+    
+    
+    binary = base64.b64encode(insti.archivo)
+    cadena = str(binary)
+    cadena = cadena[2:]
+
+    total = len(cadena)
+    archivo = cadena[:total - 1]
+    
+
+    archivo = "data:image/png;base64," + archivo
+    data = {
+        'is_taken': False,
+        'nombre': nombre,
+        'telefono': telefono,
+        'correo': correo,
+        'direccion': direccion,
+        'archivo': archivo,
+        'horario': horario
+    }
+    
+    print(data)
+    return JsonResponse(data)
 
 def registrarAlumno(request):
     especialidadesTodas = Especialidad.objects.all()
@@ -163,6 +220,7 @@ def registrarAlumno(request):
                     messages.error(request, f"{msg}: {form.error_messages[msg]}")
                 error = form.errors
                 print(error)
+                insti = obtenerInsti() 
                 return render(request, 'registroAlumno.html', context={'form': form,'especialidadesTodas':especialidadesTodas,'error':error})
         else:
             tipoMusic = MusicaTipo.objects.get(id = tipoMusic)
@@ -1696,9 +1754,6 @@ def editarAlumno(request,dni):
     print(idMusicaPreferida)
     return render(request,'crear_alumno.html',{'alumno_form':alumno_form,"tutor_form":tutor_form,'losTiposMusicas':losTiposMusicas,"idMusicaPreferida":idMusicaPreferida,'error':error,'especialidadesTodas':especialidadesTodas, 'espeAlu':espeAlu,'editacion':editacion})
 
-def configInstituto(request):
-    clases = Clase.objects.all()
-    return render(request,'confInsti.html',{'clases':clases})
 
 def configTodo(request):
     clases = Clase.objects.all()
@@ -1728,16 +1783,92 @@ def configDirectores(request):
 
     return render(request,'configdirectores.html',{'error':error,'profesoresStandbay':profesoresStandbay})
 
-def establecerDirecto(request, dni):
-    profesor = Profesor.objects.get(dni=dni)
 
-    usuario = User.objects.get(username = profesor.correoElectronico) 
-    permission = Permission.objects.get(name='es director') #permiso de home
-    usuario.user_permissions.add(permission)
-    permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
-    usuario.user_permissions.remove(permission2)
-    usuario.save()
-    return render(request,'login.html')
+def eliminarDirector(request, dni):
+    try:
+        profesor = Profesor.objects.get(dni=dni)
+        #ver que no existan roles, crear roles, asignar rol
+        rles = list(Rol.objects.all())
+        if len(rles) > 0:
+            unRol= list(Rol.objects.filter(nombre = "profesor"))
+            unRol = unRol[0]
+            profesor.rol = unRol
+            profesor.save()
+        else:
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "director"
+            uR.descripcion = "principal autoridad"
+            uR.save()
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "profesor"
+            uR.descripcion = "docente educativo"
+            uR.save()
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "alumno"
+            uR.descripcion = "estudiante del instituto"
+            uR.save()
+            unRol= list(Rol.objects.filter(nombre = "profesor"))
+            unRol = unRol[0]
+            profesor.rol = unRol
+            profesor.save()
+
+        #sino asignar el rol y fue
+        usuario = User.objects.get(username = profesor.correoElectronico) 
+        permission = Permission.objects.get(name='es director') #permiso de home
+        usuario.user_permissions.remove(permission)
+        
+        usuario.save()
+        messages.success(request, "Removido del rol Correctamente!")
+    except:
+        messages.error(request, " Error - No se pudo remover el rol de director")  
+    return configDirectores(request)
+
+
+def establecerDirecto(request, dni):
+    try:
+        profesor = Profesor.objects.get(dni=dni)
+        #ver que no existan roles, crear roles, asignar rol
+        rles = list(Rol.objects.all())
+        if len(rles) > 0:
+            unRol= list(Rol.objects.filter(nombre = "director"))
+            unRol = unRol[0]
+            profesor.rol = unRol
+            profesor.save()
+        else:
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "director"
+            uR.descripcion = "principal autoridad"
+            uR.save()
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "profesor"
+            uR.descripcion = "docente educativo"
+            uR.save()
+            rol_form = RolForm()
+            uR = rol_form.save(commit = False)
+            uR.nombre = "alumno"
+            uR.descripcion = "estudiante del instituto"
+            uR.save()
+            unRol= list(Rol.objects.filter(nombre = "director"))
+            unRol = unRol[0]
+            profesor.rol = unRol
+            profesor.save()
+
+        #sino asignar el rol y fue
+        usuario = User.objects.get(username = profesor.correoElectronico) 
+        permission = Permission.objects.get(name='es director') #permiso de home
+        usuario.user_permissions.add(permission)
+        permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
+        usuario.user_permissions.remove(permission2)
+        usuario.save()
+        messages.success(request, "Establecido Correctamente!")
+    except:
+        messages.error(request, " Error - No se pudo establecer como director")  
+    return configDirectores(request) 
 
 
 def listarclases(request):
@@ -2233,7 +2364,85 @@ def crearInstrumento(request):
         
     return render(request,'crear_instrumento.html',{'instrumento_form':instrumento_form,'editacion':editacion})
 
+def configInstituto(request):
+    editacion = 0
+    insti_form = None
+    error = None
+    primera = False
+    elDoc = None
+    try:
+        instituto = list(InstitutoDato.objects.all())
+        
+        if len(instituto) == 0  :
+            primera = True
+            print("1")
+            
+       
 
+        if request.method == 'GET':
+            print("2")
+            if primera == False:
+                instituto = instituto[0]
+                print("3")
+                insti_form = InstitutoForm(instance = instituto)
+                elDoc = instituto.archivo
+                editacion = 1
+                return render(request,'confInsti.html',{'insti_form':insti_form,'elDoc':elDoc,'error':error,'editacion':editacion})
+            else:
+                return render(request,'confInsti.html',{'insti_form':insti_form,'elDoc':elDoc,'error':error,'editacion':editacion})
+            
+            
+        else:
+            if primera == False:
+                instituto = instituto[0]
+                print("4")
+                insti_form = InstitutoForm(request.POST, instance = instituto)
+                if insti_form.is_valid():
+                    print("5")
+                    insti=insti_form.save()
+                    try:
+                        insti.archivo =request.FILES['archivo'].file.read() #no cambia img
+                        messages.success(request, "Correcto!")
+                    except:
+                        messages.success(request, "Correcto!")
+                    insti.save()
+                
+                else:
+                    print("6")
+                    print(insti_form.errors.as_data())
+                    messages.error(request, " Error")
+                    
+                return redirect('gestionMusical:confInstituto')
+            else:
+                try:
+                    print("7")
+                    insti_form = InstitutoForm(request.POST)
+                   
+                    if insti_form.is_valid() :
+                        print("9")
+                        insti = insti_form.save(commit=False)
+                    
+                        #agregar especialidades del request 
+                        print(request.POST)
+                        
+                        insti.archivo =request.FILES['archivo'].file.read()
+
+                        insti.save()
+                    
+                        messages.success(request, "Cargado Correcto!")
+                    else:
+                        print("8")
+                        messages.error(request, " Error")
+                except:
+                    messages.error(request, " Error")
+                return redirect('gestionMusical:confInstituto')
+
+    except ObjectDoesNotExist as e:
+        print("133")
+        error = e
+
+    
+    return render(request,'confInsti.html',{'insti_form':insti_form,'elDoc':elDoc,'error':error,'editacion':editacion})
 
 
 
