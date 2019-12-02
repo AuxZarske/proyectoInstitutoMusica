@@ -369,17 +369,57 @@ def listarestadisticaspresta(request):
 
 def listarestadisticasparti(request, num):
     dicti = {}
-    list(Compositor.objects.all())
+    cantccc = list(Compositor.objects.all())
+    globalTotal = 0
     for n in cantccc:
         cveces = Partitura.objects.filter(compositor = n).count()
         if cveces != 0:
             
             nombre = n.nombreIdentificador
             numero = cveces
+            globalTotal += numero
             dicti[nombre] = numero
+    dicti2 = {}
+    for k,v in dicti.items():
+        por = (v * 100)/globalTotal
+        dicti2[k] = por
+    dicti = dicti2
 
-   
-    return render(request,'listarestaparti.html',{'dicti':dicti})
+    dicti4 = {}
+    cantccc = list(MusicaTipo.objects.all())
+    globalTotal = 0
+    for n in cantccc:
+        cveces = Partitura.objects.filter(musicaElecciones = n).count()
+        if cveces != 0:
+            
+            nombre = n.nombreMusica
+            numero = cveces
+            globalTotal += numero
+            dicti4[nombre] = numero
+    dicti5 = {}
+    for k,v in dicti4.items():
+        por = (v * 100)/globalTotal
+        dicti5[k] = por
+    dicti4 = dicti5
+
+    dicti7 = {}
+    cantccc = ['Avanzado','Medio','Principiante'] 
+    globalTotal = 0
+    for n in cantccc:
+        cveces = Partitura.objects.filter(nivel = n).count()
+        if cveces != 0:
+            
+            nombre = n
+            numero = cveces
+            globalTotal += numero
+            dicti7[nombre] = numero
+    dicti8 = {}
+    for k,v in dicti7.items():
+        por = (v * 100)/globalTotal
+        dicti8[k] = por
+    dicti7 = dicti8 
+
+    return render(request,'listarestaparti.html',{'dicti':dicti,'dicti4':dicti4,'dicti7':dicti7})
 
 def listarestadisticasalu(request, num):
     p1h = -0
@@ -1791,7 +1831,7 @@ def eliminarAlumno(request,dni):
     
     #que o este en una clase
     
-    if not Clase.objects.filter(alumnoAsociados = alumno).exists():
+    if not Clase.objects.filter(alumnoAsociados = alumno).exists() and not Prestamo.objects.filter( alumnoResponsable=alumno).exists():
         alumno.estado = False
         #desasociar  partituras, temas
         alumno.partiturasAsociadas.clear()
@@ -1809,10 +1849,13 @@ def eliminarAlumno(request,dni):
     #fin
         messages.success(request, "Eliminado exitoso!")
     else:
-        
-        nombreClase = list(Clase.objects.filter(alumnoAsociados = alumno))[0]
-        frase = "Error - El alumno pertenece a una clase actualmente: " + str(nombreClase.nombre)
-        messages.error(request, frase)
+        if Clase.objects.filter(alumnoAsociados = alumno).exists():
+            nombreClase = list(Clase.objects.filter(alumnoAsociados = alumno))[0]
+            frase = "Error - El alumno pertenece a una clase actualmente: " + str(nombreClase.nombre)
+            messages.error(request, frase)
+        else:
+            frase = "Error - El alumno tiene un prestamo asociado"
+            messages.error(request, frase)
     return redirect('gestionMusical:alumnos')
 
 

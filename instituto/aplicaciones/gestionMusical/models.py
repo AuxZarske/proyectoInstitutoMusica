@@ -263,6 +263,7 @@ class Prestamo(models.Model):
     id = models.AutoField(primary_key = True)
     estadoProfesor = models.CharField('Tipo profe del prestamo', max_length = 100, null = False, blank = False)
     observaciones = models.TextField('Observaciones cuando entrega el instrumento', null = True, blank = True)
+    condicion = models.CharField('condicion de prestamo', max_length = 100, null = True, blank = True)
     profesorReferencia = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
     fechaCreacion = models.DateField('Fecha de Creacion del prestamo', auto_now=False,auto_now_add=True)
     alumnoResponsable = models.ForeignKey(Alumno, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)

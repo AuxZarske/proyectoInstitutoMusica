@@ -17,6 +17,34 @@
     </script>
     {%endfor%}
 
+    <script>
+        var lista2 = [];
+</script>
+    {%for k,v in dicti4.items%}
+    <script>
+        
+        
+        t = { y: parseInt("{{v}}"), name: "{{k}}", exploded: true }
+        lista2.push(t)
+
+        
+    </script>
+    {%endfor%}
+
+    <script>
+        var lista3 = [];
+</script>
+    {%for k,v in dicti7.items%}
+    <script>
+        
+        
+        t = { y: parseInt("{{v}}"), name: "{{k}}", exploded: true }
+        lista3.push(t)
+
+        
+    </script>
+    {%endfor%}
+
 <script>
         window.onload = function () {
             
@@ -25,7 +53,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title:{
-                text: "State Operating Funds"
+                text: "Compositores mas destacados"
             },
             legend:{
                 cursor: "pointer",
@@ -41,8 +69,50 @@
         });
         
                 
-        chart.render();
+        
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "Generos musicales mas preferidos"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: lista2
+            }]
+        });
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "Niveles de dificultad mas utilizado"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: lista3
+            }]
+        });
+        
+        chart.render();       
+        chart2.render();
+        chart3.render();
         }
+        
+        
         
         function explodePie (e) {
             if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
@@ -54,6 +124,7 @@
         
         }
         </script>
+       
         </head>
 
         <style type="text/css">
@@ -91,8 +162,8 @@
                 <div class="colap">
                         <div>
                             <h1 class="h3 mb-2 text-gray-800">Grafico de utilidad de partituras </h1>
-                            <p class="mb-4">Se presentan los generos musicales, niveles y compositores que estan mas presentes en las partituras usadas durante las clases, pudiendo filtrarlas por un determinado año.</p>
-                            <div>
+                            <p class="mb-4">Se presentan los generos musicales, niveles y compositores que estan mas presentes en las partituras usadas durante las clases.</p>
+                            <div style="display: none;">
                                     <form class="user" method="POST">
                                             {% csrf_token %}
                                 <label for="" id="tyutyu2">Filtrar por año: </label>
@@ -108,6 +179,30 @@
                     
                             
                             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    
+                            <!---->
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div >
+                            <!---->
+                    
+                            
+                            <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+                    
+                            <!---->
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <div >
+                            <!---->
+                    
+                            
+                            <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
                     
                             <!---->
                         </div>

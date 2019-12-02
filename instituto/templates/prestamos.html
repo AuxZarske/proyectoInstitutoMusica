@@ -72,12 +72,27 @@
 
 {%endblock head%}
 {%block estilos%}
+
+{%if perms.gestionMusical.es_pre_alumno%}
+<style >
+
+.flex-wrap {
+  -ms-flex-wrap: wrap!important;
+  flex-wrap: wrap!important;
+  display: none;
+}
+
+</style>
+{%endif%}
+
+
     <style type="text/css">
         h6#fraseTable{
             display: inline-block;
             
 
         }
+        
         a#fraseTableBoton{
               display: inline-block;
               float: right;
@@ -127,11 +142,18 @@ div#comboFiltro{
 div#zonaInput{
 
 }
+
+
 div.dt-buttons btn-group flex-wrap{
   
   position: absolute initial;
-  
+ 
 }
+
+
+
+
+
 div.dataTables_length{
   display: inline-block;
   margin-left: 3%;
@@ -152,6 +174,7 @@ div.dataTables_filter{
   float: right;
   
 }
+
 div#zonaBotones{
   
   text-align: right;
@@ -267,7 +290,7 @@ div#espeNIvel{
                 </form>
               </div>
             </li>
-
+            
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -430,6 +453,7 @@ div#espeNIvel{
                 {% csrf_token %}
         <div id="establecerPrestamo">
                 <h1 class="h3 mb-2 text-gray-800" id="tituloPrestamo">Establecer Prestamo:</h1>
+                
                 <div>
                         <div class="form-row">
 
@@ -466,7 +490,7 @@ div#espeNIvel{
                                         <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
                                         
                                         <div class="form-row" id="edadInput">
-                                            <input type="number" class="form-control" name="duracionDias" min="0" max="10" required>
+                                            <input type="number" class="form-control" name="duracionDias" min="1" max="10" required>
                   
                                         </div>
                   
@@ -1000,4 +1024,6 @@ div#espeNIvel{
  {%endblock archivos%}
 </body>
 
+
+            
 </html>
