@@ -155,7 +155,7 @@ def obtenerInfo(request):
         'horario': horario
     }
     
-    print(data)
+    
     return JsonResponse(data)
 
 def registrarAlumno(request):
@@ -363,40 +363,299 @@ def registrarProfesor(request):
     profesor_form =ProfesorForm()
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
+def listarestadisticaspresta(request):
+    preEnero = None
+    return render(request,'listarestapresta.html',{'preEnero':preEnero})
 
-def listarestadisticas(request):
+def listarestadisticasparti(request, num):
+    dicti = {}
+    list(Compositor.objects.all())
+    for n in cantccc:
+        cveces = Partitura.objects.filter(compositor = n).count()
+        if cveces != 0:
+            
+            nombre = n.nombreIdentificador
+            numero = cveces
+            dicti[nombre] = numero
+
+   
+    return render(request,'listarestaparti.html',{'dicti':dicti})
+
+def listarestadisticasalu(request, num):
+    p1h = -0
+    p2h = -0
+    p3h= -0
+    p4h= -0
+    p5h= -0
+    p6h= -0
+    p7h= -0
+    p8h= -0
+    p9h= -0
+    p10h= -0
+    p11h= -0
+    p12h= -0
+    p13h= -0
+    p14h= -0
+    p15h= -0
     
-    preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1).count()
-    preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2).count()
-    preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3).count()
-    preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4).count()
-    preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5).count()
-    preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6).count()
+    
+    p1m = 0
+    p2m = 0
+    p3m= 0
+    p4m= 0
+    p5m= 0
+    p6m= 0
+    p7m= 0
+    p8m= 0
+    p9m= 0
+    p10m= 0
+    p11m= 0
+    p12m= 0
+    p13m= 0
+    p14m= 0
+    p15m= 0
+    numero = request.POST.get('number', None)
+    print(numero)
+    if numero != None:
+        num = numero
+    
+    if num != 0:
+        
+        for n in range(5, 10):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p1h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p1m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(10, 15):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p2h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            
+            p2m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(15, 20):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p3h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p3m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(20, 25):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p4h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p4m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(25, 30):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p5h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p5m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(30, 35):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p6h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p6m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(35, 40):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p7h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p7m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(40, 45):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p8h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p8m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(45, 50):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p9h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p9m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(50, 55):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p10h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p10m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(55, 60):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p11h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p11m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(60, 65):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p12h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p12m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(65, 70):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p13h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p13m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(70, 75):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p14h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p14m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        for n in range(75, 101):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p15h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p15m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+        
+        
+    else:
+        #devolver 2 listas, 
+        #cada posision cantiddad total de inscriptos, hombres, acomodado por edad
+        
+        for n in range(5, 10):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p1h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p1m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(10, 15):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p2h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            
+            p2m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(15, 20):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p3h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p3m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(20, 25):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p4h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p4m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(25, 30):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p5h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p5m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(30, 35):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p6h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p6m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(35, 40):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p7h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p7m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(40, 45):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p8h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p8m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(45, 50):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p9h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p9m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(50, 55):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p10h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p10m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(55, 60):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p11h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p11m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(60, 65):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p12h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p12m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(65, 70):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p13h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p13m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(70, 75):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p14h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p14m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        for n in range(75, 101):
+            edad = n
+            years_min = datetime.now() - relativedelta(years=(int(edad) +1))
+            years_max = datetime.now() - relativedelta(years=int(edad))
+            p15h += Alumno.objects.filter(sexo = "Masculino", fechaNac__range = (years_min,years_max) ).count()
+            p15m += Alumno.objects.filter(sexo = "Femenino", fechaNac__range = (years_min,years_max) ).count()
+        listH = [p1h,p2h,p3h,p4h,p5h,p6h,p7h,p8h,p9h,p10h,p11h,p12h,p13h,p14h,p15h]
+        listM = [p1m,p2m,p3m,p4m,p5m,p6m,p7m,p8m,p9m,p10m,p11m,p12m,p13m,p14m,p15m]
+        print(listH)
+        print(listM)
+       
+    return render(request,'listarestaalu.html',{'num':num, 'p1h':p1h,'p2h':p2h,'p3h':p3h,'p4h':p4h,'p5h':p5h, 'p6h':p6h,'p7h':p7h,'p8h':p8h,'p9h':p9h,'p10h':p10h, 'p11h':p11h,'p12h':p12h,'p13h':p13h,'p14h':p14h,'p15h':p15h, 'p1m':p1m,'p2m':p2m,'p3m':p3m,'p4m':p4m,'p5m':p5m, 'p6m':p6m,'p7m':p7m,'p8m':p8m,'p9m':p9m,'p10m':p10m, 'p11m':p11m,'p12m':p12m,'p13m':p13m,'p14m':p14m,'p15m':p15m})
 
-    preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7).count()
-    preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8).count()
-    preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9).count()
-    preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10).count()
-    preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11).count()
-    preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12).count()
-
-    Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1).count()
-    Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2).count()
-    Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3).count()
-    Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4).count()
-    Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5).count()
-    Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6).count()
-
-    Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7).count()
-    Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8).count()
-    Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9).count()
-    Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10).count()
-    Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11).count()
-    Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12).count()
 
 
+def listarestadisticas(request, num):
+    print(request.POST)
+    numero = request.POST.get('number', None)
+    print(numero)
+    if numero != None:
+        num = numero
 
-    return render(request,'estadisticas.html',{'preEnero':preEnero,'preFebrero':preFebrero,'preMarzo':preMarzo,'preAbril':preAbril,'preMayo':preMayo,'preJunio':preJunio,'preJulio':preJulio,'preAgosto':preAgosto,'preSeptiembre':preSeptiembre,'preOctubre':preOctubre,'preNoviembre':preNoviembre,'preDiciembre':preDiciembre,'Enero':Enero,'Febrero':Febrero,'Marzo':Marzo,'Abril':Abril,'Mayo':Mayo,'Junio':Junio,'Julio':Julio,'Agosto':Agosto,'Septiembre':Septiembre,'Octubre':Octubre,'Noviembre':Noviembre,'Diciembre':Diciembre})
+    Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count()
+    Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()
+    Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()
+    Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()
+    Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()
+    Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()
+
+    Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()
+    Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()
+    Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()
+    Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()
+    Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()
+    Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()
+
+    preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count() + Enero
+    preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()+ Febrero
+    preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()+ Marzo
+    preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()+ Abril
+    preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()+ Mayo
+    preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()+ Junio
+
+    preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()+ Julio
+    preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()+ Agosto
+    preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()+ Septiembre
+    preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()+ Octubre
+    preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()+ Noviembre
+    preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()+ Diciembre
+
+
+
+    return render(request,'estadisticas.html',{'preEnero':preEnero,'num':num,'preFebrero':preFebrero,'preMarzo':preMarzo,'preAbril':preAbril,'preMayo':preMayo,'preJunio':preJunio,'preJulio':preJulio,'preAgosto':preAgosto,'preSeptiembre':preSeptiembre,'preOctubre':preOctubre,'preNoviembre':preNoviembre,'preDiciembre':preDiciembre,'Enero':Enero,'Febrero':Febrero,'Marzo':Marzo,'Abril':Abril,'Mayo':Mayo,'Junio':Junio,'Julio':Julio,'Agosto':Agosto,'Septiembre':Septiembre,'Octubre':Octubre,'Noviembre':Noviembre,'Diciembre':Diciembre})
 
 
 def listartutores(request):
@@ -690,10 +949,12 @@ def switch_demo(argument):
 def crearAsistenciaPasada(request):
     alumno = request.GET.get('alumno', None)
     asistencia = request.GET.get('asistencia', None)
+
+
     fecha = request.GET.get('fecha', None)
-   
-  
     fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+
+
     horario = request.GET.get('horario', None)
     clase = request.GET.get('clase', None)
     print(alumno)

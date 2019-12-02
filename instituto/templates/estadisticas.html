@@ -7,13 +7,13 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script>
-        window.onload = function () {
-        
+    window.onload = function () {
+
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
-            title:{
-                text: "Comparacion Alumnos: Pre-Inscriptos/Inscriptos del 2019"
-            },	
+            title: {
+                text: "Comparacion Alumnos: Pre-Inscriptos/Inscriptos del {{num}}"
+            },
             axisY: {
 
                 title: "Cantidad de Alumnos",
@@ -30,70 +30,70 @@
                 tickColor: "#C0504E"
 
             },
-            scales:{
+            scales: {
                 axisY: [{
-                    ticks:{
+                    ticks: {
                         beginAtZero: true,
                         stepSize: 1,
-                        min:0,
+                        min: 0,
                         max: 78
 
                     }
                 }],
-            },	
+            },
             toolTip: {
                 shared: true
             },
             legend: {
-                cursor:"pointer",
+                cursor: "pointer",
                 itemclick: toggleDataSeries
             },
             data: [{
                 type: "column",
                 name: "Pre-Inscriptos",
                 legendText: "Pre-Inscriptos",
-                showInLegend: true, 
-                dataPoints:[
-                { label: "Enero", y: parseInt("{{preEnero}}") },
-                { label: "Febrero", y: parseInt("{{preFebrero}}") },
-                { label: "Marzo", y: parseInt("{{preMarzo}}") },
-                { label: "Abril", y: parseInt("{{preAbril}}") },
-                { label: "Mayo", y: parseInt("{{preMayo}}") },
-                { label: "Junio", y: parseInt("{{preJunio}}") },
-                { label: "Julio", y: parseInt("{{preJulio}}") },
-                { label: "Agosto", y: parseInt("{{preAgosto}}") },
-                { label: "Septiembre", y:parseInt("{{preSeptiembre}}") },
-                { label: "Octubre", y: parseInt("{{preOctubre}}") },
-                { label: "Noviembre", y: parseInt("{{preNoviembre}}") },
-                { label: "Diciembre", y: parseInt("{{preDiciembre}}") }
+                showInLegend: true,
+                dataPoints: [
+                    { label: "Enero", y: parseInt("{{preEnero}}") },
+                    { label: "Febrero", y: parseInt("{{preFebrero}}") },
+                    { label: "Marzo", y: parseInt("{{preMarzo}}") },
+                    { label: "Abril", y: parseInt("{{preAbril}}") },
+                    { label: "Mayo", y: parseInt("{{preMayo}}") },
+                    { label: "Junio", y: parseInt("{{preJunio}}") },
+                    { label: "Julio", y: parseInt("{{preJulio}}") },
+                    { label: "Agosto", y: parseInt("{{preAgosto}}") },
+                    { label: "Septiembre", y: parseInt("{{preSeptiembre}}") },
+                    { label: "Octubre", y: parseInt("{{preOctubre}}") },
+                    { label: "Noviembre", y: parseInt("{{preNoviembre}}") },
+                    { label: "Diciembre", y: parseInt("{{preDiciembre}}") }
                 ]
             },
             {
-                type: "column",	
+                type: "column",
                 name: "Inscriptos",
                 legendText: "Inscriptos",
-            
+
                 showInLegend: true,
-                dataPoints:[
-                { label: "Enero", y: parseInt("{{Enero}}") },
-                { label: "Febrero", y: parseInt("{{Febrero}}") },
-                { label: "Marzo", y: parseInt("{{Marzo}}") },
-                { label: "Abril", y: parseInt("{{Abril}}") },
-                { label: "Mayo", y: parseInt("{{Mayo}}") },
-                { label: "Junio", y: parseInt("{{Junio}}") },
-                { label: "Julio", y: parseInt("{{Julio}}") },
-                { label: "Agosto", y: parseInt("{{Agosto}}") },
-                { label: "Septiembre", y:parseInt("{{Septiembre}}") },
-                { label: "Octubre", y: parseInt("{{Octubre}}") },
-                { label: "Noviembre", y: parseInt("{{Noviembre}}") },
-                { label: "Diciembre", y: parseInt("{{Diciembre}}") }
+                dataPoints: [
+                    { label: "Enero", y: parseInt("{{Enero}}") },
+                    { label: "Febrero", y: parseInt("{{Febrero}}") },
+                    { label: "Marzo", y: parseInt("{{Marzo}}") },
+                    { label: "Abril", y: parseInt("{{Abril}}") },
+                    { label: "Mayo", y: parseInt("{{Mayo}}") },
+                    { label: "Junio", y: parseInt("{{Junio}}") },
+                    { label: "Julio", y: parseInt("{{Julio}}") },
+                    { label: "Agosto", y: parseInt("{{Agosto}}") },
+                    { label: "Septiembre", y: parseInt("{{Septiembre}}") },
+                    { label: "Octubre", y: parseInt("{{Octubre}}") },
+                    { label: "Noviembre", y: parseInt("{{Noviembre}}") },
+                    { label: "Diciembre", y: parseInt("{{Diciembre}}") }
                 ]
             }]
         });
         chart.render();
-        
+
         function toggleDataSeries(e) {
-            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                 e.dataSeries.visible = false;
             }
             else {
@@ -101,91 +101,93 @@
             }
             chart.render();
         }
-        
+
+    }
+</script>
+
+<script type="text/javascript">
+    function ocultarFiltro() {
+
+
+        if (document.getElementById("colapser1").style.display == "none" || document.getElementById("colapser1").style.display == "") {
+            document.getElementById("colapser1").style.display = 'inline-block';
+
         }
-        </script>
-        
-        <script type="text/javascript">
-            function ocultarFiltro(){
-              
-                
-              if(document.getElementById("colapser1").style.display == "none" || document.getElementById("colapser1").style.display == "" ){
-                  document.getElementById("colapser1").style.display='inline-block';
-                  
-              }
-              else{
-                      document.getElementById("colapser1").style.display='none';
-                  }
-          
-          }
-          function ocultarFiltro2(){
-              
-                
-              if(document.getElementById("colapser2").style.display == "none" || document.getElementById("colapser2").style.display == "" ){
-                  document.getElementById("colapser2").style.display='inline-block';
-                  
-              }
-              else{
-                      document.getElementById("colapser2").style.display='none';
-                  }
-          
-          }
-          </script>
-          <style type="text/css">
-            div#colapser1{
+        else {
+            document.getElementById("colapser1").style.display = 'none';
+        }
 
-                display: none;
-            }
-            div#colapser2{
+    }
+    function ocultarFiltro2() {
 
-            display: none;
-            }
-            div.colap{
-                margin-bottom: 5%;
-            }
-            path.highcharts-button-symbol{
-                display:none;
-            }
-           
-          
-          </style>
-  
+
+        if (document.getElementById("colapser2").style.display == "none" || document.getElementById("colapser2").style.display == "") {
+            document.getElementById("colapser2").style.display = 'inline-block';
+
+        }
+        else {
+            document.getElementById("colapser2").style.display = 'none';
+        }
+
+    }
+</script>
+<style type="text/css">
+    div#colapser1 {
+
+        display: none;
+    }
+
+    div#colapser2 {
+
+        display: none;
+    }
+
+    div.colap {
+        margin-bottom: 5%;
+    }
+
+    path.highcharts-button-symbol {
+        display: none;
+    }
+    label#tyutyu2{
+        display: inline-block;
+    }
+    input#tyutyu{
+        display: inline-block;
+        width: 20%;
+    }
+</style>
+
 <!--colapcer1-->
-
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <div class="colap">
     <div>
         <h1 class="h3 mb-2 text-gray-800">Grafico Comparativo de Pre-inscripcion/Inscripcion</h1>
-        <p class="mb-4">Se presentan la cantidad de alumnos inscritos mensualmente del ciclo anual actual.</p>
-        <button onclick="ocultarFiltro()">Ver</button>
+        <p class="mb-4">Se presentan la cantidad de alumnos inscritos mensualmente del ciclo anual.</p>
+        <div>
+                <form class="user" method="POST">
+                        {% csrf_token %}
+            <label for="" id="tyutyu2">Filtrar por año: </label>
+            <input class="form-control" id="tyutyu" name="number"  type="number" placeholder="{{num}}" min="2000" max="2100">
+            <button class="btn btn-primary" type="submit">Filtrar</button>
+                </form>
+        </div>
+        
+<script>
+  document.querySelector("input[type=number]")
+  .oninput = e => console.log(new Date(e.target.valueAsNumber, 0, 1))
+</script>
     </div>
-    <div id="colapser1"  >
+    <div >
         <!---->
-    
+
         <div id="chartContainer" style="height: 400px; width: 100%;"></div>
-        
-        
+
+
         <!---->
     </div>
 </div>
 <!--Fincolapcer1-->
-<!--colapcer2-->
-
-<div class="colap">
-        <div>
-            <h1 class="h3 mb-2 text-gray-800">Grafico Comparativo de Alumnos </h1>
-            <p class="mb-4">Se presentan la cantidad de alumnos del instituto, hombres y mujeres, segun rango de edades.</p>
-            <button onclick="ocultarFiltro2()">Ver</button>
-        </div>
-        <div id="colapser2"  >
-            <!---->
-        
-            <div id="container" style="min-width: 310px; max-width: 800px; height:600px; margin: 0 auto"></div>
-            
-            
-            <!---->
-        </div>
- </div>
-    <!--Fincolapcer2-->
 
 
 
@@ -193,96 +195,7 @@
 
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script>
-// Data gathered from http://populationpyramid.net/germany/2015/
 
-// Age categories
-var categories = [
-    '0-4', '5-9', '10-14', '15-19',
-    '20-24', '25-29', '30-34', '35-39', '40-44',
-    '45-49', '50-54', '55-59', '60-64', '65-69',
-    '70-74', '75-79', '80-84', '85-89', '90-94',
-    '95-99', '100 + '
-];
 
-Highcharts.chart('container', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: 'Total de Alumnos Inscriptos del Instituto'
-    },
-    subtitle: {
-        text: 'Comparativa de alumnos hombres y mujeres en rango de edades'
-    },
-    xAxis: [{
-        categories: categories,
-        reversed: false,
-        labels: {
-            step: 1
-        }
-    }, { // mirror axis on right side
-        opposite: true,
-        reversed: false,
-        categories: categories,
-        linkedTo: 0,
-        labels: {
-            step: 1
-        }
-    }],
-    yAxis: {
-        title: {
-            text: null
-        },
-        labels: {
-            formatter: function () {
-                return Math.abs(this.value) + '%';
-            }
-        }
-    },
 
-    plotOptions: {
-        series: {
-            stacking: 'normal'
-        }
-    },
-
-    tooltip: {
-        formatter: function () {
-            return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
-                'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2);
-        }
-    },
-
-    series: [{
-        name: 'Hombre',
-        data: [
-            -0.0, -0.0, -0.0, -0.0,
-            -0.0, -0.0, -0.0, -0.0,
-            -0.0, -1.0, -0.0, -0.0,
-            -0.0, -0.0, -0.0, -0.0,
-            -0.0, -0.0, -0.0, -0.0,
-            -0.0
-        ]
-    }, {
-        name: 'Mujer',
-        data: [
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 0.0, 0.0,
-            0.0
-        ]
-    }]
-});
-
-</script>
-
-  
 {% endblock contenidiPagina %}
-
-  
-
-  
- 
-

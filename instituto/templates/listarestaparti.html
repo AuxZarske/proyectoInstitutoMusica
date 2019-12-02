@@ -1,0 +1,128 @@
+{%extends 'index.html'%}
+
+{% load staticfiles %}
+
+{%block contenidiPagina%}
+<script>
+        var lista = [];
+</script>
+    {%for k,v in dicti.items%}
+    <script>
+        
+        
+        t = { y: parseInt("{{v}}"), name: "{{k}}", exploded: true }
+        lista.push(t)
+
+        
+    </script>
+    {%endfor%}
+
+<script>
+        window.onload = function () {
+            
+            
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title:{
+                text: "State Operating Funds"
+            },
+            legend:{
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: lista
+            }]
+        });
+        
+                
+        chart.render();
+        }
+        
+        function explodePie (e) {
+            if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        
+        }
+        </script>
+        </head>
+
+        <style type="text/css">
+            div#colapser1 {
+        
+                display: none;
+            }
+        
+            div#colapser2 {
+        
+                display: none;
+            }
+        
+            div.colap {
+                margin-bottom: 5%;
+            }
+        
+            path.highcharts-button-symbol {
+                display: none;
+            }
+            label#tyutyu2{
+                display: inline-block;
+            }
+            input#tyutyu{
+                display: inline-block;
+                width: 20%;
+            }
+            div.canvasjs-chart-toolbar{
+                display: none;
+            }
+        </style>
+
+
+        <body>
+                <div class="colap">
+                        <div>
+                            <h1 class="h3 mb-2 text-gray-800">Grafico de utilidad de partituras </h1>
+                            <p class="mb-4">Se presentan los generos musicales, niveles y compositores que estan mas presentes en las partituras usadas durante las clases, pudiendo filtrarlas por un determinado año.</p>
+                            <div>
+                                    <form class="user" method="POST">
+                                            {% csrf_token %}
+                                <label for="" id="tyutyu2">Filtrar por año: </label>
+                                <input class="form-control" id="tyutyu" name="number"  type="number" placeholder="{{num}}" min="2000" max="2100">
+                                <button class="btn btn-primary" type="submit">Filtrar</button>
+                                    </form>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <div >
+                            <!---->
+                    
+                            
+                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    
+                            <!---->
+                        </div>
+                    </div>
+
+
+
+        
+
+
+
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+        </body>
+
+{% endblock contenidiPagina %}

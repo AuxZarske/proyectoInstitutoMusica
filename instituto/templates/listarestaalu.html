@@ -1,0 +1,155 @@
+{%extends 'index.html'%}
+
+{% load staticfiles %}
+
+{%block contenidiPagina%}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+
+<style type="text/css">
+    div#colapser1 {
+
+        display: none;
+    }
+
+    div#colapser2 {
+
+        display: none;
+    }
+
+    div.colap {
+        margin-bottom: 5%;
+    }
+
+    path.highcharts-button-symbol {
+        display: none;
+    }
+    label#tyutyu2{
+        display: inline-block;
+    }
+    input#tyutyu{
+        display: inline-block;
+        width: 20%;
+    }
+</style>
+
+
+
+<div class="colap">
+    <div>
+        <h1 class="h3 mb-2 text-gray-800">Grafico Comparativo de Alumnos </h1>
+        <p class="mb-4">Se presentan la cantidad de alumnos del instituto, hombres y mujeres, segun rango de edades.</p>
+        <div>
+                <form class="user" method="POST">
+                        {% csrf_token %}
+            <label for="" id="tyutyu2">Filtrar por año: </label>
+            <input class="form-control" id="tyutyu" name="number"  type="number" placeholder="{{num}}" min="2000" max="2100">
+            <button class="btn btn-primary" type="submit">Filtrar</button>
+                </form>
+        </div>
+        <br>
+        <br>
+    </div>
+    <div >
+        <!---->
+
+        <div id="container" style="min-width: 310px; max-width: 800px; height:600px; margin: 0 auto"></div>
+
+
+        <!---->
+    </div>
+</div>
+<!--Fincolapcer2-->
+
+
+
+
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    // Data gathered from http://populationpyramid.net/germany/2015/
+
+    // Age categories
+    var categories = [
+        '5-9', '10-14', '15-19',
+        '20-24', '25-29', '30-34', '35-39', '40-44',
+        '45-49', '50-54', '55-59', '60-64', '65-69',
+        '70-74', '75 +'
+    ];
+
+    Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Total de Alumnos Inscriptos del Instituto'
+        },
+        subtitle: {
+            text: 'Comparativa de alumnos hombres y mujeres en rango de edades'
+        },
+        xAxis: [{
+            categories: categories,
+            reversed: false,
+            labels: {
+                step: 1
+            }
+        }, { // mirror axis on right side
+            opposite: true,
+            reversed: false,
+            categories: categories,
+            linkedTo: 0,
+            labels: {
+                step: 1
+            }
+        }],
+        yAxis: {
+            title: {
+                text: null
+            },
+            labels: {
+                formatter: function () {
+                    return Math.abs(this.value) + '%';
+                }
+            }
+        },
+
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                    'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2);
+            }
+        },
+
+        series: [{
+            name: 'Hombre',
+            data: [
+                parseInt("{{p1h}}"), parseInt("{{p2h}}"), parseInt("{{p3h}}"), parseInt("{{p4h}}"),
+                 parseInt("{{p5h}}"), parseInt("{{p6h}}"), parseInt("{{p7h}}"), parseInt("{{p8h}}"), parseInt("{{p9h}}"), parseInt("{{p10h}}"),
+                 parseInt("{{p11h}}"), parseInt("{{p12h}}"), parseInt("{{p13h}}"), parseInt("{{p14h}}"), parseInt("{{p15h}}")
+            ]
+        }, {
+            name: 'Mujer',
+            data: [
+            parseInt("{{p1m}}"), parseInt("{{p2m}}"), parseInt("{{p3m}}"), parseInt("{{p4m}}"),
+                 parseInt("{{p5m}}"), parseInt("{{p6m}}"), parseInt("{{p7m}}"), parseInt("{{p8m}}"), parseInt("{{p9m}}"), parseInt("{{p10m}}"),
+                 parseInt("{{p11m}}"), parseInt("{{p12m}}"), parseInt("{{p13m}}"), parseInt("{{p14m}}"), parseInt("{{p15m}}")
+            ]
+        }],
+        
+    });
+    
+    
+</script>
+
+
+{% endblock contenidiPagina %}

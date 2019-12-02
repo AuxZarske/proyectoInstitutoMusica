@@ -368,7 +368,7 @@ div#datosTutores{
                         <div class="form-group col-md-6">
                                 <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
                                 
-                                <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" required>
+                                <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" max="2014-01-01" required>
                                 
                               </div>
                 </div>
@@ -744,7 +744,7 @@ document.getElementById("id_nombreTipo").value = "";
 </script>
 <script type="text/javascript">
 
-    document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
+    //document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
 
     function nuevoTutor(){
                 $("#elDNItutor").prop('readonly', false);

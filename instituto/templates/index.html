@@ -171,11 +171,26 @@
         </li>
        
          <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-          <a class="nav-link" href="{% url 'gestionMusical:estadisticas'  %}">
-            <i class="fas fa-fw fa-chart-bar"></i>
-            <span>Estadisticas</span></a>
-        </li>
+      
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne387" aria-expanded="true" aria-controls="collapseOne">
+              <i class="fas fa-fw fa-chart-bar"></i>
+              <span>Estadisticas</span>
+            </a>
+            <div id="collapseOne387" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                
+                <a class="collapse-item" href="{% url 'gestionMusical:estadisticas' 2019 %}">Inscripciones Anuales</a>
+                <a class="collapse-item" href="{% url 'gestionMusical:estadisticasalu' 0 %}">Alumnos del Instituto</a>
+                <a class="collapse-item" href="{% url 'gestionMusical:estadisticasparti' 0 %}">Uso de Partitura</a>
+                <a class="collapse-item" href="#">Informacion de Prestamos</a>
+                
+              </div>
+            </div>
+          </li>
+
+
         {%endif%}
   
 

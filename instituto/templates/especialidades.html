@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -16,7 +17,9 @@
 
   <!-- Custom fonts for this template -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
@@ -28,171 +31,193 @@
 {%endblock head%}
 {%block scrip%}
 <script type="text/javascript">
-  function boton(num){
-        
-        document.getElementById("custId").value = num;
-        
-        
+  function boton(num) {
 
-    
-    
-    };
-  function mostrar_ocultar(){
-    
-      
-      if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
-          document.getElementById("contenedorFiltro").style.display='block';
-      }
-      else{
-              document.getElementById("contenedorFiltro").style.display='none';
-          }
-  
-  }
-  function lola(){
-      //alert(document.getElementById("defaultCheckFiltro").checked);
-      if(document.getElementById("defaultCheckFiltro").checked ){
-          document.getElementById("textFiltro").style.display='inline-block';
-          
-      }
-      else{
-              document.getElementById("textFiltro").style.display='none';
-              
-          }
+    document.getElementById("custId").value = num;
+
+
+
+
+
+  };
+  function mostrar_ocultar() {
+
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
 
   }
-  
-  </script>
+  function lola() {
+    //alert(document.getElementById("defaultCheckFiltro").checked);
+    if (document.getElementById("defaultCheckFiltro").checked) {
+      document.getElementById("textFiltro").style.display = 'inline-block';
+
+    }
+    else {
+      document.getElementById("textFiltro").style.display = 'none';
+
+    }
+
+  }
+
+</script>
 {%endblock scrip%}
 
 
 
 {%block estilos%}
-    <style type="text/css">
-        h6#fraseTable{
-            display: inline-block;
-            
+<style type="text/css">
+  h6#fraseTable {
+    display: inline-block;
 
-        }
-        p#msj{
+
+  }
+
+  p#msj {
     font-size: 17px;
-}
-        a#fraseTableBoton{
-              display: inline-block;
-              float: right;
-             
-              
+  }
 
-        }
-        div#zonaFiltro{
-          height: 10%;
-          background-color: rgb(255, 255, 255);
-        }
-        div.delete{
-
-          margin-top: 10px;
-        }
-        body {
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
-}
-button#botonFiltro{
-  display: inline-block;
-  border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
-border: 2px solid #dad7d7;
-background-color: rgb(165, 235, 212);
-}
-div#contenedor{
-
-  border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
-border: 2px solid #bdbaba;
-background-color: rgba(255, 251, 235, 0.877);
-height: auto;
-}
-div#contenedorFiltro{
-  padding: 2%;
-  display: none;
-  background-color: antiquewhite;
-}
-div#textFiltro{
-  display: inline-block;
-  
-  width: 70%;
-  height: auto;
-  display: none;
-}
-button#fil{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#botonExtra{
-  display: inline-block;
-  background-color: rgb(219, 90, 90);
-  border: 2px solid rgb(32, 32, 32);
-}
-div#zonaBotones{
-  
-  text-align: right;
-}
-div.form-group{
-  width: 30%;
-  display: inline-block;
-}
-div#opcionFiltro{
-  display: inline-block;
-  
-  width: 29%;
-  height: auto;
-}
-input#fecha1{
-  display: inline-block;
-  width: auto;
-}
-input#fecha2{
-  display: inline-block;
-  width: auto;
-}
-div.dt-buttons btn-group flex-wrap{
-  
-  position: absolute initial;
-  
-}
-div.dataTables_length{
-  display: inline-block;
-  margin-left: 3%;
-}
-div.dataTables_filter{
-  float: right;
-}
-input.form-control{
-  width: 200px;
-}
-input#fecha3{
-  display: inline-block;
-  width: auto;
-}
-input#fecha4{
-  display: inline-block;
-  width: auto;
-}
-div#elCheck{
-  margin-bottom: 10%;
-  text-align: center;
-}
-div#zonaFiltro{
-  display: none;
-}
-label#yyy{
-  margin-left: 1%;
-  margin-right: 1%;
-}
+  a#fraseTableBoton {
+    display: inline-block;
+    float: right;
 
 
 
-    </style>
+  }
+
+  div#zonaFiltro {
+    height: 10%;
+    background-color: rgb(255, 255, 255);
+  }
+
+  div.delete {
+
+    margin-top: 10px;
+  }
+
+  body {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  button#botonFiltro {
+    display: inline-block;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 2px solid #dad7d7;
+    background-color: rgb(165, 235, 212);
+  }
+
+  div#contenedor {
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 2px solid #bdbaba;
+    background-color: rgba(255, 251, 235, 0.877);
+    height: auto;
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  div#textFiltro {
+    display: inline-block;
+
+    width: 70%;
+    height: auto;
+    display: none;
+  }
+
+  button#fil {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#botonExtra {
+    display: inline-block;
+    background-color: rgb(219, 90, 90);
+    border: 2px solid rgb(32, 32, 32);
+  }
+
+  div#zonaBotones {
+
+    text-align: right;
+  }
+
+  div.form-group {
+    width: 30%;
+    display: inline-block;
+  }
+
+  div#opcionFiltro {
+    display: inline-block;
+
+    width: 29%;
+    height: auto;
+  }
+
+  input#fecha1 {
+    display: inline-block;
+    width: auto;
+  }
+
+  input#fecha2 {
+    display: inline-block;
+    width: auto;
+  }
+
+  div.dt-buttons btn-group flex-wrap {
+
+    position: absolute initial;
+
+  }
+
+  div.dataTables_length {
+    display: inline-block;
+    margin-left: 3%;
+  }
+
+  div.dataTables_filter {
+    float: right;
+  }
+
+  input.form-control {
+    width: 200px;
+  }
+
+  input#fecha3 {
+    display: inline-block;
+    width: auto;
+  }
+
+  input#fecha4 {
+    display: inline-block;
+    width: auto;
+  }
+
+  div#elCheck {
+    margin-bottom: 10%;
+    text-align: center;
+  }
+
+  div#zonaFiltro {
+    display: none;
+  }
+
+  label#yyy {
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+</style>
 {%endblock estilos%}
 
 
@@ -200,15 +225,15 @@ label#yyy{
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
       <div id="content">
-          
-          
+
+
         {%block contenidiPagina%}
 
         <!-- Begin Page Content -->
@@ -216,217 +241,227 @@ label#yyy{
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Especialidades</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar las especialidades que cuenta la institucion actualmente; editar o eliminar alguna. Ademas de insertar una nueva al sistema.</p>
-          <div id="cuadroMensajes" >
+          <p class="mb-4">En la siguiente tabla podra visualizar las especialidades que cuenta la institucion
+            actualmente; editar o eliminar alguna. Ademas de insertar una nueva al sistema.</p>
+          <div id="cuadroMensajes">
 
-              {% if messages %}
-              {% for message in messages %}
+            {% if messages %}
+            {% for message in messages %}
 
-              {% if message.tags == 'success'%}
-              <ul class="alert alert-success alert-dismissible">
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-              </ul> 
-              {%endif%}
-              {% if message.tags == 'error'%}
-              <ul class="alert alert-danger alert-dismissible">
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-              </ul> 
-              {%endif%}
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
 
-              {% endfor %}
-             {% endif %}
-      </div>
+            {% endfor %}
+            {% endif %}
+          </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button class="btn btn-facebook" id="botonExtra" onclick="mostrar_ocultar()">
-                    <i class="fas fa-file"></i>
-                  </button>
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta actualmente:</h6>
-              
-              
-                
-              
+              <button class="btn btn-facebook" id="botonExtra" onclick="mostrar_ocultar()">
+                <i class="fas fa-file"></i>
+              </button>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta
+                actualmente:</h6>
 
-              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_especialidad'%}" class="btn btn-primary btn-icon-split">
-                              
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Añadir Especialidad</span>
-                                    
-                              
-                              </a>
+
+
+
+
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_especialidad'%}"
+                class="btn btn-primary btn-icon-split">
+
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Añadir Especialidad</span>
+
+
+              </a>
             </div>
-            <form class="user"  method="POST">
-                {% csrf_token %}
-                <div id="contenedorFiltro">
-                    <input type="hidden" id="filtrado" value="{{filtro}}">
-                  <p style="font-size: 22px">Fecha de Creacion:</p>
+            <form class="user" method="POST">
+              {% csrf_token %}
+              <div id="contenedorFiltro">
+                <input type="hidden" id="filtrado" value="{{filtro}}">
+                <p style="font-size: 22px">Fecha de Creacion:</p>
 
-                  <input type="hidden" id="inputOculto" value="{{pedidor}}">
-                
-                    <input type="hidden" id="inputOcultoTemplate" value="2">
-           
-                    <div id="comboFiltro">
-                        
-                      <div id="zonaInput">
-                        <!--3 div-->
-                        <div class="form-group">
-                            <label for="inputAddress2" class="sub" style="color: black">Anterior a:</label>
-                            
-                            <div class="form-row">
-                                <input type="date" class="form-control" name="fecha1">
-      
-                            </div>
-      
-                          </div>
-      
-                          
-      
-                          <div class="form-group">
-                              <label for="inputAddress2" class="sub" style="color: black">Posterior a:</label>
-                              
-                              <div class="form-row">
-                                  <input type="date" class="form-control" name="fecha2">
-        
-                              </div>
-        
-                            </div>
-      
+                <input type="hidden" id="inputOculto" value="{{pedidor}}">
 
+                <input type="hidden" id="inputOcultoTemplate" value="2">
 
+                <div id="comboFiltro">
 
+                  <div id="zonaInput">
+                    <!--3 div-->
+                    <div class="form-group">
+                      <label for="inputAddress2" class="sub" style="color: black">Anterior a:</label>
 
-                            <div class="form-group">
-                                <label for="inputAddress2" class="sub" style="color: black">Entre:</label>
-                                
-                                <div class="form-row">
-                                    <input type="date" class="form-control" name="fecha3">
-                                    <label for="" id="yyy"> y </label>
-                                    <input type="date" class="form-control" name="fecha4">
-                                </div>
-          
-                              </div>
+                      <div class="form-row">
+                        <input type="date" class="form-control" name="fecha1">
 
-
-
-
-      
-                            </div>
-      
-      
-      
-                            
-      
-                        <!--3dic-->
-                      
-                      <div id="zonaBotones">
-                      <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
-                      <input type="hidden" id="custId" name="custId" value="no cambio">
-                        
                       </div>
-      
+
                     </div>
-      
+
+
+
+                    <div class="form-group">
+                      <label for="inputAddress2" class="sub" style="color: black">Posterior a:</label>
+
+                      <div class="form-row">
+                        <input type="date" class="form-control" name="fecha2">
+
+                      </div>
+
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                      <label for="inputAddress2" class="sub" style="color: black">Entre:</label>
+
+                      <div class="form-row">
+                        <input type="date" class="form-control" name="fecha3">
+                        <label for="" id="yyy"> y </label>
+                        <input type="date" class="form-control" name="fecha4">
+                      </div>
+
+                    </div>
+
+
+
+
+
                   </div>
-        </form>
-        <!--comienzo-->
+
+
+
+
+
+                  <!--3dic-->
+
+                  <div id="zonaBotones">
+                    <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+                    <input type="hidden" id="custId" name="custId" value="no cambio">
+
+                  </div>
+
+                </div>
+
+              </div>
+            </form>
+            <!--comienzo-->
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th class="noExport">#</th>
-                      <th >Nombre</th>
-                      <th >Fecha Creacion</th>
+                      <th>Nombre</th>
+                      <th>Fecha Creacion</th>
                       <th>Descripcion</th>
-                      
+
                       <th class="noExport">Acciones</th>
-                      
+
                     </tr>
                   </thead>
-                  
+
                   <tbody>
                     {% for especialidad in especialidades%}
-                      
-                        <tr>
-                          <td >{{especialidad.id}}</td>
-                          <td>{{especialidad.nombre}}</td>
-                          <td >{{especialidad.fechaCreacion}}</td>
-                          <td>{{especialidad.descripcion}}</td>
-                          
-                          <td>
-                          <center>
-                              <div id="ere">
-                              <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}" class="btn btn-warning btn-icon-split">
-                              
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-paint-brush"></i>
-                                    </span>
-                                    <span class="text">Editar</span>
-                                    
-                              
-                              </a>
+
+                    <tr>
+                      <td>{{especialidad.id}}</td>
+                      <td>{{especialidad.nombre}}</td>
+                      <td>{{especialidad.fechaCreacion}}</td>
+                      <td>{{especialidad.descripcion}}</td>
+
+                      <td>
+                        <center>
+                          <div id="ere">
+                            <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}"
+                              class="btn btn-warning btn-icon-split">
+
+                              <span class="icon text-white-50">
+                                <i class="fas fa-paint-brush"></i>
+                              </span>
+                              <span class="text">Editar</span>
+
+
+                            </a>
+                          </div>
+
+
+
+                          <div class="delete">
+
+                            <button class="btn btn-danger btn-icon-split" id="elBotonBorra" data-toggle="modal"
+                              data-target=".bs-example-modal-lg2{{especialidad.id}}">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+
+                              </span>
+                              <span class="text">Eliminar</span>
+                            </button>
+
+                            <div class="btn-group">
+
+
+                              <div class="modal fade bs-example-modal-lg2{{especialidad.id}}"
+                                id="myModal2{{especialidad.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="myModalLabel{{especialidad.id}}">Confirmacion de
+                                        Eliminacion</h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+
+
+                                    <div class="modal-body">
+                                      <h4>Esta seguro de Eliminar la especialidad {{especialidad.nombre}} ???</h4>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}">
+                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                      </a>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+
+
+
+
+
+
+
+
+
                             </div>
+                        </center>
+                      </td>
 
-                              
-                                
-                                        <div class="delete">
-                              
-                                    <button class="btn btn-danger btn-icon-split" id="elBotonBorra" data-toggle="modal" data-target=".bs-example-modal-lg2{{especialidad.id}}">
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-trash"></i>
-                                         
-                                    </span>
-                                    <span class="text">Eliminar</span>
-                                  </button>
+                    </tr>
 
-                                  <div class="btn-group">
-                                      
-                                      
-                                        <div class="modal fade bs-example-modal-lg2{{especialidad.id}}" id="myModal2{{especialidad.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel{{especialidad.id}}">Confirmacion de Eliminacion</h4>
-                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                </button>
-                                                        
-                                                    </div>
-
-                                                    
-                                                    <div class="modal-body">
-                                                        <h4>Esta seguro de Eliminar la especialidad {{especialidad.nombre}}  ???</h4>
-                                                        
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}">
-                                                        <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                                      </a>
-                                                      </div>
-                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                              
-
-
-
-
-
-
-
-                                            </div>
-                          </center>
-                          </td>
-                        
-                        </tr>
-                        
                     {%endfor%}
                   </tbody>
                 </table>
@@ -467,7 +502,8 @@ label#yyy{
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -494,11 +530,11 @@ label#yyy{
   <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
-  
+
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-  
-  
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
   {%endblock archivos%}
