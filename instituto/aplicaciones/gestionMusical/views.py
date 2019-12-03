@@ -798,7 +798,7 @@ def listarAuditoria(request):
 
 
 
-def listarprestamos(request):
+def listarprestamos(request, numer):
     if request.method == 'POST':
         
        
@@ -829,6 +829,11 @@ def listarprestamos(request):
 
 
     prestamos = Prestamo.objects.all()
+    if numer != 0:
+        pedidor = str(request.user.username)
+        elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        elusuario = elusuario[0]
+        prestamos = Prestamo.objects.filter(alumnoResponsable = elusuario)
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
@@ -836,7 +841,7 @@ def listarprestamos(request):
     instruPres = list(Prestamo.objects.filter( estadoPrestamo = True).values('instrumentoPrestado'))
 
     print(aluPres)
-    alumnos = list(Alumno.objects.all())
+    alumnos = list(Alumno.objects.filter(estado = True))
     print(alumnos)
     
     aluPresAUX = aluPres.copy()
@@ -897,6 +902,16 @@ def crearTutor(request):
 
 def finPrestamo(request):
     extra = request.GET.get('username', None)
+    print(request.GET)
+    checkExce = str(request.GET.get('checkExce', None))
+    checkBien = str(request.GET.get('checkBien', None))
+    checkAcep = str(request.GET.get('checkAcep', None))
+    checkReg = str(request.GET.get('checkReg', None))
+    checkMal = str(request.GET.get('checkMal', None))
+   
+
+
+
     iden = request.GET.get('identificador', None)
     data = {
         'is_taken': not(Prestamo.objects.filter(id=iden).exists())
@@ -908,6 +923,27 @@ def finPrestamo(request):
     else:
         #crear compositor, ponerle ese nombre
         try:
+            reputacion = 100 
+            concon = ""
+            if checkExce =='true':
+                concon = "Excelente"
+                reputacion += 5
+            if checkBien=='true':
+                concon = "Bien"
+                reputacion += 1
+            if checkAcep=='true':
+                concon = "Aceptable"
+                reputacion = 100
+            if checkReg=='true':
+                concon = "Regular"
+                reputacion -= 20
+            if checkMal=='true':
+                concon = "Mal estado"
+                reputacion -= 40
+            
+
+            
+
             presta = Prestamo.objects.get(id = iden)
             presta.estadoProfesor = "Recibido"
             presta.estadoPrestamo = False
@@ -915,9 +951,20 @@ def finPrestamo(request):
             elProfe = Profesor.objects.get(correoElectronico = pedidor)
             presta.profesorReferencia = elProfe
             presta.observaciones = extra
+            presta.condicion = concon
             
             presta.fechaCierre = datetime.now()
-
+            #poner reputacion al alumno
+            alu = presta.alumnoResponsable
+            fechita = presta.fechaCreacion + relativedelta(days=int(presta.duracionDias))
+            hoy = datetime.now().date() 
+            if  fechita < hoy: 
+                
+                reputacion -= 40
+                print("atrazado") 
+            alu.reputacion -= 100-reputacion
+            print(reputacion)
+            alu.save()
             presta.save()
             messages.success(request, "Carga Correcta!")
         except:
@@ -1831,7 +1878,7 @@ def eliminarAlumno(request,dni):
     
     #que o este en una clase
     
-    if not Clase.objects.filter(alumnoAsociados = alumno).exists() and not Prestamo.objects.filter( alumnoResponsable=alumno).exists():
+    if not Clase.objects.filter(alumnoAsociados = alumno).exists() and not Prestamo.objects.filter( alumnoResponsable=alumno, estadoPrestamo = True).exists():
         alumno.estado = False
         #desasociar  partituras, temas
         alumno.partiturasAsociadas.clear()

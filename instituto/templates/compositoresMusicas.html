@@ -490,7 +490,7 @@ div#zonaBotones{
                                                   <div class="modal-body">
                                                       <label for="">Nombre de Compositor</label>
                                                       <input type="text" id="inputCompoEditar" value="{{com.nombreIdentificador}}">
-                                                      <input type="hidden" id="idCompo" value="{{com.id}}">
+                                                      <input type="hidden" id="idCompo" value="{{com.id}}" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
@@ -597,7 +597,7 @@ div#zonaBotones{
                                                   <div class="modal-body">
                                                       <label for="">Nombre del Tipo de Musica:</label>
                                                        <input type="text" id="inputMusicEditar" value="{{com.nombreMusica}}">
-                                                       <input type="hidden" id="idMusic" value="{{com.id}}">
+                                                       <input type="hidden" id="idMusic" value="{{com.id}}" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
@@ -680,7 +680,7 @@ div#zonaBotones{
             </div>
             <div class="modal-body">
                 <label for="">Nombre del Tipo de Musica:</label>
-                <input type="text" id="inputMusicaCrear">
+                <input type="text" id="inputMusicaCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 
             </div>
             <div class="modal-footer">
@@ -705,7 +705,7 @@ div#zonaBotones{
             </div>
             <div class="modal-body">
                 <label for="">Nombre de Compositor</label>
-                <input type="text" id="inputCompoCrear">
+                <input type="text" id="inputCompoCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 
             </div>
             <div class="modal-footer">

@@ -15,6 +15,19 @@
 </head>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+    function Numeros(string){//Solo numeros
+    var out = '';
+    var filtro = '1234567890';//Caracteres validos
+	
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+};
       $(document).ready(function () {
           $("#inputEmail4").keyup(function () {
               var value = $(this).val();
@@ -247,11 +260,11 @@
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required>
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required>
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                 </div>
 
@@ -282,7 +295,7 @@
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" placeholder="Numero telefono" required>
+                            <input type="text" class="form-control" id="elTelefono" placeholder="Numero telefono" required onkeyup="this.value=Numeros(this.value)"  maxlength="15">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>

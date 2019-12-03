@@ -326,18 +326,18 @@ display: None;
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required>
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required>
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                 </div>
 
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">DNI:</label>
-                            <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento" onkeyup="this.value=Numeros(this.value)" required>
+                            <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento" onkeyup="this.value=Numeros(this.value)"  maxlength="9" required>
                         </div>
                         
                         <div class="form-group col-md-6">
@@ -354,22 +354,22 @@ display: None;
                         <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4" class="sub">Apellido</label>
-                                    <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" placeholder="Apellido" >
+                                    <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" placeholder="Apellido" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                 </div>
                                 <div class="form-group col-md-6">
                                   <label for="inputPassword4" class="sub">Nombre</label>
-                                  <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" placeholder="Nombre">
+                                  <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" placeholder="Nombre" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                 </div>
                         </div>
                         <div class="form-row"> 
 
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4" class="sub">DNI:</label>
-                                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)"  placeholder="Numero Documento">
+                                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)" maxlength="9"  placeholder="Numero Documento">
                                 </div>
                                 <div class="form-group col-md-6">
                                         <label for="inputPassword4" class="sub">Telefono del tutor:</label>
-                                        <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono tutor..." >
+                                        <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)" maxlength="15"    placeholder="Numero telefono tutor..." >
                                     </div>
 
                                 
@@ -461,7 +461,7 @@ display: None;
                       <div class="form-row">
                               <div class="form-group col-md-6">
                                   <label for="inputPassword4" class="sub">Telefono:</label>
-                                  <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono" required>
+                                  <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)" maxlength="15"     placeholder="Numero telefono" required>
                               </div>
                               <div class="form-group col-md-6">
                                   <label for="inputPassword4" class="sub">Sexo:</label>

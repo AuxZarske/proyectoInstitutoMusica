@@ -192,11 +192,11 @@
             <div class="form-group">
                 <label for="inputAddress2" class="sub">Nombre de clase:</label>
                 {%if editacion != 1%}
-                <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required>
+                <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..." required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 {%else%}
 
                 <input type="text" class="form-control" id="nombr" name="nombre" placeholder="Nombre..."
-                    value="{{clase_form.nombre.value}}">
+                    value="{{clase_form.nombre.value}}" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 {%endif%}
             </div>
 
@@ -205,9 +205,9 @@
                 <label for="inputAddress2" class="sub">Descripcion de la clase:</label>
                 {%if editacion != 1%}
                 <textarea class="form-control" id="desbr" name="descripcion"
-                    placeholder="Descripcion y detalles de la clase..." required></textarea>
+                    placeholder="Descripcion y detalles de la clase..." required maxlength="250"></textarea>
                 {%else%}
-                <textarea class="form-control" id="desbr" name="descripcion"
+                <textarea class="form-control" id="desbr" maxlength="250" name="descripcion"
                     placeholder="Descripcion y detalles de la clase...">{{clase_form.descripcion.value}}</textarea>
                 {%endif%}
             </div>

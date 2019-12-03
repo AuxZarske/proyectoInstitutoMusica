@@ -167,6 +167,7 @@ class Alumno(Usuario):
     musica = models.ForeignKey(MusicaTipo, on_delete = models.DO_NOTHING,  null = True, blank = True)
     tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
+    reputacion = models.IntegerField('numero de reputacion max 100', default=100, null = False, blank = False)
      
 
     class Meta:

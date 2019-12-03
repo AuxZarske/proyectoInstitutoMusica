@@ -338,11 +338,11 @@ div#datosTutores{
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{alumno_form.apellido.value}}" required>
+                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" value="{{alumno_form.apellido.value}}" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{alumno_form.nombre.value}}"required>
+                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" value="{{alumno_form.nombre.value}}"required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                         </div>
                 </div>
 
@@ -390,11 +390,11 @@ div#datosTutores{
     
                                     <div class="form-group col-md-6">
                                         <label for="inputPassword4" class="sub">DNI:</label>
-                                        <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)"  placeholder="Numero Documento">
+                                        <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)" maxlength="9"  placeholder="Numero Documento">
                                     </div>
                                     <div class="form-group col-md-6">
                                             <label for="inputPassword4" class="sub">Telefono del tutor:</label>
-                                            <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)"     placeholder="Numero telefono tutor..." >
+                                            <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)" maxlength="15"    placeholder="Numero telefono tutor..." >
                                         </div>
     
                                     

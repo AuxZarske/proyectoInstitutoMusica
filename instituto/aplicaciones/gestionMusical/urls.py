@@ -42,7 +42,7 @@ urlpatterns = [
     path('crear_tutor/',login_required(crearTutor),name='crear_tutor'),
     path('editar_tutor/<int:dni>',login_required(editarTutor),name='editar_tutor'),
 
-    path('prestamos/',login_required(listarprestamos),name='prestamos'),
+    path('prestamos/<int:numer>',login_required(listarprestamos),name='prestamos'),
     
     path('fin_Prestamo/',login_required(finPrestamo),name='fin_Prestamo'),
 
