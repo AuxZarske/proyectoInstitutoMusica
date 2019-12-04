@@ -7,165 +7,197 @@
 
 
 <head>
-    <title>Chat</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+	<title>Chat</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
 </head>
 <!--Coded With Love By Mutiullah Samim-->
-<style  type="text/css">
-	body,html{
-			height: 100%;
-			margin: 0;
-			background: rgb(82, 255, 2);
-	       background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-	        background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-		}
+<style type="text/css">
+	body,
+	html {
+		height: 100%;
+		margin: 0;
+		background: rgb(82, 255, 2);
+		background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+		background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+	}
 
-		.chat{
-			margin-top: auto;
-			margin-bottom: auto;
-		}
-		.card{
-			height: 500px;
-			border-radius: 15px !important;
-			background-color: rgba(31, 78, 206, 0.726) !important;
-		}
-		.contacts_body{
-			padding:  0.75rem 0 !important;
-			overflow-y: auto;
-			white-space: nowrap;
-            background-color: rgba(162, 196, 247, 0.726);
-		}
-		.msg_card_body{
-			overflow-y: auto;
-            background-color: rgb(162, 196, 247);
-		}
-		.card-header{
-			border-radius: 15px 15px 0 0 !important;
-			border-bottom: 0 !important;
-		}
-	 .card-footer{
+	.chat {
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+
+	.card {
+		height: 500px;
+		border-radius: 15px !important;
+		background-color: rgba(31, 78, 206, 0.726) !important;
+	}
+
+	.contacts_body {
+		padding: 0.75rem 0 !important;
+		overflow-y: auto;
+		white-space: nowrap;
+		background-color: rgba(162, 196, 247, 0.726);
+	}
+
+	.msg_card_body {
+		overflow-y: auto;
+		background-color: rgb(162, 196, 247);
+	}
+
+	.card-header {
+		border-radius: 15px 15px 0 0 !important;
+		border-bottom: 0 !important;
+	}
+
+	.card-footer {
 		border-radius: 0 0 15px 15px !important;
-			border-top: 0 !important;
+		border-top: 0 !important;
 	}
-		.container{
-			align-content: center;
-		}
-		.search{
-			border-radius: 15px 0 0 15px !important;
-			background-color: rgba(255, 255, 255, 0.973) !important;
-			border:0 !important;
-			color:black !important;
-		}
-		.search:focus{
-		     box-shadow:none !important;
-           outline:0px !important;
-		}
-		.type_msg{
-			background-color: rgba(243, 241, 247, 0.719) !important;
-			border:0 !important;
-			color:black !important;
-			height: 60px !important;
-			overflow-y: auto;
-		}
-			.type_msg:focus{
-		     box-shadow:none !important;
-           outline:0px !important;
-		}
-		.attach_btn{
-	border-radius: 15px 0 0 15px !important;
-	background-color: rgba(211, 230, 42, 0.3) !important;
-			border:0 !important;
-			color: white !important;
-			cursor: pointer;
-		}
-		.send_btn{
-	border-radius: 0 15px 15px 0 !important;
-	background-color: rgba(34, 163, 41, 0.3) !important;
-			border:0 !important;
-			color: white !important;
-			cursor: pointer;
-		}
-		.search_btn{
-			border-radius: 0 15px 15px 0 !important;
-			background-color: rgba(43, 129, 187, 0.3) !important;
-			border:0 !important;
-			color: white !important;
-			cursor: pointer;
-		}
-		.contacts{
-			list-style: none;
-			padding: 0;
-		}
-		.contacts li{
-			width: 100% !important;
-			padding: 5px 10px;
-			margin-bottom: 15px !important;
-		}
-	.active{
-			background-color: rgba(92, 218, 42, 0.3)1, 0.3);
+
+	.container {
+		align-content: center;
 	}
-		.user_img{
-			height: 70px;
-			width: 70px;
-			border:1.5px solid #f5f6fa;
-		
-		}
-		.user_img_msg{
-			height: 40px;
-			width: 40px;
-			border:1.5px solid #f5f6fa;
-		
-		}
-	.img_cont{
-			position: relative;
-			height: 70px;
-			width: 70px;
+
+	.search {
+		border-radius: 15px 0 0 15px !important;
+		background-color: rgba(255, 255, 255, 0.973) !important;
+		border: 0 !important;
+		color: black !important;
 	}
-	.img_cont_msg{
-			height: 40px;
-			width: 40px;
+
+	.search:focus {
+		box-shadow: none !important;
+		outline: 0px !important;
 	}
-	.online_icon{
+
+	.type_msg {
+		background-color: rgba(243, 241, 247, 0.719) !important;
+		border: 0 !important;
+		color: black !important;
+		height: 60px !important;
+		overflow-y: auto;
+	}
+
+	.type_msg:focus {
+		box-shadow: none !important;
+		outline: 0px !important;
+	}
+
+	.attach_btn {
+		border-radius: 15px 0 0 15px !important;
+		background-color: rgba(211, 230, 42, 0.3) !important;
+		border: 0 !important;
+		color: white !important;
+		cursor: pointer;
+	}
+
+	.send_btn {
+		border-radius: 0 15px 15px 0 !important;
+		background-color: rgba(34, 163, 41, 0.3) !important;
+		border: 0 !important;
+		color: white !important;
+		cursor: pointer;
+	}
+
+	.search_btn {
+		border-radius: 0 15px 15px 0 !important;
+		background-color: rgba(43, 129, 187, 0.3) !important;
+		border: 0 !important;
+		color: white !important;
+		cursor: pointer;
+	}
+
+	.contacts {
+		list-style: none;
+		padding: 0;
+	}
+
+	.contacts li {
+		width: 100% !important;
+		padding: 5px 10px;
+		margin-bottom: 15px !important;
+	}
+
+	.active {
+		background-color: rgba(92, 218, 42, 0.3)1, 0.3);
+	}
+
+	.user_img {
+		height: 70px;
+		width: 70px;
+		border: 1.5px solid #f5f6fa;
+
+	}
+
+	.user_img_msg {
+		height: 40px;
+		width: 40px;
+		border: 1.5px solid #f5f6fa;
+
+	}
+
+	.img_cont {
+		position: relative;
+		height: 70px;
+		width: 70px;
+	}
+
+	.img_cont_msg {
+		height: 40px;
+		width: 40px;
+	}
+
+	.online_icon {
 		position: absolute;
 		height: 15px;
-		width:15px;
+		width: 15px;
 		background-color: #4cd137;
 		border-radius: 50%;
 		bottom: 0.2em;
 		right: 0.4em;
-		border:1.5px solid white;
+		border: 1.5px solid white;
 	}
-	.offline{
+
+	.offline {
 		background-color: #c23616 !important;
 	}
-	.user_info{
+
+	.user_info {
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-left: 15px;
 	}
-	.user_info span{
+
+	.user_info span {
 		font-size: 20px;
 		color: white;
 	}
-	.user_info p{
-	font-size: 10px;
-	color: rgba(255,255,255,0.6);
+
+	.user_info p {
+		font-size: 10px;
+		color: rgba(255, 255, 255, 0.6);
 	}
-	.video_cam{
+
+	.video_cam {
 		margin-left: 50px;
 		margin-top: 5px;
 	}
-	.video_cam span{
+
+	.video_cam span {
 		color: white;
 		font-size: 20px;
 		cursor: pointer;
 		margin-right: 20px;
 	}
-	.msg_cotainer{
+
+	.msg_cotainer {
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-left: 10px;
@@ -174,33 +206,38 @@
 		padding: 10px;
 		position: relative;
 	}
-	.msg_cotainer_send{
+
+	.msg_cotainer_send {
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 25px;
-		background-color:#dcf8c6;
+		background-color: #dcf8c6;
 		padding: 10px;
 		position: relative;
 	}
-	.msg_time{
+
+	.msg_time {
 		position: absolute;
 		left: 0;
 		bottom: -15px;
-		color: rgba(255,255,255,0.5);
+		color: rgba(255, 255, 255, 0.5);
 		font-size: 10px;
 	}
-	.msg_time_send{
+
+	.msg_time_send {
 		position: absolute;
-		right:0;
+		right: 0;
 		bottom: -15px;
-		color: rgba(255,255,255,0.5);
+		color: rgba(255, 255, 255, 0.5);
 		font-size: 10px;
 	}
-	.msg_head{
+
+	.msg_head {
 		position: relative;
 	}
-	#action_menu_btn{
+
+	#action_menu_btn {
 		position: absolute;
 		right: 10px;
 		top: 10px;
@@ -208,7 +245,8 @@
 		cursor: pointer;
 		font-size: 20px;
 	}
-	.action_menu{
+
+	.action_menu {
 		z-index: 1;
 		position: absolute;
 		padding: 15px 0;
@@ -219,141 +257,367 @@
 		right: 15px;
 		display: none;
 	}
-	.action_menu ul{
+
+	.action_menu ul {
 		list-style: none;
 		padding: 0;
-	margin: 0;
+		margin: 0;
 	}
-	.action_menu ul li{
+
+	.action_menu ul li {
 		width: 100%;
 		padding: 10px 15px;
 		margin-bottom: 5px;
 	}
-	.action_menu ul li i{
+
+	.action_menu ul li i {
 		padding-right: 10px;
-	
+
 	}
-	.action_menu ul li:hover{
+
+	.action_menu ul li:hover {
 		cursor: pointer;
 		background-color: rgba(223, 13, 13, 0.2);
 	}
-	@media(max-width: 576px){
-	.contacts_card{
-		margin-bottom: 15px !important;
-	}
-	}
 
+	@media(max-width: 576px) {
+		.contacts_card {
+			margin-bottom: 15px !important;
+		}
+	}
 </style>
 <script>
-$(document).ready(function(){
-$('#action_menu_btn').click(function(){
-	$('.action_menu').toggle();
-});
+	$(document).ready(function () {
+		$('#action_menu_btn').click(function () {
+			$('.action_menu').toggle();
+		});
 	});
 </script>
-<body>
-    <div class="container-fluid h-100">
-        <div class="row justify-content-center h-100">
-            <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
-                <div class="card-header">
-                    <div class="input-group">
-                        <input type="text" placeholder="Search..." name="" class="form-control search">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body contacts_body">
-                    <ui class="contacts">
-                    <li class="active">
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                                <span class="online_icon"></span>
-                            </div>
-                            <div class="user_info">
-                                <span>Khalid</span>
-                                <p>Kalid is online</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img">
-                                <span class="online_icon offline"></span>
-                            </div>
-                            <div class="user_info">
-                                <span>Taherah Big</span>
-                                <p>Taherah left 7 mins ago</p>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    
-                    
-                    </ui>
-                </div>
-                <div class="card-footer"></div>
-            </div></div>
-            <div class="col-md-8 col-xl-6 chat">
-                <div class="card">
-                    <div class="card-header msg_head">
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                                <span class="online_icon"></span>
-                            </div>
-                            <div class="user_info">
-                                <span>Woky Jernan</span>
-                                <p>Alumno</p>
-                            </div>
-                            
-                        </div>
-                        <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-                        <div class="action_menu">
-                            <ul>
-                                <li><i class="fas fa-user-circle"></i> Ver perfil del Usuario</li>
-                                
-                                <li><i class="fas fa-ban"></i> Eliminar todos los Mensajes</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-body msg_card_body">
-                        <div class="d-flex justify-content-start mb-4">
-                            
-                            <div class="msg_cotainer">
-                                Hi, how are you samim?
-                                <span class="msg_time">8:40 AM, Today</span>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mb-4">
-                            <div class="msg_cotainer_send">
-                                Hi Khalid i am good tnx how about you?
-                                <span class="msg_time_send">8:55 AM, Today</span>
-                            </div>
-                            
-                        </div>
-                        
-                        
-                       
-                        
-                        
-                    </div>
-                    <div class="card-footer">
-                        <div class="input-group">
-                            
-                            <textarea name="" class="form-control type_msg" placeholder="Escriba su mensaje..."></textarea>
-                            <div class="input-group-append">
-                                <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 
+<body>
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center h-100">
+			<div class="col-md-4 col-xl-3 chat">
+				<div class="card mb-sm-3 mb-md-0 contacts_card">
+					<div class="card-header">
+						<div class="input-group">
+							<input type="text" placeholder="Search..." name="" class="form-control search">
+							<div class="input-group-prepend">
+								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+							</div>
+						</div>
+					</div>
+					<div class="card-body contacts_body">
+						<ui class="contacts">
+							{%for p in profes%}
+							<a onclick="establecerActual('{{p.dni}}','{{p.apellido}} {{p.nombre}}','Profesor')">
+							<li class="active">
+								<div class="d-flex bd-highlight">
+									<div class="img_cont">
+										<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+											class="rounded-circle user_img" style="width: 50px;height: 50px;">
+										
+									</div>
+									<div class="user_info">
+										<span>{{p.apellido}} {{p.nombre}}</span>
+										<p>Profesor</p>
+									</div>
+								</div>
+							</li>
+						</a>
+								{%endfor%}
+								{%for a in alus%}
+								<a onclick="establecerActual('{{a.dni}}','{{a.apellido}} {{a.nombre}}','Alumno')">
+							<li>
+								<div class="d-flex bd-highlight">
+									<div class="img_cont">
+										<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+											class="rounded-circle user_img" style="width: 50px;height: 50px;">
+										
+									</div>
+									<div class="user_info">
+										<span>{{a.apellido}} {{a.nombre}}</span>
+										<p>Alumno</p>
+									</div>
+								</div>
+							</li>
+						</a>
+							{%endfor%}
+
+
+
+						</ui>
+					</div>
+					<div class="card-footer"></div>
+				</div>
+			</div>
+			<div class="col-md-8 col-xl-6 chat">
+				<div class="card">
+					<div class="card-header msg_head">
+						<div class="d-flex bd-highlight">
+							<div class="img_cont">
+								<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+									class="rounded-circle user_img">
+								
+							</div>
+							<div class="user_info">
+								<span id="usuario">Usuario</span>
+								<input type="hidden" id="rrr" value="0">
+									<input type="hidden" id="eee" value="0">
+								<input type="hidden" id="actual">
+								<p id="identificador">Rol</p>
+
+								<input type="hidden" id="actualEmisorDni" value="{{yo.dni}}">
+							</div>
+
+						</div>
+						<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+						<div class="action_menu">
+							<ul>
+								<li><i class="fas fa-user-circle"></i> Ver perfil del Usuario</li>
+
+								<li><i class="fas fa-ban"></i> Eliminar todos los Mensajes</li>
+							</ul>
+						</div>
+					</div>
+					<div class="card-body msg_card_body" id="historia">
+
+
+				
+
+
+						
+
+						
+
+
+					</div>
+					<div class="card-footer">
+						<div class="input-group">
+
+							<textarea name="" class="form-control type_msg"
+								placeholder="Escriba su mensaje..." id="mensaje"
+								onkeyup="mensajeChange()" maxlength="128" ></textarea>
+							<div class="input-group-append">
+								
+								<button type="button" class="input-group-text send_btn"  onclick="enviarMensaje()" id="enviar" disabled><i class="fas fa-location-arrow"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+		
+		  function actualizarMensajes() {
+			console.log('funcion actualizar');
+			var idEmisor = document.getElementById('actualEmisorDni').value;
+			var idReceptor = document.getElementById('actual').value;
+			obtenerUltimosMensajes(idEmisor, idReceptor);
+		  }
+		  function activar(){
+		  setInterval(actualizarMensajes, 3000);
+		}
+		  
+		  
+		
+		
+	  </script>
+<script>
+function establecerActual(dni,username,identidad){
+document.getElementById('usuario').innerHTML = username;
+document.getElementById('actual').value = dni;
+document.getElementById('identificador').innerHTML = identidad;
+activar();
+}
+
+</script>
+</style>
+<script>
+	function idReceptorDID(idReceptor){
+		var dni = idReceptor;
+		var id = 0;
+		$.ajax({
+      data: { 'dni': dni },
+      url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
+      type: 'get',
+      success: function (data) {
+			id =parseInt( data.id);
+			
+			document.getElementById('rrr').value = id;
+	  }});
+	  
+	  return id;
+
+	}
+	function idEmisorDID(idEmisor){
+		var dni = idEmisor;
+		var id = 0;
+		$.ajax({
+      data: { 'dni': dni },
+      url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
+      type: 'get',
+      success: function (data) {
+		  
+			id =parseInt( data.id);
+			
+			document.getElementById('eee').value = id;
+	  }});
+	  
+	  
+	  return id;
+
+
+		
+}
+  function ocultarMensajes(id) {
+    var id_profesor = "{{user.id}}"
+    $.ajax({
+      data: { 'id': id },
+      url: '{% url "gestionMusical:ocultar_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+      type: 'get',
+      success: function (data) {
+        if (data['ocultar'] == false) {
+          if (data['profesor'] == true) {
+            var html = '<li class="nav-item">' +
+              '<a class="nav-link" href="/chat/inbox_profesor/' + id_profesor + '">Mensajes</a>' +
+              '</li>'
+            $('#mensajes').html(html);
+          } else {
+            var html = '<li class="nav-item">' +
+              '<a class="nav-link" href="/chat/inbox/' + id + '/' + data['profesor_id'] + '">Mensajes</a>' +
+              '</li>'
+            $('#mensajes').html(html);
+          }
+        }
+      }
+    });
+  }
+</script>
+
+<script>
+  function verConversacion(idEmisor, idReceptor) {
+    console.log(idEmisor);
+	console.log(idReceptor);
+	l = idReceptorDID(idReceptor);
+			
+
+	r = idEmisorDID(idEmisor);
+    $.ajax({
+      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
+      url: '{% url "gestionMusical:ver_conversacion_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+      type: 'get',
+      success: function (conversacion) {
+		 
+        for (var i = 0; i < conversacion.length; i++) {
+			
+			
+			
+
+
+			
+			lE = document.getElementById('rrr').value;
+			lR = document.getElementById('eee').value;
+			
+          if (conversacion[i].sender == lR) {
+			
+            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
+			  
+			  
+            $('#historia').append(html);
+            console.log(html);
+          }
+          else if (conversacion[i].sender == lE) {
+			
+            var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
+            $('#historia').append(html);
+            console.log(html);
+          }
+        }
+      },
+    });
+  }
+  function enviarMensaje(idEmisor, idReceptor) {
+	
+	  var idEmisor = document.getElementById('actualEmisorDni').value;
+	  var idReceptor = document.getElementById('actual').value;
+	  if(idReceptor != ""){
+	  console.log(idReceptor);
+    var mensaje = document.getElementById("mensaje").value;
+    console.log('enviar mensaje');
+    $.ajax({
+      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor, 'mensaje': mensaje },
+      url: '{% url "gestionMusical:enviar_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+      dataType: 'json',
+      success: function (dic) {
+        var limpiar = ""
+        $('#historia').html(limpiar);
+        verConversacion(idEmisor, idReceptor);
+      },
+	});
+	
+    $('#mensaje').val('');
+  }else{
+	  alert("seleccione un chat");
+  }
+}
+  function vistoMensaje(mensaje) {
+    console.log('visto mensaje');
+    console.log(mensaje);
+    $.ajax({
+      data: { 'mensaje': mensaje },
+      url: '{% url "gestionMusical:visto_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+      dataType: 'json',
+      success: function (data) {
+        console.log('visto')
+      },
+    });
+  }
+  function obtenerUltimosMensajes(idEmisor, idReceptor) {
+    console.log(idEmisor);
+	console.log("idReceptor");
+	
+    $.ajax({
+      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
+      url: '{% url "gestionMusical:obtener_ultimos_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+      dataType: 'json',
+      success: function (mensajesNoLeidos) {
+        for (var i = 0; i < mensajesNoLeidos.length; i++) {
+          if (mensajesNoLeidos[i].sender == idReceptor) {
+            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
+            $('#historia').append(html);
+            console.log(mensajesNoLeidos[i].idMensaje);
+            vistoMensaje(mensajesNoLeidos[i].idMensaje);
+          }
+          else if (mensajesNoLeidos[i].sender == idEmisor) {
+            var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
+            $('#historia').append(html);
+            vistoMensaje(mensajesNoLeidos[i].idMensaje);
+          }
+        }
+      },
+    });
+  }
+</script>
+
+
+
+<script>
+  function mensajeChange() {
+    console.log("change");
+    const mensaje = document.getElementById("mensaje");
+    const boton = document.getElementById("enviar");
+    console.log(boton)
+    if (mensaje.value.trim() !== "") {
+      console.log("Se muestra")
+      boton.removeAttribute('disabled')
+    } else {
+      console.log('se oculta');
+      boton.setAttribute('disabled', "true");
+    }
+  }
+</script>
 
 {% endblock contenidiPagina %}

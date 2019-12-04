@@ -15,7 +15,7 @@ import json
 from django.http import HttpResponse
 import time
 from datetime import date
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Image
@@ -25,7 +25,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4, mm
 from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
-
+from directmessages.apps import Inbox
 import dateutil.parser
 
 import base64
@@ -182,7 +182,7 @@ def registrarAlumno(request):
         
         fecha = dateutil.parser.parse(fecha)
         fecha = fecha.strftime('%d/%m/%Y')
-        fecha = datetime.strptime(fecha, '%d/%m/%Y')
+        fecha = datetime.strptime(fecha, '%d/%m/%Y') #aca pone el formato
         print(fecha)
         
         hoy = datetime.now()      # Tipo: datetime.datetime
@@ -2565,16 +2565,258 @@ def mostrarClase (request,id):
     print(habilitado)
     return render(request,'una_clase.html',{'laClase':laClase,'habilitado':habilitado,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
+
+
 def listarmensajes(request):
     clases = Clase.objects.all()
-    return render(request,'mensajes.html',{'clases':clases})
-
-
+    profes = Profesor.objects.filter(estado = True)
+    alus = Alumno.objects.filter(estado = True)
+    print(alus)
+    yo = None
+    try:
+        pedidor = str(request.user.username)
     
     
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            yo = elusuario
+    except:
+        pass 
+    return render(request,'mensajes.html',{'clases':clases,'alus':alus,'profes':profes,'yo':yo}) 
+
+
+def enviarMensaje(request):
+    print("listo")
+    print(request.GET.get('idReceptor',None))
+    
+     
+
+
+    dniR = request.GET.get('idReceptor', None)
+    elusuario = Profesor.objects.get(dni = dniR)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniR)
+    if elusuario:
+        elusuario = elusuario
+    userReceptor = elusuario 
+    idR = userReceptor.correoElectronico
+
+    userReceptor = list(User.objects.filter(username = idR))[0]
+
+
+    dniE = request.GET.get('idEmisor', None)
+    elusuario = Profesor.objects.get(dni = dniE)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniE)
+    if elusuario:
+        elusuario = elusuario
+    userEmisor = elusuario
+    idR = userEmisor.correoElectronico
+
+    userEmisor = list(User.objects.filter(username = idR))[0]
+    
+
+
+    mensaje = str(request.GET.get('mensaje', None))
+    
+    if mensaje != '':
+        mensaje = Inbox.send_message(userEmisor, userReceptor, mensaje)
+        
+        dic = {}
+        
+        dic['idReceptor'] = str(userReceptor.id)
+        dic['idEmisor'] = str(userReceptor.id)
+        dic['mensaje'] = str(mensaje)
+    
+    
+    return HttpResponse(
+                json.dumps(dic),
+                content_type="application/json")
+    
+def dniUser(request):  
+
+    elID = None
+    
+    dniR = request.GET.get('dni', None)
+    elusuario = Profesor.objects.get(dni = dniR)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniR)
+    if elusuario:
+        elusuario = elusuario
+    userReceptor = elusuario 
+    idR = userReceptor.correoElectronico
+
+    userReceptor = list(User.objects.filter(username = idR))[0]
+    elID = userReceptor.id
+    
+    
+    data = {
+            'id': elID
+        }
+    print(data)
+    return JsonResponse(data)
     
    
+def verConversacion (request):
+    print(request.GET['idReceptor'])
+    print(request.GET['idEmisor'])
 
+
+    dniR = request.GET.get('idReceptor', None)
+    elusuario = Profesor.objects.get(dni = dniR)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniR)
+    if elusuario:
+        elusuario = elusuario
+    userReceptor = elusuario 
+    idR = userReceptor.correoElectronico
+
+    userReceptor = list(User.objects.filter(username = idR))[0]
+
+
+    dniE = request.GET.get('idEmisor', None)
+    elusuario = Profesor.objects.get(dni = dniE)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniE)
+    if elusuario:
+        elusuario = elusuario
+    userEmisor = elusuario
+    idR = userEmisor.correoElectronico
+
+    userEmisor = list(User.objects.filter(username = idR))[0]
+    
+    conversacionAux = Inbox.get_conversation(userEmisor, userReceptor, 50)
+    conversacion = []
+    dic = {}
+    for conver in conversacionAux:
+        ahora = conver.sent_at
+        print(ahora)
+        ahora = ahora - timedelta(hours=3)
+        print(ahora)
+        dic = {
+        'content': conver.content,
+        'sender': conver.sender.id,
+        'recipient': conver.recipient.id,
+        'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
+        'idMensaje': str(conver.id)
+        }
+        conversacion.append(dic)
+    
+    return HttpResponse(
+                json.dumps(conversacion),
+                content_type="application/json")
+
+
+def ocultarMensajes(request):
+    user = User.objects.get(id=request.GET['id'])
+    data = {}
+    
+    if not(user.is_staff):
+        if (Alumno.objects.filter(user_id=user.id).exists()):
+            alumno = Alumno.objects.get(user_id=user.id)
+            data['profesor_id'] = str(alumno.profesor_id.user_id)
+            d = False
+            data['ocultar'] = d
+            p = False
+            data['profesor'] = p
+            mensajesNoLeidos = Inbox.get_unread_messages(alumno.user_id)
+            c = len(mensajesNoLeidos)
+            data['count']= c
+        elif (Profesor.objects.filter(user_id=user.id).exists()):
+            profesor = Profesor.objects.get(user_id=user.id)
+            data['profesor_id'] = profesor.user_id
+            d = False
+            data['ocultar'] = d
+            p = True
+            data['profesor'] = p
+            mensajesNoLeidos = Inbox.get_unread_messages(profesor.user_id)
+            c = len(mensajesNoLeidos)
+            data['count']= c
+    else:
+        p = None
+        data['profesor_id'] = p
+        d = True
+        data['ocultar'] = d
+        p = False
+        data['profesor'] = p
+        c = 0
+        data['count']= c
+        
+    print(data['ocultar'])
+    
+    return HttpResponse(
+                json.dumps(data),
+                content_type="application/json")
+
+
+def obtenerUltimosMensajes(request):
+    dniR = request.GET.get('idReceptor', None)
+    print("hola")
+    print(request.GET) 
+    elusuario = Profesor.objects.get(dni = dniR)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniR)
+    if elusuario:
+        elusuario = elusuario
+    userReceptor = elusuario 
+    idR = userReceptor.correoElectronico
+
+    userReceptor = list(User.objects.filter(username = idR))[0] 
+
+
+    dniE = request.GET.get('idEmisor', None)
+    elusuario = Profesor.objects.get(dni = dniE)
+
+    if not elusuario:
+        elusuario = Alumno.objects.get(dni = dniE)
+    if elusuario:
+        elusuario = elusuario
+    userEmisor = elusuario
+    idR = userEmisor.correoElectronico
+
+    userEmisor = list(User.objects.filter(username = idR))[0] 
+    
+    mensajesNoLeidosAux = Inbox.get_unread_messages(userEmisor)
+    mensajesNoLeidos = []
+    dic = {}
+    for msj in mensajesNoLeidosAux:
+        ahora = msj.sent_at
+        ahora = ahora - timedelta(hours=3)
+        dic = {
+        'content': msj.content,
+        'sender': msj.sender.id,
+        'recipient': msj.recipient.id,
+        'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
+        'idMensaje': str(msj.id)
+        }
+        mensajesNoLeidos.append(dic)
+    
+    return HttpResponse(
+                json.dumps(mensajesNoLeidos),
+                content_type="application/json")
+
+def vistoMensaje(request):
+    msj = request.GET['mensaje']
+    data = {}
+    print
+    mensaje = Message.objects.get(id=msj)
+    print(type(mensaje))
+    Inbox.read_message(mensaje.id)
+    
+    print(mensaje)
+    return HttpResponse(
+                json.dumps(data),
+                content_type="application/json")
 
 
 def listarpartituras(request):

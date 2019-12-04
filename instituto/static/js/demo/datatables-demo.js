@@ -433,15 +433,15 @@ margin: 20
                 if(template == 9){
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
-                   doc.content[0].table.widths = [95, 80, 90,50,55];
-                   var table = $("#midatatable").DataTable();//Obtengo la tabla
-                  var pageInfo = table.page.info(); //Obtiene el objeto page.info()
-                  for (i = 1; i <= pageInfo.recordsDisplay; i++) { //recordsDisplay me devuelve la cantidad de registros mostrados
-                  doc.content[1].table.body[i][5].alignment = 'right'; //El segundo [] es el numero de columna a alinear
-                  doc.content[0].table.body[i][4].alignment = 'right';
-                  doc.content[0].table.body[i][3].alignment = 'right';
-                  doc.content[0].table.body[i][6].alignment = 'center';
-                  doc.content[0].table.body[i][2].alignment = 'center';
+                   doc.content[0].table.widths = [33,33,33,33,33];
+                  // var table = $("#midatatable").DataTable();//Obtengo la tabla
+                  //var pageInfo = table.page.info(); //Obtiene el objeto page.info()
+                 // for (i = 1; i <= pageInfo.recordsDisplay; i++) { //recordsDisplay me devuelve la cantidad de registros mostrados
+                  //doc.content[1].table.body[i][5].alignment = 'right'; //El segundo [] es el numero de columna a alinear
+                  //doc.content[0].table.body[i][4].alignment = 'right';
+                 // doc.content[0].table.body[i][3].alignment = 'right';
+                 // doc.content[0].table.body[i][6].alignment = 'center';
+                 // doc.content[0].table.body[i][2].alignment = 'center';
                 }; 
                 }
                 if(template == 10){
