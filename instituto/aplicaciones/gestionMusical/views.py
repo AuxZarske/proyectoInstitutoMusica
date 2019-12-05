@@ -2534,6 +2534,7 @@ def mostrarClase (request,id):
                     asistt.fechaCreacion = date.today()
                     asistt.profesorReferencia = elProfe
                     asistt.claseReferencia = laClase
+                    asistt.horario = horarioActualClase(laClase)
                     asistt.save()
 
     try:
@@ -2762,6 +2763,7 @@ def obtenerUltimosMensajes(request):
     dniR = request.GET.get('idReceptor', None)
     print("hola")
     print(request.GET) 
+   
     elusuario = Profesor.objects.get(dni = dniR)
 
     if not elusuario:
@@ -2786,8 +2788,9 @@ def obtenerUltimosMensajes(request):
 
     userEmisor = list(User.objects.filter(username = idR))[0] 
     
-    mensajesNoLeidosAux = Inbox.get_unread_messages(userEmisor)
+    mensajesNoLeidosAux = Inbox.get_unread_messages(userEmisor.id)
     mensajesNoLeidos = []
+    
     dic = {}
     for msj in mensajesNoLeidosAux:
         ahora = msj.sent_at
@@ -2800,7 +2803,8 @@ def obtenerUltimosMensajes(request):
         'idMensaje': str(msj.id)
         }
         mensajesNoLeidos.append(dic)
-    
+    print(dic)
+   
     return HttpResponse(
                 json.dumps(mensajesNoLeidos),
                 content_type="application/json")

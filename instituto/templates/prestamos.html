@@ -565,18 +565,21 @@
                   <div class="form-group" id="nivell">
                     <label for="inputState" style="color: black" id="labbel">Responsable:</label>
 
-                    <select id="country" class="form-control" name="alumnoResponsable" required>
+                    <select id="country" class="form-control"  name="alumnoResponsable" required>
 
 
 
                       {%for alu in alumnos%}
                       <option value='{{alu.dni}}'>{{alu.nombre}}</option>
-                      <input type="hidden" id="{{alu.dni}}" value="{{alu.reputacion}}">
+                      
 
                       {%endfor%}
 
                     </select>
                   </div>
+                  {%for alu in alumnos%}
+                  <input type="hidden" id="{{alu.dni}}" value="{{alu.reputacion}}">
+                  {%endfor%}
                   <div class="form-group" id="nivell">
                     <label for="inputState" style="color: black" id="labbel">Instrumento:</label>
 

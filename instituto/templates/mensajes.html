@@ -205,6 +205,7 @@
 		background-color: #ffffff;
 		padding: 10px;
 		position: relative;
+		
 	}
 
 	.msg_cotainer_send {
@@ -215,22 +216,25 @@
 		background-color: #dcf8c6;
 		padding: 10px;
 		position: relative;
+		
 	}
 
 	.msg_time {
 		position: absolute;
 		left: 0;
 		bottom: -15px;
-		color: rgba(255, 255, 255, 0.5);
+		color: rgb(85, 85, 85);
 		font-size: 10px;
+		width: 90px;
 	}
 
 	.msg_time_send {
 		position: absolute;
 		right: 0;
 		bottom: -15px;
-		color: rgba(255, 255, 255, 0.5);
+		color: rgb(85, 85, 85);
 		font-size: 10px;
+		width: 90px;
 	}
 
 	.msg_head {
@@ -263,6 +267,12 @@
 		padding: 0;
 		margin: 0;
 	}
+
+
+.col-xl-3 {
+    
+    max-width: 30%;
+}
 
 	.action_menu ul li {
 		width: 100%;
@@ -356,16 +366,16 @@
 					<div class="card-header msg_head">
 						<div class="d-flex bd-highlight">
 							<div class="img_cont">
-								<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+								<img src="https://source.unsplash.com/FZWivbri0Xk/60x60"
 									class="rounded-circle user_img">
 								
 							</div>
 							<div class="user_info">
-								<span id="usuario">Usuario</span>
+								<span id="usuario"></span>
 								<input type="hidden" id="rrr" value="0">
 									<input type="hidden" id="eee" value="0">
 								<input type="hidden" id="actual">
-								<p id="identificador">Rol</p>
+								<p id="identificador"></p>
 
 								<input type="hidden" id="actualEmisorDni" value="{{yo.dni}}">
 							</div>
@@ -415,10 +425,11 @@
 			console.log('funcion actualizar');
 			var idEmisor = document.getElementById('actualEmisorDni').value;
 			var idReceptor = document.getElementById('actual').value;
-			obtenerUltimosMensajes(idEmisor, idReceptor);
+			//obtenerUltimosMensajes(idEmisor, idReceptor);
+			verConversacion(idEmisor, idReceptor);
 		  }
 		  function activar(){
-		  setInterval(actualizarMensajes, 3000);
+		  setInterval(actualizarMensajes, 5000);
 		}
 		  
 		  
@@ -426,11 +437,23 @@
 		
 	  </script>
 <script>
+function modificarEstilo(){
+	//color resaltar
+	
+
+	//cambiar cabeza imagen
+}
+
 function establecerActual(dni,username,identidad){
 document.getElementById('usuario').innerHTML = username;
 document.getElementById('actual').value = dni;
 document.getElementById('identificador').innerHTML = identidad;
+var idEmisor = document.getElementById('actualEmisorDni').value;
+	  var idReceptor = document.getElementById('actual').value;
+	  modificarEstilo();
+verConversacion(idEmisor, idReceptor);
 activar();
+
 }
 
 </script>
@@ -499,6 +522,7 @@ activar();
 
 <script>
   function verConversacion(idEmisor, idReceptor) {
+	
     console.log(idEmisor);
 	console.log(idReceptor);
 	l = idReceptorDID(idReceptor);
@@ -510,7 +534,8 @@ activar();
       url: '{% url "gestionMusical:ver_conversacion_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
       type: 'get',
       success: function (conversacion) {
-		 
+		var limpiar = "";
+		$('#historia').html(limpiar);
         for (var i = 0; i < conversacion.length; i++) {
 			
 			
@@ -523,19 +548,23 @@ activar();
 			
           if (conversacion[i].sender == lR) {
 			
-            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
+			
+			var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
 			  
 			  
             $('#historia').append(html);
             console.log(html);
           }
           else if (conversacion[i].sender == lE) {
-			
-            var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
+			var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
+            
             $('#historia').append(html);
             console.log(html);
           }
-        }
+		}
+		var elem = document.getElementById('historia');
+   		elem.scrollTop = elem.scrollHeight;
+		
       },
     });
   }
@@ -553,7 +582,8 @@ activar();
       dataType: 'json',
       success: function (dic) {
         var limpiar = ""
-        $('#historia').html(limpiar);
+		$('#historia').html(limpiar);
+		
         verConversacion(idEmisor, idReceptor);
       },
 	});
@@ -578,25 +608,39 @@ activar();
   function obtenerUltimosMensajes(idEmisor, idReceptor) {
     console.log(idEmisor);
 	console.log("idReceptor");
+	l = idReceptorDID(idReceptor);
+			
+
+	r = idEmisorDID(idEmisor);
 	
     $.ajax({
       data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
       url: '{% url "gestionMusical:obtener_ultimos_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
       dataType: 'json',
       success: function (mensajesNoLeidos) {
+		var limpiar = ""
+		$('#historia').html(limpiar);
         for (var i = 0; i < mensajesNoLeidos.length; i++) {
-          if (mensajesNoLeidos[i].sender == idReceptor) {
-            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
+			lE = document.getElementById('rrr').value;
+			lR = document.getElementById('eee').value;
+			console.log("ulti: "+ mensajesNoLeidos[i].sender+ "  "+lR+"  "+lE);
+          if (mensajesNoLeidos[i].sender == lR) {
+			
+			var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+mensajesNoLeidos[i].content+'<span class="msg_time_send">'+mensajesNoLeidos[i].sent_at+'</span></div></div>'
             $('#historia').append(html);
             console.log(mensajesNoLeidos[i].idMensaje);
+           vistoMensaje(mensajesNoLeidos[i].idMensaje);
+          }
+          else if (mensajesNoLeidos[i].sender == lE) {
+            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+mensajesNoLeidos[i].content+'<span class="msg_time">'+mensajesNoLeidos[i].sent_at+'</span></div></div>'
+			console.log(mensajesNoLeidos[i].idMensaje);
+			$('#historia').append(html);
             vistoMensaje(mensajesNoLeidos[i].idMensaje);
           }
-          else if (mensajesNoLeidos[i].sender == idEmisor) {
-            var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
-            $('#historia').append(html);
-            vistoMensaje(mensajesNoLeidos[i].idMensaje);
-          }
-        }
+		}
+		var elem = document.getElementById('historia');
+   		elem.scrollTop = elem.scrollHeight;
+		
       },
     });
   }

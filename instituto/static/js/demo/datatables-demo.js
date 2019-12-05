@@ -442,7 +442,7 @@ margin: 20
                  // doc.content[0].table.body[i][3].alignment = 'right';
                  // doc.content[0].table.body[i][6].alignment = 'center';
                  // doc.content[0].table.body[i][2].alignment = 'center';
-                }; 
+                //}; 
                 }
                 if(template == 10){
                   //doc.content[0].table.widths = colCount;
