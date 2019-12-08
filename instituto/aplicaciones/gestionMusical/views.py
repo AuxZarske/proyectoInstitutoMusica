@@ -2570,8 +2570,13 @@ def mostrarClase (request,id):
 
 def listarmensajes(request):
     clases = Clase.objects.all()
-    profes = Profesor.objects.filter(estado = True)
-    alus = Alumno.objects.filter(estado = True)
+    correo = ""
+
+    
+    correo = str(request.user.username)
+    
+    profes = Profesor.objects.filter(estado = True ).exclude(correoElectronico = correo)
+    alus = Alumno.objects.filter(estado = True).exclude(correoElectronico = correo)
     print(alus)
     yo = None
     try:
@@ -2587,23 +2592,27 @@ def listarmensajes(request):
             yo = elusuario
     except:
         pass 
+
+
+
+    
     return render(request,'mensajes.html',{'clases':clases,'alus':alus,'profes':profes,'yo':yo}) 
 
 
 def enviarMensaje(request):
     print("listo")
     print(request.GET.get('idReceptor',None))
-    
+    dic = {}
      
 
 
     dniR = request.GET.get('idReceptor', None)
-    elusuario = Profesor.objects.get(dni = dniR)
+    elusuario = list(Profesor.objects.filter(dni = dniR))
 
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniR)
-    if elusuario:
-        elusuario = elusuario
+    if len(elusuario) < 1:
+        elusuario = list(Alumno.objects.filter(dni = dniR))
+    if len(elusuario) > 0:
+        elusuario = elusuario[0]
     userReceptor = elusuario 
     idR = userReceptor.correoElectronico
 
@@ -2611,12 +2620,12 @@ def enviarMensaje(request):
 
 
     dniE = request.GET.get('idEmisor', None)
-    elusuario = Profesor.objects.get(dni = dniE)
+    elusuario = list(Profesor.objects.filter(dni = dniE))
 
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniE)
-    if elusuario:
-        elusuario = elusuario
+    if len(elusuario) < 1:
+        elusuario = list(Alumno.objects.get(dni = dniE))
+    if len(elusuario) > 0:
+        elusuario = elusuario[0]
     userEmisor = elusuario
     idR = userEmisor.correoElectronico
 
@@ -2641,77 +2650,86 @@ def enviarMensaje(request):
                 content_type="application/json")
     
 def dniUser(request):  
-
+    
     elID = None
-    
-    dniR = request.GET.get('dni', None)
-    elusuario = Profesor.objects.get(dni = dniR)
+    try:
+        dniR = request.GET.get('dni', None)
+        print(dniR)
+        elusuario = list(Profesor.objects.filter(dni = dniR))
 
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniR)
-    if elusuario:
-        elusuario = elusuario
-    userReceptor = elusuario 
-    idR = userReceptor.correoElectronico
+        if len(elusuario) < 1:
+            elusuario = list(Alumno.objects.filter(dni = dniR))
+        if len(elusuario) > 0:
+            elusuario = elusuario[0]
+        userReceptor = elusuario 
+        idR = userReceptor.correoElectronico
 
-    userReceptor = list(User.objects.filter(username = idR))[0]
-    elID = userReceptor.id
-    
-    
-    data = {
-            'id': elID
-        }
-    print(data)
+        userReceptor = list(User.objects.filter(username = idR))[0]
+        elID = userReceptor.id
+        
+        
+        data = {
+                'id': elID
+            }
+        
+    except:
+        data = {}
     return JsonResponse(data)
     
    
 def verConversacion (request):
-    print(request.GET['idReceptor'])
-    print(request.GET['idEmisor'])
-
-
-    dniR = request.GET.get('idReceptor', None)
-    elusuario = Profesor.objects.get(dni = dniR)
-
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniR)
-    if elusuario:
-        elusuario = elusuario
-    userReceptor = elusuario 
-    idR = userReceptor.correoElectronico
-
-    userReceptor = list(User.objects.filter(username = idR))[0]
-
-
-    dniE = request.GET.get('idEmisor', None)
-    elusuario = Profesor.objects.get(dni = dniE)
-
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniE)
-    if elusuario:
-        elusuario = elusuario
-    userEmisor = elusuario
-    idR = userEmisor.correoElectronico
-
-    userEmisor = list(User.objects.filter(username = idR))[0]
-    
-    conversacionAux = Inbox.get_conversation(userEmisor, userReceptor, 50)
-    conversacion = []
+    #print(request.GET['idReceptor'])
+    #print(request.GET['idEmisor'])
     dic = {}
-    for conver in conversacionAux:
-        ahora = conver.sent_at
-        print(ahora)
-        ahora = ahora - timedelta(hours=3)
-        print(ahora)
-        dic = {
-        'content': conver.content,
-        'sender': conver.sender.id,
-        'recipient': conver.recipient.id,
-        'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
-        'idMensaje': str(conver.id)
-        }
-        conversacion.append(dic)
-    
+    try: #borrar try catch y ver los mensajes print//marcar vistos-eliminarlos//prestamos
+
+        dniR = request.GET.get('idReceptor', None)
+        elusuario = list(Profesor.objects.filter(dni = dniR))
+
+        if len(elusuario) < 1:
+            elusuario = list(Alumno.objects.filter(dni = dniR))
+        if len(elusuario) > 0:
+            elusuario = elusuario[0]
+        userReceptor = elusuario 
+        idR = userReceptor.correoElectronico
+
+        userReceptor = list(User.objects.filter(username = idR))[0]
+
+
+        dniE = request.GET.get('idEmisor', None)
+        elusuario = list(Profesor.objects.filter(dni = dniE))
+
+        if len(elusuario) < 1:
+            elusuario = list(Alumno.objects.get(dni = dniE))
+        if len(elusuario) > 0:
+            elusuario = elusuario[0]
+        userEmisor = elusuario
+        idR = userEmisor.correoElectronico
+
+        userEmisor = list(User.objects.filter(username = idR))[0]
+        print("hyg") 
+        conversacionAux = Inbox.get_conversation(userEmisor, userReceptor, 50)
+        print(userEmisor)
+        print(userReceptor)
+        print(conversacionAux)
+        conversacion = []
+        dic = {}
+        for conver in conversacionAux:
+            ahora = conver.sent_at
+            
+            ahora = ahora - timedelta(hours=3)
+            
+            dic = {
+            'content': conver.content,
+            'sender': conver.sender.id,
+            'recipient': conver.recipient.id,
+            'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
+            'idMensaje': str(conver.id)
+            }
+            conversacion.append(dic)
+    except:
+        conversacion = []
+    print(conversacion) 
     return HttpResponse(
                 json.dumps(conversacion),
                 content_type="application/json")
@@ -2764,25 +2782,25 @@ def obtenerUltimosMensajes(request):
     print("hola")
     print(request.GET) 
    
-    elusuario = Profesor.objects.get(dni = dniR)
+    elusuario = list(Profesor.objects.filter(dni = dniR))
 
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniR)
-    if elusuario:
-        elusuario = elusuario
-    userReceptor = elusuario 
+    if len(elusuario) < 1:
+        elusuario = list(Alumno.objects.filter(dni = dniR))
+    if len(elusuario) > 0:
+        elusuario = elusuario[0]
+    userReceptor = elusuario  
     idR = userReceptor.correoElectronico
 
     userReceptor = list(User.objects.filter(username = idR))[0] 
 
 
     dniE = request.GET.get('idEmisor', None)
-    elusuario = Profesor.objects.get(dni = dniE)
+    elusuario = list(Profesor.objects.filter(dni = dniE))
 
-    if not elusuario:
-        elusuario = Alumno.objects.get(dni = dniE)
-    if elusuario:
-        elusuario = elusuario
+    if len(elusuario) < 1:
+        elusuario = list(Alumno.objects.get(dni = dniE))
+    if len(elusuario) > 0:
+        elusuario = elusuario[0]
     userEmisor = elusuario
     idR = userEmisor.correoElectronico
 

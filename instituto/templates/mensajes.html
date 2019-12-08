@@ -205,7 +205,7 @@
 		background-color: #ffffff;
 		padding: 10px;
 		position: relative;
-		
+
 	}
 
 	.msg_cotainer_send {
@@ -216,7 +216,7 @@
 		background-color: #dcf8c6;
 		padding: 10px;
 		position: relative;
-		
+
 	}
 
 	.msg_time {
@@ -269,10 +269,14 @@
 	}
 
 
-.col-xl-3 {
-    
-    max-width: 30%;
-}
+	.col-xl-3 {
+		min-width: 30%;
+		max-width: 30%;
+	}
+
+	button.tt {
+		width: 100%;
+	}
 
 	.action_menu ul li {
 		width: 100%;
@@ -283,6 +287,34 @@
 	.action_menu ul li i {
 		padding-right: 10px;
 
+	}
+	div#elgrando{
+  width: 400px;
+}
+label.izquierda{
+  display: inline-block;
+  margin-left: 5%;
+  
+}
+div.derecha{
+  display: inline-block;
+  
+  margin-left: 5%;
+  
+  
+}
+div.alinealoNomas{
+  text-align: left;
+}
+
+	button.tt {
+		background-color: Transparent;
+		background-repeat: no-repeat;
+		border: none;
+		cursor: pointer;
+		overflow: hidden;
+		outline: none;
+		display: block;
 	}
 
 	.action_menu ul li:hover {
@@ -311,47 +343,52 @@
 				<div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" placeholder="Search..." name="" class="form-control search">
+							<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." name=""
+								class="form-control search">
 							<div class="input-group-prepend">
 								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
 					</div>
 					<div class="card-body contacts_body">
-						<ui class="contacts">
+						<ui class="contacts" id="cont">
+
+
 							{%for p in profes%}
-							<a onclick="establecerActual('{{p.dni}}','{{p.apellido}} {{p.nombre}}','Profesor')">
-							<li class="active">
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
-											class="rounded-circle user_img" style="width: 50px;height: 50px;">
-										
+							<button id="{{p.dni}}p" class="tt"
+								onclick="establecerActual('{{p.dni}}','{{p.apellido}} {{p.nombre}}','Profesor')">
+								<li>
+									<div class="d-flex bd-highlight">
+										<div class="img_cont">
+											<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+												class="rounded-circle user_img" style="width: 50px;height: 50px;">
+
+										</div>
+										<div class="user_info">
+											<span>{{p.apellido}} {{p.nombre}}</span>
+											<p>Profesor</p>
+										</div>
 									</div>
-									<div class="user_info">
-										<span>{{p.apellido}} {{p.nombre}}</span>
-										<p>Profesor</p>
+								</li>
+							</button>
+							{%endfor%}
+							{%for a in alus%}
+							<button class="tt" id="{{a.dni}}a"
+								onclick="establecerActual('{{a.dni}}','{{a.apellido}} {{a.nombre}}','Alumno')">
+								<li>
+									<div class="d-flex bd-highlight">
+										<div class="img_cont">
+											<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+												class="rounded-circle user_img" style="width: 50px;height: 50px;">
+
+										</div>
+										<div class="user_info">
+											<span>{{a.apellido}} {{a.nombre}}</span>
+											<p>Alumno</p>
+										</div>
 									</div>
-								</div>
-							</li>
-						</a>
-								{%endfor%}
-								{%for a in alus%}
-								<a onclick="establecerActual('{{a.dni}}','{{a.apellido}} {{a.nombre}}','Alumno')">
-							<li>
-								<div class="d-flex bd-highlight">
-									<div class="img_cont">
-										<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
-											class="rounded-circle user_img" style="width: 50px;height: 50px;">
-										
-									</div>
-									<div class="user_info">
-										<span>{{a.apellido}} {{a.nombre}}</span>
-										<p>Alumno</p>
-									</div>
-								</div>
-							</li>
-						</a>
+								</li>
+							</button>
 							{%endfor%}
 
 
@@ -368,12 +405,12 @@
 							<div class="img_cont">
 								<img src="https://source.unsplash.com/FZWivbri0Xk/60x60"
 									class="rounded-circle user_img">
-								
+
 							</div>
 							<div class="user_info">
 								<span id="usuario"></span>
 								<input type="hidden" id="rrr" value="0">
-									<input type="hidden" id="eee" value="0">
+								<input type="hidden" id="eee" value="0">
 								<input type="hidden" id="actual">
 								<p id="identificador"></p>
 
@@ -381,287 +418,606 @@
 							</div>
 
 						</div>
+						{%if  perms.gestionMusical.es_director or  perms.gestionMusical.es_profesor %}
 						<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-						<div class="action_menu">
-							<ul>
-								<li><i class="fas fa-user-circle"></i> Ver perfil del Usuario</li>
-
-								<li><i class="fas fa-ban"></i> Eliminar todos los Mensajes</li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body msg_card_body" id="historia">
 
 
-				
+
+						{%for alu in alus%}
+						<div class="modal fade bs-example-modal-lg{{alu.dni}}" id="myModal{{alu.dni}}aa" tabindex="-1"
+							role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content" id="elgrando">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel{{alu.dni}}">Datos Personales</h4>
+										<button type="button" class="close" data-dismiss="modal"><span
+												aria-hidden="true">×</span>
+										</button>
+
+									</div>
+									<div class="modal-body" id="cuerpoModal">
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">DNI: </label>
+											<div class="derecha">
+												{{alu.dni}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Apellido:</label>
+											<div class="derecha">
+												{{alu.apellido}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Nombre:</label>
+											<div class="derecha">
+												{{alu.nombre}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Sexo:</label>
+											<div class="derecha">
+												{{alu.sexo}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+											<div class="derecha">
+												{{alu.fechaNac}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Domicilio:</label>
+											<div class="derecha">
+												{{alu.domicilio}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Telefono:</label>
+											<div class="derecha">
+												{{alu.telefono}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Correo:</label>
+											<div class="derecha">
+												{{alu.correoElectronico}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Observaciones:</label>
+											<div class="derecha">
+												{{alu.observaciones}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+											<div class="derecha">
+												{{alu.musica}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
+											<div class="derecha">
+												{{alu.conocimientoPrevio}}
+											</div>
+										</div>
+
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
+											<div class="derecha">
+												{% if alu.especialidadRequerida == None  %}
+												Ninguna Asignada
+
+												{% else %}
+												{{alu.especialidadRequerida}}
+												{% endif %}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Nivel en la especialidad:</label>
+											<div class="derecha">
+												{{alu.nivel}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"
+												style="color: black;">TUTOR:</label>
+											<div class="derecha">
+
+												{%if alu.tutor%}
+												{{alu.tutor}}
+												<a href="#">mas</a>
+												{%else%}
+												<p>No registrado / mayor de edad</p>
+												{%endif%}
+											</div>
+										</div>
 
 
-						
+									</div>
+									<div class="modal-footer">
 
-						
+										<button type="button" class="btn btn-primary"
+											data-dismiss="modal">Cerrar</button>
+									</div>
 
-
-					</div>
-					<div class="card-footer">
-						<div class="input-group">
-
-							<textarea name="" class="form-control type_msg"
-								placeholder="Escriba su mensaje..." id="mensaje"
-								onkeyup="mensajeChange()" maxlength="128" ></textarea>
-							<div class="input-group-append">
-								
-								<button type="button" class="input-group-text send_btn"  onclick="enviarMensaje()" id="enviar" disabled><i class="fas fa-location-arrow"></i></button>
+								</div>
 							</div>
+						</div>
+						{%endfor%}
+
+
+
+						{%for profe in profes%}
+						<div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}pp" tabindex="-1"
+							role="dialog" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content" id="elgrando">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales</h4>
+										<button type="button" class="close" data-dismiss="modal"><span
+												aria-hidden="true">×</span>
+										</button>
+
+									</div>
+									<div class="modal-body" id="cuerpoModal">
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">DNI: </label>
+											<div class="derecha">
+												{{profe.dni}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Apellido:</label>
+											<div class="derecha">
+												{{profe.apellido}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Nombre:</label>
+											<div class="derecha">
+												{{profe.nombre}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Sexo:</label>
+											<div class="derecha">
+												{{profe.sexo}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+											<div class="derecha">
+												{{profe.fechaNac}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Domicilio:</label>
+											<div class="derecha">
+												{{profe.domicilio}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Telefono:</label>
+											<div class="derecha">
+												{{profe.telefono}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Correo:</label>
+											<div class="derecha">
+												{{profe.correoElectronico}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Observaciones:</label>
+											<div class="derecha">
+												{{profe.observaciones}}
+											</div>
+										</div>
+										<div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda">Especialidades:</label>
+											<div class="derecha">
+
+												{%for es in profe.especialidades.all%}
+
+												<p> {{es}} </p>
+												{%endfor%}
+											</div>
+										</div>
+
+									</div>
+									<div class="modal-footer">
+
+										<button type="button" class="btn btn-primary"
+											data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					{%endfor%}
+
+
+
+
+
+					{%endif%}
+
+					<div class="action_menu">
+						<ul>
+							<li onclick="verModelPerfil()"><i class="fas fa-user-circle" id="perfilito"></i> Ver perfil
+								del Usuario</li>
+
+							<li><i class="fas fa-ban"></i> Eliminar todos los Mensajes</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-body msg_card_body" id="historia">
+
+
+
+
+
+
+
+
+
+
+				</div>
+				<div class="card-footer">
+					<div class="input-group">
+
+						<textarea name="" class="form-control type_msg" placeholder="Escriba su mensaje..." id="mensaje"
+							onkeyup="mensajeChange()" maxlength="128"></textarea>
+						<div class="input-group-append">
+
+							<button type="button" class="input-group-text send_btn" onclick="enviarMensaje()"
+								id="enviar" disabled><i class="fas fa-location-arrow"></i></button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
 </body>
 <script>
-		
-		  function actualizarMensajes() {
-			console.log('funcion actualizar');
-			var idEmisor = document.getElementById('actualEmisorDni').value;
-			var idReceptor = document.getElementById('actual').value;
-			//obtenerUltimosMensajes(idEmisor, idReceptor);
-			verConversacion(idEmisor, idReceptor);
-		  }
-		  function activar(){
-		  setInterval(actualizarMensajes, 5000);
+	function verModelPerfil() {
+		//obtener seleccion
+		dni = document.getElementById('actual').value;
+		ident = document.getElementById('identificador').innerHTML;
+		if (dni != "") {
+			if (ident == "Alumno") {
+				id = "#myModal" + dni + "aa";
+				$(id).modal('show');
+			} else {
+				id = "#myModal" + dni + "pp";
+				$(id).modal('show');
+			}
 		}
-		  
-		  
-		
-		
-	  </script>
+
+
+	}
+
+	function actualizarMensajes() {
+		console.log('funcion actualizar');
+		var idEmisor = document.getElementById('actualEmisorDni').value;
+		var idReceptor = document.getElementById('actual').value;
+		//obtenerUltimosMensajes(idEmisor, idReceptor);
+		verConversacion(idEmisor, idReceptor);
+	}
+	function activar() {
+		setInterval(actualizarMensajes, 5000);
+	}
+
+
+
+
+</script>
 <script>
-function modificarEstilo(){
-	//color resaltar
-	
+	function myFunction() {
+		// Declare variables
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById('myInput');
+		filter = input.value.toUpperCase();
+		ul = document.getElementById("cont");
+		li = ul.getElementsByTagName('li');
 
-	//cambiar cabeza imagen
-}
+		// Loop through all list items, and hide those who don't match the search query
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("span")[0];
 
-function establecerActual(dni,username,identidad){
-document.getElementById('usuario').innerHTML = username;
-document.getElementById('actual').value = dni;
-document.getElementById('identificador').innerHTML = identidad;
-var idEmisor = document.getElementById('actualEmisorDni').value;
-	  var idReceptor = document.getElementById('actual').value;
-	  modificarEstilo();
-verConversacion(idEmisor, idReceptor);
-activar();
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
+</script>
+<script>
+	activar();
+	function modificarEstilo() {
+		//color resaltar
 
-}
+
+		//cambiar cabeza imagen
+	}
+	function sleep(miliseconds) {
+		var currentTime = new Date().getTime();
+
+		while (currentTime + miliseconds >= new Date().getTime()) {
+		}
+	}
+	function habilitar() {
+		var x = document.getElementsByClassName("tt");
+		var i;
+		for (i = 0; i < x.length; i++) {
+			x[i].removeAttribute('disabled');
+		}
+	}
+	var viejo = "";
+	function establecerActual(dni, username, identidad) {
+		//document.getElementById("cont").style.display="none";
+		var x = document.getElementsByClassName("tt");
+		var i;
+		for (i = 0; i < x.length; i++) {
+			x[i].setAttribute('disabled', "true");
+		}
+		if (identidad == "Profesor") {
+			nomnom = dni + "p";
+			document.getElementById(nomnom).style.backgroundColor = "blue";
+
+			if (viejo != "" && viejo != nomnom) {
+
+				document.getElementById(viejo).style.backgroundColor = "transparent";
+
+			}
+			viejo = nomnom;
+		} else {
+			nomnom = dni + "a";
+			document.getElementById(nomnom).style.backgroundColor = "blue";
+			if (viejo != "" && viejo != nomnom) {
+				document.getElementById(viejo).style.backgroundColor = "transparent";
+			}
+			viejo = nomnom;
+		}
+		document.getElementById('usuario').innerHTML = username;
+		document.getElementById('actual').value = dni;
+		document.getElementById('identificador').innerHTML = identidad;
+		var idEmisor = document.getElementById('actualEmisorDni').value;
+		var idReceptor = document.getElementById('actual').value;
+
+		modificarEstilo();
+		verConversacion(idEmisor, idReceptor);
+
+
+
+
+
+
+
+	}
 
 </script>
 </style>
 <script>
-	function idReceptorDID(idReceptor){
+	function idReceptorDID(idReceptor) {
 		var dni = idReceptor;
 		var id = 0;
 		$.ajax({
-      data: { 'dni': dni },
-      url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
-      type: 'get',
-      success: function (data) {
-			id =parseInt( data.id);
-			
-			document.getElementById('rrr').value = id;
-	  }});
-	  
-	  return id;
+			data: { 'dni': dni },
+			url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
+			type: 'get',
+			success: function (data) {
+				id = parseInt(data.id);
+
+				document.getElementById('rrr').value = id;
+			}
+		});
+
+		return id;
 
 	}
-	function idEmisorDID(idEmisor){
+	function idEmisorDID(idEmisor) {
 		var dni = idEmisor;
 		var id = 0;
 		$.ajax({
-      data: { 'dni': dni },
-      url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
-      type: 'get',
-      success: function (data) {
-		  
-			id =parseInt( data.id);
-			
-			document.getElementById('eee').value = id;
-	  }});
-	  
-	  
-	  return id;
+			data: { 'dni': dni },
+			url: '{% url "gestionMusical:dni_to_idUser" %}', //El id que estoy guardando en data se va a enviar en esa url
+			type: 'get',
+			success: function (data) {
+
+				id = parseInt(data.id);
+
+				document.getElementById('eee').value = id;
+			}
+		});
 
 
-		
-}
-  function ocultarMensajes(id) {
-    var id_profesor = "{{user.id}}"
-    $.ajax({
-      data: { 'id': id },
-      url: '{% url "gestionMusical:ocultar_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
-      type: 'get',
-      success: function (data) {
-        if (data['ocultar'] == false) {
-          if (data['profesor'] == true) {
-            var html = '<li class="nav-item">' +
-              '<a class="nav-link" href="/chat/inbox_profesor/' + id_profesor + '">Mensajes</a>' +
-              '</li>'
-            $('#mensajes').html(html);
-          } else {
-            var html = '<li class="nav-item">' +
-              '<a class="nav-link" href="/chat/inbox/' + id + '/' + data['profesor_id'] + '">Mensajes</a>' +
-              '</li>'
-            $('#mensajes').html(html);
-          }
-        }
-      }
-    });
-  }
+		return id;
+
+
+
+	}
+	function ocultarMensajes(id) {
+		var id_profesor = "{{user.id}}"
+		$.ajax({
+			data: { 'id': id },
+			url: '{% url "gestionMusical:ocultar_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+			type: 'get',
+			success: function (data) {
+				if (data['ocultar'] == false) {
+					if (data['profesor'] == true) {
+						var html = '<li class="nav-item">' +
+							'<a class="nav-link" href="/chat/inbox_profesor/' + id_profesor + '">Mensajes</a>' +
+							'</li>'
+						$('#mensajes').html(html);
+					} else {
+						var html = '<li class="nav-item">' +
+							'<a class="nav-link" href="/chat/inbox/' + id + '/' + data['profesor_id'] + '">Mensajes</a>' +
+							'</li>'
+						$('#mensajes').html(html);
+					}
+				}
+			}
+		});
+	}
 </script>
 
 <script>
-  function verConversacion(idEmisor, idReceptor) {
-	
-    console.log(idEmisor);
-	console.log(idReceptor);
-	l = idReceptorDID(idReceptor);
-			
+	function verConversacion(idEmisor, idReceptor) {
 
-	r = idEmisorDID(idEmisor);
-    $.ajax({
-      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
-      url: '{% url "gestionMusical:ver_conversacion_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
-      type: 'get',
-      success: function (conversacion) {
-		var limpiar = "";
-		$('#historia').html(limpiar);
-        for (var i = 0; i < conversacion.length; i++) {
-			
-			
-			
+		console.log(idEmisor);
+		console.log(idReceptor);
+		l = idReceptorDID(idReceptor);
 
 
-			
-			lE = document.getElementById('rrr').value;
-			lR = document.getElementById('eee').value;
-			
-          if (conversacion[i].sender == lR) {
-			
-			
-			var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+conversacion[i].content+'<span class="msg_time_send">'+conversacion[i].sent_at+'</span></div></div>'
-			  
-			  
-            $('#historia').append(html);
-            console.log(html);
-          }
-          else if (conversacion[i].sender == lE) {
-			var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+conversacion[i].content+'<span class="msg_time">'+conversacion[i].sent_at+'</span></div></div>'
-            
-            $('#historia').append(html);
-            console.log(html);
-          }
+		r = idEmisorDID(idEmisor);
+		$.ajax({
+			data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
+			url: '{% url "gestionMusical:ver_conversacion_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+			type: 'get',
+			success: function (conversacion) {
+				var limpiar = "";
+				$('#historia').html(limpiar);
+				for (var i = 0; i < conversacion.length; i++) {
+
+
+
+
+
+
+					lE = document.getElementById('rrr').value;
+					lR = document.getElementById('eee').value;
+
+					if (conversacion[i].sender == lR) {
+
+
+						var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >' + conversacion[i].content + '<span class="msg_time_send">' + conversacion[i].sent_at + '</span></div></div>'
+
+
+						$('#historia').append(html);
+						console.log(html);
+					}
+					else if (conversacion[i].sender == lE) {
+						var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >' + conversacion[i].content + '<span class="msg_time">' + conversacion[i].sent_at + '</span></div></div>'
+
+						$('#historia').append(html);
+						console.log(html);
+					}
+				}
+				var elem = document.getElementById('historia');
+				elem.scrollTop = elem.scrollHeight;
+				habilitar();
+
+			},
+		});
+
+
+
+	}
+	function enviarMensaje(idEmisor, idReceptor) {
+
+		var idEmisor = document.getElementById('actualEmisorDni').value;
+		var idReceptor = document.getElementById('actual').value;
+		if (idReceptor != "") {
+			console.log(idReceptor);
+			var mensaje = document.getElementById("mensaje").value;
+			console.log('enviar mensaje');
+			$.ajax({
+				data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor, 'mensaje': mensaje },
+				url: '{% url "gestionMusical:enviar_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+				dataType: 'json',
+				success: function (dic) {
+					var limpiar = ""
+					$('#historia').html(limpiar);
+
+					verConversacion(idEmisor, idReceptor);
+				},
+			});
+
+			$('#mensaje').val('');
+		} else {
+			alert("seleccione un chat");
 		}
-		var elem = document.getElementById('historia');
-   		elem.scrollTop = elem.scrollHeight;
-		
-      },
-    });
-  }
-  function enviarMensaje(idEmisor, idReceptor) {
-	
-	  var idEmisor = document.getElementById('actualEmisorDni').value;
-	  var idReceptor = document.getElementById('actual').value;
-	  if(idReceptor != ""){
-	  console.log(idReceptor);
-    var mensaje = document.getElementById("mensaje").value;
-    console.log('enviar mensaje');
-    $.ajax({
-      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor, 'mensaje': mensaje },
-      url: '{% url "gestionMusical:enviar_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
-      dataType: 'json',
-      success: function (dic) {
-        var limpiar = ""
-		$('#historia').html(limpiar);
-		
-        verConversacion(idEmisor, idReceptor);
-      },
-	});
-	
-    $('#mensaje').val('');
-  }else{
-	  alert("seleccione un chat");
-  }
-}
-  function vistoMensaje(mensaje) {
-    console.log('visto mensaje');
-    console.log(mensaje);
-    $.ajax({
-      data: { 'mensaje': mensaje },
-      url: '{% url "gestionMusical:visto_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
-      dataType: 'json',
-      success: function (data) {
-        console.log('visto')
-      },
-    });
-  }
-  function obtenerUltimosMensajes(idEmisor, idReceptor) {
-    console.log(idEmisor);
-	console.log("idReceptor");
-	l = idReceptorDID(idReceptor);
-			
+	}
+	function vistoMensaje(mensaje) {
+		console.log('visto mensaje');
+		console.log(mensaje);
+		$.ajax({
+			data: { 'mensaje': mensaje },
+			url: '{% url "gestionMusical:visto_mensaje_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+			dataType: 'json',
+			success: function (data) {
+				console.log('visto')
+			},
+		});
+	}
+	function obtenerUltimosMensajes(idEmisor, idReceptor) {
+		console.log(idEmisor);
+		console.log("idReceptor");
+		l = idReceptorDID(idReceptor);
 
-	r = idEmisorDID(idEmisor);
-	
-    $.ajax({
-      data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
-      url: '{% url "gestionMusical:obtener_ultimos_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
-      dataType: 'json',
-      success: function (mensajesNoLeidos) {
-		var limpiar = ""
-		$('#historia').html(limpiar);
-        for (var i = 0; i < mensajesNoLeidos.length; i++) {
-			lE = document.getElementById('rrr').value;
-			lR = document.getElementById('eee').value;
-			console.log("ulti: "+ mensajesNoLeidos[i].sender+ "  "+lR+"  "+lE);
-          if (mensajesNoLeidos[i].sender == lR) {
-			
-			var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >'+mensajesNoLeidos[i].content+'<span class="msg_time_send">'+mensajesNoLeidos[i].sent_at+'</span></div></div>'
-            $('#historia').append(html);
-            console.log(mensajesNoLeidos[i].idMensaje);
-           vistoMensaje(mensajesNoLeidos[i].idMensaje);
-          }
-          else if (mensajesNoLeidos[i].sender == lE) {
-            var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >'+mensajesNoLeidos[i].content+'<span class="msg_time">'+mensajesNoLeidos[i].sent_at+'</span></div></div>'
-			console.log(mensajesNoLeidos[i].idMensaje);
-			$('#historia').append(html);
-            vistoMensaje(mensajesNoLeidos[i].idMensaje);
-          }
-		}
-		var elem = document.getElementById('historia');
-   		elem.scrollTop = elem.scrollHeight;
-		
-      },
-    });
-  }
+
+		r = idEmisorDID(idEmisor);
+
+		$.ajax({
+			data: { 'idEmisor': idEmisor, 'idReceptor': idReceptor },
+			url: '{% url "gestionMusical:obtener_ultimos_mensajes_ajax" %}', //El id que estoy guardando en data se va a enviar en esa url
+			dataType: 'json',
+			success: function (mensajesNoLeidos) {
+				var limpiar = ""
+				$('#historia').html(limpiar);
+				for (var i = 0; i < mensajesNoLeidos.length; i++) {
+					lE = document.getElementById('rrr').value;
+					lR = document.getElementById('eee').value;
+					console.log("ulti: " + mensajesNoLeidos[i].sender + "  " + lR + "  " + lE);
+					if (mensajesNoLeidos[i].sender == lR) {
+
+						var html = '<div class="d-flex justify-content-end mb-4" ><div class="msg_cotainer_send" >' + mensajesNoLeidos[i].content + '<span class="msg_time_send">' + mensajesNoLeidos[i].sent_at + '</span></div></div>'
+						$('#historia').append(html);
+						console.log(mensajesNoLeidos[i].idMensaje);
+						vistoMensaje(mensajesNoLeidos[i].idMensaje);
+					}
+					else if (mensajesNoLeidos[i].sender == lE) {
+						var html = '<div class="d-flex justify-content-start mb-4" ><div class="msg_cotainer" >' + mensajesNoLeidos[i].content + '<span class="msg_time">' + mensajesNoLeidos[i].sent_at + '</span></div></div>'
+						console.log(mensajesNoLeidos[i].idMensaje);
+						$('#historia').append(html);
+						vistoMensaje(mensajesNoLeidos[i].idMensaje);
+					}
+				}
+
+				var elem = document.getElementById('historia');
+				elem.scrollTop = elem.scrollHeight;
+				habilitar();
+
+			},
+		});
+
+
+	}
 </script>
 
 
 
 <script>
-  function mensajeChange() {
-    console.log("change");
-    const mensaje = document.getElementById("mensaje");
-    const boton = document.getElementById("enviar");
-    console.log(boton)
-    if (mensaje.value.trim() !== "") {
-      console.log("Se muestra")
-      boton.removeAttribute('disabled')
-    } else {
-      console.log('se oculta');
-      boton.setAttribute('disabled', "true");
-    }
-  }
+	function mensajeChange() {
+		console.log("change");
+		const mensaje = document.getElementById("mensaje");
+		const boton = document.getElementById("enviar");
+		console.log(boton)
+		if (mensaje.value.trim() !== "") {
+			console.log("Se muestra")
+			boton.removeAttribute('disabled')
+		} else {
+			console.log('se oculta');
+			boton.setAttribute('disabled', "true");
+		}
+	}
 </script>
 
 {% endblock contenidiPagina %}
