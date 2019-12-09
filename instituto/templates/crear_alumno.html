@@ -348,7 +348,7 @@ div#datosTutores{
 
                 <div class="form-row">
                         
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                           <label for="inputPassword4" class="sub">Sexo:</label>
                           <select name="sexo" id="id_sexo" class="form-control" required>
                               {% if alumno_form.sexo == "Femenino" %}
@@ -365,12 +365,17 @@ div#datosTutores{
 
                               </select>
                         </div>
-                        <div class="form-group col-md-6">
+
+                        <div class="form-group col-md-4">
                                 <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
                                 
                                 <input type="date" id="id_fechaNac"  class="form-control" value={{alumno_form.fechaNac.value|date:"Y-m-d"}} name="fechaNac"  min="1900-01-01" max="2014-01-01" required>
                                 
-                              </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label for="inputPassword4" class="sub">Telefono:</label>
+                                <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)" value="{{alumno_form.telefono.value}}" placeholder="Numero telefono" required>
+                            </div>
                 </div>
                 <div  id="datosTutores">
                         <p style="color: black;">Datos de Tutor/a:</p>
@@ -454,13 +459,7 @@ div#datosTutores{
                   <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" value="{{alumno_form.domicilio.value}}" required>
                 </div>
 
-                <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Telefono:</label>
-                            <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)" value="{{alumno_form.telefono.value}}" placeholder="Numero telefono" required>
-                        </div>
-                        
-                </div>
+                
                 <div class="form-group">
                         <label for="inputAddress2" class="sub">Observaciones:</label>
                         
@@ -485,7 +484,7 @@ div#datosTutores{
                                 {%endfor%}
                                 
                         </select>
-                        <button type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
+                        <button class="btn btn-light" type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
                                 <i class="fas fa-plus"></i>
                         </button>
                       

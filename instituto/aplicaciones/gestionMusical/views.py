@@ -14,6 +14,7 @@ from django.core import serializers
 import json
 from django.http import HttpResponse
 import time
+from directmessages.models import Message
 from datetime import date
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -27,7 +28,7 @@ from reportlab.platypus import Table
 from reportlab.lib.enums import TA_CENTER
 from directmessages.apps import Inbox
 import dateutil.parser
-
+ 
 import base64
 import psycopg2
 import os
@@ -2623,7 +2624,7 @@ def enviarMensaje(request):
     elusuario = list(Profesor.objects.filter(dni = dniE))
 
     if len(elusuario) < 1:
-        elusuario = list(Alumno.objects.get(dni = dniE))
+        elusuario = list(Alumno.objects.filter(dni = dniE))
     if len(elusuario) > 0:
         elusuario = elusuario[0]
     userEmisor = elusuario
@@ -2681,9 +2682,13 @@ def verConversacion (request):
     #print(request.GET['idReceptor'])
     #print(request.GET['idEmisor'])
     dic = {}
-    try: #borrar try catch y ver los mensajes print//marcar vistos-eliminarlos//prestamos
+    conversacion = []
+    #//marcar vistos-eliminarlos//prestamos
+    
+    dniR = request.GET.get('idReceptor', None)
+    dniE = request.GET.get('idEmisor', None)
 
-        dniR = request.GET.get('idReceptor', None)
+    if dniR !="" and dniE !="":
         elusuario = list(Profesor.objects.filter(dni = dniR))
 
         if len(elusuario) < 1:
@@ -2696,11 +2701,11 @@ def verConversacion (request):
         userReceptor = list(User.objects.filter(username = idR))[0]
 
 
-        dniE = request.GET.get('idEmisor', None)
+        
         elusuario = list(Profesor.objects.filter(dni = dniE))
 
         if len(elusuario) < 1:
-            elusuario = list(Alumno.objects.get(dni = dniE))
+            elusuario = list(Alumno.objects.filter(dni = dniE))
         if len(elusuario) > 0:
             elusuario = elusuario[0]
         userEmisor = elusuario
@@ -2708,10 +2713,22 @@ def verConversacion (request):
 
         userEmisor = list(User.objects.filter(username = idR))[0]
         print("hyg") 
-        conversacionAux = Inbox.get_conversation(userEmisor, userReceptor, 50)
+        conversacionAux = list(Inbox.get_conversation(userEmisor, userReceptor, 50))
+
+
+        copia = conversacionAux.copy() 
+        for a in copia:       
+            if a.read_at != None:   
+                print("esta visto")
+                conversacionAux.remove(a)
+            else:
+                print("no esta visto")
+        
+
+
         print(userEmisor)
         print(userReceptor)
-        print(conversacionAux)
+        
         conversacion = []
         dic = {}
         for conver in conversacionAux:
@@ -2727,9 +2744,8 @@ def verConversacion (request):
             'idMensaje': str(conver.id)
             }
             conversacion.append(dic)
-    except:
-        conversacion = []
-    print(conversacion) 
+    
+    
     return HttpResponse(
                 json.dumps(conversacion),
                 content_type="application/json")
@@ -2798,7 +2814,7 @@ def obtenerUltimosMensajes(request):
     elusuario = list(Profesor.objects.filter(dni = dniE))
 
     if len(elusuario) < 1:
-        elusuario = list(Alumno.objects.get(dni = dniE))
+        elusuario = list(Alumno.objects.filter(dni = dniE))
     if len(elusuario) > 0:
         elusuario = elusuario[0]
     userEmisor = elusuario

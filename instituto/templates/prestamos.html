@@ -59,6 +59,15 @@
     layer = jQuery(win.document);
   }
   function mensaje() {
+    var varInstru = document.getElementById("country2").value;
+
+    var varAlu = document.getElementById("country").value;
+    varAlu = varAlu + "op";
+    varAlu = document.getElementById(varAlu).innerHTML;
+    var varDias = document.getElementById("numeroDias").value;
+
+
+    document.getElementById("cabezaPresta").innerText = "Esta seguro de establecer el prestamo del instrumento: "+varInstru+"; para el alumno: "+varAlu+"; por "+varDias+" dias  ?";
     var valorDni = document.getElementById('country').value;
 
     valorDni = parseInt(valorDni);
@@ -308,7 +317,7 @@
   }
 
   label.finalizado {
-    background-color: rgb(86, 240, 86);
+    background-color: #54FF87;
     padding: 5px;
     color: black;
     border-radius: 18px 18px 18px 18px;
@@ -565,13 +574,13 @@
                   <div class="form-group" id="nivell">
                     <label for="inputState" style="color: black" id="labbel">Responsable:</label>
 
-                    <select id="country" class="form-control"  name="alumnoResponsable" required>
+                    <select id="country" class="form-control" name="alumnoResponsable" required>
 
 
 
                       {%for alu in alumnos%}
-                      <option value='{{alu.dni}}'>{{alu.nombre}}</option>
-                      
+                      <option id ="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.nombre}}</option>
+
 
                       {%endfor%}
 
@@ -588,7 +597,7 @@
 
 
                       {%for instru in instrumentos%}
-                      <option value='{{instru.id}}'>{{instru.nombre}}</option>
+                      <option  value='{{instru.id}}'>{{instru.nombre}}</option>
                       {%endfor%}
 
                     </select>
@@ -599,7 +608,7 @@
                     <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
 
                     <div class="form-row" id="edadInput">
-                      <input type="number" class="form-control" name="duracionDias" min="1" max="10" required>
+                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" min="1" max="10" required>
 
                     </div>
 
@@ -623,12 +632,18 @@
 
                           </div>
                           <div class="modal-body">
-                            Esta seguro de establecer el prestamo ?
-                            <div id="bien"><strong>Segun su reputacion, se ve que el alumno nunca tuvo problemas con los
-                                prestamos dados</strong> </div>
-                            <div id="mal"><strong>Tenga en cuenta que el Alumno seleccionado tuvo varios problemas con
-                                las devolucion de los prestamos dados, y por lo cual tiene una baja reputacion conforme
-                                a los prestamos.</strong> </div>
+                            <p id="cabezaPresta">
+                                
+
+                            </p>
+                            
+
+                            
+                            <div id="mal">
+                              
+                            </div>
+
+                                
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -767,7 +782,7 @@
                       <th>Alumno Responsable</th>
                       <th>Instrumento</th>
                       <th>Fecha Creacion</th>
-                      
+
                       <th style="display: none">Duracion dias</th>
                       <th style="display: none">Estado de Prestamo</th>
 
@@ -788,7 +803,7 @@
                     <tr>
                       <td>
                         {% if par.estadoPrestamo %}
-                        <label class="activo" id="pres{{par.id}}">Prestamo Activo</label>
+                        <label class="badge badge-warning" id="pres{{par.id}}">Prestamo Activo</label>
 
                         <script>
                           var fecha = "{{par.fechaCreacion|date:'%m/%d/%Y'}}";
@@ -819,7 +834,7 @@
 
 
                         {%else%}
-                        <label class="finalizado">Prestamo Finalizado</label>
+                        <label class="badge badge-success">Prestamo Finalizado</label>
                         {%endif%}
                       </td>
 
@@ -844,37 +859,36 @@
 
                       <td>
 
-                        <center>
+                        
 
 
 
                           <div class="btn-group">
-                            <center>
-                              <div style="display: inline-block;">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                  data-target=".bs-example-modal-lg{{par.id}}">
 
-                                  <i class="fa fa-eye"></i>
+                            <div style="display: inline-block;">
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{par.id}}">
 
-                                </button>
-                              </div>
-                              <div style="display: none;">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                  data-target=".bs-example-modal-lgEditar{{par.id}}">
+                                <i class="fa fa-eye"></i>
 
-                                  <i class="fa fa-eye"></i>
+                              </button>
+                            </div>
+                            <div style="display: none;">
+                              <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target=".bs-example-modal-lgEditar{{par.id}}">
 
-                                </button>
-                              </div>
-                              <div style="display: none;">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                  data-target=".bs-example-modal-lgEliminar{{par.id}}">
+                                <i class="fa fa-eye"></i>
 
-                                  <i class="fa fa-eye"></i>
+                              </button>
+                            </div>
+                            <div style="display: none;">
+                              <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target=".bs-example-modal-lgEliminar{{par.id}}">
 
-                                </button>
-                              </div>
-                            </center>
+                                <i class="fa fa-eye"></i>
+
+                              </button>
+                            </div>
+
                             <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1"
                               role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-lg">
@@ -997,12 +1011,12 @@
                               {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor  %}
                               <center>
                                 {%if par.estadoPrestamo%}
-                                <button type="button" class="btn btn-danger btn-icon-split"
+                                <button type="button" class="btn btn-primary"
                                   style="background-color: seagreen;" data-toggle="modal"
                                   data-target=".bs-example-modal-lg23{{par.id}}">
-                                  <div id="icon8">
+                                  
                                     <i class="fas fa-window-close"></i>
-                                  </div>
+                                  
                                 </button>
                                 {%endif%}
                               </center>
@@ -1094,7 +1108,7 @@
                                   </div>
                                 </div>
                               </div>
-                        </center>
+                        
 
                       </td>
 
