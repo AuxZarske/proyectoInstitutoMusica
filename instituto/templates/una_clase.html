@@ -372,7 +372,8 @@
     background-color: brown;
 
   }
-  button.btn-secondary{
+
+  button.btn-secondary {
     background-color: #ff004b;
   }
 
@@ -449,7 +450,7 @@
   }
 
   button#nuevoAlumno {
-   
+
     padding: 0.5%;
     margin: 10px;
     margin-left: 0%;
@@ -461,13 +462,14 @@
     -webkit-border-radius: 31px 31px 31px 31px;
 
   }
-  div#cosaArriba{
-    float:right;
+
+  div#cosaArriba {
+    float: right;
   }
 
   button#nuevoAsistencia {
     padding: 0.5%;
-    
+
     margin: 10px;
     margin-left: 0%;
     background-color: #ffc107;
@@ -475,34 +477,35 @@
     border-radius: 31px 31px 31px 31px;
     -moz-border-radius: 31px 31px 31px 31px;
     -webkit-border-radius: 31px 31px 31px 31px;
-    float:right;
+    float: right;
 
 
   }
-  button#pasadaAsistencia{
+
+  button#pasadaAsistencia {
     padding: 0.5%;
     margin: 10px;
-    
+
     margin-left: 0%;
     background-color: #ffc107;
     border: 1px solid rgba(255, 182, 99, 0.295);
     border-radius: 31px 31px 31px 31px;
     -moz-border-radius: 31px 31px 31px 31px;
     -webkit-border-radius: 31px 31px 31px 31px;
-    float:right;
+    float: right;
   }
 
   button#verTotalAsistencia {
     padding: 0.5%;
     margin: 10px;
-    
+
     margin-left: 0%;
     background-color: #ffc107;
     border: 1px solid rgba(255, 182, 99, 0.295);
     border-radius: 31px 31px 31px 31px;
     -moz-border-radius: 31px 31px 31px 31px;
     -webkit-border-radius: 31px 31px 31px 31px;
-    float:right;
+    float: right;
 
   }
 
@@ -524,12 +527,14 @@
 
 
   }
-  input#id_fechaPasada{
+
+  input#id_fechaPasada {
     width: 30%;
   }
+
   div.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 40%;
-}
+  }
 
   input.elCheck {
 
@@ -599,9 +604,10 @@
     -webkit-border-radius: 31px 31px 31px 31px;
 
   }
-  p#msj{
+
+  p#msj {
     font-size: 17px;
-}
+  }
 
   select#country {
     display: inline-block;
@@ -625,27 +631,27 @@
   </div>
 
 
-  <div id="cuadroMensajes" >
+  <div id="cuadroMensajes">
 
-      {% if messages %}
-      {% for message in messages %}
+    {% if messages %}
+    {% for message in messages %}
 
-      {% if message.tags == 'success'%}
-      <ul class="alert alert-success alert-dismissible">
+    {% if message.tags == 'success'%}
+    <ul class="alert alert-success alert-dismissible">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-      </ul> 
-      {%endif%}
-      {% if message.tags == 'error'%}
-      <ul class="alert alert-danger alert-dismissible">
+      <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+    </ul>
+    {%endif%}
+    {% if message.tags == 'error'%}
+    <ul class="alert alert-danger alert-dismissible">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-      </ul> 
-      {%endif%}
+      <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+    </ul>
+    {%endif%}
 
-      {% endfor %}
-     {% endif %}
-</div>
+    {% endfor %}
+    {% endif %}
+  </div>
 
   <div id="zonaInferior">
     <!--lista-->
@@ -666,31 +672,32 @@
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
                     <thead>
-                      
-                        <button id="nuevoAlumno" type="button" style="display: inline-block;" data-toggle="modal"
-                          data-target=".bs-example-modal-lg5"><i class="fas fa-plus"></i> Añadir Alumno</button>
-                       
-                          <a href="{% url 'gestionMusical:asistencia_unaClase'  laClase.id %}">
-                          <button id="verTotalAsistencia" type="button" style="display: inline-block;"><i
-                              class="fas fa-calendar-check"></i> Ver Asistencias</button>
-                        </a>
 
-                        <button id="pasadaAsistencia" type="button" style="display: inline-block;" data-toggle="modal"
-                          data-target=".bs-example-modal-lg6347"><i class="fas fa-arrow-circle-down"></i> Establecer Asistencia Pasada
-                          </button>
+                      <button id="nuevoAlumno" type="button" style="display: inline-block;" data-toggle="modal"
+                        data-target=".bs-example-modal-lg5"><i class="fas fa-plus"></i> Añadir Alumno</button>
 
-                        <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i
-                            class="fas fa-check"></i>Establecer Asistencias marcadas</button>
+                      <a href="{% url 'gestionMusical:asistencia_unaClase'  laClase.id %}">
+                        <button id="verTotalAsistencia" type="button" style="display: inline-block;"><i
+                            class="fas fa-calendar-check"></i> Ver Asistencias</button>
+                      </a>
 
+                      <button id="pasadaAsistencia" type="button" style="display: inline-block;" data-toggle="modal"
+                        data-target=".bs-example-modal-lg6347"><i class="fas fa-arrow-circle-down"></i> Establecer
+                        Asistencia Pasada
+                      </button>
 
-                            
-                       
+                      <button id="nuevoAsistencia" type="submit" style="display: inline-block;"><i
+                          class="fas fa-check"></i>Establecer Asistencias marcadas</button>
 
 
 
 
 
-                       
+
+
+
+
+
 
 
 
@@ -950,92 +957,90 @@
         </div>
       </div>
     </form>
-{%endif%}
-<!--MMMM-->
-<div class="modal fade bs-example-modal-lg6347" id="myModal6347"
-tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel6347">Establecer una asistencia pasada a la fecha de clase:</h4>
-      <button type="button" class="close" data-dismiss="modal"><span
-          aria-hidden="true">×</span>
-      </button>
+    {%endif%}
+    <!--MMMM-->
+    <div class="modal fade bs-example-modal-lg6347" id="myModal6347" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel6347">Establecer una asistencia pasada a la fecha de clase:</h4>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+            </button>
 
+          </div>
+          <div class="modal-body">
+            <div class="form-row">
+              <label for="inputAddress2" class="sub">Alumno:</label>
+              <select class="selectpicker" single data-live-search="true" id="alumnoPas" required>
+
+
+
+                {%for al in listAlumnos%}
+
+                <option value='{{al.dni}}'>{{al.apellido}} {{al.nombre}}</option>
+                {%endfor%}
+
+              </select>
+            </div>
+            <br>
+            <div class="form-row">
+
+              <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
+              <select class="selectpicker" single id="alumnoPasEstado" required>
+
+
+
+
+                <option value='Asistio'>Asistio</option>
+                <option value='Falto'>Falto</option>
+
+
+              </select>
+            </div>
+            <br>
+            <div class="form-row">
+              <label for="inputAddress2" class="sub">Fecha de Asistencia:</label>
+              <input type="date" id="id_fechaPasada" class="form-control" name="fechaPasada" value="2019-07-22"
+                min="20-01-01" max="2020-01-01" required>
+
+            </div>
+
+            <br>
+            <div class="form-row">
+
+              <label for="inputAddress2" class="sub">Horario de Clase:</label>
+              <select class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required>
+
+
+
+                {%for h in laClase.horarios.all%}
+
+                <option value='{{h.id}}'>{{h.diaSemanal}} Desde {{h.horario_inicio}} Hasta {{h.horario_final}} </option>
+                {%endfor%}
+
+              </select>
+
+
+            </div>
+
+
+
+
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            <button type="button" id="botonCargaPasada" class="btn btn-primary">Confirmar</button>
+
+          </div>
+
+        </div>
+      </div>
     </div>
-    <div class="modal-body">
-      <div class="form-row">
-       <label for="inputAddress2" class="sub">Alumno:</label>
-       <select  class="selectpicker" single data-live-search="true" id="alumnoPas" required  >
-             
-             
-
-           {%for al in listAlumnos%}
-           
-           <option value='{{al.dni}}'>{{al.apellido}} {{al.nombre}}</option>
-           {%endfor%}
-           
-      </select>
-     </div>
-     <br>
-     <div class="form-row">
-
-         <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
-         <select  class="selectpicker" single  id="alumnoPasEstado" required  >
-               
-               
-
-            
-             <option value='Asistio'>Asistio</option>
-             <option value='Falto'>Falto</option>
-             
-             
-        </select>
-     </div>
-     <br>
-     <div class="form-row">
-        <label for="inputAddress2" class="sub">Fecha de Asistencia:</label>
-        <input type="date" id="id_fechaPasada"  class="form-control" name="fechaPasada" value="2019-07-22" min="20-01-01" max="2020-01-01" required>
-
-     </div>
-
-     <br>
-     <div class="form-row">
-
-         <label for="inputAddress2" class="sub">Horario de Clase:</label>
-         <select  class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required  >
-               
-               
-
-            {%for h in laClase.horarios.all%}
-                                                                
-            <option value='{{h.id}}'>{{h.diaSemanal}}  Desde {{h.horario_inicio}} Hasta {{h.horario_final}} </option>
-            {%endfor%}
-             
-        </select>
-
-
-     </div>
-
-
-
-      
-
-      
-
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-      <button type="button" id="botonCargaPasada" class="btn btn-primary"
-        >Confirmar</button>
-
-    </div>
-
-  </div>
-</div>
-</div>
-<!--mmm-->
+    <!--mmm-->
 
     <!--Finlista-->
     <div id="accordion">
@@ -1043,7 +1048,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
       <div id="zonaAlumno">
         <div id="datosPersonales">
-            {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
           <h3 style="margin-bottom: 20px;" id="datoAlumno">Datos del Alumno:</h3>
           {% if elAlumno %}
 
@@ -1238,11 +1243,14 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
           {%if  perms.gestionMusical.es_alumno%}
           {%if elAlumno.sexo == "Masculino"%}
-          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenido a Clases {{elAlumno.apellido}} {{elAlumno.nombre}}:</h3>
+          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenido a Clases {{elAlumno.apellido}}
+            {{elAlumno.nombre}}:</h3>
           {%else%}
-          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenida a Clases {{elAlumno.apellido}} {{elAlumno.nombre}}:</h3>
+          <h3 style="margin-bottom: 20px;" id="datoAlumno">Bienvenida a Clases {{elAlumno.apellido}}
+            {{elAlumno.nombre}}:</h3>
           {%endif%}
-          <p style="margin-left: 20px;">Aqui podra ver las los ejercicio, temas y partituras anexadas por su profesor de clase.</p>
+          <p style="margin-left: 20px;">Aqui podra ver las los ejercicio, temas y partituras anexadas por su profesor de
+            clase.</p>
           <p style="margin-left: 20px;"> Ademas de las recomendacion practicas como tarea para el hogar.</p>
           {%endif%}
           {%endif%}
@@ -1274,7 +1282,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
                     <div id="addAlumno">
                       <div class="btn-group">
-                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                        {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                         <button type="button" class="btn btn-primary btn-icon-split" id="fraseTableBoton"
                           data-toggle="modal" data-target=".bs-example-modal-lg5{{laClase.id}}">
                           <span class="icon text-white-50">
@@ -1644,7 +1652,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
                                   </a>
                                 </div>
                                 <div class="btn-group">
-                                    {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                                  {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                   <center>
                                     <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                       data-target=".bs-example-modal-lg12{{tema.id}}">
@@ -1711,7 +1719,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
                     <div id="addAlumno">
                       <div class="btn-group">
-                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                        {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                         <button type="button" class="btn btn-info btn-icon-split" id="fraseTableBoton2"
                           data-toggle="modal" data-target=".bs-example-modal-lg6132{{laClase.id}}"
                           style="margin-right: 10px;">
@@ -1926,7 +1934,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
                                                     </div>
                                                   </div>
 
-                                                
+
                                                   <div class="btn-group">
                                                     <center>
                                                       <button type="button" class="btn btn-success btn-icon-split"
@@ -1968,9 +1976,9 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
                                                         </div>
                                                       </div>
-                                                      
+
                                                     </div>
-                                                    
+
                                               </center>
 
                                             </td>
@@ -2434,7 +2442,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
                                 </div>
                                 <div class="btn-group">
                                   <center>
-                                      {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                                    {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                     <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                       data-target=".bs-example-modal-lg2{{par.id}}">
                                       <div id="icon8">
@@ -2668,7 +2676,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
                                   {%endif%}
                                   <div class="btn-group">
                                     <center>
-                                        {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                                      {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                                       <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                         data-target=".bs-example-modal-lg255{{t.id}}">
                                         <div id="icon8">
@@ -3136,7 +3144,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
       }
 
     </script>
-<script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+    <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
     <!-- Bootstrap core JavaScript
  <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
@@ -3166,7 +3174,7 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
 
 
-        
+
 
         $("#botonCargaPasada").click(function () {
 
@@ -3181,14 +3189,14 @@ tabindex="-1" role="dialog" aria-hidden="true">
 
           } else {
 
-          $.ajax({
+            $.ajax({
 
               url: '{% url "gestionMusical:crear_asistenciaPasada" %}',
               data: {
                 'alumno': alumno,
                 'asistencia': asistencia,
                 'fecha': fecha,
-                'clase':clase,
+                'clase': clase,
                 'horario': horario
               },
               dataType: 'json',
@@ -3203,8 +3211,8 @@ tabindex="-1" role="dialog" aria-hidden="true">
                   location.reload();
                 }
               }
-              });
-            }
+            });
+          }
 
 
         });
@@ -3256,9 +3264,9 @@ tabindex="-1" role="dialog" aria-hidden="true">
     <script type="text/javascript">
 
       document.getElementById("id_fechaPasada").max = new Date().toISOString().split("T")[0];
-  
-          
-  </script>
+
+
+    </script>
 
 
     {%endblock archivos%}

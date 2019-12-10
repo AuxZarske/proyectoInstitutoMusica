@@ -59,18 +59,21 @@
     layer = jQuery(win.document);
   }
   function mensaje() {
+
     var varInstru = document.getElementById("country2").value;
     varInstru = varInstru + "opo";
-    
-    varInstru = document.getElementById(varInstru).innerHTML;
 
+    varInstru = document.getElementById(varInstru).innerHTML;
     var varAlu = document.getElementById("country").value;
     varAlu = varAlu + "op";
     varAlu = document.getElementById(varAlu).innerHTML;
     var varDias = document.getElementById("numeroDias").value;
+    if (varInstru != "" && varAlu != "" && varDias != "") {
+      document.getElementById("cabezaPresta").innerText = "Esta seguro de establecer el prestamo del instrumento: " + varInstru + "; para el alumno: " + varAlu + "; por " + varDias + " dias  ?";
+    }
 
 
-    document.getElementById("cabezaPresta").innerText = "Esta seguro de establecer el prestamo del instrumento: "+varInstru+"; para el alumno: "+varAlu+"; por "+varDias+" dias  ?";
+
     var valorDni = document.getElementById('country').value;
 
     valorDni = parseInt(valorDni);
@@ -151,7 +154,8 @@
     width: 100px;
     height: 100px;
   }
-  p#cabezaPresta{
+
+  p#cabezaPresta {
 
     font-size: 20px;
   }
@@ -254,13 +258,13 @@
 
   div#mal {
     border: solid 3px rgb(128, 0, 0);
-    background-color: rgb(223, 56, 56);
+
     color: black;
-    margin: 5%;
+    margin: 2%;
     border-radius: 18px 18px 18px 18px;
     -moz-border-radius: 18px 18px 18px 18px;
     -webkit-border-radius: 18px 18px 18px 18px;
-    padding: 3%;
+
   }
 
   div#edadFiltro {
@@ -586,7 +590,7 @@
 
 
                       {%for alu in alumnos%}
-                      <option id ="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.nombre}}</option>
+                      <option id="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.nombre}}</option>
 
 
                       {%endfor%}
@@ -604,7 +608,7 @@
 
 
                       {%for instru in instrumentos%}
-                      <option id ="{{instru.id}}opo"  value='{{instru.id}}'>{{instru.nombre}}</option>
+                      <option id="{{instru.id}}opo" value='{{instru.id}}'>{{instru.nombre}}</option>
                       {%endfor%}
 
                     </select>
@@ -615,7 +619,8 @@
                     <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
 
                     <div class="form-row" id="edadInput">
-                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" min="1" max="10" required>
+                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" min="1" max="10"
+                        required>
 
                     </div>
 
@@ -627,7 +632,7 @@
                   <div class="form-group" style="vertical-align: bottom;">
 
 
-                    <!--MMMM varios modal con datastables--> 
+                    <!--MMMM varios modal con datastables-->
                     <div class="modal fade bs-example-modal-lg2371" id="myModal2371" tabindex="-1" role="dialog"
                       aria-hidden="true">
                       <div class="modal-dialog modal-lg">
@@ -640,18 +645,327 @@
                           </div>
                           <div class="modal-body">
                             <p id="cabezaPresta">
-                                Seguro que quiere establecer el Prestamo?
+                              Seguro que quiere establecer el Prestamo?
 
 
                             </p>
-                            
 
-                            
+
+
                             <div id="mal">
-                              
+                              <div id="atrazado">
+                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                  data-target="#divReco" id="b3c" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  Datos Adicionales
+                              </button>
+                                
+                                <!--table reco-->
+                                <div id="divReco"  class="collapse" aria-labelledby="headingThree"
+                                data-parent="#mal">
+                                  <!--ftable-->
+                                  <!-- DataTales Example -->
+                                  <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+
+                                      
+                                      
+                                      <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table class="table table-bordered" id="dataTable7" width="100%"
+                                            cellspacing="0">
+                                            <thead>
+                                              <tr>
+
+
+                                                <th> Nombre</th>
+
+                                                <th> Descripcion</th>
+                                                <th>Acciones</th>
+
+                                              </tr>
+                                            </thead>
+
+                                            <tbody>
+                                              {% for t in todasRecomendaciones%}
+
+
+                                              <tr>
+
+                                                <td>{{t.nombre}}</td>
+                                                <td>{{t.descripcion}}</td>
+
+
+
+                                                <td>
+
+                                                  <center>
+
+
+
+                                                    <div class="btn-group">
+                                                      <center>
+                                                        <div>
+                                                          <button type="button" class="btn btn-primary"
+                                                            data-toggle="modal"
+                                                            data-target=".bs-example-modal-lg34{{t.id}}">
+
+                                                            <i class="fa fa-eye"></i>
+
+                                                          </button>
+                                                        </div>
+                                                      </center>
+                                                      <div class="modal fade bs-example-modal-lg34{{t.id}}"
+                                                        id="myModal34{{t.id}}" tabindex="-1" role="dialog"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                          <div class="modal-content" id="elgrando">
+                                                            <div class="modal-header">
+                                                              <h4 class="modal-title" id="myModalLabel{{t.id}}">Datos
+                                                              </h4>
+                                                              <button type="button" class="close"
+                                                                data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                              </button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Nombre:
+                                                                </label>
+                                                                <div class="derecha">
+                                                                  {{t.nombre}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3"
+                                                                  class="izquierda">Descripcion:</label>
+                                                                <div class="derecha">
+                                                                  {{t.descripcion}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3"
+                                                                  class="izquierda">Profesor:</label>
+                                                                <div class="derecha">
+                                                                  {{t.profesorReferencia.nombre}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Fecha
+                                                                  Inicio:</label>
+                                                                <div class="derecha">
+                                                                  {{t.fechaCreacion}}
+                                                                </div>
+                                                              </div>
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Fecha
+                                                                  fin:</label>
+                                                                <div class="derecha">
+                                                                  {{t.fechaCierre}}
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="alinealoNomas">
+                                                                <label for="inputEmail3" class="izquierda">Partitura
+                                                                  Recomendada:</label>
+                                                                <div class="derecha">
+                                                                  {{t.partiMusicReco.nombreIdentificador}}
+                                                                </div>
+                                                              </div>
+
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                              <button type="button" class="btn btn-primary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                            </div>
+
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+
+
+                                                  </center>
+
+                                                </td>
+
+                                              </tr>
+
+                                              {%endfor%}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!--ftable fin-->
+
+                                </div>
+                                <!--fin table reco-->
+                              </div>
+
+                              <div id="malosDevoluciones">
+                                
+                                <div id="atrazado">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#divReco" id="b3c" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    Datos Adicionales
+                                </button>
+                                 <!--table reco-->
+                                 <div id="divReco"  class="collapse" aria-labelledby="headingThree"
+                                 data-parent="#mal">
+                                   <!--ftable-->
+                                   <!-- DataTales Example -->
+                                   <div class="card shadow mb-4">
+                                     <div class="card-header py-3">
+ 
+                                       
+                                       
+                                       <div class="card-body">
+                                         <div class="table-responsive">
+                                           <table class="table table-bordered" id="dataTable7" width="100%"
+                                             cellspacing="0">
+                                             <thead>
+                                               <tr>
+ 
+ 
+                                                 <th> Nombre</th>
+ 
+                                                 <th> Descripcion</th>
+                                                 <th>Acciones</th>
+ 
+                                               </tr>
+                                             </thead>
+ 
+                                             <tbody>
+                                               {% for t in todasRecomendaciones%}
+ 
+ 
+                                               <tr>
+ 
+                                                 <td>{{t.nombre}}</td>
+                                                 <td>{{t.descripcion}}</td>
+ 
+ 
+ 
+                                                 <td>
+ 
+                                                   <center>
+ 
+ 
+ 
+                                                     <div class="btn-group">
+                                                       <center>
+                                                         <div>
+                                                           <button type="button" class="btn btn-primary"
+                                                             data-toggle="modal"
+                                                             data-target=".bs-example-modal-lg34{{t.id}}">
+ 
+                                                             <i class="fa fa-eye"></i>
+ 
+                                                           </button>
+                                                         </div>
+                                                       </center>
+                                                       <div class="modal fade bs-example-modal-lg34{{t.id}}"
+                                                         id="myModal34{{t.id}}" tabindex="-1" role="dialog"
+                                                         aria-hidden="true">
+                                                         <div class="modal-dialog modal-lg">
+                                                           <div class="modal-content" id="elgrando">
+                                                             <div class="modal-header">
+                                                               <h4 class="modal-title" id="myModalLabel{{t.id}}">Datos
+                                                               </h4>
+                                                               <button type="button" class="close"
+                                                                 data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                               </button>
+ 
+                                                             </div>
+                                                             <div class="modal-body">
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3" class="izquierda">Nombre:
+                                                                 </label>
+                                                                 <div class="derecha">
+                                                                   {{t.nombre}}
+                                                                 </div>
+                                                               </div>
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3"
+                                                                   class="izquierda">Descripcion:</label>
+                                                                 <div class="derecha">
+                                                                   {{t.descripcion}}
+                                                                 </div>
+                                                               </div>
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3"
+                                                                   class="izquierda">Profesor:</label>
+                                                                 <div class="derecha">
+                                                                   {{t.profesorReferencia.nombre}}
+                                                                 </div>
+                                                               </div>
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3" class="izquierda">Fecha
+                                                                   Inicio:</label>
+                                                                 <div class="derecha">
+                                                                   {{t.fechaCreacion}}
+                                                                 </div>
+                                                               </div>
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3" class="izquierda">Fecha
+                                                                   fin:</label>
+                                                                 <div class="derecha">
+                                                                   {{t.fechaCierre}}
+                                                                 </div>
+                                                               </div>
+ 
+                                                               <div class="alinealoNomas">
+                                                                 <label for="inputEmail3" class="izquierda">Partitura
+                                                                   Recomendada:</label>
+                                                                 <div class="derecha">
+                                                                   {{t.partiMusicReco.nombreIdentificador}}
+                                                                 </div>
+                                                               </div>
+ 
+ 
+ 
+                                                             </div>
+                                                             <div class="modal-footer">
+ 
+                                                               <button type="button" class="btn btn-primary"
+                                                                 data-dismiss="modal">Cerrar</button>
+                                                             </div>
+ 
+                                                           </div>
+                                                         </div>
+                                                       </div>
+ 
+ 
+ 
+                                                   </center>
+ 
+                                                 </td>
+ 
+                                               </tr>
+ 
+                                               {%endfor%}
+                                             </tbody>
+                                           </table>
+                                         </div>
+                                       </div>
+                                     </div>
+                                   </div>
+                                   <!--ftable fin-->
+ 
+                                 </div>
+                                 <!--fin table reco-->
+                              </div>
+
+
                             </div>
 
-                                
+
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -867,256 +1181,256 @@
 
                       <td>
 
-                        
 
 
 
+
+                        <div class="btn-group">
+
+                          <div style="display: inline-block;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target=".bs-example-modal-lg{{par.id}}">
+
+                              <i class="fa fa-eye"></i>
+
+                            </button>
+                          </div>
+                          <div style="display: none;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target=".bs-example-modal-lgEditar{{par.id}}">
+
+                              <i class="fa fa-eye"></i>
+
+                            </button>
+                          </div>
+                          <div style="display: none;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target=".bs-example-modal-lgEliminar{{par.id}}">
+
+                              <i class="fa fa-eye"></i>
+
+                            </button>
+                          </div>
+
+                          <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1"
+                            role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content" id="elgrando">
+                                <div class="modal-header">
+                                  <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos del Prestamo:</h4>
+                                  <button type="button" class="close" data-dismiss="modal"><span
+                                      aria-hidden="true">×</span>
+                                  </button>
+
+                                </div>
+                                <div class="modal-body" id="cuerpoModal">
+                                  <!---->
+                                  <div class="alinealoNomas">
+                                    <label class="izquierda">Numero de Identificacion: </label>
+                                    <div class="derecha">
+                                      {{par.id}}
+                                    </div>
+                                  </div>
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
+                                    <div class="derecha">
+                                      {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}
+                                    </div>
+                                  </div>
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Instrumento:</label>
+                                    <div class="derecha">
+                                      {{par.instrumentoPrestado.nombre}}
+                                    </div>
+                                  </div>
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                                    <div class="derecha">
+                                      {{par.fechaCreacion}}
+                                    </div>
+                                  </div>
+
+                                  {% if par.estadoPrestamo %}
+
+                                  {%else%}
+
+
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Fecha de Recepcion:</label>
+                                    <div class="derecha">
+                                      {{par.fechaCierre}}
+                                    </div>
+                                  </div>
+                                  {%endif%}
+
+
+
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
+                                    <div class="derecha">
+                                      {{par.duracionDias}}
+                                    </div>
+                                  </div>
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
+                                    <div class="derecha">
+                                      {% if par.estadoPrestamo %}
+                                      Activo
+                                      {%else%}
+                                      Finalizado
+                                      {%endif%}
+                                    </div>
+                                  </div>
+                                  {%if par.estadoProfesor == "Entregador"%}
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Profesor Responsable del
+                                      prestamo:</label>
+                                    <div class="derecha">
+                                      {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                    </div>
+                                  </div>
+                                  {%else%}
+
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
+                                    <div class="derecha">
+                                      {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                    </div>
+                                  </div>
+
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
+                                    <div class="derecha">
+                                      {{par.observaciones}}
+                                    </div>
+                                  </div>
+
+                                  <div class="alinealoNomas">
+                                    <label for="inputEmail3" class="izquierda">Estado del instrumento:</label>
+                                    <div class="derecha">
+                                      {{par.condicion}}
+                                    </div>
+                                  </div>
+
+                                  {%endif%}
+
+
+
+
+                                </div>
+                                <div class="modal-footer">
+
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="ere">
+
+                          </div>
                           <div class="btn-group">
+                            {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor  %}
+                            <center>
+                              {%if par.estadoPrestamo%}
+                              <button type="button" class="btn btn-primary" style="background-color: seagreen;"
+                                data-toggle="modal" data-target=".bs-example-modal-lg23{{par.id}}">
 
-                            <div style="display: inline-block;">
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{par.id}}">
-
-                                <i class="fa fa-eye"></i>
-
-                              </button>
-                            </div>
-                            <div style="display: none;">
-                              <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target=".bs-example-modal-lgEditar{{par.id}}">
-
-                                <i class="fa fa-eye"></i>
+                                <i class="fas fa-window-close"></i>
 
                               </button>
-                            </div>
-                            <div style="display: none;">
-                              <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target=".bs-example-modal-lgEliminar{{par.id}}">
+                              {%endif%}
+                            </center>
+                            {%endif%}
 
-                                <i class="fa fa-eye"></i>
-
-                              </button>
-                            </div>
-
-                            <div class="modal fade bs-example-modal-lg{{par.id}}" id="myModal{{par.id}}" tabindex="-1"
-                              role="dialog" aria-hidden="true">
+                            <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}"
+                              tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-lg">
-                                <div class="modal-content" id="elgrando">
+                                <div class="modal-content">
                                   <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel{{par.id}}">Datos del Prestamo:</h4>
+                                    <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Finalizacion
+                                      de Prestamo</h4>
                                     <button type="button" class="close" data-dismiss="modal"><span
                                         aria-hidden="true">×</span>
                                     </button>
 
                                   </div>
-                                  <div class="modal-body" id="cuerpoModal">
-                                    <!---->
-                                    <div class="alinealoNomas">
-                                      <label class="izquierda">Numero de Identificacion: </label>
-                                      <div class="derecha">
-                                        {{par.id}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
-                                      <div class="derecha">
-                                        {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Instrumento:</label>
-                                      <div class="derecha">
-                                        {{par.instrumentoPrestado.nombre}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
-                                      <div class="derecha">
-                                        {{par.fechaCreacion}}
-                                      </div>
-                                    </div>
+                                  <div class="modal-body">
+                                    <h4 style="font-size: 18px;">Esta seguro de Finalizar el prestamo del Instrumento
+                                      {{par.instrumentoPrestado.nombre}} correspondiente al alumno
+                                      {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}} ?</h4>
+                                    <br>
 
-                                    {% if par.estadoPrestamo %}
-
-                                    {%else%}
-
-
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Fecha de Recepcion:</label>
-                                      <div class="derecha">
-                                        {{par.fechaCierre}}
+                                    <label for="inputEmail3"
+                                      style="display: block; text-align: left; margin-left: 5%;">Estado de la
+                                      devolucion:</label>
+                                    <div style="display: block; text-align: left; margin-left: 10%;">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                          id="exampleRadios1{{par.id}}" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                          Excelente
+                                        </label>
                                       </div>
-                                    </div>
-                                    {%endif%}
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                          id="exampleRadios2{{par.id}}" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                          Bien
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                          id="exampleRadios3{{par.id}}" value="option3">
+                                        <label class="form-check-label" for="exampleRadios3">
+                                          Aceptable
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                          id="exampleRadios4{{par.id}}" value="option4">
+                                        <label class="form-check-label" for="exampleRadios4">
+                                          regular
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                          id="exampleRadios5{{par.id}}" value="option5">
+                                        <label class="form-check-label" for="exampleRadios5">
+                                          Mal estado
+                                        </label>
+                                      </div>
 
 
 
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
-                                      <div class="derecha">
-                                        {{par.duracionDias}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
-                                      <div class="derecha">
-                                        {% if par.estadoPrestamo %}
-                                        Activo
-                                        {%else%}
-                                        Finalizado
-                                        {%endif%}
-                                      </div>
-                                    </div>
-                                    {%if par.estadoProfesor == "Entregador"%}
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Profesor Responsable del
-                                        prestamo:</label>
-                                      <div class="derecha">
-                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
-                                      </div>
-                                    </div>
-                                    {%else%}
 
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
-                                      <div class="derecha">
-                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
-                                      </div>
                                     </div>
 
+                                    <br>
                                     <div class="alinealoNomas">
                                       <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
-                                      <div class="derecha">
-                                        {{par.observaciones}}
-                                      </div>
+
+                                      <textarea class="form-control" id="id_observacionesP{{par.id}}"
+                                        name="observaciones"
+                                        placeholder="Anotaciones sobre el estado de entrega del instrumento..."></textarea>
+
                                     </div>
-
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Estado del instrumento:</label>
-                                      <div class="derecha">
-                                        {{par.condicion}}
-                                      </div>
-                                    </div>
-
-                                    {%endif%}
-
-
-
 
                                   </div>
                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary"
+                                      onclick="finPrestamo('{{par.id}}','id_observacionesP{{par.id}}','exampleRadios5{{par.id}}','exampleRadios4{{par.id}}','exampleRadios3{{par.id}}','exampleRadios2{{par.id}}','exampleRadios1{{par.id}}')">Confirmar
+                                      Finalizacion</button>
+
                                   </div>
 
                                 </div>
                               </div>
                             </div>
 
-                            <div id="ere">
-
-                            </div>
-                            <div class="btn-group">
-                              {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor  %}
-                              <center>
-                                {%if par.estadoPrestamo%}
-                                <button type="button" class="btn btn-primary"
-                                  style="background-color: seagreen;" data-toggle="modal"
-                                  data-target=".bs-example-modal-lg23{{par.id}}">
-                                  
-                                    <i class="fas fa-window-close"></i>
-                                  
-                                </button>
-                                {%endif%}
-                              </center>
-                              {%endif%}
-
-                              <div class="modal fade bs-example-modal-lg23{{par.id}}" id="myModal2{{par.id}}"
-                                tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Finalizacion
-                                        de Prestamo</h4>
-                                      <button type="button" class="close" data-dismiss="modal"><span
-                                          aria-hidden="true">×</span>
-                                      </button>
-
-                                    </div>
-                                    <div class="modal-body">
-                                      <h4 style="font-size: 18px;">Esta seguro de Finalizar el prestamo del Instrumento
-                                        {{par.instrumentoPrestado.nombre}} correspondiente al alumno
-                                        {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}} ?</h4>
-                                      <br>
-
-                                      <label for="inputEmail3"
-                                        style="display: block; text-align: left; margin-left: 5%;">Estado de la
-                                        devolucion:</label>
-                                      <div style="display: block; text-align: left; margin-left: 10%;">
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="exampleRadios"
-                                            id="exampleRadios1{{par.id}}" value="option1" checked>
-                                          <label class="form-check-label" for="exampleRadios1">
-                                            Excelente
-                                          </label>
-                                        </div>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="exampleRadios"
-                                            id="exampleRadios2{{par.id}}" value="option2">
-                                          <label class="form-check-label" for="exampleRadios2">
-                                            Bien
-                                          </label>
-                                        </div>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="exampleRadios"
-                                            id="exampleRadios3{{par.id}}" value="option3">
-                                          <label class="form-check-label" for="exampleRadios3">
-                                            Aceptable
-                                          </label>
-                                        </div>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="exampleRadios"
-                                            id="exampleRadios4{{par.id}}" value="option4">
-                                          <label class="form-check-label" for="exampleRadios4">
-                                            regular
-                                          </label>
-                                        </div>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="exampleRadios"
-                                            id="exampleRadios5{{par.id}}" value="option5">
-                                          <label class="form-check-label" for="exampleRadios5">
-                                            Mal estado
-                                          </label>
-                                        </div>
-
-
-
-
-                                      </div>
-
-                                      <br>
-                                      <div class="alinealoNomas">
-                                        <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
-
-                                        <textarea class="form-control" id="id_observacionesP{{par.id}}"
-                                          name="observaciones"
-                                          placeholder="Anotaciones sobre el estado de entrega del instrumento..."></textarea>
-
-                                      </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                                      <button type="button" class="btn btn-primary"
-                                        onclick="finPrestamo('{{par.id}}','id_observacionesP{{par.id}}','exampleRadios5{{par.id}}','exampleRadios4{{par.id}}','exampleRadios3{{par.id}}','exampleRadios2{{par.id}}','exampleRadios1{{par.id}}')">Confirmar
-                                        Finalizacion</button>
-
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </div>
-                        
 
                       </td>
 
