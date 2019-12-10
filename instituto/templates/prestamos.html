@@ -60,6 +60,9 @@
   }
   function mensaje() {
     var varInstru = document.getElementById("country2").value;
+    varInstru = varInstru + "opo";
+    
+    varInstru = document.getElementById(varInstru).innerHTML;
 
     var varAlu = document.getElementById("country").value;
     varAlu = varAlu + "op";
@@ -147,6 +150,10 @@
 
     width: 100px;
     height: 100px;
+  }
+  p#cabezaPresta{
+
+    font-size: 20px;
   }
 
   div#ere {
@@ -597,7 +604,7 @@
 
 
                       {%for instru in instrumentos%}
-                      <option  value='{{instru.id}}'>{{instru.nombre}}</option>
+                      <option id ="{{instru.id}}opo"  value='{{instru.id}}'>{{instru.nombre}}</option>
                       {%endfor%}
 
                     </select>
@@ -620,7 +627,7 @@
                   <div class="form-group" style="vertical-align: bottom;">
 
 
-                    <!--MMMM-->
+                    <!--MMMM varios modal con datastables--> 
                     <div class="modal fade bs-example-modal-lg2371" id="myModal2371" tabindex="-1" role="dialog"
                       aria-hidden="true">
                       <div class="modal-dialog modal-lg">
@@ -633,7 +640,8 @@
                           </div>
                           <div class="modal-body">
                             <p id="cabezaPresta">
-                                
+                                Seguro que quiere establecer el Prestamo?
+
 
                             </p>
                             
