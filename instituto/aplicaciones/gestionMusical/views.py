@@ -11,6 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+
 import json
 from django.http import HttpResponse
 import time
@@ -33,6 +34,17 @@ import base64
 import psycopg2
 import os
 import base64
+from django.http import JsonResponse
+from json_render import json_render
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
 
 def image_as_base64(image_file, format='png'):
     """
@@ -367,6 +379,101 @@ def registrarProfesor(request):
 def listarestadisticaspresta(request):
     preEnero = None
     return render(request,'listarestapresta.html',{'preEnero':preEnero})
+
+def GrupoTableYellow(request):
+    print(request.GET)
+    alumno= request.GET.get('alumno',None)
+    alu = Alumno.objects.get(dni = alumno)
+    prestamost = list(Prestamo.objects.filter(alumnoResponsable = alu))
+    listaD = []
+    for p in prestamost:
+
+        data = {
+            'id': p.id,
+            'condicion': p.condicion,
+            'observaciones': p.observaciones,
+            
+            'fechaCreacion': p.fechaCreacion,
+            
+            'fechaCierre': p.fechaCierre,
+            'estadoPrestamo': p.estadoPrestamo,
+            'duracionDias': p.duracionDias,
+            'nombreInstru': p.instrumentoPrestado.nombre,
+            'nombreProfe': p.profesorReferencia.apellido+" "+ p.profesorReferencia.nombre,
+            'nombreAlu': p.alumnoResponsable.apellido + " " + p.alumnoResponsable.nombre
+            
+        }
+    
+        listaD.append(data)
+    
+    dicD = {
+        'info': listaD
+    }
+
+    return JsonResponse(dicD)
+
+def GrupoTable(request):
+    print(request.GET)
+    alumno= request.GET.get('alumno',None)
+    alu = Alumno.objects.get(dni = alumno)
+    prestamost = list(Prestamo.objects.filter(alumnoResponsable = alu))
+    listaD = []
+    for p in prestamost:
+
+        data = {
+            'id': p.id,
+            'condicion': p.condicion,
+            'observaciones': p.observaciones,
+            
+            'fechaCreacion': p.fechaCreacion,
+            
+            'fechaCierre': p.fechaCierre,
+            'estadoPrestamo': p.estadoPrestamo,
+            'duracionDias': p.duracionDias,
+            'nombreInstru': p.instrumentoPrestado.nombre,
+            'nombreProfe': p.profesorReferencia.apellido+" "+ p.profesorReferencia.nombre,
+            'nombreAlu': p.alumnoResponsable.apellido + " " + p.alumnoResponsable.nombre
+            
+        }
+    
+        listaD.append(data)
+    
+    dicD = {
+        'info': listaD
+    }
+
+    return JsonResponse(dicD)
+
+
+def GrupoPresta(request):
+    
+    presta = request.GET.get('idPresta',None)
+    
+    p = Prestamo.objects.get(id = presta)
+
+    
+
+    data = {
+        'id': p.id,
+        'condicion': p.condicion,
+        'observaciones': p.observaciones,
+        
+        'fechaCreacion': p.fechaCreacion,
+        
+        'fechaCierre': p.fechaCierre,
+        'estadoPrestamo': p.estadoPrestamo,
+        'duracionDias': p.duracionDias,
+        'nombreInstru': p.instrumentoPrestado.nombre,
+        'nombreProfe': p.profesorReferencia.apellido+" "+ p.profesorReferencia.nombre,
+        'nombreAlu': p.alumnoResponsable.apellido + " " + p.alumnoResponsable.nombre
+        
+    }
+    
+       
+
+    return JsonResponse(data)
+    
+
 
 def listarestadisticasparti(request, num):
     dicti = {}
@@ -900,6 +1007,16 @@ def crearTutor(request):
     else:
         tutor_form =TutorForm()
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
+
+def nomInstru(request):
+    extra = request.GET.get('num', None)
+    print(extra)
+    instru = Instrumento.objects.get(id = extra)
+    nombre = instru.nombre
+    data = {
+        'nombre':nombre
+    }
+    return JsonResponse(data)
 
 def finPrestamo(request):
     extra = request.GET.get('username', None)

@@ -255,9 +255,20 @@
     -webkit-border-radius: 18px 18px 18px 18px;
     padding: 3%;
   }
-
+button#b3c{
+  margin: 2%;
+ 
+    color: black;
+    background-color: #ffc107;
+    
+}
+button#b4c{
+  margin: 2%;
+  color: black;
+  background-color:#E85A61;
+}
   div#mal {
-    border: solid 3px rgb(128, 0, 0);
+
 
     color: black;
     margin: 2%;
@@ -590,7 +601,7 @@
 
 
                       {%for alu in alumnos%}
-                      <option id="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.nombre}}</option>
+                      <option id="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.apellido}} {{alu.nombre}}</option>
 
 
                       {%endfor%}
@@ -619,7 +630,7 @@
                     <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
 
                     <div class="form-row" id="edadInput">
-                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" min="1" max="10"
+                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" value="7" min="1" max="30"
                         required>
 
                     </div>
@@ -653,23 +664,25 @@
 
 
                             <div id="mal">
+                              <p>Tenga en cuenta que la reputacion del Alumno conforme a la entrega de prestamos esta afectada de forma negativa por las siguientes razones:</p>
                               <div id="atrazado">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                  data-target="#divReco" id="b3c" aria-expanded="false"
-                                  aria-controls="collapseThree">
-                                  Datos Adicionales
-                              </button>
-                                
+                                <button class="btn btn-warning" type="button" data-toggle="collapse"
+                                  data-target="#divReco" id="b3c" aria-expanded="false" aria-controls="collapseThree">
+                                  <b>Prestamos devueltos con atrazo en fecha de entrega</b> <span class="icon text-white-50">
+                                      <i class="fas fa-arrow-down"></i>
+          
+                                    </span>
+                                </button>
+
                                 <!--table reco-->
-                                <div id="divReco"  class="collapse" aria-labelledby="headingThree"
-                                data-parent="#mal">
+                                <div id="divReco" class="collapse" aria-labelledby="headingThree" data-parent="#mal">
                                   <!--ftable-->
                                   <!-- DataTales Example -->
                                   <div class="card shadow mb-4">
                                     <div class="card-header py-3">
 
-                                      
-                                      
+
+
                                       <div class="card-body">
                                         <div class="table-responsive">
                                           <table class="table table-bordered" id="dataTable7" width="100%"
@@ -677,10 +690,9 @@
                                             <thead>
                                               <tr>
 
-
-                                                <th> Nombre</th>
-
-                                                <th> Descripcion</th>
+                                                <th>Instrumento</th>
+                                                <th>Dias Otorgado</th>
+                                                <th> Dias de atrazo</th>
                                                 <th>Acciones</th>
 
                                               </tr>
@@ -692,9 +704,10 @@
 
                                               <tr>
 
+                                                
+                                                <td>{{t.descripcion}}</td>
                                                 <td>{{t.nombre}}</td>
                                                 <td>{{t.descripcion}}</td>
-
 
 
                                                 <td>
@@ -808,191 +821,251 @@
                               </div>
 
                               <div id="malosDevoluciones">
-                                
+
                                 <div id="atrazado">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                    data-target="#divReco" id="b3c" aria-expanded="false"
+                                  <button class="btn btn-danger" type="button" data-toggle="collapse"
+                                    data-target="#divReco2" id="b4c" aria-expanded="false"
                                     aria-controls="collapseThree">
-                                    Datos Adicionales
-                                </button>
-                                 <!--table reco-->
-                                 <div id="divReco"  class="collapse" aria-labelledby="headingThree"
-                                 data-parent="#mal">
-                                   <!--ftable-->
-                                   <!-- DataTales Example -->
-                                   <div class="card shadow mb-4">
-                                     <div class="card-header py-3">
- 
-                                       
-                                       
-                                       <div class="card-body">
-                                         <div class="table-responsive">
-                                           <table class="table table-bordered" id="dataTable7" width="100%"
-                                             cellspacing="0">
-                                             <thead>
-                                               <tr>
- 
- 
-                                                 <th> Nombre</th>
- 
-                                                 <th> Descripcion</th>
-                                                 <th>Acciones</th>
- 
-                                               </tr>
-                                             </thead>
- 
-                                             <tbody>
-                                               {% for t in todasRecomendaciones%}
- 
- 
-                                               <tr>
- 
-                                                 <td>{{t.nombre}}</td>
-                                                 <td>{{t.descripcion}}</td>
- 
- 
- 
-                                                 <td>
- 
-                                                   <center>
- 
- 
- 
-                                                     <div class="btn-group">
-                                                       <center>
-                                                         <div>
-                                                           <button type="button" class="btn btn-primary"
-                                                             data-toggle="modal"
-                                                             data-target=".bs-example-modal-lg34{{t.id}}">
- 
-                                                             <i class="fa fa-eye"></i>
- 
-                                                           </button>
-                                                         </div>
-                                                       </center>
-                                                       <div class="modal fade bs-example-modal-lg34{{t.id}}"
-                                                         id="myModal34{{t.id}}" tabindex="-1" role="dialog"
-                                                         aria-hidden="true">
-                                                         <div class="modal-dialog modal-lg">
-                                                           <div class="modal-content" id="elgrando">
-                                                             <div class="modal-header">
-                                                               <h4 class="modal-title" id="myModalLabel{{t.id}}">Datos
-                                                               </h4>
-                                                               <button type="button" class="close"
-                                                                 data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                               </button>
- 
-                                                             </div>
-                                                             <div class="modal-body">
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3" class="izquierda">Nombre:
-                                                                 </label>
-                                                                 <div class="derecha">
-                                                                   {{t.nombre}}
-                                                                 </div>
-                                                               </div>
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3"
-                                                                   class="izquierda">Descripcion:</label>
-                                                                 <div class="derecha">
-                                                                   {{t.descripcion}}
-                                                                 </div>
-                                                               </div>
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3"
-                                                                   class="izquierda">Profesor:</label>
-                                                                 <div class="derecha">
-                                                                   {{t.profesorReferencia.nombre}}
-                                                                 </div>
-                                                               </div>
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3" class="izquierda">Fecha
-                                                                   Inicio:</label>
-                                                                 <div class="derecha">
-                                                                   {{t.fechaCreacion}}
-                                                                 </div>
-                                                               </div>
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3" class="izquierda">Fecha
-                                                                   fin:</label>
-                                                                 <div class="derecha">
-                                                                   {{t.fechaCierre}}
-                                                                 </div>
-                                                               </div>
- 
-                                                               <div class="alinealoNomas">
-                                                                 <label for="inputEmail3" class="izquierda">Partitura
-                                                                   Recomendada:</label>
-                                                                 <div class="derecha">
-                                                                   {{t.partiMusicReco.nombreIdentificador}}
-                                                                 </div>
-                                                               </div>
- 
- 
- 
-                                                             </div>
-                                                             <div class="modal-footer">
- 
-                                                               <button type="button" class="btn btn-primary"
-                                                                 data-dismiss="modal">Cerrar</button>
-                                                             </div>
- 
-                                                           </div>
-                                                         </div>
-                                                       </div>
- 
- 
- 
-                                                   </center>
- 
-                                                 </td>
- 
-                                               </tr>
- 
-                                               {%endfor%}
-                                             </tbody>
-                                           </table>
-                                         </div>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <!--ftable fin-->
- 
-                                 </div>
-                                 <!--fin table reco-->
+                                    <b>Prestamos recibidos en malas condiciones </b>
+                                    
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-arrow-down"></i>
+            
+                                      </span>
+                                  </button>
+                                  <!--table reco-->
+                                  <div id="divReco2" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#malosDevoluciones">
+                                    <!--ftable-->
+                                    <!-- DataTales Example -->
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+
+
+
+                                        <div class="card-body">
+                                          <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable88" width="100%"
+                                              cellspacing="0">
+                                              <thead>
+                                                <tr>
+
+
+                                                  <th>Instrumento</th>
+
+                                                  <th>Condicion</th>
+                                                  <th>Descripcion de Entrega</th>
+
+                                                  <th>Acciones</th>
+
+                                                </tr>
+                                              </thead>
+
+                                              <tbody id = "cuerpoT2">
+                                                {% for par in prestamos%}
+
+
+                                                <tr>
+
+                                                  <td>{{par.instrumentoPrestado.nombre}}</td>
+                                                  <td>{{par.condicion}}</td>
+                                                  <td>{{par.observaciones}}</td>
+
+
+                                                  <td>
+
+                                                    <center>
+
+
+
+                                                      <div class="btn-group">
+                                                        <center>
+                                                          <div>
+                                                            <button type="button" class="btn btn-primary"
+                                                              data-toggle="modal"
+                                                              data-target=".bs-example-modal-lg34MalasCondiciones">
+
+                                                              <i class="fa fa-eye"></i>
+
+                                                            </button>
+                                                          </div>
+                                                        </center>
+
+                                                        
+
+
+
+                                                    </center>
+
+                                                  </td>
+
+                                                </tr>
+
+                                                {%endfor%}
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!--ftable fin-->
+
+                                  </div>
+                                  <!--fin table reco-->
+                                </div>
+
+
                               </div>
 
 
                             </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 
+                              <button type="submit" class="btn btn-facebook" style="vertical-align: bottom;">Confirmar
+                              </button>
+
+                            </div>
 
                           </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-
-                            <button type="submit" class="btn btn-facebook" style="vertical-align: bottom;">Confirmar
-                            </button>
-
-                          </div>
-
                         </div>
                       </div>
-                    </div>
-                    <!--mmm-->
+                      </div>
+                      <!--mmm-->
 
+
+
+
+                    </div>
 
 
 
                   </div>
-
-
-
                 </div>
               </div>
-            </div>
           </form>
+
           {%endif%}
           <br>
+          <!--tyty-->
+          <div class="modal fade bs-example-modal-lg34MalasCondiciones"
+                                                          id="myModal34MalasCondiciones" tabindex="-1" role="dialog"
+                                                          aria-hidden="true">
+                                                          <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content" id="elgrando">
+                                                              <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabelMalasCondiciones">Datos
+                                                                </h4>
+                                                                <button type="button" class="close"
+                                                                  data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                </button>
+
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                
+
+                                                                  <div class="alinealoNomas">
+                                                                      <label class="izquierda">Numero de Identificacion: </label>
+                                                                      <div class="derecha" id= "idMal">
+                                                                        {{par.id}}
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
+                                                                      <div class="derecha" id= "aluMal">
+                                                                        {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Instrumento:</label>
+                                                                      <div class="derecha" id= "instruMal">
+                                                                        {{par.instrumentoPrestado.nombre}}
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                                                                      <div class="derecha" id= "fcreaMal">
+                                                                        {{par.fechaCreacion}}
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    {% if par.estadoPrestamo %}
+                                  
+                                                                    {%else%}
+                                  
+                                  
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Fecha de Recepcion:</label>
+                                                                      <div class="derecha" id= "fcierreMal">
+                                                                        {{par.fechaCierre}}
+                                                                      </div>
+                                                                    </div>
+                                                                    {%endif%}
+                                  
+                                  
+                                  
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
+                                                                      <div class="derecha" id= "diasMal">
+                                                                        {{par.duracionDias}}
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
+                                                                      <div class="derecha" id= "estadoMal">
+                                                                        {% if par.estadoPrestamo %}
+                                                                        Activo
+                                                                        {%else%}
+                                                                        Finalizado
+                                                                        {%endif%}
+                                                                      </div>
+                                                                    </div>
+                                                                    {%if par.estadoProfesor == "Entregador"%}
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Profesor Responsable del
+                                                                        prestamo:</label>
+                                                                      <div class="derecha" id= "pro1Mal">
+                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                                                      </div>
+                                                                    </div>
+                                                                    {%else%}
+                                  
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
+                                                                      <div class="derecha" id= "pro2Mal">
+                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
+                                                                      <div class="derecha" id= "obserMal">
+                                                                        {{par.observaciones}}
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    <div class="alinealoNomas">
+                                                                      <label for="inputEmail3" class="izquierda">Estado del instrumento:</label>
+                                                                      <div class="derecha" id= "condicionMal">
+                                                                        {{par.condicion}}
+                                                                      </div>
+                                                                    </div>
+                                  
+                                                                    {%endif%}
+
+
+
+                                                              </div>
+                                                              <div class="modal-footer">
+
+                                                                <button type="button" class="btn btn-primary"
+                                                                  data-dismiss="modal">Cerrar</button>
+                                                              </div>
+
+                                                            </div>
+                                                          </div>
+                                                        </div>
+          <!--tyty-->
           <br>
           <h1 class="h3 mb-2 text-gray-800">Prestamos</h1>
           {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_director %}
@@ -1530,6 +1603,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
   <script type="text/javascript">
+
+
+
+
     function finPrestamo(id, tex, c5m, c4r, c3a, c2b, c1e) {
 
 
@@ -1686,6 +1763,204 @@
       });
     });
   </script>
+  <script>
+      function nombreInstru(idpas, num){
+        if (num != ""){
+        
+          
+        $.ajax({
+           
+              url: '{% url "gestionMusical:nom_instru" %}',
+              data: {
+                
+                'num': num
+              },
+              dataType: 'json',
+
+              success: function (data) {
+                
+              
+              document.getElementById(idpas).innerHTML = data['nombre'];
+              }
+          });}
+      }
+      
+      $('#country').change(function(){
+        updateTable();
+        updateTableYellow();
+          
+      });
+      function updateTableYellow(){
+       
+          var table = $('#dataTable7').DataTable();
+          $('#dataTable7').DataTable().clear();
+          $('#dataTable7').DataTable().draw();
+          var rn = $("#country").val();
+      
+          $.ajax({
+              url: '{% url "gestionMusical:grupo_TableYellow" %}',
+              data: {
+                  'alumno': rn,
+              },
+              dataType: 'json',
+              success: function(data) {
+                  var instrumento = "";
+                  var dias = "";
+                  var atrazoDias = "";
+                  var acciones = "";
+                  var nid;
+                  var prestamoID = "0"
+                  console.log(data);
+                  console.log(data['info'].length);
+                  for (var i = 0; i < data['info'].length; i++) {
+                      
+                      
+                      instrumento = data['info'][i]['nombreInstru'];
+                      dias = data['info'][i]['duracionDias'] ;
+                      atrazoDias = 999;
+                      prestamoID = data['info'][i]['id'] ;
+                      c = " ' "+prestamoID+" ' ";
+                      cosa = 'onclick="updateModal('+c+')"' ;
+                      acciones = " <center><div class='btn-group'><center><div><button type='button' "+ cosa +"  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>"; 
+                      
+ 
+                      table.row.add( [ instrumento, dias, atrazoDias, acciones] ).draw();
+                      
+                  }
+                  //$('#cuerpoT2').html(html);
+     
+                    
+                    
+
+                  
+              }
+          })
+
+
+      };
+      function updateTable(){
+        console.log('cambio alumno');
+          var table = $('#dataTable88').DataTable();
+          $('#dataTable88').DataTable().clear();
+          $('#dataTable88').DataTable().draw();
+          var rn = $("#country").val();
+          console.log(rn);
+          $.ajax({
+              url: '{% url "gestionMusical:grupo_Table" %}',
+              data: {
+                  'alumno': rn,
+              },
+              dataType: 'json',
+              success: function(data) {
+                  var instrumento = "";
+                  var condicion = "";
+                  var descripcion = "";
+                  var acciones = "";
+                  var nid;
+                  var prestamoID = "0"
+                  console.log(data);
+                  console.log(data['info'].length);
+                  for (var i = 0; i < data['info'].length; i++) {
+                      
+                      
+                      instrumento = data['info'][i]['nombreInstru'];
+                      condicion = data['info'][i]['condicion'] ;
+                      descripcion = data['info'][i]['observaciones'];
+                      prestamoID = data['info'][i]['id'] ;
+                      c = " ' "+prestamoID+" ' ";
+                      cosa = 'onclick="updateModal('+c+')"' ;
+                      acciones = " <center><div class='btn-group'><center><div><button type='button' "+ cosa +"  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>"; 
+                      
+ 
+                      table.row.add( [ instrumento, condicion, descripcion, acciones] ).draw();
+                      
+                  }
+                  //$('#cuerpoT2').html(html);
+     
+                    
+                    
+
+                  
+              }
+          })
+
+
+      };
+      //updateTable();
+      function updateModal(ida){
+       
+        var id = parseInt(ida);
+        
+          
+         
+          $.ajax({
+              url: '{% url "gestionMusical:grupo_Presta" %}',
+              data: {
+                  'idPresta': id,
+              },
+              dataType: 'json',
+              success: function(data) {
+                  var instrumento = "";
+                  var condicion = "";
+                  var descripcion = "";
+                  var acciones = "";
+                  var nid;
+                  var prestamoID = "0";
+                  console.log(data);
+                  
+                      
+                  /* 
+                  instrumento = data['info'][i]['nombreInstru'];
+                  condicion = data['info'][i]['condicion'] ;
+                  descripcion = data['info'][i]['observaciones'];
+                  prestamoID = data['id'] + "identiPresta";
+                  //completar otro*/
+                  //cargar a modal
+                  document.getElementById("idMal").innerHTML = data['id'] ;
+
+                  document.getElementById("aluMal").innerHTML = data['nombreAlu'] ;
+                  document.getElementById("instruMal").innerHTML = data['nombreInstru'] ;
+
+                  document.getElementById("fcreaMal").innerHTML = data['fechaCreacion'] ;
+                  document.getElementById("fcierreMal").innerHTML = data['fechaCierre'] ;
+
+                  document.getElementById("diasMal").innerHTML = data['duracionDias'] ;
+
+                  if(data['estadoPrestamo'] == "True"){
+                    document.getElementById("estadoMal").innerHTML = "Activo" ;
+                  }else{
+                    document.getElementById("estadoMal").innerHTML = "Finalizado" ;
+                  }
+
+                    document.getElementById("estadoMal").innerHTML = data['id'] ;
+
+                
+                  document.getElementById("pro2Mal").innerHTML = data['nombreProfe'] ;
+
+                  document.getElementById("obserMal").innerHTML = data['observaciones'] ;
+                  document.getElementById("condicionMal").innerHTML = data['condicion'] ;
+                  
+                      
+                      
+                  
+                  
+     
+                    
+                    
+
+                  
+              }
+          })
+
+
+      };
+  </script>
+   <script>
+      $(document).ready(function () {
+        updateTable();
+        updateTableYellow();
+      });
+      </script>
 
   {%endblock archivos%}
 </body>
