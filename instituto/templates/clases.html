@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -19,7 +20,9 @@
 
   <!-- Custom fonts for this template -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
@@ -30,66 +33,105 @@
 </head>
 {%endblock head%}
 {%block estilos%}
-    <style type="text/css">
-        h6#fraseTable{
-            display: inline-block;
-            
+<script>
+  function cambioOcultarHistorico() {
 
-        }
-        a#fraseTableBoton{
-              display: inline-block;
-              float: right;
-             
-              
+    var v = document.getElementById("historicoClases").style.display;
+    if (v == "none") {
+      document.getElementById("historicoClases").style.display = "block";
+    } else {
+      document.getElementById("historicoClases").style.display = "none";
+    }
 
-        }
-        div.alinealoNomas{
-  text-align: left;
-}
-p#msj{
+
+  }
+
+</script>
+<style type="text/css">
+  h6#fraseTable {
+    display: inline-block;
+
+
+  }
+
+  a#fraseTableBoton {
+    display: inline-block;
+    float: right;
+
+
+
+  }
+
+  div.alinealoNomas {
+    text-align: left;
+  }
+
+  p#msj {
     font-size: 17px;
-}
-div#elgrando{
-  width: 400px;
-}
-label.izquierda{
-  display: inline-block;
-  margin-left: 5%;
-  
-}
-div.derecha{
-  display: inline-block;
-  
-  margin-left: 5%;
-  
-  
-}
+  }
+
+  div#elgrando {
+    width: 400px;
+  }
+
+  label.izquierda {
+    display: inline-block;
+    margin-left: 5%;
+
+  }
+
+  div.derecha {
+    display: inline-block;
+
+    margin-left: 5%;
 
 
-        label.col-form-label{
-          display: inline-block;
-         
-        }
-        div#icon8{
-          padding: 10px;
-          width: 40px;
-          height: 40px;
-        }
-        div#icon7{
-          
-          width: 100px;
-          height: 100px;
-        }
-        div#ere{
-
-margin-right: 2px;
-margin-left: 2px;
-}
+  }
 
 
+  label.col-form-label {
+    display: inline-block;
 
+  }
 
-    </style>
+  div#icon8 {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  div#historicoClases{
+    display: none;
+    background: rgba(201,229,255,1);
+    background: -moz-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201,229,255,1)), color-stop(27%, rgba(180,180,250,1)), color-stop(61%, rgba(150,150,255,1)), color-stop(92%, rgba(68,68,245,1)), color-stop(99%, rgba(6,6,196,1)), color-stop(100%, rgba(32,124,229,1)));
+    background: -webkit-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
+    background: -o-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
+    background: linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1 );
+    
+    border-radius: 13px 0px 13px 13px;
+    -moz-border-radius: 13px 0px 13px 13px;
+    -webkit-border-radius: 13px 0px 13px 13px;
+    border: orange 2px solid ;
+    height: auto; 
+    color: black;
+    padding: 3%;
+    margin-bottom: 2%;
+  }
+
+  div#icon7 {
+
+    width: 100px;
+    height: 100px;
+  }
+
+  div#ere {
+
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+</style>
 {%endblock estilos%}
 
 
@@ -97,7 +139,7 @@ margin-left: 2px;
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -113,21 +155,24 @@ margin-left: 2px;
             <i class="fa fa-bars"></i>
           </button>
 
-          
+
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -140,13 +185,15 @@ margin-left: 2px;
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
@@ -189,13 +236,15 @@ margin-left: 2px;
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
@@ -205,7 +254,8 @@ margin-left: 2px;
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
@@ -215,7 +265,8 @@ margin-left: 2px;
                     <div class="status-indicator"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
@@ -225,7 +276,8 @@ margin-left: 2px;
                     <div class="status-indicator bg-warning"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
@@ -235,7 +287,8 @@ margin-left: 2px;
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -247,7 +300,8 @@ margin-left: 2px;
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
@@ -282,40 +336,227 @@ margin-left: 2px;
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <div id="cuadroMensajes" >
+          <div id="cuadroMensajes">
 
-                {% if messages %}
-                {% for message in messages %}
-  
-                {% if message.tags == 'success'%}
-                <ul class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-                {% if message.tags == 'error'%}
-                <ul class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-  
-                {% endfor %}
-               {% endif %}
-        </div>
+            {% if messages %}
+            {% for message in messages %}
+
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+
+            {% endfor %}
+            {% endif %}
+          </div>
 
           <!-- Page Heading -->
+          {%if  perms.gestionMusical.es_director %}
+          <button onclick="cambioOcultarHistorico()" class="btn btn-warning btn-icon-split" style="float: right;"><span
+              class="icon text-white-50">
+              <i class="fas fa-table"></i>
+            </span>
+            <span class="text">Historico de Clases</span></button>
+          <br>
+          <div id="historicoClases" > 
+
+              <div style="border: black solid 2px; height: 600px;">datatable clases
+
+                <!--uuu787-->
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de clases historicas:
+                      </h6>
+                      
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre de Clase</th>
+        
+                              <th>Horarios</th>
+        
+        
+                              <th>Acciones</th>
+        
+                            </tr>
+                          </thead>
+        
+                          <tbody>
+                            {% for clase in clases%}
+        
+        
+                            <tr>
+                              <td>{{clase.id}}</td>
+                              {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                              <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
+                              {%else%}
+                              {%if  perms.gestionMusical.es_alumno%}
+                              <td><a href="{% url 'gestionMusical:ver_alumno_clase' 0 clase.id %}">{{clase.nombre}}</a></td>
+                              {%endif%}
+        
+                              {%endif%}
+        
+                              <td>{% for h in clase.horarios.all%}
+                                <label>{{h}}</label><br>
+                                {%endfor%}
+                              </td>
+        
+        
+        
+        
+        
+                              <td>
+        
+                                <center>
+        
+                                  <div class="btn-group">
+                                    <center>
+                                      <div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg{{clase.id}}">
+        
+                                          <i class="fa fa-eye"></i>
+        
+                                        </button>
+                                      </div>
+                                    </center>
+                                    <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}"
+                                      tabindex="-1" role="dialog" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                        <div class="modal-content" id="elgrando">
+                                          <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                            </button>
+        
+                                          </div>
+                                          <div class="modal-body" id="cuerpoModal">
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">ID: </label>
+                                              <div class="derecha">
+                                                {{clase.id}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                              <div class="derecha">
+        
+                                                {{clase.nombre}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                              <div class="derecha">
+                                                {{clase.descripcion}}
+                                              </div>
+                                            </div>
+        
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                              <div class="derecha">
+                                                {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Alumnos:</label>
+                                              <div class="derecha">
+                                                {%for a in clase.alumnoAsociados.all%}
+                                                {{a.apellido}} {{a.nombre}};
+                                                {%endfor%}
+        
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Cupo:</label>
+                                                <div class="derecha">
+                                                  {{clase.cupo}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                <div class="derecha">
+                                                  {{clase.nivel}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                                <div class="derecha">
+                                                  {%for c in clase.especialidadesDar.all%}
+                                                  {{c.nombre}} ;
+                                                  {%endfor%}
+                                                </div>
+                                              </div>
+                                            </div>
+        
+        
+                                          </div>
+                                          <div class="modal-footer">
+        
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                          </div>
+        
+                                        </div>
+                                      </div>
+                                    </div>
+        
+                                    
+        
+        
+                                    
+        
+        
+        
+        
+                                </center>
+        
+                              </td>
+        
+                            </tr>
+        
+                            {%endfor%}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                <!--uuu787 fin-->
+              
+              </div>
+              <div style="border: black solid 2px; height: 400px;">estadictica con filtros</div>
+
+
+          </div>
+          {%endif%}
           <h1 class="h3 mb-2 text-gray-800">Clases</h1>
           {%if  perms.gestionMusical.es_director %}
-          <p class="mb-4">En la siguiente tabla podra visualizar las clases que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar una nueva al sistema.</p>
+
+          <p class="mb-4">En la siguiente tabla podra visualizar las clases que cuenta la institucion actualmente;
+            editar o eliminar alguno. Ademas de insertar una nueva al sistema.</p>
           <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
           {%else%}
           {%if  perms.gestionMusical.es_profesor%}
-          <p class="mb-4">En la siguiente tabla podra visualizar las clases que dicta en la institucion actualmente; editarla o visualizar la informacion correspondiente</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar las clases que dicta en la institucion actualmente;
+            editarla o visualizar la informacion correspondiente</p>
           <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
           {%else%}
           {%if  perms.gestionMusical.es_alumno%}
-          <p class="mb-4">En la siguiente tabla podra visualizar las clases a las que asiste en la institucion actualmente. </p>
+          <p class="mb-4">En la siguiente tabla podra visualizar las clases a las que asiste en la institucion
+            actualmente. </p>
           <p class="mb-4">Haga Click sobre el nombre de una para dirigirce a la misma </p>
           {%endif%}
           {%endif%}
@@ -323,18 +564,20 @@ margin-left: 2px;
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de clases que cuenta actualmente:</h6>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de clases que cuenta actualmente:
+              </h6>
               {%if  perms.gestionMusical.es_director %}
-              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_clase'%}" class="btn btn-primary btn-icon-split">
-                              
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span class="text">Añadir Clase</span>
-                                    
-                              
-                              </a>
-                              {%endif%}
+              <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_clase'%}"
+                class="btn btn-primary btn-icon-split">
+
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Añadir Clase</span>
+
+
+              </a>
+              {%endif%}
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -343,186 +586,194 @@ margin-left: 2px;
                     <tr>
                       <th>#</th>
                       <th>Nombre de Clase</th>
-                      
+
                       <th>Horarios</th>
-                      
-                      
+
+
                       <th>Acciones</th>
-                      
+
                     </tr>
                   </thead>
-                  
+
                   <tbody>
                     {% for clase in clases%}
-                    
-                      
-                        <tr>
-                          <td>{{clase.id}}</td>
-                          {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
-                          <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
-                          {%else%}
-                          {%if  perms.gestionMusical.es_alumno%}
-                          <td><a href="{% url 'gestionMusical:ver_alumno_clase' 0 clase.id %}">{{clase.nombre}}</a></td>
-                          {%endif%}
 
-                          {%endif%}
-                          
-                          <td>{% for h in clase.horarios.all%}
-                              <label>{{h}}</label><br>
-                              {%endfor%}
-                          </td>
-                         
-                          
-                          
-                          
-                          
-                          <td>
-                          
-                          <center>
-                              
-                              <div class="btn-group">
-                                  <center>
-                                      <div >
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{clase.id}}">
-                                      
-                                      <i class="fa fa-eye"></i>
-                                    
+
+                    <tr>
+                      <td>{{clase.id}}</td>
+                      {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                      <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
+                      {%else%}
+                      {%if  perms.gestionMusical.es_alumno%}
+                      <td><a href="{% url 'gestionMusical:ver_alumno_clase' 0 clase.id %}">{{clase.nombre}}</a></td>
+                      {%endif%}
+
+                      {%endif%}
+
+                      <td>{% for h in clase.horarios.all%}
+                        <label>{{h}}</label><br>
+                        {%endfor%}
+                      </td>
+
+
+
+
+
+                      <td>
+
+                        <center>
+
+                          <div class="btn-group">
+                            <center>
+                              <div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg{{clase.id}}">
+
+                                  <i class="fa fa-eye"></i>
+
+                                </button>
+                              </div>
+                            </center>
+                            <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}"
+                              tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="elgrando">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">×</span>
                                     </button>
+
                                   </div>
-                                  </center>
-                                    <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content" id="elgrando">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                            </button>
-                                                    
-                                                </div>
-                                                <div class="modal-body" id="cuerpoModal">
-                                                    <div class="alinealoNomas">
-                                                        <label for="inputEmail3" class="izquierda">ID: </label>
-                                                        <div class="derecha">
-                                                          {{clase.id}}
-                                                        </div>
-                                                      </div>
-                                                      <div class="alinealoNomas">
-                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                                          <div class="derecha">
-                                                              
-                                                              {{clase.nombre}}
-                                                          </div>
-                                                        </div>
-                                                        <div class="alinealoNomas">
-                                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                                            <div class="derecha">
-                                                                {{clase.descripcion}}
-                                                            </div>
-                                                          </div>
-                                                         
-                                                                <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
-                                                                    <div class="derecha">
-                                                                        {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}} 
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Alumnos:</label>
-                                                                      <div class="derecha">
-                                                                        {%for a in clase.alumnoAsociados.all%}
-                                                                            {{a.apellido}} {{a.nombre}};
-                                                                        {%endfor%}
-                                                                          
-                                                                      </div>
-                                                                      <div class="alinealoNomas">
-                                                                          <label for="inputEmail3" class="izquierda">Cupo:</label>
-                                                                          <div class="derecha">
-                                                                              {{clase.cupo}} 
-                                                                          </div>
-                                                                        </div>
-                                                                        <div class="alinealoNomas">
-                                                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
-                                                                            <div class="derecha">
-                                                                                {{clase.nivel}}  
-                                                                            </div>
-                                                                          </div>
-                                                                          <div class="alinealoNomas">
-                                                                              <label for="inputEmail3" class="izquierda">Especialidades:</label>
-                                                                              <div class="derecha">
-                                                                                  {%for c in clase.especialidadesDar.all%}
-                                                                                        {{c.nombre}} ;
-                                                                                    {%endfor%}
-                                                                              </div>
-                                                                            </div>
-                                                                    </div>
-                                                                    
-                                                    
-                                                </div>
-                                                <div class="modal-footer">
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                                </div>
-                                
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
-                              <a href="{% url 'gestionMusical:editar_clase' clase.id %}" class="btn btn-warning btn-icon-split">
-                              
-                                    <span class="icon text-white-50">
-                                          <i class="fas fa-paint-brush"></i>
-                                    </span>
-                              
-                              </a>
-                              {%endif%}
-
-
-                              {%if  perms.gestionMusical.es_director %}
-                              <div class="btn-group">
-                                  <center>
-                                    <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{clase.id}}">
-                                        <div id="icon8">
-                                      <i class="fas fa-trash"></i>
-                                    </div>
-                                    </button>
-                                  </center>
-                              <div class="modal fade bs-example-modal-lg2{{clase.id}}" id="myModal2{{clase.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                      <div class="modal-content">
-                                          <div class="modal-header">
-                                              <h4 class="modal-title" id="myModalLabel{{clase.id}}">Confirmacion de Eliminacion</h4>
-                                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                      </button>
-                                              
-                                          </div>
-                                          <div class="modal-body">
-                                              <h4>Esta seguro de Eliminar la clase {{clase.nombre}}  ???</h4>
-                                              <h4>SE BORRARAN LAS ASISTENCIAS PERTENECIENTES A LA CLASE</h4>
-                                              
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                              <a href="{% url 'gestionMusical:eliminar_clase' clase.id %}">
-                                              <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                            </a>
-                                            </div>
-                          
+                                  <div class="modal-body" id="cuerpoModal">
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">ID: </label>
+                                      <div class="derecha">
+                                        {{clase.id}}
                                       </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <div class="derecha">
+
+                                        {{clase.nombre}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                      <div class="derecha">
+                                        {{clase.descripcion}}
+                                      </div>
+                                    </div>
+
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                      <div class="derecha">
+                                        {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Alumnos:</label>
+                                      <div class="derecha">
+                                        {%for a in clase.alumnoAsociados.all%}
+                                        {{a.apellido}} {{a.nombre}};
+                                        {%endfor%}
+
+                                      </div>
+                                      <div class="alinealoNomas">
+                                        <label for="inputEmail3" class="izquierda">Cupo:</label>
+                                        <div class="derecha">
+                                          {{clase.cupo}}
+                                        </div>
+                                      </div>
+                                      <div class="alinealoNomas">
+                                        <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                        <div class="derecha">
+                                          {{clase.nivel}}
+                                        </div>
+                                      </div>
+                                      <div class="alinealoNomas">
+                                        <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                        <div class="derecha">
+                                          {%for c in clase.especialidadesDar.all%}
+                                          {{c.nombre}} ;
+                                          {%endfor%}
+                                        </div>
+                                      </div>
+                                    </div>
+
+
                                   </div>
+                                  <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                  </div>
+
+                                </div>
                               </div>
+                            </div>
+
+                            {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
+                            <a href="{% url 'gestionMusical:editar_clase' clase.id %}"
+                              class="btn btn-warning btn-icon-split">
+
+                              <span class="icon text-white-50">
+                                <i class="fas fa-paint-brush"></i>
+                              </span>
+
+                            </a>
+                            {%endif%}
+
+
+                            {%if  perms.gestionMusical.es_director %}
+                            <div class="btn-group">
+                              <center>
+                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg2{{clase.id}}">
+                                  <div id="icon8">
+                                    <i class="fas fa-trash"></i>
+                                  </div>
+                                </button>
+                              </center>
+                              <div class="modal fade bs-example-modal-lg2{{clase.id}}" id="myModal2{{clase.id}}"
+                                tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="myModalLabel{{clase.id}}">Confirmacion de Eliminacion
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body">
+                                      <h4>Esta seguro de Eliminar la clase {{clase.nombre}} ???</h4>
+                                      <h4>SE BORRARAN LAS ASISTENCIAS PERTENECIENTES A LA CLASE</h4>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a href="{% url 'gestionMusical:eliminar_clase' clase.id %}">
+                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                      </a>
+                                    </div>
+
+                                  </div>
+                                </div>
                               </div>
-                              {%endif%}
+                            </div>
+                            {%endif%}
 
 
 
 
-                          </center>
-                        
-                          </td>
-                        
-                        </tr>
-                        
+                        </center>
+
+                      </td>
+
+                    </tr>
+
                     {%endfor%}
                   </tbody>
                 </table>
@@ -559,7 +810,8 @@ margin-left: 2px;
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -593,7 +845,7 @@ margin-left: 2px;
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
-  
+
   {%endblock archivos%}
 </body>
 

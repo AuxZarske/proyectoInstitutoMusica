@@ -11,7 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
-
+from django.db.models import Q
 import json
 from django.http import HttpResponse
 import time
@@ -376,15 +376,54 @@ def registrarProfesor(request):
     profesor_form =ProfesorForm()
     return render(request, 'registroProfesor.html', context={'form': form,'profesor_form':profesor_form,'especialidadesTodas':especialidadesTodas})
 
-def listarestadisticaspresta(request):
-    preEnero = None
-    return render(request,'listarestapresta.html',{'preEnero':preEnero})
+
+
+def listarestadisticaspresta(request,num):
+    dicti = {}
+    cantccc = list(Instrumento.objects.all())
+    globalTotal = 0
+    for n in cantccc:
+        cveces = Prestamo.objects.filter(instrumentoPrestado = n).count()
+        if cveces != 0:
+            
+            nombre = n.nombre
+            numero = cveces
+            globalTotal += numero
+            dicti[nombre] = numero
+    dicti2 = {}
+    for k,v in dicti.items():
+        por = (v * 100)/globalTotal
+        dicti2[k] = por
+    dicti = dicti2
+
+    dicti4 = {}
+    cantccc = list(Alumno.objects.all())
+    globalTotal = 0
+    for n in cantccc:
+        cveces = Prestamo.objects.filter(alumnoResponsable = n).count()
+        if cveces != 0:
+            
+            nombre = n.nombre
+            numero = cveces
+            globalTotal += numero
+            dicti4[nombre] = numero
+    dicti5 = {}
+    for k,v in dicti4.items():
+        por = (v * 100)/globalTotal
+        dicti5[k] = por
+    dicti4 = dicti5
+    
+
+
+    return render(request,'listarestapresta.html',{  'dicti':dicti,'dicti4':dicti4  })
+
+
 
 def GrupoTableYellow(request):
     print(request.GET)
     alumno= request.GET.get('alumno',None)
     alu = Alumno.objects.get(dni = alumno)
-    prestamost = list(Prestamo.objects.filter(alumnoResponsable = alu))
+    prestamost = list(Prestamo.objects.filter(Q(alumnoResponsable = alu), Q(condicion = "Regular") | Q(condicion = "Mal estado") )) 
     listaD = []
     for p in prestamost:
 
@@ -416,7 +455,16 @@ def GrupoTable(request):
     print(request.GET)
     alumno= request.GET.get('alumno',None)
     alu = Alumno.objects.get(dni = alumno)
-    prestamost = list(Prestamo.objects.filter(alumnoResponsable = alu))
+    prestamost = []
+    prestaL = list(Prestamo.objects.filter(alumnoResponsable = alu)) # y tenga atraso, calcular fecha; 
+    #fecha inicio + dias duracion debe ser menor a fecha cierre
+    for p in prestaL:
+        ff = p.fechaCreacion + relativedelta(days=int(p.duracionDias))
+        fc = p.fechaCierre
+        print(ff)
+        print(fc)
+        if ff <= fc:
+            prestamost.append(p)
     listaD = []
     for p in prestamost:
 
@@ -1026,9 +1074,6 @@ def finPrestamo(request):
     checkAcep = str(request.GET.get('checkAcep', None))
     checkReg = str(request.GET.get('checkReg', None))
     checkMal = str(request.GET.get('checkMal', None))
-   
-
-
 
     iden = request.GET.get('identificador', None)
     data = {

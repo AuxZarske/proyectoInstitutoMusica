@@ -109,7 +109,8 @@ urlpatterns = [
     path('estadisticas/<int:num>',login_required(listarestadisticas),name='estadisticas'),
     path('estadisticasalu/<int:num>',login_required(listarestadisticasalu),name='estadisticasalu'),
     path('estadisticasparti/<int:num>',login_required(listarestadisticasparti),name='estadisticasparti'),
-    path('estadisticaspresta/',login_required(listarestadisticaspresta),name='estadisticaspresta'),
+    
+    path('estadisticaspresta/<int:num>',login_required(listarestadisticaspresta),name='estadisticaspresta'),
 
     path('crear_horario/',login_required(crearHorario),name='crear_horario'),
 
