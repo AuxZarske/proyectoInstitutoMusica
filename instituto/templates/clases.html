@@ -33,6 +33,19 @@
 </head>
 {%endblock head%}
 {%block estilos%}
+<script type="text/javascript">
+  function ocultarFiltro() {
+
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
+
+  }
+</script>
 <script>
   function cambioOcultarHistorico() {
 
@@ -59,6 +72,17 @@
     float: right;
 
 
+
+  }
+
+  button#botonMas {
+    display: inline-block;
+    float: right;
+    padding: 0;
+
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
 
   }
 
@@ -99,24 +123,41 @@
     width: 40px;
     height: 40px;
   }
-  div#historicoClases{
+
+  div#historicoClases {
     display: none;
-    background: rgba(201,229,255,1);
-    background: -moz-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
-    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201,229,255,1)), color-stop(27%, rgba(180,180,250,1)), color-stop(61%, rgba(150,150,255,1)), color-stop(92%, rgba(68,68,245,1)), color-stop(99%, rgba(6,6,196,1)), color-stop(100%, rgba(32,124,229,1)));
-    background: -webkit-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
-    background: -o-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
-    background: -ms-linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
-    background: linear-gradient(45deg, rgba(201,229,255,1) 0%, rgba(180,180,250,1) 27%, rgba(150,150,255,1) 61%, rgba(68,68,245,1) 92%, rgba(6,6,196,1) 99%, rgba(32,124,229,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1 );
-    
+    background: rgba(201, 229, 255, 1);
+    background: -moz-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201, 229, 255, 1)), color-stop(27%, rgba(180, 180, 250, 1)), color-stop(61%, rgba(150, 150, 255, 1)), color-stop(92%, rgba(68, 68, 245, 1)), color-stop(99%, rgba(6, 6, 196, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
+    background: -webkit-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -o-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1);
+
     border-radius: 13px 0px 13px 13px;
     -moz-border-radius: 13px 0px 13px 13px;
     -webkit-border-radius: 13px 0px 13px 13px;
-    border: orange 2px solid ;
-    height: auto; 
+    border: orange 2px solid;
+    height: auto;
     color: black;
     padding: 3%;
+    margin-bottom: 2%;
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: rgb(219, 255, 252);
+    border-radius: 23px 23px 23px 23px;
+    -moz-border-radius: 23px 23px 23px 23px;
+    -webkit-border-radius: 23px 23px 23px 23px;
     margin-bottom: 2%;
   }
 
@@ -368,176 +409,257 @@
             </span>
             <span class="text">Historico de Clases</span></button>
           <br>
-          <div id="historicoClases" > 
+          <div id="historicoClases">
 
-              <div style="border: black solid 2px; height: 600px;">datatable clases
+            <div style="border: black solid 2px; height: 600px;">datatable clases
 
-                <!--uuu787-->
+              <!--uuu787-->
 
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de clases historicas:
-                      </h6>
-                      
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de clases historicas:
+                  </h6>
+                  <button type="button" id="botonMas" onclick="ocultarFiltro()" class="btn btn-info">
+                    <div id="icon8">
+                      <i class="fas fa-filter"></i>
                     </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Nombre de Clase</th>
-        
-                              <th>Horarios</th>
-        
-        
-                              <th>Acciones</th>
-        
-                            </tr>
-                          </thead>
-        
-                          <tbody>
-                            {% for clase in clases%}
-        
-        
-                            <tr>
-                              <td>{{clase.id}}</td>
-                              {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
-                              <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
-                              {%else%}
-                              {%if  perms.gestionMusical.es_alumno%}
-                              <td><a href="{% url 'gestionMusical:ver_alumno_clase' 0 clase.id %}">{{clase.nombre}}</a></td>
-                              {%endif%}
-        
-                              {%endif%}
-        
-                              <td>{% for h in clase.horarios.all%}
-                                <label>{{h}}</label><br>
-                                {%endfor%}
-                              </td>
-        
-        
-        
-        
-        
-                              <td>
-        
-                                <center>
-        
-                                  <div class="btn-group">
-                                    <center>
-                                      <div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                          data-target=".bs-example-modal-lg{{clase.id}}">
-        
-                                          <i class="fa fa-eye"></i>
-        
-                                        </button>
-                                      </div>
-                                    </center>
-                                    <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}"
-                                      tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                        <div class="modal-content" id="elgrando">
-                                          <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
-                                            <button type="button" class="close" data-dismiss="modal"><span
-                                                aria-hidden="true">×</span>
-                                            </button>
-        
-                                          </div>
-                                          <div class="modal-body" id="cuerpoModal">
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda">ID: </label>
-                                              <div class="derecha">
-                                                {{clase.id}}
-                                              </div>
-                                            </div>
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                              <div class="derecha">
-        
-                                                {{clase.nombre}}
-                                              </div>
-                                            </div>
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                              <div class="derecha">
-                                                {{clase.descripcion}}
-                                              </div>
-                                            </div>
-        
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
-                                              <div class="derecha">
-                                                {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
-                                              </div>
-                                            </div>
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda">Alumnos:</label>
-                                              <div class="derecha">
-                                                {%for a in clase.alumnoAsociados.all%}
-                                                {{a.apellido}} {{a.nombre}};
-                                                {%endfor%}
-        
-                                              </div>
-                                              <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Cupo:</label>
-                                                <div class="derecha">
-                                                  {{clase.cupo}}
-                                                </div>
-                                              </div>
-                                              <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Nivel:</label>
-                                                <div class="derecha">
-                                                  {{clase.nivel}}
-                                                </div>
-                                              </div>
-                                              <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Especialidades:</label>
-                                                <div class="derecha">
-                                                  {%for c in clase.especialidadesDar.all%}
-                                                  {{c.nombre}} ;
-                                                  {%endfor%}
-                                                </div>
-                                              </div>
-                                            </div>
-        
-        
-                                          </div>
-                                          <div class="modal-footer">
-        
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                          </div>
-        
-                                        </div>
-                                      </div>
-                                    </div>
-        
-                                    
-        
-        
-                                    
-        
-        
-        
-        
-                                </center>
-        
-                              </td>
-        
-                            </tr>
-        
-                            {%endfor%}
-                          </tbody>
-                        </table>
-                      </div>
+                    <div id="fraseBoton"> </div>
+
+                  </button>
+
+                </div>
+
+
+                <!--dvifiltro-->
+                <div id="contenedorFiltro">
+                  <input type="hidden" id="filtrado" value="{{filtro}}">
+                  <div id="comboFiltro">
+                    <div id="zonaInput">
+                      <!--filtor-->
+                      <h4>Filtrar por:</h3>
+
+                        <div class="form-group" id="espeNIvel">
+                          <label for="inputAddress2" class="sub" style="color: black">Tabla:</label>
+
+                          <div class="form-row">
+                            <select id="tablas" class="form-control" single>
+                              <option value=''>-------</option>
+                              {%for t in tablas%}
+                              <option value="{{t.model}}">{{t.model}}</option>
+                              {%endfor%}
+
+
+                            </select>
+
+                          </div>
+
+                        </div>
+
+
+
+
+                        <div class="form-group" id="espeNIvel2">
+                          <label for="inputAddress2" class="sub" style="color: black">Accion:</label>
+
+                          <div class="form-row">
+                            <select id="accion" class="form-control" single>
+                              <option value=''>---</option>
+
+                              <option value="Eliminación">Eliminación</option>
+                              <option value="Creación">Creación</option>
+                              <option value="Modificación">Modificación</option>
+
+                            </select>
+
+                          </div>
+
+                        </div>
+
+
+
+                        <div class="form-group" id="fecha1">
+                          <label for="inputAddress2" class="sub" style="color: black">Entre:</label>
+
+                          <div class="form-row">
+                            <input type="date" id="fechaMIN" style="display: inline-block;" class="form-control"
+                              name="fecha3">
+                            <label for="" id="yyy"> y </label>
+                            <input type="date" id="fechaMAX" style="display: inline-block;" class="form-control"
+                              name="fecha4">
+                          </div>
+
+                        </div>
+
+                        <button type="button" id="filtrar" class="btn btn-info">
+                          <div id="icon8">
+                            <i class="fas fa-recycle"></i>
+                          </div>
+                          <div id="fraseBoton"> Filtrar</div>
+
+
+                          <!--filtor-->
                     </div>
                   </div>
-                <!--uuu787 fin-->
-              
+                </div>
+
+
+
+
+                <!--dvifiltro-->
+
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre de Clase</th>
+
+                          <th>Ultimos Horarios</th>
+
+
+                          <th>Acciones</th>
+
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for clase in clases%}
+
+
+                        <tr>
+                          <td>{{clase.id}}</td>
+                          <td>{{clase.nombre}}</td>
+
+
+                          <td>{% for h in clase.horarios.all%}
+                            <label>{{h}}</label><br>
+                            {%endfor%}
+                          </td>
+
+
+
+
+
+                          <td>
+
+                            <center>
+
+                              <div class="btn-group">
+                                <center>
+                                  <div>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                      data-target=".bs-example-modal-lg{{clase.id}}">
+
+                                      <i class="fa fa-eye"></i>
+
+                                    </button>
+                                  </div>
+                                </center>
+                                <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}"
+                                  tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content" id="elgrando">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                        </button>
+
+                                      </div>
+                                      <div class="modal-body" id="cuerpoModal">
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">ID: </label>
+                                          <div class="derecha">
+                                            {{clase.id}}
+                                          </div>
+                                        </div>
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                          <div class="derecha">
+
+                                            {{clase.nombre}}
+                                          </div>
+                                        </div>
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                          <div class="derecha">
+                                            {{clase.descripcion}}
+                                          </div>
+                                        </div>
+
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                          <div class="derecha">
+                                            {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
+                                          </div>
+                                        </div>
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Alumnos:</label>
+                                          <div class="derecha">
+                                            {%for a in clase.alumnoAsociados.all%}
+                                            {{a.apellido}} {{a.nombre}};
+                                            {%endfor%}
+
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Cupo:</label>
+                                            <div class="derecha">
+                                              {{clase.cupo}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                            <div class="derecha">
+                                              {{clase.nivel}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                            <div class="derecha">
+                                              {%for c in clase.especialidadesDar.all%}
+                                              {{c.nombre}} ;
+                                              {%endfor%}
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+                                      </div>
+                                      <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-primary"
+                                          data-dismiss="modal">Cerrar</button>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+                            </center>
+
+                          </td>
+
+                        </tr>
+
+                        {%endfor%}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div style="border: black solid 2px; height: 400px;">estadictica con filtros</div>
+              <!--uuu787 fin-->
+
+            </div>
+            <div style="border: black solid 2px; height: 400px;">estadictica con filtros</div>
 
 
           </div>
@@ -627,14 +749,15 @@
                             <center>
                               <div>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                  data-target=".bs-example-modal-lg{{clase.id}}">
+                                  data-target=".bs-example-modal-lg768988{{clase.id}}">
 
                                   <i class="fa fa-eye"></i>
 
                                 </button>
                               </div>
                             </center>
-                            <div class="modal fade bs-example-modal-lg{{clase.id}}" id="myModal{{clase.id}}"
+                            <!--fyl-->
+                            <div class="modal fade bs-example-modal-lg768988{{clase.id}}" id="myModal{{clase.id}}"
                               tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-lg">
                                 <div class="modal-content" id="elgrando">
@@ -645,7 +768,7 @@
                                     </button>
 
                                   </div>
-                                  <div class="modal-body" id="cuerpoModal">
+                                  <div class="modal-body" id="cuerpoModal{{clase.id}}">
                                     <div class="alinealoNomas">
                                       <label for="inputEmail3" class="izquierda">ID: </label>
                                       <div class="derecha">
@@ -712,6 +835,7 @@
                                 </div>
                               </div>
                             </div>
+                            <!--fyl-->
 
                             {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                             <a href="{% url 'gestionMusical:editar_clase' clase.id %}"
