@@ -373,7 +373,7 @@
                       <th>Nombre</th>
                       <th>Fecha Creacion</th>
                       <th>Descripcion</th>
-
+                      <th class="noExport">Estado</th>
                       <th class="noExport">Acciones</th>
 
                     </tr>
@@ -387,66 +387,119 @@
                       <td>{{especialidad.nombre}}</td>
                       <td>{{especialidad.fechaCreacion}}</td>
                       <td>{{especialidad.descripcion}}</td>
+                      <td>
+                        {%if especialidad.estadoEsp%}
+                        <div class="badge badge-info" >ACTIVO</div>
+                          
+                        {%else%}
+                        <div class="badge badge-danger" >INACTIVO</div>
+                        {%endif%}
+                      </td>
 
                       <td>
+                        <!--tda-->
                         <center>
-                          <div id="ere">
-                            <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}"
-                              class="btn btn-warning btn-icon-split">
-
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paint-brush"></i>
-                              </span>
-                              <span class="text">Editar</span>
 
 
-                            </a>
+
+                          <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}">
+
+                            <button type="button" class="btn btn-warning btn-sm" ng-click="Editar(l.Id)">
+                              <span class="fas fa-paint-brush" aria-hidden="true"></span>
+                            </button>
+
+                          </a>
+
+
+                          <button type="button" ng-hide="btnAlta" class="btn btn-info btn-sm" ng-click="Alta(l.Id)"
+                          data-toggle="modal" data-target=".bs-example-modal-lg2878{{especialidad.id}}">
+                            <span class="fa fa-angle-up" aria-hidden="true"></span>Alta
+                          </button>
+
+
+
+                          <button type="button" ng-hide="btnBaja" class="btn btn-danger btn-sm" ng-click="Baja(l.Id)"
+                            data-toggle="modal" data-target=".bs-example-modal-lg2{{especialidad.id}}">
+                            <span class="fa fa-angle-down" aria-hidden="true"></span>Baja
+                          </button>
+
+
+
+
+
+
+                          <div class="modal fade bs-example-modal-lg2878{{especialidad.id}}"
+                          id="myModal2{{especialidad.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel{{especialidad.id}}">Confirmacion de
+                                  Alta</h4>
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">×</span>
+                                </button>
+
+                              </div>
+
+
+                              <div class="modal-body">
+                                <h4>Esta seguro de dar de "ALTA" la especialidad {{especialidad.nombre}} ???</h4>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <a href="{% url 'gestionMusical:alta_especialidad' especialidad.id %}">
+                                  <button type="button" class="btn btn-primary">Confirmar</button>
+                                </a>
+                              </div>
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+                          <div class="modal fade bs-example-modal-lg2{{especialidad.id}}"
+                            id="myModal2{{especialidad.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title" id="myModalLabel{{especialidad.id}}">Confirmacion de
+                                    Baja</h4>
+                                  <button type="button" class="close" data-dismiss="modal"><span
+                                      aria-hidden="true">×</span>
+                                  </button>
+
+                                </div>
+
+
+                                <div class="modal-body">
+                                  <h4>Esta seguro de dar de "BAJA" la especialidad {{especialidad.nombre}} ???</h4>
+
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <a href="{% url 'gestionMusical:baja_especialidad' especialidad.id %}">
+                                    <button type="button" class="btn btn-primary">Confirmar</button>
+                                  </a>
+                                </div>
+
+
+                              </div>
+
+                            </div>
                           </div>
 
 
 
-                          <div class="delete">
-
-                            <button class="btn btn-danger btn-icon-split" id="elBotonBorra" data-toggle="modal"
-                              data-target=".bs-example-modal-lg2{{especialidad.id}}">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-trash"></i>
-
-                              </span>
-                              <span class="text">Eliminar</span>
-                            </button>
-
-                            <div class="btn-group">
-
-
-                              <div class="modal fade bs-example-modal-lg2{{especialidad.id}}"
-                                id="myModal2{{especialidad.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{especialidad.id}}">Confirmacion de
-                                        Eliminacion</h4>
-                                      <button type="button" class="close" data-dismiss="modal"><span
-                                          aria-hidden="true">×</span>
-                                      </button>
-
-                                    </div>
-
-
-                                    <div class="modal-body">
-                                      <h4>Esta seguro de Eliminar la especialidad {{especialidad.nombre}} ???</h4>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <a href="{% url 'gestionMusical:eliminar_especialidad' especialidad.id %}">
-                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
-                                      </a>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </div>
 
 
 
@@ -456,8 +509,21 @@
 
 
 
-                            </div>
+
+
                         </center>
+
+
+
+
+
+
+
+
+
+
+
+                        <!--tda-->
                       </td>
 
                     </tr>

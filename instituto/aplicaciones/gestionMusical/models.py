@@ -11,7 +11,7 @@ class Especialidad(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la especialidad', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion de la especialidad', null = False, blank = False)
-    
+    estadoEsp = models.BooleanField('activo/inactivo', default = True)
     fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
 
     class Meta:
@@ -247,7 +247,7 @@ class Clase(models.Model):
     nivel = models.CharField('Nivel de la clase', max_length = 50, null = False, blank = False)
     historica =  models.BooleanField('estado de clase en tiempo activo/inactivo', default = False)
     profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
-    
+    cantidadAsistida = models.IntegerField('cantidad de asistencias totales a clase', null = False, blank = False, default=0)
     
     
     class Meta:

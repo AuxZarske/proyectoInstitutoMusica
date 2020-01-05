@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, eliminarEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
+from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, bajaEspecialidad, altaEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno, crearHorario, crearAsistenciaPasada, editarUsuario, editarIndividuo, editarIndividuoAlumno, editarIndividuoProfesor, configInstituto, configTodo, configDirectores, listarestadisticaspresta, listarestadisticasparti, listarestadisticasalu
 from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo, GrupoTable, nomInstru, GrupoPresta, GrupoTableYellow
 from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI, enviarMensaje, verConversacion, ocultarMensajes, vistoMensaje, obtenerUltimosMensajes, dniUser
@@ -16,7 +16,8 @@ urlpatterns = [
     path('validate_username_tutorDNI/',validate_username_tutorDNI,name='validate_username_tutorDNI'),
 
     path('especialidades/',login_required(listarespecialidades),name='especialidades'),
-    path('eliminar_especialidad/<int:id>',login_required(eliminarEspecialidad),name='eliminar_especialidad'),
+    path('baja_especialidad/<int:id>',login_required(bajaEspecialidad),name='baja_especialidad'),
+    path('alta_especialidad/<int:id>',login_required(altaEspecialidad),name='alta_especialidad'),
     path('crear_especialidad/',login_required(crearEspecialidad),name='crear_especialidad'),
     path('editar_especialidad/<int:id>',login_required(editarEspecialidad),name='editar_especialidad'),
 

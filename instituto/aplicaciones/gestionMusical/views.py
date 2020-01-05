@@ -172,7 +172,7 @@ def obtenerInfo(request):
     return JsonResponse(data)
 
 def registrarAlumno(request):
-    especialidadesTodas = Especialidad.objects.all()
+    especialidadesTodas = Especialidad.objects.filter(estadoEsp = True)
     losTiposMusicas = MusicaTipo.objects.all()
     form = NewUserForm
     alumno_form =AlumnoForm()
@@ -320,7 +320,7 @@ def registrarAlumno(request):
 
 
 def registrarProfesor(request):
-    especialidadesTodas = Especialidad.objects.all()
+    especialidadesTodas = Especialidad.objects.filter(estadoEsp = True)
     
     if request.method == 'POST':
 
@@ -1725,16 +1725,33 @@ def listarespecialidades(request):
     return render(request,'especialidades.html',{'especialidades':especialidades,'filtro':filtro,'pedidor':pedidor, 'clases':clases})
 
 
-def eliminarEspecialidad(request,id):
+def bajaEspecialidad(request,id):
     
     especialidad = Especialidad.objects.get(id=id)
     try:
-        especialidad.delete()
-        messages.success(request, "eliminado Correcto!")
+        #especialidad.delete()
+        especialidad.estadoEsp = False
+        especialidad.save()
+        messages.success(request, "Baja Correcta!")
     except:
-        messages.error(request, " Error - no puede eliminarse una especialidad en uso")
+        messages.error(request, " Error - no puede darse de baja")
     return redirect('gestionMusical:especialidades')
+
+
+def altaEspecialidad(request,id):
     
+    especialidad = Especialidad.objects.get(id=id)
+    try:
+        #especialidad.delete()
+        especialidad.estadoEsp = True
+        especialidad.save()
+        messages.success(request, "Alta Correcta!")
+    except:
+        messages.error(request, " Error - no puede darse de baja")
+    return redirect('gestionMusical:especialidades')
+
+
+
 def crearEspecialidad(request):
     editacion = 0
     if request.method == 'POST':
@@ -1877,7 +1894,7 @@ def reivindicarProfesor(request,dni):
 
 def crearProfesor(request):
     editacion = 0
-    especialidadesTodas = Especialidad.objects.all()
+    especialidadesTodas = Especialidad.objects.filter(estadoEsp = True)
     
     if request.method == 'POST':
         
@@ -1910,7 +1927,7 @@ def editarProfesor(request,dni):
     profesor_form = None
     error = None
     editacion = 1
-    especialidadesTodas = list(Especialidad.objects.all())
+    especialidadesTodas = list(Especialidad.objects.filter(estadoEsp = True))
     espePro = []
     try:
         
@@ -2113,7 +2130,7 @@ def reivindicarAlumno(request,dni):
     
 def crearAlumno(request):
     editacion = 0
-    especialidadesTodas = Especialidad.objects.all()
+    especialidadesTodas = Especialidad.objects.filter(estadoEsp = True)
     if request.method == 'POST':
         alumno_form = AlumnoForm(request.POST)
         if alumno_form.is_valid():
@@ -2147,7 +2164,7 @@ def editarAlumno(request,dni):
     error = None
     idMusicaPreferida = 0
     editacion = 1
-    especialidadesTodas = list(Especialidad.objects.all())
+    especialidadesTodas = list(Especialidad.objects.filter(estadoEsp = True))
     espeAlu = []
     try:
         alumno = Alumno.objects.get(dni =dni,estado=True)
@@ -2386,26 +2403,29 @@ def establecerDirecto(request, dni):
 
 
 def listarclases(request):
-    clases = Clase.objects.all()
-    return render(request,'clases.html',{'clases':clases})
+    clases = Clase.objects.filter(historica = False)
+    clasesHistoricas =   Clase.objects.filter(historica = True)
+    return render(request,'clases.html',{'clases':clases, 'clasesHistoricas':clasesHistoricas})
 
 def listarclasesProfe(request):
     pedidor = str(request.user.username)
     elusuario = Profesor.objects.filter(correoElectronico = pedidor)
     elusuario = elusuario[0]
-    clases = Clase.objects.filter(profesorCargo = elusuario)
+    clases = Clase.objects.filter(profesorCargo = elusuario, historica = False)
     return render(request,'clases.html',{'clases':clases})
 
 def listarclasesAlumno(request):
     pedidor = str(request.user.username)
     elusuario = Alumno.objects.filter(correoElectronico = pedidor)
     elusuario = elusuario[0]
-    clases = Clase.objects.filter(alumnoAsociados = elusuario)
+    clases = Clase.objects.filter(alumnoAsociados = elusuario, historica = False)
     return render(request,'clases.html',{'clases':clases})
 
 
 def eliminarClase(request,id):
+    cantidad = 0
     clase = Clase.objects.get(id=id)
+
     listaAsistenias = list(Asistencia.objects.filter(claseReferencia = clase))
     listaAlumnosC = []
     for x in clase.alumnoAsociados.all():
@@ -2413,11 +2433,20 @@ def eliminarClase(request,id):
     if len(listaAlumnosC) == 0 :
         for asis in listaAsistenias:
             asis.delete()
-        clase.delete()
+            cantidad += 1  
+
+        #clase.delete()#poner estado de clase historico
+        clase.cantidadAsistida = cantidad
+        clase.historica = True
+        
+        
+        #clase.alumnoAsociados.clear()
+        clase.save()
+
         messages.success(request, "Borrado Correcto!")
     else:
         print("errororlro")
-        messages.error(request, " Error - No se pudo borrar la clase")
+        messages.error(request, " Error - No se pudo borrar la clase porque tiene alumnos asociados")
 
     return redirect('gestionMusical:clases')
 
@@ -2449,7 +2478,7 @@ def crearClase(request):
     
     editacion = 0
     especialidadest = None
-    especialidadest =  Especialidad.objects.all()
+    especialidadest =  Especialidad.objects.filter(estadoEsp = True)
     profesTodos = Profesor.objects.filter(estado = True)
     horarios = Horario.objects.all()
     
@@ -2627,11 +2656,11 @@ def editarUsuario(request):
     if not elusuario:
         elusuario = list(Alumno.objects.filter(correoElectronico = pedidor))
         losTiposMusicas = MusicaTipo.objects.all()
-        aespecialidadesDar = Especialidad.objects.all()
+        aespecialidadesDar = Especialidad.objects.filter(estadoEsp = True)
     else:
         listaep = list(elusuario[0].especialidades.all())
         
-        espeNoPro = list(Especialidad.objects.all()) 
+        espeNoPro = list(Especialidad.objects.filter(estadoEsp = True)) 
         ccc = espeNoPro.copy()
         for e in ccc:
             if list(elusuario[0].especialidades.all()).count(e) > 0 :
@@ -3298,7 +3327,7 @@ def eliminarInstrumento(request,id):
 
 def crearPartitura(request):
     editacion = 0
-    especialidadesTodas = list(Especialidad.objects.all())
+    especialidadesTodas = list(Especialidad.objects.filter(estadoEsp = True))
     compositores = Compositor.objects.all()
     if request.method == 'POST':
         try:
@@ -3353,7 +3382,7 @@ def editarPartitura(request,id):
     editacion = 1
     partitura_form = None
     error = None
-    especialidadesTodas = list(Especialidad.objects.all())
+    especialidadesTodas = list(Especialidad.objects.filter(estadoEsp = True))
     compositores = Compositor.objects.all()
     donCompo = None
     espeParti = []

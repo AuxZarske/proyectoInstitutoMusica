@@ -524,7 +524,7 @@
                       </thead>
 
                       <tbody>
-                        {% for clase in clases%}
+                        {% for clase in clasesHistoricas%}
 
 
                         <tr>
@@ -561,7 +561,7 @@
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content" id="elgrando">
                                       <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos Personales</h4>
+                                        <h4 class="modal-title" id="myModalLabel{{clase.id}}">Datos de la Clase:</h4>
                                         <button type="button" class="close" data-dismiss="modal"><span
                                             aria-hidden="true">×</span>
                                         </button>
@@ -589,11 +589,12 @@
                                         </div>
 
                                         <div class="alinealoNomas">
-                                          <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                          <label for="inputEmail3" class="izquierda">Ultimo Profesor a Cargo:</label>
                                           <div class="derecha">
                                             {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
                                           </div>
                                         </div>
+
                                         <div class="alinealoNomas">
                                           <label for="inputEmail3" class="izquierda">Alumnos:</label>
                                           <div class="derecha">
@@ -601,7 +602,8 @@
                                             {{a.apellido}} {{a.nombre}};
                                             {%endfor%}
 
-                                          </div>
+                                          </div></div>
+
                                           <div class="alinealoNomas">
                                             <label for="inputEmail3" class="izquierda">Cupo:</label>
                                             <div class="derecha">
@@ -622,7 +624,7 @@
                                               {%endfor%}
                                             </div>
                                           </div>
-                                        </div>
+                                        
 
 
                                       </div>
