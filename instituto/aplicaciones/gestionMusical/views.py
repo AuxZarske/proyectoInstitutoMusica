@@ -2405,6 +2405,7 @@ def establecerDirecto(request, dni):
 def listarclases(request):
     clases = Clase.objects.filter(historica = False)
     clasesHistoricas =   Clase.objects.filter(historica = True)
+    
     return render(request,'clases.html',{'clases':clases, 'clasesHistoricas':clasesHistoricas})
 
 def listarclasesProfe(request):

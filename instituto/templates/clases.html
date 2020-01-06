@@ -123,6 +123,11 @@
     width: 40px;
     height: 40px;
   }
+  div#espeNIvel2 {
+    display: inline-block;
+    margin-right: 2%;
+    width: 20%;
+  }
 
   div#historicoClases {
     display: none;
@@ -411,7 +416,7 @@
           <br>
           <div id="historicoClases">
 
-            <div style="border: black solid 2px; height: 600px;">datatable clases
+            <div style=" height: auto;">
 
               <!--uuu787-->
 
@@ -432,74 +437,88 @@
 
                 <!--dvifiltro-->
                 <div id="contenedorFiltro">
-                  <input type="hidden" id="filtrado" value="{{filtro}}">
-                  <div id="comboFiltro">
-                    <div id="zonaInput">
-                      <!--filtor-->
-                      <h4>Filtrar por:</h3>
+                  <h4>Filtrar por:</h4>
 
-                        <div class="form-group" id="espeNIvel">
-                          <label for="inputAddress2" class="sub" style="color: black">Tabla:</label>
-
-                          <div class="form-row">
-                            <select id="tablas" class="form-control" single>
-                              <option value=''>-------</option>
-                              {%for t in tablas%}
-                              <option value="{{t.model}}">{{t.model}}</option>
-                              {%endfor%}
+                  <div id="zonaMedia">
 
 
-                            </select>
 
-                          </div>
+                    <div class="form-group" id="espeNIvel2">
+                      <label for="inputAddress2" class="sub" style="color: black">Profesor a cargo:</label>
 
+                      <div class="form-row">
+                        <select id="accion" class="form-control" single>
+                          <option value=''>---</option>
+
+                          <option value="Eliminación">Eliminación</option>
+                          <option value="Creación">Creación</option>
+                          <option value="Modificación">Modificación</option>
+
+                        </select>
+                      </div>
+                    </div>
+
+
+
+                    <div class="form-group" id="espeNIvel2">
+                        <label for="inputAddress2" class="sub" style="color: black">Año de creacion:</label>
+  
+                        <div class="form-row">
+                          <select id="accion" class="form-control" single>
+                            <option value=''>---</option>
+  
+
+
+                            <option value="2000">2000</option>
+                            <!--hacer un jquery que carge con la pagina y append en el selector desde e 2000
+                            hata el anio actual, luego poner los niveles, profesores y especialidades con buscador-->
+                            
+  
+                          </select>
                         </div>
+                      </div>
 
 
-
-
-                        <div class="form-group" id="espeNIvel2">
-                          <label for="inputAddress2" class="sub" style="color: black">Accion:</label>
-
+                      <div class="form-group" id="espeNIvel2">
+                          <label for="inputAddress2" class="sub" style="color: black">Especialidad:</label>
+    
                           <div class="form-row">
                             <select id="accion" class="form-control" single>
                               <option value=''>---</option>
-
+    
                               <option value="Eliminación">Eliminación</option>
                               <option value="Creación">Creación</option>
                               <option value="Modificación">Modificación</option>
-
+    
                             </select>
-
                           </div>
-
                         </div>
 
 
-
-                        <div class="form-group" id="fecha1">
-                          <label for="inputAddress2" class="sub" style="color: black">Entre:</label>
-
-                          <div class="form-row">
-                            <input type="date" id="fechaMIN" style="display: inline-block;" class="form-control"
-                              name="fecha3">
-                            <label for="" id="yyy"> y </label>
-                            <input type="date" id="fechaMAX" style="display: inline-block;" class="form-control"
-                              name="fecha4">
+                        <div class="form-group" id="espeNIvel2">
+                            <label for="inputAddress2" class="sub" style="color: black">Nivel:</label>
+      
+                            <div class="form-row">
+                              <select id="accion" class="form-control" single>
+                                <option value=''>---</option>
+      
+                                <option value="Eliminación">Eliminación</option>
+                                <option value="Creación">Creación</option>
+                                <option value="Modificación">Modificación</option>
+      
+                              </select>
+                            </div>
                           </div>
 
-                        </div>
-
-                        <button type="button" id="filtrar" class="btn btn-info">
-                          <div id="icon8">
-                            <i class="fas fa-recycle"></i>
-                          </div>
-                          <div id="fraseBoton"> Filtrar</div>
 
 
-                          <!--filtor-->
-                    </div>
+
+
                   </div>
+
+                  <h3>
+                    <button class="btn btn-primary">Filtrar</button>
+                  </h3>
                 </div>
 
 
@@ -589,6 +608,13 @@
                                         </div>
 
                                         <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                                          <div class="derecha">
+                                            {{clase.creadaClase}}
+                                          </div>
+                                        </div>
+
+                                        <div class="alinealoNomas">
                                           <label for="inputEmail3" class="izquierda">Ultimo Profesor a Cargo:</label>
                                           <div class="derecha">
                                             {{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}
@@ -596,35 +622,38 @@
                                         </div>
 
                                         <div class="alinealoNomas">
-                                          <label for="inputEmail3" class="izquierda">Alumnos:</label>
+                                          <label for="inputEmail3" class="izquierda">Cantidad de asistencias
+                                            registradas:</label>
                                           <div class="derecha">
-                                            {%for a in clase.alumnoAsociados.all%}
-                                            {{a.apellido}} {{a.nombre}};
+
+
+                                            {{clase.cantidadAsistida}}
+
+
+                                          </div>
+                                        </div>
+
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Cupo:</label>
+                                          <div class="derecha">
+                                            {{clase.cupo}}
+                                          </div>
+                                        </div>
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                          <div class="derecha">
+                                            {{clase.nivel}}
+                                          </div>
+                                        </div>
+                                        <div class="alinealoNomas">
+                                          <label for="inputEmail3" class="izquierda">Especialidades impartidas:</label>
+                                          <div class="derecha">
+                                            {%for c in clase.especialidadesDar.all%}
+                                            {{c.nombre}} ;
                                             {%endfor%}
+                                          </div>
+                                        </div>
 
-                                          </div></div>
-
-                                          <div class="alinealoNomas">
-                                            <label for="inputEmail3" class="izquierda">Cupo:</label>
-                                            <div class="derecha">
-                                              {{clase.cupo}}
-                                            </div>
-                                          </div>
-                                          <div class="alinealoNomas">
-                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
-                                            <div class="derecha">
-                                              {{clase.nivel}}
-                                            </div>
-                                          </div>
-                                          <div class="alinealoNomas">
-                                            <label for="inputEmail3" class="izquierda">Especialidades:</label>
-                                            <div class="derecha">
-                                              {%for c in clase.especialidadesDar.all%}
-                                              {{c.nombre}} ;
-                                              {%endfor%}
-                                            </div>
-                                          </div>
-                                        
 
 
                                       </div>
@@ -705,7 +734,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable97" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>#</th>
