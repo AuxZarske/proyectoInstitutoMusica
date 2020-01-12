@@ -451,6 +451,155 @@ def GrupoTableYellow(request):
 
     return JsonResponse(dicD)
 
+
+def grupoClaseHistoricaUno(request):
+    #otener la clase, los datos de esa clase, generar dic copyado de viejo
+    clase = request.GET.get('idClase',None)
+    
+    c = Clase.objects.get(id = clase)
+
+    lis3 = []
+    lis3 = list(c.especialidadesDar.all())
+    aux = []
+    for e in lis3:
+        aux.append(e.nombre)
+    lis3 = aux
+
+
+    data = {
+            'id': c.id,
+            'creadaClase': c.creadaClase,
+            'nombre': c.nombre,
+            'descripcion': c.descripcion,
+
+
+            
+            'especialidadesDar': lis3.copy(), 
+
+            'cupo': c.cupo,
+            'nivel': c.nivel,
+            'historica': c.historica,
+            'profesorCargo': c.profesorCargo.apellido + " " +c.profesorCargo.nombre, 
+            'cantidadAsistida': c.cantidadAsistida
+        }
+    
+       
+
+    return JsonResponse(data)
+
+
+def filtroTablaHistorica(request):
+    print(request.GET)#ver la lista
+
+    #obtener los datos por separado
+    profesor= request.GET.get('profe',None)
+    year= request.GET.get('year',None)
+    especialidades= request.GET.get('especialidades[]',None)
+    nivel= request.GET.get('nivel',None)
+    
+    #lista principal de clases
+    todasClases = []
+    todasClases = list(Clase.objects.filter(historica = True))
+    print(todasClases)
+    #el filtrado if cuadruple
+    if profesor != None and profesor != "---":
+        auxiliar = []
+        prof = Profesor.objects.get(dni = profesor)
+        for c in todasClases:
+            if c.profesorCargo == prof:
+                auxiliar.append(c)
+        todasClases = auxiliar
+
+    print(todasClases)
+    if year != None and year != "---":
+        auxiliar = []
+        for c in todasClases:
+            
+            if int(c.creadaClase.year)  == int(year) :
+                auxiliar.append(c)
+        todasClases = auxiliar
+    print(todasClases)
+    if nivel != None and nivel != "---":
+        auxiliar = []
+        for c in todasClases:
+            if c.nivel == nivel:
+                auxiliar.append(c)
+        todasClases = auxiliar
+    print(todasClases)
+    if especialidades != None:
+        
+        for e in especialidades:
+            auxiliar = []
+            eO = Especialidad.objects.get(id = e)
+            for c in todasClases:
+                
+                listAux = list(c.especialidadesDar.all())
+                if listAux.count(eO) > 0:
+                    auxiliar.append(c)
+            todasClases = auxiliar
+
+
+    print(todasClases)
+    print("listo")
+
+
+
+
+    listaD = []
+    
+    for c in todasClases:
+        
+        lis1 = []
+        lis3 = []
+
+
+        lis1 = list(c.horarios.all())
+        auxH = []
+        for h in lis1:
+            auxH.append(" "+h.__str__() + " ")
+        lis1 = auxH
+
+
+        
+        lis3 = list(c.especialidadesDar.all())
+        aux = []
+        for e in lis3:
+            aux.append(e.nombre)
+        lis3 = aux
+
+        print(lis1)
+      
+        print(lis3)
+
+
+        data = {
+            'id': c.id,
+            'creadaClase': c.creadaClase,
+            'nombre': c.nombre,
+            'descripcion': c.descripcion,
+
+
+            'horarios': lis1.copy(),
+            
+            'especialidadesDar': lis3.copy(), 
+
+            'cupo': c.cupo,
+            'nivel': c.nivel,
+            'historica': c.historica,
+            'profesorCargo': c.profesorCargo.apellido + " " +c.profesorCargo.nombre, 
+            'cantidadAsistida': c.cantidadAsistida
+        }
+    
+        listaD.append(data)
+    
+    dicD = {
+        'info': listaD
+    }
+
+    return JsonResponse(dicD)
+
+
+
 def GrupoTable(request):
     print(request.GET)
     alumno= request.GET.get('alumno',None)
@@ -2405,8 +2554,10 @@ def establecerDirecto(request, dni):
 def listarclases(request):
     clases = Clase.objects.filter(historica = False)
     clasesHistoricas =   Clase.objects.filter(historica = True)
+    especialidadesTodas = Especialidad.objects.all()
+    profesTodos = Profesor.objects.all()
     
-    return render(request,'clases.html',{'clases':clases, 'clasesHistoricas':clasesHistoricas})
+    return render(request,'clases.html',{'clases':clases, 'clasesHistoricas':clasesHistoricas,'especialidadesTodas':especialidadesTodas,'profesTodos':profesTodos })
 
 def listarclasesProfe(request):
     pedidor = str(request.user.username)
