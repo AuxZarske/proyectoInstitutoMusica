@@ -167,6 +167,13 @@
     -webkit-border-radius: 23px 23px 23px 23px;
     margin-bottom: 2%;
   }
+  div#cuadroEstadisticaHistorico{
+
+    border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+  }
+
 
   div#icon7 {
 
@@ -697,9 +704,9 @@
               <!--uuu787 fin-->
 
             </div>
-            <div style="background-color: rgb(248, 246, 255); height: auto;">
+            <div id="cuadroEstadisticaHistorico" style="background-color: rgb(248, 246, 255); height: 300px;">
             
-              <canvas id="bar-chart-horizontal" width="auto" height="auto"></canvas>
+              <canvas id="bar-chart-horizontal" ></canvas>
             
             </div>
 
@@ -997,30 +1004,91 @@
   {%block archivos%}
 
   <!--crear lista por django con scrip combinado, cargala, luego mandar a chart-->
+  <script>
+    var label2 = [];
+    var data2 = [];
+    var dataColor2 = [];
+  </script>
+
+  {%for n in listaClassHistoryNom%}
+  <script>
+    var nombreAlguno = "{{n}}";
+    label2.push(nombreAlguno);
+  </script>
+  {%endfor%}
+
+  {%for n in listaClassHistoryCant%}
+  <script>
+    var cantAlguno = "{{n}}";
+    data2.push(cantAlguno);
+  </script>
+  {%endfor%}
+
+  {%for n in listaClassHistoryColors%}
+  <script>
+    var colorAlguno = "{{n}}";
+    dataColor2.push(colorAlguno);
+  </script>
+  {%endfor%}
+
+
 
   <script  >
+
     
-    new Chart(document.getElementById("bar-chart-horizontal"), {
+
+    var chart = new Chart(document.getElementById("bar-chart-horizontal"), {
         type: 'horizontalBar',
         data: {
-          labels: ["jfoo", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America"],
+          labels: [],
           datasets: [
             {
-              label: "Population (millions)",
-              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-              data: [2478,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433]
+              label: "Participación registrada",
+              backgroundColor: [],
+              data: []
             }
+          
           ]
         },
         options: {
           legend: { display: false },
+          responsive: true,
+          maintainAspectRatio: false,
           title: {
             display: true,
             fontSize: 21,
-            text: 'Clases organizadas segun mayor participacion'
+            text: 'Clases organizadas segun mayor participación'
           }
         }
     });
+    
+
+    function addData( ) {
+    
+    for(var i = 0; i < label2.length; i++){
+        chart.data.labels.push(label2[i]);
+        chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(data2[i]);
+          dataset.backgroundColor.push(dataColor2[i]);
+        });
+        
+        chart.update();
+  }
+}
+addData( );
+
+  var cantidadLista2 = parseInt(label2.length);
+        if(cantidadLista2 > 5){
+          //calcula
+          cantidadLista2 = 200 + cantidadLista2 * 30;
+          var valor = cantidadLista2+"px";
+          
+         
+          //generar var
+          document.getElementById("cuadroEstadisticaHistorico").style.height = valor;
+      }else{
+        document.getElementById("cuadroEstadisticaHistorico").style.height = "300px";
+      }
       
       
       </script>
@@ -1066,6 +1134,7 @@
     };
 
     function updateTable() {
+      var cantidadLista = 0;
       console.log('cambio filtro');
 
       var table = $('#dataTable775544').DataTable();
@@ -1119,11 +1188,53 @@
             table.row.add([id, nombre, horariosFinal, acciones]).draw();
 
           }
+          //obtener las listas,borrar viejo, poner nuevo
+          var label2Filtro = [];
+          var data2Filtro = [];
+          var dataColor2Filtro = [];
+
+          label2Filtro = data['listaClassHistoryNom'];
+          
+          cantidadLista = parseInt(label2Filtro.length);
+     
+          data2Filtro = data['listaClassHistoryCant'];
+          dataColor2Filtro = data['listaClassHistoryColors'];
+
+          chart.data.labels = [];
+          chart.data.datasets.forEach((dataset) => {
+              dataset.data = [];
+              dataset.backgroundColor = [];
+          });
+          chart.update();
+
+          for(var i = 0; i < label2Filtro.length; i++){
+        chart.data.labels.push(label2Filtro[i]);
+        chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(data2Filtro[i]);
+          dataset.backgroundColor.push(dataColor2Filtro[i]);
+        });
+        
+        
+        chart.update();
+        
+    
+  }
+
+
 
 
 
           //$('#cuerpoT2').html(html);
-
+          if(cantidadLista > 5){
+          //calcula
+          cantidadLista = 200 + cantidadLista * 30;
+          var valor = cantidadLista+"px";
+         
+          //generar var
+          document.getElementById("cuadroEstadisticaHistorico").style.height = valor;
+      }else{
+        document.getElementById("cuadroEstadisticaHistorico").style.height = "300px";
+      }
 
 
 
@@ -1131,9 +1242,16 @@
         }
       })
 
+      //document.getElementById("cuadroEstadisticaHistorico").style.height = "300px";
+      //pregunta cantidad, evlua pone altura
+      
+      
 
+      
+      //chart.update();
+      
     };
-
+    
 
 
   </script>

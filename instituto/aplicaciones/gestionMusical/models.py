@@ -159,7 +159,6 @@ class Profesor(Usuario):
 
 class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = True, blank = True)
-   
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = True, blank = True)
     especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING,  null = True, blank = True)
     partiturasAsociadas = models.ManyToManyField(Partitura)

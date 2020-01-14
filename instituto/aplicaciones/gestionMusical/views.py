@@ -30,6 +30,7 @@ from reportlab.lib.enums import TA_CENTER
 from directmessages.apps import Inbox
 import dateutil.parser
  
+import random
 import base64
 import psycopg2
 import os
@@ -499,7 +500,8 @@ def filtroTablaHistorica(request):
     
     #lista principal de clases
     todasClases = []
-    todasClases = list(Clase.objects.filter(historica = True))
+    todasClases = list(Clase.objects.filter(historica = True).order_by('cantidadAsistida'))
+    todasClases = todasClases[::-1]
     print(profesor)
     print(year)
     print(nivel)
@@ -593,9 +595,23 @@ def filtroTablaHistorica(request):
         }
     
         listaD.append(data)
-    
+    listaClassHistoryNom = []
+    listaClassHistoryColors = []
+    listaClassHistoryCant = []
+
+    for c in todasClases:
+        listaClassHistoryNom.append(c.nombre)
+        listaClassHistoryCant.append(c.cantidadAsistida)
+        color = "%06x" % random.randint(0, 0xFFFFFF)
+        print(color)
+        color = "#"+str(color)
+        listaClassHistoryColors.append(color)
+
     dicD = {
-        'info': listaD
+        'info': listaD,
+        'listaClassHistoryNom': listaClassHistoryNom,
+        'listaClassHistoryColors': listaClassHistoryColors,
+        'listaClassHistoryCant': listaClassHistoryCant
     }
 
     return JsonResponse(dicD)
@@ -2566,7 +2582,10 @@ def listarclases(request):
     for c in clasesHistoricas:
         listaClassHistoryNom.append(c.nombre)
         listaClassHistoryCant.append(c.cantidadAsistida)
-        listaClassHistoryColors.append("#0FFFFF")
+        color = "%06x" % random.randint(0, 0xFFFFFF)
+        print(color)
+        color = "#"+str(color)
+        listaClassHistoryColors.append(color)
 
     especialidadesTodas = Especialidad.objects.all()
     profesTodos = Profesor.objects.all()
