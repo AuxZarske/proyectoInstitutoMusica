@@ -500,9 +500,11 @@ def filtroTablaHistorica(request):
     #lista principal de clases
     todasClases = []
     todasClases = list(Clase.objects.filter(historica = True))
-    print(todasClases)
+    print(profesor)
+    print(year)
+    print(nivel)
     #el filtrado if cuadruple
-    if profesor != None and profesor != "---":
+    if profesor != None and profesor != '':
         auxiliar = []
         prof = Profesor.objects.get(dni = profesor)
         for c in todasClases:
@@ -511,7 +513,7 @@ def filtroTablaHistorica(request):
         todasClases = auxiliar
 
     print(todasClases)
-    if year != None and year != "---":
+    if year != None and year != '':
         auxiliar = []
         for c in todasClases:
             
@@ -519,7 +521,7 @@ def filtroTablaHistorica(request):
                 auxiliar.append(c)
         todasClases = auxiliar
     print(todasClases)
-    if nivel != None and nivel != "---":
+    if nivel != None and nivel != '':
         auxiliar = []
         for c in todasClases:
             if c.nivel == nivel:
@@ -2553,11 +2555,23 @@ def establecerDirecto(request, dni):
 
 def listarclases(request):
     clases = Clase.objects.filter(historica = False)
-    clasesHistoricas =   Clase.objects.filter(historica = True)
+    clasesHistoricas =   list(Clase.objects.filter(historica = True).order_by('cantidadAsistida'))
+    clasesHistoricas = clasesHistoricas[::-1]
+    
+
+    listaClassHistoryNom = []
+    listaClassHistoryColors = []
+    listaClassHistoryCant = []
+
+    for c in clasesHistoricas:
+        listaClassHistoryNom.append(c.nombre)
+        listaClassHistoryCant.append(c.cantidadAsistida)
+        listaClassHistoryColors.append("#0FFFFF")
+
     especialidadesTodas = Especialidad.objects.all()
     profesTodos = Profesor.objects.all()
     
-    return render(request,'clases.html',{'clases':clases, 'clasesHistoricas':clasesHistoricas,'especialidadesTodas':especialidadesTodas,'profesTodos':profesTodos })
+    return render(request,'clases.html',{'clases':clases,'listaClassHistoryColors':listaClassHistoryColors,'listaClassHistoryCant':listaClassHistoryCant,'listaClassHistoryNom':listaClassHistoryNom, 'clasesHistoricas':clasesHistoricas,'especialidadesTodas':especialidadesTodas,'profesTodos':profesTodos })
 
 def listarclasesProfe(request):
     pedidor = str(request.user.username)

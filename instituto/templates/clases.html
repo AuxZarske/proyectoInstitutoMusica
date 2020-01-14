@@ -30,7 +30,7 @@
 
   <!-- Custom styles for this page -->
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 {%endblock head%}
 {%block estilos%}
@@ -697,7 +697,11 @@
               <!--uuu787 fin-->
 
             </div>
-            <div style="border: black solid 2px; height: 400px;">estadictica con filtros</div>
+            <div style="background-color: rgb(248, 246, 255); height: auto;">
+            
+              <canvas id="bar-chart-horizontal" width="auto" height="auto"></canvas>
+            
+            </div>
 
 
           </div>
@@ -991,6 +995,38 @@
     </div>
   </div>
   {%block archivos%}
+
+  <!--crear lista por django con scrip combinado, cargala, luego mandar a chart-->
+
+  <script  >
+    
+    new Chart(document.getElementById("bar-chart-horizontal"), {
+        type: 'horizontalBar',
+        data: {
+          labels: ["jfoo", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America", "Asia", "Europe", "Latin America", "North America"],
+          datasets: [
+            {
+              label: "Population (millions)",
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+              data: [2478,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433,5267,734,784,433]
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            fontSize: 21,
+            text: 'Clases organizadas segun mayor participacion'
+          }
+        }
+    });
+      
+      
+      </script>
+
+
+
   <script>
 
 
