@@ -1,405 +1,706 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-  <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <!-- Custom styles for this page -->
+
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+    <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
 </head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
-    function Numeros(string){//Solo numeros
-    var out = '';
-    var filtro = '1234567890';//Caracteres validos
-	
-    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++)
-       if (filtro.indexOf(string.charAt(i)) != -1) 
-             //Se añaden a la salida los caracteres validos
-	     out += string.charAt(i);
-	
-    //Retornar valor filtrado
-    return out;
-};
-    
+    function Numeros(string) {//Solo numeros
+        var out = '';
+        var filtro = '1234567890';//Caracteres validos
+
+        //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+        for (var i = 0; i < string.length; i++)
+            if (filtro.indexOf(string.charAt(i)) != -1)
+                //Se añaden a la salida los caracteres validos
+                out += string.charAt(i);
+
+        //Retornar valor filtrado
+        return out;
+    };
+
 </script>
 <script type="text/javascript">
-
-    function boton(num){
+    function nuevoAso() {
+        var dniTutor = "{{tutor_form.dniTutor.value}}";
         
-        document.getElementById("custId").value = num;
-    
-    
-    }
-    
-    </script>
+
+        var dniAlumno = document.getElementById('alunoElejir').value;
+        var relacion = "";
+        if(document.getElementById('exampleRadios3').checked){
+            relacion = document.getElementById('tuOtroTutor').value;
+        }
+        if(document.getElementById('exampleRadios2').checked){
+            relacion = "Madre";
+        }
+        if(document.getElementById('exampleRadios1').checked){
+            relacion = "Padre";
+        }
+       
+
+
+        if (document.getElementById('exampleRadios3').checked) {
+            var palabras = document.getElementById('tuOtroTutor').value;
+            if (palabras != "") {
+                if (document.getElementById('alunoElejir').value != "") {
+                    $.ajax({
+                        url: '{% url "gestionMusical:nuevo_RelacionTutor" %}',
+                        data: {
+                            'dniTutor': dniTutor,
+                            'dniAlumno': dniAlumno,
+                            'relacion': relacion
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+
+                        }
+                    });
+                    location.reload();
+                }
+            }
+        } else {
+            if (document.getElementById('alunoElejir').value != "") {
+                    
+                    $.ajax({
+                        url: '{% url "gestionMusical:nuevo_RelacionTutor" %}',
+                        data: {
+                            'dniTutor': dniTutor,
+                            'dniAlumno': dniAlumno,
+                            'relacion': relacion
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+
+                        }
+                    });
+
+                    
+                                location.reload();
+                        }
+
+                    }
+        };
+
+            function boton(num) {
+
+                document.getElementById("custId").value = num;
+
+
+            }
+
+</script>
 
 
 
 
 <style type="text/css">
-
-    div#cuadroPrincipal{
+    div#cuadroPrincipal {
         border: 1px solid;
         max-width: 60%;
         margin: 0 auto;
-        
+
         padding: 2%;
         border-radius: 0px 0px 18px 18px;
-    -moz-border-radius: 0px 0px 18px 18px;
-    -webkit-border-radius: 0px 0px 18px 18px;
-    border: 2px solid #e3e6e3;
-    background-color: rgb(255, 255, 255);
+        -moz-border-radius: 0px 0px 18px 18px;
+        -webkit-border-radius: 0px 0px 18px 18px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
     }
-    div#cuadroCabeza{
+
+    div#myModal2Unico2 {
+        width: auto;
+        margin-left: 40%;
+        margin-top: 5%;
+
+
+    }
+
+    div#cuadroCabeza {
         border: 1px solid;
         max-width: 60%;
         margin: 0 auto;
         margin-top: 4%;
         padding: 1%;
         border-radius: 18px 18px 0px 0px;
-    -moz-border-radius: 18px 18px 0px 0px;
-    -webkit-border-radius: 18px 18px 0px 0px;
-    border: 2px solid #e3e6e3;
-    background-color: rgb(255, 255, 255);
-    font-size: 22px;
+        -moz-border-radius: 18px 18px 0px 0px;
+        -webkit-border-radius: 18px 18px 0px 0px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+        font-size: 22px;
         color: rgb(255, 255, 255);
         border-bottom: 0px;
-    
+
         background-color: #4e73df;
     }
-    
-    body#total{
+
+    body#total {
         background-color: rgba(238, 236, 236, 0.747);
     }
-    div#titulon{
+
+    div#titulon {
         font-size: 22px;
         color: black;
     }
-    label.sub{
+
+    label.sub {
         color: black;
     }
-    button#salirBoton{
+
+    button#salirBoton {
         float: right;
 
     }
-    input#tuOtroTutor{
+
+    input#tuOtroTutor {
         display: none;
     }
-    p#msj{
-    font-size: 17px;
-}
-    div#cabeza{
+
+    p#msj {
+        font-size: 17px;
+    }
+
+    div#cabeza {
         background-color: #4e73df;
     }
-    
-    input#id_nombre{
-    display: None;
+
+    input#id_nombre {
+        display: None;
     }
-    textarea#id_descripcion{
-    display: None;
+
+    textarea#id_descripcion {
+        display: None;
     }
-    
-    body#total{
-    background-color: rgba(224, 224, 224, 0.747);
-}
-    
-    
-    </style>
+
+    body#total {
+        background-color: rgba(224, 224, 224, 0.747);
+    }
+</style>
 
 <body id="total">
-    
-        <div id="cuadroCabeza">
-                {%if editacion != 1%}
-                <strong>Crear tutor: </strong>
-                {%else%}
-                <strong>Editar tutor: </strong>
-                {%endif%}
-                
 
-        </div>
+    <div id="cuadroCabeza">
+        {%if editacion != 1%}
+        <strong>Crear tutor: </strong>
+        {%else%}
+        <strong>Editar tutor: </strong>
+        {%endif%}
+
+
+    </div>
     <div id="cuadroPrincipal">
 
-            
-
-
-            <form class="user" method="POST">
-                    {% csrf_token %}
-
-                        
-
-                        
-
-                        
-
-                    
-                        {{tutor_form.descripcion}} 
-                        {{tutor_form.nombre}} 
-                        <div id="cuadroMensajes" >
-
-                                {% if messages %}
-                                {% for message in messages %}
-                  
-                                {% if message.tags == 'success'%}
-                                <ul class="alert alert-success alert-dismissible">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                                </ul> 
-                                {%endif%}
-                                {% if message.tags == 'error'%}
-                                <ul class="alert alert-danger alert-dismissible">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                                </ul> 
-                                {%endif%}
-                  
-                                {% endfor %}
-                               {% endif %}
-                        </div>
-
-                <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Apellido</label>
-                            {%if editacion != 1%}
-                            <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Apellido"  required>
-                            {%else%}
-                            <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Apellido" value="{{tutor_form.apellidoTutor.value}}" required>
-                            
-                            {%endif%}
 
 
 
-                           
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Nombre</label>
-                         
-                          {%if editacion != 1%}
-                            <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Nombre"  required>
-                            {%else%}
-                            <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" style="text-transform:uppercase;"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Nombre" value="{{tutor_form.nombreTutor.value}}" required>
-                            
-                            {%endif%}
-                        </div>
+        <form class="user" method="POST">
+            {% csrf_token %}
+
+
+
+
+
+
+
+
+            {{tutor_form.descripcion}}
+            {{tutor_form.nombre}}
+            <div id="cuadroMensajes">
+
+                {% if messages %}
+                {% for message in messages %}
+
+                {% if message.tags == 'success'%}
+                <ul class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj">
+                        <strong>{{ message }}</strong></p>
+                </ul>
+                {%endif%}
+                {% if message.tags == 'error'%}
+                <ul class="alert alert-danger alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj">
+                        <strong>{{ message }}</strong></p>
+                </ul>
+                {%endif%}
+
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Apellido</label>
+                    {%if editacion != 1%}
+                    <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor"
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        placeholder="Apellido" required>
+                    {%else%}
+                    <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor"
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        placeholder="Apellido" value="{{tutor_form.apellidoTutor.value}}" required>
+
+                    {%endif%}
+
+
+
+
                 </div>
-                <div class="form-row"> 
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Nombre</label>
 
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">DNI:</label>
-                            {%if editacion != 1%}
-                            <input type="text" class="form-control" id="elDNItutor" name="dniTutor"  onkeyup="this.value=Numeros(this.value)"   placeholder="DNI"  required>
-                            {%else%}
-                            <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)"   placeholder="DNI" value="{{tutor_form.dniTutor.value}}" disabled  required>
-                            
-                            {%endif%}
-                            
-                        </div>
-                        <div class="form-group col-md-6">
-                                <label for="inputPassword4" class="sub">Telefono del tutor:</label>
-                                
-                                {%if editacion != 1%}
-                            <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor"  onkeyup="this.value=Numeros(this.value)"   placeholder="Numero telefono tutor..."  required>
-                            {%else%}
-                            <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor"  onkeyup="this.value=Numeros(this.value)"   placeholder="Numero telefono tutor..." value="{{tutor_form.telefonoTutor.value}}" required>
-                            
-                            {%endif%}
-                            </div>
+                    {%if editacion != 1%}
+                    <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor"
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        placeholder="Nombre" required>
+                    {%else%}
+                    <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor"
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        placeholder="Nombre" value="{{tutor_form.nombreTutor.value}}" required>
 
-                        
-                        </div>
-                        <div class="form-row"> 
-                                <!--jh-->
-                                <div class="form-group col-md-6" >
-                            
-                                        <label for="inputPassword4" class="sub">Relacion:</label><br>
-                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Padre
-                                                </label>
-                                        </div>
-                                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre" >
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Madre
-                                                </label>
-                                        </div>
-                                        <div class="form-check" style="display: inline-block;" >
-                                                <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro" >
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Otro:
-                                                </label>
-                                                
-                                                
+                    {%endif%}
+                </div>
+            </div>
+            <div class="form-row">
 
-                                                
-                                                <input type="text" id="tuOtroTutor" name ="otroTutor" class="form-control" >
-                                        </div>
-                                <!---->
-                        </div></div>
-                        
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">DNI:</label>
+                    {%if editacion != 1%}
+                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor"
+                        onkeyup="this.value=Numeros(this.value)" placeholder="DNI" required>
+                    {%else%}
+                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor"
+                        onkeyup="this.value=Numeros(this.value)" placeholder="DNI" value="{{tutor_form.dniTutor.value}}"
+                        disabled required>
+
+                    {%endif%}
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">Telefono del tutor:</label>
+
+                    {%if editacion != 1%}
+                    <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor"
+                        onkeyup="this.value=Numeros(this.value)" placeholder="Numero telefono tutor..." required>
+                    {%else%}
+                    <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor"
+                        onkeyup="this.value=Numeros(this.value)" placeholder="Numero telefono tutor..."
+                        value="{{tutor_form.telefonoTutor.value}}" required>
+
+                    {%endif%}
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">Correo Electronico:</label>
+                    {%if editacion != 1%}
+                    <input type="email" class="form-control" name="emailTutor" id="elCorreoTutor" maxlength="75"
+                        placeholder="Correo Electronico del tutor..." required>
+                    {%else%}
+                    <input type="email" class="form-control" name="emailTutor" id="elCorreoTutor" maxlength="75"
+                        placeholder="Correo Electronico del tutor..." value="{{tutor_form.emailTutor.value}}" required>
+                    {%endif%}
+                </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-                 {%if editacion != 1%}
-
-                            <button type="submit" class="btn btn-primary" onclick="boton(1)"> Guardar y Cargar Otra </button>
-                 
-                 {%endif%}
-
-                
-                
-                <button type="submit" class="btn btn-primary" onclick="boton(2)">Guardar </button>
-
-                <a href="{% url 'gestionMusical:tutores'%}">
-                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
-                </a>
-
-
-                <input type="hidden" id="custId" name="custId" value="no cambio">
-              </form>
-              
             </div>
 
 
 
-    
-              {%block archivos%}
-              <!-- Bootstrap core JavaScript-->
-              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-              <!-- Core plugin JavaScript-->
-              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-            
-              <!-- Custom scripts for all pages-->
-              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-            
-              <!-- Page level plugins -->
-              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-            
-              <!-- Page level custom scripts -->
-              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-  <script src="{%static 'js/selectMul.js'%}"></script>
-              {%endblock archivos%} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {%if editacion != 1%}
+
+            <button type="submit" class="btn btn-primary" onclick="boton(1)"> Guardar y Cargar Otra </button>
+
+            {%else%}
+            <div style="margin-bottom: 4%; margin-top: 2%;">
+
+                <button type="button" class="btn btn-info" data-toggle="modal"
+                    data-target=".bs-example-modal-lg2Unico">Editar Asociacion con Alumnos</button>
+            </div>
+            {%endif%}
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary" onclick="boton(2)">Guardar </button>
+
+            <a href="{% url 'gestionMusical:tutores'%}">
+                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+            </a>
+
+
+            <input type="hidden" id="custId" name="custId" value="no cambio">
+        </form>
+        <!--modal-->
+        <div class="modal fade bs-example-modal-lg2Unico" id="myModal2Unico" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabelUnico">Alumnos Asociados al Tutor -
+                            {{tutor_form.apellidoTutor.value}} {{tutor_form.nombreTutor.value}}</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+
+                    </div>
+                    <div class="modal-body">
+                        <!--tabla-->
+                        <div class="card-body">
+                            <button class="btn btn-success" style="margin-bottom: 2%;" data-toggle="modal"
+                                data-target=".bs-example-modal-lg2Unico2">Establecer Nueva</button>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable101" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+
+
+                                            <th>Alumno</th>
+                                            <th>Relacion</th>
+
+                                            <th>Acciones</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for reT in relacionesTutor%}
+
+
+                                        <tr>
+
+                                            <td>{{reT.alumno.apellido}} {{reT.alumno.nombre}}</td>
+                                            <td>{{reT.tipo}}</td>
+
+
+
+
+
+                                            <td>
+
+                                                <!--fdef-->
+                                                <center>
+                                                    <button style="padding: 3px;" type="button"
+                                                        class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                                        data-target=".bs-example-modal-lg2789{{reT.id}}">
+                                                        <div id="icon8">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </div>
+                                                    </button>
+                                                </center>
+
+                                                <div class="modal fade bs-example-modal-lg2789{{reT.id}}"
+                                                    id="myModal2789{{reT.id}}" tabindex="-1" role="dialog"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabel789{{reT.id}}">
+                                                                    Confirmacion de
+                                                                    Eliminacion</h4>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal"><span
+                                                                        aria-hidden="true">×</span>
+                                                                </button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h4>Esta seguro de Eliminar la relacion de {{reT.tipo}} entre el
+                                                                    tutor {{reT.tutor.apellidoTutor}} {{reT.tutor.nombreTutor}} y el alumno {{reT.alumno.apellido}} {{reT.alumno.nombre}} ???
+                                                                </h4>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <a href="{% url 'gestionMusical:eliminar_asociacionTutor' reT.id %}">
+                                                                    <button type="button"
+                                                                        class="btn btn-primary">Confirmar
+                                                                        Eliminacion</button>
+                                                                </a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--fdef-->
+
+                                            </td>
+
+                                        </tr>
+
+                                        {%endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!--fin tabla-->
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--modal-->
+
+        <!--otroModal-->
+
+        <div class="modal fade bs-example-modal-lg2Unico2" id="myModal2Unico2" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="border: blue 2px solid;">
+                    <form class="user" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabelUnico2">Nueva Asociacion</h4>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                            </button>
+
+                        </div>
+                        <div class="modal-body" style="color: black;">
+                            <div class="form-row">
+                                <label for="inputState" style="margin-right: 3%;">Tutor de:</label>
+                                <select id="alunoElejir" name="alumnoElejir" class="selectpicker" single
+                                    data-live-search="true" required>
+
+                                    {%for alu in listaAlumnosDisponible%}
+
+
+                                    <option value='{{alu.dni}}'>{{alu.apellido}} {{alu.nombre}}</option>
+
+                                    {%endfor%}
+
+                                </select>
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <!--jh-->
+                                <div class="form-group col-md-6">
+
+                                    <label for="inputPassword4" class="sub">Tipo de Relacion:</label><br>
+                                    <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1"
+                                            value="Padre" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Padre
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2"
+                                            value="Madre">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Madre
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="display: inline-block;">
+                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3"
+                                            value="otro">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Otro:
+                                        </label>
+
+                                        <input type="text" id="tuOtroTutor" name="otroTutor" class="form-control">
+                                    </div>
+                                    <!---->
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="button" onclick="nuevoAso()" class="btn btn-primary">Confirmar</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--otroModal-->
+
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+    {%block archivos%}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Page level plugins -->
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <script src="{%static 'vendor/datatables/jquery.dataTables.min.js'%}"></script>
+    <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+    <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+    <script src="{%static 'js/selectMul.js'%}"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+    {%endblock archivos%}
 
 </body>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 <script>
-      $(document).ready(function () {
-          
-          
-        $("#tuOtroTutor").keyup(function () {
-              var value = $(this).val();
-              $("#exampleRadios3").val(value);
-          });
-          $("#exampleRadios3").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',true);
-                        document.getElementById("tuOtroTutor").style.display="block";
+                $(document).ready(function () {
 
-                    
-              });
-              $("#exampleRadios2").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
-                        document.getElementById("tuOtroTutor").style.display="none";
 
-                    
-              });
-              $("#exampleRadios1").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
-                        document.getElementById("tuOtroTutor").style.display="none";
 
-                    
-              });
-        
-          
-          
-      });
+                    $("#tuOtroTutor").keyup(function () {
+                        var value = $(this).val();
+                        $("#exampleRadios3").val(value);
+                    });
+                    $("#exampleRadios3").change(function () {
+
+                        $("#tuOtroTutor").prop('required', true);
+                        document.getElementById("tuOtroTutor").style.display = "block";
+
+
+                    });
+                    $("#exampleRadios2").change(function () {
+
+                        $("#tuOtroTutor").prop('required', false);
+                        document.getElementById("tuOtroTutor").style.display = "none";
+
+
+                    });
+                    $("#exampleRadios1").change(function () {
+
+                        $("#tuOtroTutor").prop('required', false);
+                        document.getElementById("tuOtroTutor").style.display = "none";
+
+
+                    });
+
+
+
+                });
 </script>
 {%if editacion != 1%}
-                            
+
 {%else%}
 <script>
-    
-    
-    var tipoTutor = '{{tutor_form.tipo.value}}';
-    
-    if(tipoTutor == 'Madre'){
-        $("#exampleRadios2").prop("checked", true);
-    }else{
-        if(tipoTutor == 'Padre'){
-            $("#exampleRadios1").prop("checked", true);
-        }else{
-            
-            document.getElementById("tuOtroTutor").style.display="block";
-            $("#exampleRadios3").prop("checked", true);
-            $("#tuOtroTutor").val('{{tutor_form.tipo.value}}');
-            
-        }
-    }
+
+
+                var tipoTutor = '{{tutor_form.tipo.value}}';
+
+                if (tipoTutor == 'Madre') {
+                    $("#exampleRadios2").prop("checked", true);
+                } else {
+                    if (tipoTutor == 'Padre') {
+                        $("#exampleRadios1").prop("checked", true);
+                    } else {
+
+                        document.getElementById("tuOtroTutor").style.display = "block";
+                        $("#exampleRadios3").prop("checked", true);
+                        $("#tuOtroTutor").val('{{tutor_form.tipo.value}}');
+
+                    }
+                }
 
 
 </script>
 
 {%endif%}
 <script type="text/javascript">
-   
-    document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
-   
 
-        
+                document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
+
+
+
 </script>
 
 <script>
-        $(document).ready(function(){
-           $("#elDNItutor").change(function () {
-               
-             var username = $(this).val();
-             
-             
-             $.ajax({
-               
-               url: '{% url "gestionMusical:validate_username_tutorDNI" %}',
-               data: {
-                 'username': username
-               },
-               dataType: 'json',
-               
-               success: function (data) {
-                   
-                 if (data.is_taken) {
-                   alert("Ese dni ya lo tiene otro tutor");
-                   document.getElementById("elDNItutor").value = "";
-                 }
-               }
-             });
-       
-           });
-       });
-         </script>
+            $(document).ready(function () {
+                $("#elDNItutor").change(function () {
+
+                    var username = $(this).val();
+
+
+                    $.ajax({
+
+                        url: '{% url "gestionMusical:validate_username_tutorDNI" %}',
+                        data: {
+                            'username': username
+                        },
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            if (data.is_taken) {
+                                alert("Ese dni ya lo tiene otro tutor");
+                                document.getElementById("elDNItutor").value = "";
+                            }
+                        }
+                    });
+
+                });
+            });
+</script>
+
+
 </html>

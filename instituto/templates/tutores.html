@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -16,189 +17,236 @@
 
   <!-- Custom fonts for this template -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
-
+  <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
 </head>
 <script type="text/javascript">
-  function ocultarFiltro(){
-    
-      
-    if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
-        document.getElementById("contenedorFiltro").style.display='block';
-    }
-    else{
-            document.getElementById("contenedorFiltro").style.display='none';
-        }
+  function ocultarFiltro() {
 
-}
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
+
+  };
+  function ocultarFiltro() {
+
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
+
+  }
 </script>
 {%endblock head%}
 {%block estilos%}
-    <style type="text/css">
-        h6#fraseTable{
-            display: inline-block;
-            
+<style type="text/css">
+  h6#fraseTable {
+    display: inline-block;
 
-        }
-        a#fraseTableBoton{
-              display: inline-block;
-              margin-bottom: 2%;
-              color: black;
-              float: right;
-             
-              
 
-        }
-        div.verMasNombre{
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      padding: 2px;
-      background-color: rgb(85, 188, 202);
-      margin: auto;
-      margin-right: 2%;
-      
-      text-align: center;
-      border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          float: right;
+  }
 
-    }
-    div#zonaBotones{
-  
-  text-align: right;
-  vertical-align: b
-}
-div#contenedorFiltro{
-  padding: 2%;
-  display: none;
-  background-color: antiquewhite;
-}
-button#fil{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#repo{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#botonExtra{
-  display: inline-block;
-  background-color: rgb(219, 90, 90);
-  border: 2px solid rgb(32, 32, 32);
-}
-div#elgrando{
-  width: 400px;
-}
-label.izquierda{
-  display: inline-block;
-  margin-left: 5%;
-  
-}
-div.derecha{
-  display: inline-block;
-  
-  margin-left: 5%;
-  
-  
-}
-div.alinealoNomas{
-  text-align: left;
-}
+  a#fraseTableBoton {
+    display: inline-block;
+    margin-bottom: 2%;
+    color: black;
+    float: right;
 
-        label.col-form-label{
-          display: inline-block;
-         
-        }
-        div#icon8{
-          padding: 10px;
-          width: 40px;
-          height: 40px;
-        }
-        div#icon7{
-          
-          width: 100px;
-          height: 100px;
-        }
-        p.nombreLista{
-      display: inline-block;
-      margin-right: 1%;
-    }
-    div.laFilitaUno{
-      border-bottom: 2px solid;
-      text-align: left;
-      padding-left: 2%;
-      padding-right: 4%;
-      height: 50px;
-      padding-top: 10px;
-    }
-    div#masPlus{
-      margin-left: 2%;
 
-    }
-    div.dt-buttons btn-group flex-wrap{
-  
-  position: absolute initial;
-  
-}
-div.dataTables_length{
-  display: inline-block;
-  margin-left: 3%;
-}
-div.dataTables_filter{
-  float: right;
-  
-}
-        div.desasosiarNombre{
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      padding: 2px;
-      background-color: rgb(228, 69, 69);
-      margin: auto;
-      margin-right: 2%;
-      
-      text-align: center;
-      border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          float: right;
-    }
 
-        div#ere{
+  }
 
-margin-right: 2px;
-margin-left: 2px;
-}
-p#msj{
+  div.verMasNombre {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    background-color: rgb(85, 188, 202);
+    margin: auto;
+    margin-right: 2%;
+
+    text-align: center;
+    border-radius: 43px 43px 43px 43px;
+    -moz-border-radius: 43px 43px 43px 43px;
+    -webkit-border-radius: 43px 43px 43px 43px;
+    float: right;
+
+  }
+
+  div#zonaBotones {
+
+    text-align: right;
+    vertical-align: b
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  button#fil {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#repo {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#botonExtra {
+    display: inline-block;
+    background-color: rgb(219, 90, 90);
+    border: 2px solid rgb(32, 32, 32);
+  }
+
+  div#elgrando {
+    width: 400px;
+  }
+
+  label.izquierda {
+    display: inline-block;
+    margin-left: 5%;
+
+  }
+
+  div.derecha {
+    display: inline-block;
+
+    margin-left: 5%;
+
+
+  }
+
+  div.alinealoNomas {
+    text-align: left;
+  }
+
+  label.col-form-label {
+    display: inline-block;
+
+  }
+
+  div#icon8 {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  div#icon7 {
+
+    width: 100px;
+    height: 100px;
+  }
+
+  p.nombreLista {
+    display: inline-block;
+    margin-right: 1%;
+  }
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  div.laFilitaUno {
+    border-bottom: 2px solid;
+    text-align: left;
+    padding-left: 2%;
+    padding-right: 4%;
+    height: 50px;
+    padding-top: 10px;
+  }
+
+  div#masPlus {
+    margin-left: 2%;
+
+  }
+
+  div.dt-buttons btn-group flex-wrap {
+
+    position: absolute initial;
+
+  }
+
+  div.dataTables_length {
+    display: inline-block;
+    margin-left: 3%;
+  }
+
+  div.dataTables_filter {
+    float: right;
+
+  }
+
+  div.desasosiarNombre {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    background-color: rgb(228, 69, 69);
+    margin: auto;
+    margin-right: 2%;
+
+    text-align: center;
+    border-radius: 43px 43px 43px 43px;
+    -moz-border-radius: 43px 43px 43px 43px;
+    -webkit-border-radius: 43px 43px 43px 43px;
+    float: right;
+  }
+
+  button#botonExtra {
+    display: inline-block;
+    background-color: rgb(219, 90, 90);
+    border: 2px solid rgb(32, 32, 32);
+  }
+
+  div#ere {
+
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  p#msj {
     font-size: 17px;
-}
-div#nivell{
-  width: auto;
-  display: inline-block;
-  margin-left: 3%;
-  margin-right: 3%;
-  
-}
-label#labbel{
-  display: block;
-}
-div#espeNIvel{
-  display: inline-block;
- 
-  
-}
+  }
 
-    </style>
+  div#nivell {
+    width: auto;
+    display: inline-block;
+    margin-left: 3%;
+    margin-right: 3%;
+
+  }
+
+  label#labbel {
+    display: block;
+  }
+
+  div#espeNIvel {
+    display: inline-block;
+
+
+  }
+</style>
 {%endblock estilos%}
 
 
@@ -206,7 +254,7 @@ div#espeNIvel{
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -222,21 +270,24 @@ div#espeNIvel{
             <i class="fa fa-bars"></i>
           </button>
 
-          
+
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -249,13 +300,15 @@ div#espeNIvel{
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
@@ -298,13 +351,15 @@ div#espeNIvel{
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
@@ -314,7 +369,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
@@ -324,7 +380,8 @@ div#espeNIvel{
                     <div class="status-indicator"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
@@ -334,7 +391,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-warning"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
@@ -344,7 +402,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -356,7 +415,8 @@ div#espeNIvel{
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
@@ -391,299 +451,434 @@ div#espeNIvel{
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <div id="cuadroMensajes" >
+          <div id="cuadroMensajes">
 
-                {% if messages %}
-                {% for message in messages %}
-  
-                {% if message.tags == 'success'%}
-                <ul class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-                {% if message.tags == 'error'%}
-                <ul class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-  
-                {% endfor %}
-               {% endif %}
-        </div>
+            {% if messages %}
+            {% for message in messages %}
+
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+
+            {% endfor %}
+            {% endif %}
+          </div>
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Tutores</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los tutores que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar los tutores que cuenta la institucion actualmente;
+            editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de tutores que cuenta actualmente:</h6>
-                    <!--modal-->
-                  
-                    
-                    {%if  perms.gestionMusical.es_director %}
-                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" href="{% url 'gestionMusical:crear_tutor' %}">
-                              
-                            <span class="icon text-white-50">
-                                  <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Añadir Tutores</span>
-                            
-                      
-                        </a>
-                        {%endif%}
+              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                <i class="fas fa-file"></i>
+              </button>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de tutores que cuenta actualmente:
+              </h6>
+              <!--modal-->
 
-                        
-                        
-                                 
-            
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      
+              
+
+
+              {%if  perms.gestionMusical.es_director %}
+              <a id="fraseTableBoton" class="btn btn-primary btn-icon-split"
+                href="{% url 'gestionMusical:crear_tutor' %}">
+
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Añadir Tutores</span>
+
+
+              </a>
+              {%endif%}
+
+              <form class="user" method="POST">
+                {% csrf_token %}
+                <div id="contenedorFiltro">
+                  
+                  <div id="comboFiltro">
+                    <div id="zonaInput">
+                      <!--3 div-->
+                      <div class="form-group" id="espeNIvel2">
+                        <label for="inputAddress2" class="sub" style="color: black">Filtrar segun alumno asociado:</label>
+  
+                        <div class="form-row">
+                          <select id="alunoElejir" name="alumnoElejir" class="selectpicker" single
+                          data-live-search="true" required>
+                          <option value='---'>---</option>
+
+                          {%for alu in listaAlumnosDisponible%}
+
+
+                          <option value='{{alu.dni}}'>{{alu.apellido}} {{alu.nombre}}</option>
+
+                          {%endfor%}
+
+                      </select>
+  
+                        </div>
+  
+                      </div>
+  
+  
+                    </div>
+  
+  
+                    <!--3dic-->
+  
+                    <div id="zonaBotones">
+                      <button type="submit" class="btn btn-primary" id="filtrar">Filtrar</button>
+  
+                      <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                      <input type="hidden" id="custId" name="custId" value="no cambio">
+  
+                    </div>
+  
+                  </div>
+  
+                </div>
+              </form>
+
+
+
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+
                         <th style="display: none">D.N.I</th>
-                      <th style="display: none"> Apellido </th>
-                      <th style="display: none"> Nombre</th>
-                      <th class="noExport">Apellido y Nombre</th>
-                      <th> Telefono</th>
-                      
-                      
-                      <th class="noExport">Acciones</th>
-                      
-                    </tr>
-                  </thead>
-                  
-                  <tbody>
-                    {% for t in tutores%}
-                        
-                     
-                        <tr>
-                            <td style="display: none">{{t.dniTutor}}</td>
-                            <td style="display: none">{{t.apellidoTutor}}</td>
-                            <td style="display: none">{{t.nombreTutor}}</td>
-                            <td>{{t.apellidoTutor}}, {{t.nombreTutor}}</td>
-                          <td>{{t.telefonoTutor}}</td>
-                            
-                            
-                            
-                         
+                        <th style="display: none"> Apellido </th>
+                        <th style="display: none"> Nombre</th>
+                        <th class="noExport">Apellido y Nombre</th>
+                        <th> Telefono</th>
+                        <th style="display: none"> Correo Electronico</th>
 
-                          
-                          
-                          
-                          
-                          
-                          
-                          <td>
-                          
+
+                        <th class="noExport">Acciones</th>
+
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {% for t in tutores%}
+
+
+                      <tr>
+                        <td style="display: none">{{t.dniTutor}}</td>
+                        <td style="display: none">{{t.apellidoTutor}}</td>
+                        <td style="display: none">{{t.nombreTutor}}</td>
+                        <td>{{t.apellidoTutor}}, {{t.nombreTutor}}</td>
+                        <td>{{t.telefonoTutor}}</td>
+                        <td style="display: none">{{t.emailTutor}}</td>
+
+
+
+
+
+
+
+
+
+
+
+                        <td>
+
                           <center>
-                              
-                             
 
-                              <div class="btn-group">
-                                <center>
-                                    <div >
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{t.dniTutor}}">
-                                    
+
+
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" onclick="updateModal('{{t.dniTutor}}')" class="btn btn-primary"
+                                    data-toggle="modal" data-target=".bs-example-modal-lgUnico">
+
                                     <i class="fa fa-eye"></i>
-                                  
+
                                   </button>
                                 </div>
-                                </center>
-                                  <div class="modal fade bs-example-modal-lg{{t.dniTutor}}" id="myModal{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                          <div class="modal-content" id="elgrando">
-                                              <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Datos Personales</h4>
-                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                          </button>
-                                                  
-                                              </div>
-                                              <div class="modal-body">
-                                                  <div class="alinealoNomas">
-                                                      <label for="inputEmail3" class="izquierda">DNI: </label>
-                                                      <div class="derecha">
-                                                        {{t.dniTutor}}
-                                                      </div>
-                                                    </div>
-                                                    <div class="alinealoNomas">
-                                                        <label for="inputEmail3" class="izquierda">Apellido:</label>
-                                                        <div class="derecha">
-                                                            {{t.apellidoTutor}}
-                                                        </div>
-                                                      </div>
-                                                      <div class="alinealoNomas">
-                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                                          <div class="derecha">
-                                                              {{t.nombreTutor}}
-                                                          </div>
-                                                        </div>
-                                                        <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Telefono:</label>
-                                                                <div class="derecha">
-                                                                    {{t.telefonoTutor}}
-                                                                </div>
-                                                              </div>
-                                                              <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Relacion:</label>
-                                                                  <div class="derecha">
-                                                                      {{t.tipo}}
-                                                                  </div>
-                                                                </div>
-                                                        
-                                                            
-                                                  
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <input type="hidden" id="inputOculto" value="{{pedidor}}">
-                                                    <input type="hidden" id="inputOcultoTemplate" value="6">
-                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                              </div>
-                                              <input type="hidden" id="filtrado" value="{{filtro}}">
-                                          </div>
-                                      </div>
-                                  </div>
+                              </center>
 
-                                  <div id="ere">
-                            <a href="{% url 'gestionMusical:editar_tutor' t.dniTutor %}" class="btn btn-warning btn-icon-split">
-                                 
-                                <span class="icon text-white-50">
-                                      <i class="fas fa-paint-brush"></i>
-                                </span>
-                                
-                                
-                          
-                          </a>
+
+
+                              <div id="ere">
+                                <a href="{% url 'gestionMusical:editar_tutor' t.dniTutor %}"
+                                  class="btn btn-warning btn-icon-split">
+
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-paint-brush"></i>
+                                  </span>
+
+
+
+                                </a>
                               </div>
                               <div class="btn-group">
-                                  {%if  perms.gestionMusical.es_director %}
+                                {%if  perms.gestionMusical.es_director %}
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.dniTutor}}">
-                                      <div id="icon8">
-                                    <i class="fas fa-trash"></i>
-                                  </div>
+                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                    data-target=".bs-example-modal-lg2{{t.dniTutor}}">
+                                    <div id="icon8">
+                                      <i class="fas fa-trash"></i>
+                                    </div>
                                   </button>
                                 </center>
-                                
-                                  <div class="modal fade bs-example-modal-lg2{{t.dniTutor}}" id="myModal2{{t.dniTutor}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                          <div class="modal-content">
-                                              <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Confirmacion de Eliminacion</h4>
-                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                          </button>
-                                                  
-                                              </div>
-                                              <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar al Tutor {{t.apellidoTutor}} {{t.nombreTutor}} ???</h4>
-                                                  
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_tutor' t.dniTutor %}">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                                </a>
-                                                </div>
-                              
-                                          </div>
+
+                                <div class="modal fade bs-example-modal-lg2{{t.dniTutor}}" id="myModal2{{t.dniTutor}}"
+                                  tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Confirmacion de
+                                          Eliminacion</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                        </button>
+
                                       </div>
+                                      <div class="modal-body">
+                                        <h4>Esta seguro de Eliminar al Tutor {{t.apellidoTutor}} {{t.nombreTutor}} ???
+                                        </h4>
+
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                          data-dismiss="modal">Close</button>
+                                        <a href="{% url 'gestionMusical:eliminar_tutor' t.dniTutor %}">
+                                          <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                        </a>
+                                      </div>
+
+                                    </div>
                                   </div>
-                                  {%endif%}
+                                </div>
+                                {%endif%}
                           </center>
-                        
-                          </td>
-                        
-                        </tr>
-                        
-                    {%endfor%}
-                  </tbody>
-                </table>
+
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            
+
+          </div>
+          <!--modal externo-->
+          <div class="modal fade bs-example-modal-lgUnico" id="myModalUnico" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content" id="elgrando">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabelUnico">Datos Personales</h4>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
+
+                </div>
+                <div class="modal-body">
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">DNI: </label>
+                    <div class="derecha" id="dniTU">
+                      {{t.dniTutor}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Apellido:</label>
+                    <div class="derecha" id="apellidoTU">
+                      {{t.apellidoTutor}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Nombre:</label>
+                    <div class="derecha" id="nombreTU">
+                      {{t.nombreTutor}}
+                    </div>
+                  </div>
+
+
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Telefono:</label>
+                    <div class="derecha" id="telefonoTU">
+                      {{t.telefonoTutor}}
+                    </div>
+                  </div>
+
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Correo Electronico:</label>
+                    <div class="derecha" id="emailTU">
+                      {{t.emailTutor}}
+                    </div>
+                  </div>
+
+
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda" style="vertical-align: top;">Alumnos asociados:</label>
+                    <div class="derecha" id="tipuTU">
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                  <input type="hidden" id="inputOculto" value="{{pedidor}}">
+                  <input type="hidden" id="inputOcultoTemplate" value="6">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+                
+                <input type="hidden" id="filtrado" value="{{filtro}}">
               </div>
             </div>
           </div>
+          <!--modal externo fin-->
+          <!-- /.container-fluid -->
+          {%endblock contenidiPagina%}
 
         </div>
-        <!-- /.container-fluid -->
-        {%endblock contenidiPagina%}
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; Your Website 2019</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
 
       </div>
-      <!-- End of Main Content -->
+      <!-- End of Content Wrapper -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
           </div>
         </div>
-      </footer>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
       </div>
     </div>
-  </div>
-  {%block archivos%}
-  <!-- Bootstrap core JavaScript-->
+    {%block archivos%}
+    <!-- Bootstrap core JavaScript-->
+    <script>
+      function updateModal(ida) {
 
-  <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
-  <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
-  
-  <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
-
- 
-
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+        var idTutor = parseInt(ida);
 
 
-  <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+        $.ajax({
+          url: '{% url "gestionMusical:grupo_UnTutor" %}',
+          data: {
+            'idTutor': idTutor,
+          },
+          dataType: 'json',
+          success: function (data) {
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+            document.getElementById("dniTU").innerHTML = data['dniTutor'];
+            document.getElementById("apellidoTU").innerHTML = data['nombreTutor'];
+            document.getElementById("nombreTU").innerHTML = data['apellidoTutor'];
 
-  
-  {%endblock archivos%}
+            document.getElementById("telefonoTU").innerHTML = data['telefonoTutor'];
+            document.getElementById("emailTU").innerHTML = data['emailTutor'];
+            var listaNya = [];
+            texto = "";
+            listaNya = data['tipo'];
+            for (var i = 0; i < listaNya.length; i++) {
+              texto += "<label>" + listaNya[i] + "</label><br>";
+            }
+
+            document.getElementById("tipuTU").innerHTML = texto;
+
+
+
+
+          }
+        })
+
+
+      };
+    </script>
+    <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+
+    <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
+
+
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    <script src="{%static 'js/jquery.multi-select.js'%}"></script>
+    <script src="{%static 'js/selectMul.js'%}"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+
+    <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+
+    {%endblock archivos%}
 </body>
 
 </html>

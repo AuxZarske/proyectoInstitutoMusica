@@ -74,8 +74,9 @@ class Tutor(models.Model):
     dniTutor = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
     nombreTutor = models.CharField('Nombre del tutor', max_length = 100, null = False, blank = False)
     apellidoTutor = models.CharField('Apellido del tutor', max_length = 200, null = False, blank = False)
-    tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
+   # tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
     telefonoTutor = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
+    emailTutor = models.EmailField('Correo electronico del tutor', null =  True, blank = True, default = None)
 
     class Meta:
         verbose_name = 'Tutor'
@@ -164,7 +165,8 @@ class Alumno(Usuario):
     partiturasAsociadas = models.ManyToManyField(Partitura)
     temasAsociadas = models.ManyToManyField(Tema)
     musica = models.ForeignKey(MusicaTipo, on_delete = models.DO_NOTHING,  null = True, blank = True)
-    tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    #tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
+    tutor = models.ManyToManyField(Tutor, through='TipoRelacion')
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     reputacion = models.IntegerField('numero de reputacion max 100', default=100, null = False, blank = False)
      
@@ -174,8 +176,10 @@ class Alumno(Usuario):
         verbose_name_plural = 'Alumnos'
         permissions = (("es_alumno", "es alumno"),("es_pre_alumno", "es pre alumno")) 
 
-
-
+class TipoRelacion(models.Model):
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
 
 class InstitutoDato(models.Model):
     
@@ -279,6 +283,15 @@ class Prestamo(models.Model):
     def __str__(self):
         return str(self.id)
 
+class TipoTarea(models.Model):
+    id = models.AutoField(primary_key = True)
+    nombre = models.CharField('Nombre de la recomendacion', max_length = 100, null = False, blank = False)
+    class Meta:
+        verbose_name = 'TipoTarea'
+        verbose_name_plural = 'TipoTareas'
+    
+    def __str__(self):
+        return str(self.id)
 
 class Recomendacion(models.Model):
     

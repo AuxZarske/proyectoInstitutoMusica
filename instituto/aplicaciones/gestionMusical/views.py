@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
@@ -276,6 +276,7 @@ def registrarAlumno(request):
             #crear form tutor y relacion
             creado = False
             dniTu = request.POST['dniTutor']
+            tipoElegido = request.POST['tipo']
             creado = Tutor.objects.filter(dniTutor = dniTu).exists()
             formTutor = TutorForm(request.POST) 
             
@@ -286,16 +287,21 @@ def registrarAlumno(request):
                 user = form.save()
                 alum = formAlu.save(commit=False)
                 if formTutor.is_valid():
-                    tuto = formTutor.save()
+                    tuto = formTutor.save() #eh esto verificA igualdades ???
                 else:
                     tuto = Tutor.objects.get(dniTutor = dniTu)
                 alum.user = user
                 if validamusica == 1:
                     tipoMusic = laMusica.save()
                 alum.musica = tipoMusic
-
-                alum.tutor = tuto
                 alum.save()
+                #alum.tutor.add(tuto)
+
+                alum.save()
+                tipoRelacion = TipoRelacion(alumno=alum, tutor=tuto,  tipo=tipoElegido)
+                tipoRelacion.save()
+
+                #aca crear la tiporelacion
 
                 dj_login(request, user)
                 messages.success(request, "Registro Correcto!")
@@ -451,6 +457,59 @@ def GrupoTableYellow(request):
     }
 
     return JsonResponse(dicD)
+
+def grupoUnTutor(request):
+    tutor = request.GET.get('idTutor',None)
+    t = Tutor.objects.get(dniTutor = tutor)
+    listaFinal = []
+    listaFinal2 = []
+    listaAlumnosDisponible = list(Alumno.objects.all()) 
+            
+    relacionesTutor = list(TipoRelacion.objects.filter(tutor = t))
+    listaFinal = listaAlumnosDisponible.copy()
+    for a in listaFinal:
+        for r in relacionesTutor:
+            if a.dni == r.alumno.dni:
+                listaFinal2.append(a)
+
+    listaString = []
+    palabra = ""
+    for e in listaFinal2:
+        palabra = e.apellido + " " + e.nombre
+        listaString.append(palabra)
+
+
+    data = {
+            'dniTutor': t.dniTutor,
+            'nombreTutor': t.nombreTutor,
+            'apellidoTutor': t.apellidoTutor,
+
+            'tipo': listaString.copy(), 
+
+            
+            'telefonoTutor': t.telefonoTutor, 
+            'emailTutor': t.emailTutor
+        }
+    
+       
+
+    return JsonResponse(data)
+
+def nuevoRelacionTutor(request):
+    dniAlu = request.GET.get('dniAlumno',None)
+    dniTut = request.GET.get('dniTutor',None)
+    relac = request.GET.get('relacion',None)
+
+    alum = Alumno.objects.get(dni = dniAlu)
+    tutorAlu = Tutor.objects.get(dniTutor = dniTut)
+    
+
+
+    tipoRelacion = TipoRelacion(alumno=alum, tutor=tutorAlu,  tipo=relac) 
+    tipoRelacion.save()
+
+    data = {}
+    return JsonResponse(data)
 
 
 def grupoClaseHistoricaUno(request):
@@ -1026,6 +1085,27 @@ def listartutores(request):
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
+    listaAlumnosDisponible = []
+    listaAlumnosDisponible = list(Alumno.objects.all())
+    
+    if request.method == 'POST':
+        #obtener alumno
+        alumno = request.POST.get('alumnoElejir', None)
+        print(alumno)
+        print(request.POST)
+        if alumno == '---':
+            pass
+        else:
+            alu = Alumno.objects.get(dni = alumno)
+            relas = list(TipoRelacion.objects.filter(alumno = alu))
+            tutoresFinal = []
+            for r in relas:
+                tutorUnico = Tutor.objects.get(dniTutor = r.tutor.dniTutor)
+                tutoresFinal.append(tutorUnico)
+            tutores = tutoresFinal.copy()
+            filtro = "Filtrado por tutores asociados al Alumno: "+alu.apellido +" "+alu.nombre
+        #obtener todo los tutores relacionados con ese alumno
+
 
     try:
         pedidor = str(request.user.username)
@@ -1038,9 +1118,10 @@ def listartutores(request):
         if elusuario:
             elusuario = elusuario[0]
             pedidor = elusuario.apellido + ' '+ elusuario.nombre
+        
     except:
         pass 
-    return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro})
+    return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro,'listaAlumnosDisponible':listaAlumnosDisponible})
 
 
 
@@ -1221,6 +1302,7 @@ def crearTutor(request):
             return redirect('gestionMusical:tutores')
     else:
         tutor_form =TutorForm()
+        
     return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'editacion':editacion})
 
 def nomInstru(request):
@@ -1292,8 +1374,11 @@ def finPrestamo(request):
                 
                 reputacion -= 40
                 print("atrazado") 
-            alu.reputacion -= 100-reputacion
-            print(reputacion)
+            if reputacion >= 100:
+                alu.reputacion += 100-reputacion
+            else:
+                alu.reputacion -= 100-reputacion
+            
             alu.save()
             presta.save()
             messages.success(request, "Carga Correcta!")
@@ -1326,6 +1411,28 @@ def crearCompositor(request):
         
        
         data['error_message'] = 'creado exitosamente.'
+    print(data)
+    return JsonResponse(data)
+
+def agregarTipoTarea(request):
+    nombre = request.GET.get('nombre', None)
+    
+    
+    data = {
+        'is_taken': TipoTarea.objects.filter(nombre__iexact=nombre).exists()
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ese nombre ya esta ocupado.'
+    else:
+        #crear compositor, ponerle ese nombre
+        
+        tipott = TipoTarea(nombre = nombre)
+        tipott.save()
+           
+        messages.success(request, "Carga Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+      
     print(data)
     return JsonResponse(data)
 
@@ -1733,10 +1840,25 @@ def editarTutor(request,dni):
     editacion = 1
     tutor_form = None
     error = None
+    listaAlumnosDisponible = []
+    relacionesTutor = []
     try:
         tutor = Tutor.objects.get(dniTutor = dni)
         if request.method == 'GET':
             tutor_form = TutorForm(instance = tutor)
+            #lista de alumnos disponibles
+            #listAlumnos = listAlumnos.prefetch_related('Asistencia')
+            #print(TipoRelacion.objects.select_related('TipoRelacion')) 
+            listaAlumnosDisponible = list(Alumno.objects.all()) #menos los tuyos
+            
+            relacionesTutor = list(TipoRelacion.objects.filter(tutor = tutor))
+            listaFinal = listaAlumnosDisponible.copy()
+            for a in listaFinal:
+                for r in relacionesTutor:
+                    if a.dni == r.alumno.dni:
+                        listaAlumnosDisponible.remove(a)
+            
+
         else:
             tutor_form = TutorForm(request.POST, instance = tutor)
             if tutor_form.is_valid() :
@@ -1749,10 +1871,18 @@ def editarTutor(request,dni):
     except ObjectDoesNotExist as e:
         error = e
 
-    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion})
+    return render(request,'crear_tutor.html',{'tutor_form':tutor_form,'error':error,'editacion':editacion,'listaAlumnosDisponible':listaAlumnosDisponible,'relacionesTutor':relacionesTutor})
 
 
-
+def eliminarAsociacionTutor(request,id):
+    relacion = TipoRelacion.objects.get(id = id)
+    
+    try:
+        relacion.delete()
+        messages.success(request, "eliminado Correcto!")
+    except:
+        messages.error(request, " Error - no puede eliminarse")
+    return redirect('gestionMusical:tutores')
 
 def eliminarTutor(request,dni):
     tutor = Tutor.objects.get(dniTutor = dni)
@@ -2028,16 +2158,22 @@ def listarprofesores(request):
 def eliminarProfesor(request,dni):
     try:
         profesor = Profesor.objects.get(dni=dni)
-        
-        profesor.estado = False
-        profesor.save()
-        usuario = User.objects.get(username = profesor.correoElectronico) 
-        permission = Permission.objects.get(name='es profesor') #permiso de home
-        usuario.user_permissions.remove(permission)
-        permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
-        usuario.user_permissions.add(permission2)
-        usuario.save()
-        messages.success(request, "removido correctamente!")
+        clases = list(Clase.objects.filter(profesorCargo = profesor))
+        estaAsociadoAclase = len(clases)
+        if estaAsociadoAclase > 0:
+            unaClase = clases[0].nombre
+            texto = " Error - El profesor no pudo ser removido, esta asociado a la clase: "+ unaClase +", reasigne otro profesor a la clase o descarte la clase del sistema primeramente"
+            messages.error(request, texto)
+        else:
+            profesor.estado = False
+            profesor.save()
+            usuario = User.objects.get(username = profesor.correoElectronico) 
+            permission = Permission.objects.get(name='es profesor') #permiso de home
+            usuario.user_permissions.remove(permission)
+            permission2 = Permission.objects.get(name='es pre profesor') #permiso de home
+            usuario.user_permissions.add(permission2)
+            usuario.save()
+            messages.success(request, "removido correctamente!")
     except:
         messages.error(request, " Error - El profesor no pudo ser removido")
     return redirect('gestionMusical:profesores')
@@ -3812,7 +3948,7 @@ def verAlumnoClase(request,dni,idC):
     completoparti = list(Partitura.objects.all())
     temasTodos = None
     
-    todasRecomendaciones = list(Recomendacion.objects.all())
+    todasRecomendaciones = []
     try:
         if dni == 0:
             print(request.user.username )
@@ -3823,7 +3959,7 @@ def verAlumnoClase(request,dni,idC):
         else:
             
             elAlumno = Alumno.objects.get(dni = dni)
-            
+            todasRecomendaciones = list(Recomendacion.objects.filter(alumnoReco = elAlumno))
     except:
         print("jjiji")
         

@@ -611,7 +611,14 @@
 
   select#country {
     display: inline-block;
-    width: 40%;
+    width: 60%;
+
+
+  }
+
+  select#countryTarea {
+    display: inline-block;
+    width: 60%;
 
 
   }
@@ -2741,33 +2748,75 @@
                     </div>
                     <div class="modal-body">
                       <div>
-                        <label for="">Nombre:</label>
-                        <input type="text" class="form-control" id="inputRecoCrear">
-                      </div>
+                        <label for=""><strong>Nombre:</strong></label>
+                        <div style="margin-left: 5%;">
+                          <div class="form-row">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="exampleRadios99" id="exampleRadios188"
+                                value="option188" checked>
+                              <label class="form-check-label" for="exampleRadios1">
+                                Lista disponible
+                              </label>
+                            </div>
+                            <select id="countryTarea" class="form-control" name="nombresTareas">
+                              <option value=''>-----</option>
 
+
+                              {%for compo in partituras%}
+                              <option value='{{compo.id}}'>{{compo.nombre}}</option>
+                              {%endfor%}
+
+                            </select>
+                          </div>
+                          <br>
+                          <div class="form-row">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="exampleRadios99" id="exampleRadios199"
+                                value="option199">
+                              <label class="form-check-label" for="exampleRadios1">
+                                Otro
+                              </label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Nombre para la tarea..."
+                              style="width: 30%;" id="inputRecoCrear2" disabled>
+
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <br>
                       <div>
-                        <label for="">Descripcion:</label>
+                        <label for=""><strong>Descripcion:</strong></label>
                         <textarea type="text" class="form-control" id="inputRecoDesCrear"></textarea>
                       </div>
+                      <br>
                       <div class="form-row">
                         <div>
-                          <label for="">Duracion (dias):</label>
+                          <label for=""><strong>Duracion (dias):</strong></label>
                           <input type="number" class="form-control" id="inputRecoDias" min="1" max="150">
                         </div>
-                        <div>
-                          <label for="">Partitura/Musica:</label>
-
-                          <select id="country" class="form-control" name="parti">
-                            <option value=''>-----</option>
-
-
-                            {%for compo in completoparti%}
-                            <option value='{{compo.id}}'>{{compo.nombre}}</option>
-                            {%endfor%}
-
-                          </select>
-                        </div>
                       </div>
+                      <br>
+                      <div class="form-row">
+                        <div>
+                          <label for=""><strong>Partitura/Musica asociada al Alumno:</strong></label>
+
+                          <div>
+                            <select id="country" class="form-control" name="parti">
+                              <option value=''>-----</option>
+
+
+                              {%for compo in partituras%}
+                              <option value='{{compo.id}}'>{{compo.nombre}}</option>
+                              {%endfor%}
+
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -3104,6 +3153,12 @@
       $("#country").select2({
         placeholder: "Seleccione Partitura",
         allowClear: true
+      });
+    </script>
+    <script>
+      $("#countryTarea").select2({
+        placeholder: "Seleccione Nombre",
+        allowClear: false
       });
     </script>
     <script>

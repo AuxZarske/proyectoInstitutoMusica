@@ -59,6 +59,29 @@
 
 
   }
+  function cambioOcultarCalendario() {
+
+var v = document.getElementById("calendarioClases").style.display;
+if (v == "none") {
+  document.getElementById("calendarioClases").style.display = "block";
+} else {
+  document.getElementById("calendarioClases").style.display = "none";
+}
+
+
+}
+
+  function cambioOcultarEstadistica() {
+
+var v = document.getElementById("estadisticaClases").style.display;
+if (v == "none") {
+  document.getElementById("estadisticaClases").style.display = "block";
+} else {
+  document.getElementById("estadisticaClases").style.display = "none";
+}
+
+
+}
 
 </script>
 <style type="text/css">
@@ -132,6 +155,53 @@
   }
 
   div#historicoClases {
+    display: none;
+    background: rgba(201, 229, 255, 1);
+    background: -moz-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201, 229, 255, 1)), color-stop(27%, rgba(180, 180, 250, 1)), color-stop(61%, rgba(150, 150, 255, 1)), color-stop(92%, rgba(68, 68, 245, 1)), color-stop(99%, rgba(6, 6, 196, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
+    background: -webkit-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -o-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1);
+
+    border-radius: 13px 0px 13px 13px;
+    -moz-border-radius: 13px 0px 13px 13px;
+    -webkit-border-radius: 13px 0px 13px 13px;
+    border: orange 2px solid;
+    height: auto;
+    color: black;
+    padding: 3%;
+    margin-bottom: 2%;
+  }
+
+  div#calendarioClases {
+    display: none;
+    background: rgba(201, 229, 255, 1);
+    background: -moz-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201, 229, 255, 1)), color-stop(27%, rgba(180, 180, 250, 1)), color-stop(61%, rgba(150, 150, 255, 1)), color-stop(92%, rgba(68, 68, 245, 1)), color-stop(99%, rgba(6, 6, 196, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
+    background: -webkit-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -o-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    background: linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1);
+
+    border-radius: 13px 0px 13px 13px;
+    -moz-border-radius: 13px 0px 13px 13px;
+    -webkit-border-radius: 13px 0px 13px 13px;
+    border: orange 2px solid;
+    height: auto;
+    color: black;
+    padding: 3%;
+    margin-bottom: 2%;
+  }
+
+
+
+  
+
+
+  div#estadisticaClases {
     display: none;
     background: rgba(201, 229, 255, 1);
     background: -moz-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
@@ -417,11 +487,48 @@
 
           <!-- Page Heading -->
           {%if  perms.gestionMusical.es_director %}
-          <button onclick="cambioOcultarHistorico()" class="btn btn-warning btn-icon-split" style="float: right;"><span
+          <button  onclick="cambioOcultarCalendario()" class="btn btn-secondary btn-icon-split" style="float: right;">
+            <span class="icon text-white-50">
+            <i class="fas fa-calendar-day"></i>
+          </span>
+          <span class="text">Calendario/Agenda</span>
+        </button>
+        
+        <div id="calendarioClases">
+          <div style="border: solid 2px black; height: 400px; "></div>
+          <div style="border: solid 2px black; height: 400px; "></div>
+
+        </div>
+        
+
+          {%endif%}
+
+          {%if  perms.gestionMusical.es_director %}
+          <button  onclick="cambioOcultarEstadistica()" class="btn btn-info btn-icon-split" style="float: right;"><span
+            class="icon text-white-50">
+            <i class="fas fa-people-carry"></i>
+          </span>
+          <span class="text">Alumnos Activos</span>
+        </button>
+        
+        <div id="estadisticaClases">
+          <div style="border: solid 2px black; height: 400px; "></div>
+          <div style="border: solid 2px black; height: 400px; "></div>
+
+        </div>
+        
+
+          {%endif%}
+
+
+          {%if  perms.gestionMusical.es_director %}
+
+          <button onclick="cambioOcultarHistorico()" class="btn btn-warning btn-icon-split" style="float: right ;"><span
               class="icon text-white-50">
               <i class="fas fa-table"></i>
             </span>
-            <span class="text">Historico de Clases</span></button>
+            <span class="text">Historico de Clases</span>
+          </button>
           <br>
           <div id="historicoClases">
 

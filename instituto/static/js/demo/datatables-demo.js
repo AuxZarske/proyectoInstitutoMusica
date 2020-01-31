@@ -43,7 +43,40 @@ $(document).ready(function () {
                   }
   },
   });
-
+  $('#dataTable101').DataTable({
+    "paging": true,
+    "buttons": [
+    ],
+    "dom":'Blfrtip',
+    "language": {
+      "sProcessing":     "Procesando...",
+                  "sLengthMenu":     "Mostrar _MENU_ registros",
+                  "sZeroRecords":    "No se encontraron resultados",
+                  "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                  "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix":    "",
+                  "sSearch":         "Buscar:",
+                  "sUrl":            "",
+                  "sInfoThousands":  ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst":    "Primero",
+                      "sLast":     "Último",
+                      "sNext":     "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  },
+                  "buttons": {
+                      "copy": "Copiar",
+                      "colvis": "Visibilidad"
+                  }
+  },
+  });
 
   $('#dataTable97').DataTable({
     "paging": true,
@@ -526,7 +559,16 @@ margin: 20
                 if(template == 6){
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
-                   doc.content[0].table.widths = [60, 100, 100,70];
+                   doc.content[0].table.widths = [60, 70, 70,70,120];
+                   var table = $("#dataTable").DataTable();//Obtengo la tabla
+                   var pageInfo = table.page.info(); //Obtiene el objeto page.info()
+                  for (i = 1; i <= pageInfo.recordsDisplay; i++) { //recordsDisplay me devuelve la cantidad de registros mostrados
+                  //doc.content[1].table.body[i][5].alignment = 'right'; //El segundo [] es el numero de columna a alinear
+                  //doc.content[0].table.body[i][4].alignment = 'right';
+                 // doc.content[0].table.body[i][3].alignment = 'right';
+                  doc.content[0].table.body[i][3].alignment = 'right';
+                  doc.content[0].table.body[i][0].alignment = 'right';
+                };
                 }
                 if(template == 7){
                   //doc.content[0].table.widths = colCount;

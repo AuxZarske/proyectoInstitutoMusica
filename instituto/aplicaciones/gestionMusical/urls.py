@@ -2,8 +2,8 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, bajaEspecialidad, altaEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno, crearHorario, crearAsistenciaPasada, editarUsuario, editarIndividuo, editarIndividuoAlumno, editarIndividuoProfesor, configInstituto, configTodo, configDirectores, listarestadisticaspresta, listarestadisticasparti, listarestadisticasalu
-from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo, GrupoTable, nomInstru, GrupoPresta, GrupoTableYellow, filtroTablaHistorica, grupoClaseHistoricaUno
-from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI, enviarMensaje, verConversacion, ocultarMensajes, vistoMensaje, obtenerUltimosMensajes, dniUser
+from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo, GrupoTable, nomInstru, GrupoPresta, GrupoTableYellow, filtroTablaHistorica, grupoClaseHistoricaUno, nuevoRelacionTutor, eliminarAsociacionTutor, agregarTipoTarea
+from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI, enviarMensaje, verConversacion, ocultarMensajes, vistoMensaje, obtenerUltimosMensajes, dniUser, grupoUnTutor
 urlpatterns = [
     #path('',home,name='index'),
 
@@ -30,6 +30,9 @@ urlpatterns = [
     path('editar_profesor/<int:dni>',login_required(editarProfesor),name='editar_profesor'),
     path('establecer_director/<int:dni>',login_required(establecerDirecto),name='establecer_director'),
     path('eliminar_director/<int:dni>',login_required(eliminarDirector),name='eliminar_director'),
+
+    path('eliminar_asociacionTutor/<int:id>',login_required(eliminarAsociacionTutor),name='eliminar_asociacionTutor'),
+    
     
     path('alumnos/',login_required(listaralumnos),name='alumnos'),
     path('eliminar_alumno/<int:dni>',login_required(eliminarAlumno),name='eliminar_alumno'),
@@ -50,6 +53,10 @@ urlpatterns = [
     path('grupo_Table/',login_required(GrupoTable),name='grupo_Table'),
 
     path('grupo_ClaseHistorica/',login_required(grupoClaseHistoricaUno),name='grupo_ClaseHistorica'),
+   
+    path('grupo_UnTutor/',login_required(grupoUnTutor),name='grupo_UnTutor'),
+
+    path('nuevo_RelacionTutor/',login_required(nuevoRelacionTutor),name='nuevo_RelacionTutor'),
 
 
     path('grupo_TableYellow/',login_required(GrupoTableYellow),name='grupo_TableYellow'),
@@ -71,6 +78,8 @@ urlpatterns = [
     path('crear_composito/',login_required(crearCompositor),name='crear_composito'),
     path('editar_composito/',login_required(editarComposito),name='editar_composito'),
     path('editar_asistencia/',login_required(editarAsistencia),name='editar_asistencia'),
+
+    path('agregar_tipo_tarea/',login_required(agregarTipoTarea),name='agregar_tipo_tarea'),
     
 
     path('eliminar_musica/<int:id>',login_required(eliminarMusica),name='eliminar_musica'),

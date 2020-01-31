@@ -1,553 +1,603 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 </head>
 <script type="text/javascript">
 
-function limpiar(){
+    function limpiar() {
 
         document.getElementById("id_nombreTipo").value = "";
-};
-function Numeros(string){//Solo numeros
-    var out = '';
-    var filtro = '1234567890';//Caracteres validos
-	
-    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
-    for (var i=0; i<string.length; i++)
-       if (filtro.indexOf(string.charAt(i)) != -1) 
-             //Se añaden a la salida los caracteres validos
-	     out += string.charAt(i);
-	
-    //Retornar valor filtrado
-    return out;
-};
+    };
+    function Numeros(string) {//Solo numeros
+        var out = '';
+        var filtro = '1234567890';//Caracteres validos
 
-function cargaMusic(){
-    
-    var nombre = document.getElementById("id_nombreTipo").value;
-    var noExiste = true;
-    var username = nombre;
-    $.ajax({
-            
+        //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+        for (var i = 0; i < string.length; i++)
+            if (filtro.indexOf(string.charAt(i)) != -1)
+                //Se añaden a la salida los caracteres validos
+                out += string.charAt(i);
+
+        //Retornar valor filtrado
+        return out;
+    };
+
+    function cargaMusic() {
+
+        var nombre = document.getElementById("id_nombreTipo").value;
+        var noExiste = true;
+        var username = nombre;
+        $.ajax({
+
             url: '{% url "gestionMusical:validate_username_tipoMusica" %}',
             data: {
-              'username': username
+                'username': username
             },
             dataType: 'json',
-            
+
             success: function (data) {
-                
-              if (data.is_taken) {
-                
-                alert("ese nombre ya existe");
-              }else{
 
-                if (nombre != "" ){
-                    optionExtra = "";
-                    
-                
-                    limpiar();
+                if (data.is_taken) {
 
-                    $('#myModal2').modal('hide'); 
+                    alert("ese nombre ya existe");
+                } else {
 
-                    
-                    //cambiar valor al finalizar formulario, de nada al nombre del select
-                    optionExtra += "<option value='"+nombre +"' selected>"  +nombre+ "</option>";
-                    
+                    if (nombre != "") {
+                        optionExtra = "";
+
+
+                        limpiar();
+
+                        $('#myModal2').modal('hide');
+
+
+                        //cambiar valor al finalizar formulario, de nada al nombre del select
+                        optionExtra += "<option value='" + nombre + "' selected>" + nombre + "</option>";
+
                         $("#country").append(optionExtra);
 
                         $("#country").val(nombre).change();
-                    
 
-                    
-                                    
-            }else{
-                alert("Escriba un nombre nuevo, sino simplemente seleccionelo de la lista: ");
-            }
-              }
-            }
-          });
-    
 
-}
+
+
+                    } else {
+                        alert("Escriba un nombre nuevo, sino simplemente seleccionelo de la lista: ");
+                    }
+                }
+            }
+        });
+
+
+    }
 
 
 </script>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-      $(document).ready(function () {
-          $("#inputEmail4").keyup(function () {
-              var value = $(this).val();
-              $("#id_username").val(value);
-          });
-          $("#apellidoIn").keyup(function () {
-              var value = $(this).val();
-              $("#id_first_name").val(value);
-          });
-          $("#tuOtroTutor").keyup(function () {
-              var value = $(this).val();
-              $("#exampleRadios3").val(value);
-          });
-          $("#nombreIn").keyup(function () {
-              var value = $(this).val();
-              $("#id_last_name").val(value);
-          });
-          $("#inputEmail4").keyup(function () {
-              var value = $(this).val();
-              $("#id_email").val(value);
-          });
-          $("#inputPassword4").keyup(function () {
-              var value = $(this).val();
-              $("#id_password1").val(value);
-          });
-          $("#inputPassword5").keyup(function () {
-              var value = $(this).val();
-              $("#id_password2").val(value);
-          });
-          $("#inputEmail4").keyup(function () {
-              var value = $(this).val();
-              $("#id_correoElectronico").val(value);
-          });
-          $("#elDNI").keyup(function () {
-              var value = $(this).val();
-              $("#id_dni").val(value);
-          });
-          $("#apellidoIn").keyup(function () {
-              var value = $(this).val();
-              $("#id_apellido").val(value);
-          });
-          $("#nombreIn").keyup(function () {
-              var value = $(this).val();
-              $("#id_nombre").val(value);
-          });
-          
-          
-          $("#inputAddress2").keyup(function () {
-              var value = $(this).val();
-              $("#id_domicilio").val(value);
-          });
-          $("#elTelefono").keyup(function () {
-              var value = $(this).val();
-              $("#id_telefono").val(value);
-          });
-          
-          
-      });
+    $(document).ready(function () {
+        $("#inputEmail4").keyup(function () {
+            var value = $(this).val();
+            $("#id_username").val(value);
+        });
+        $("#apellidoIn").keyup(function () {
+            var value = $(this).val();
+            $("#id_first_name").val(value);
+        });
+        $("#tuOtroTutor").keyup(function () {
+            var value = $(this).val();
+            $("#exampleRadios3").val(value);
+        });
+        $("#nombreIn").keyup(function () {
+            var value = $(this).val();
+            $("#id_last_name").val(value);
+        });
+        $("#inputEmail4").keyup(function () {
+            var value = $(this).val();
+            $("#id_email").val(value);
+        });
+        $("#inputPassword4").keyup(function () {
+            var value = $(this).val();
+            $("#id_password1").val(value);
+        });
+        $("#inputPassword5").keyup(function () {
+            var value = $(this).val();
+            $("#id_password2").val(value);
+        });
+        $("#inputEmail4").keyup(function () {
+            var value = $(this).val();
+            $("#id_correoElectronico").val(value);
+        });
+        $("#elDNI").keyup(function () {
+            var value = $(this).val();
+            $("#id_dni").val(value);
+        });
+        $("#apellidoIn").keyup(function () {
+            var value = $(this).val();
+            $("#id_apellido").val(value);
+        });
+        $("#nombreIn").keyup(function () {
+            var value = $(this).val();
+            $("#id_nombre").val(value);
+        });
+
+
+        $("#inputAddress2").keyup(function () {
+            var value = $(this).val();
+            $("#id_domicilio").val(value);
+        });
+        $("#elTelefono").keyup(function () {
+            var value = $(this).val();
+            $("#id_telefono").val(value);
+        });
+
+
+    });
 </script>
 
 
 
 <style type="text/css">
+    div#cuadroPrincipal {
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
 
-div#cuadroPrincipal{
-    border: 1px solid;
-    max-width: 60%;
-    margin: 0 auto;
-    
-    padding: 2%;
-    border-radius: 0px 0px 18px 18px;
--moz-border-radius: 0px 0px 18px 18px;
--webkit-border-radius: 0px 0px 18px 18px;
-border: 2px solid #e3e6e3;
-background-color: rgb(255, 255, 255);
-}
-div#datosTutores{
-    display: none;
-}
-div#cuadroCabeza{
-    border: 1px solid;
-    max-width: 60%;
-    margin: 0 auto;
-    margin-top: 4%;
-    padding: 1%;
-    border-radius: 18px 18px 0px 0px;
--moz-border-radius: 18px 18px 0px 0px;
--webkit-border-radius: 18px 18px 0px 0px;
-border: 2px solid #e3e6e3;
-background-color: rgb(255, 255, 255);
-font-size: 22px;
-    color: rgb(255, 255, 255);
-    border-bottom: 0px;
+        padding: 2%;
+        border-radius: 0px 0px 18px 18px;
+        -moz-border-radius: 0px 0px 18px 18px;
+        -webkit-border-radius: 0px 0px 18px 18px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+    }
 
-    background-color: #4e73df;
-}
-div#datosTutores{
-    background-color: rgba(212, 250, 228, 0.411);
-    padding: 2%;
-    border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
-border: 0px solid #000000;
-}
-body#total{
-    background-color: rgba(224, 224, 224, 0.747);
-}
-div#titulon{
-    font-size: 22px;
-    color: black;
-}
-label.sub{
-    color: black;
-}
-div#cabeza{
-    background-color: #4e73df;
-}
-input#tuOtroTutor{
-    display: none;
-}
-select#country{
-    display: inline-block;
-    width: 80%;
-}
-button#agregarMusic{
-    display: inline-block;
+    div#datosTutores {
+        display: none;
+    }
 
-}
-input#id_username{
+    div#cuadroCabeza {
+        border: 1px solid;
+        max-width: 60%;
+        margin: 0 auto;
+        margin-top: 4%;
+        padding: 1%;
+        border-radius: 18px 18px 0px 0px;
+        -moz-border-radius: 18px 18px 0px 0px;
+        -webkit-border-radius: 18px 18px 0px 0px;
+        border: 2px solid #e3e6e3;
+        background-color: rgb(255, 255, 255);
+        font-size: 22px;
+        color: rgb(255, 255, 255);
+        border-bottom: 0px;
 
-display: None;
+        background-color: #4e73df;
+    }
 
-}
-input#id_first_name{
-display: None;
-}
-input#id_last_name{
-display: None;
-}
-input#id_email{
-display: None;
-}
-input#id_password1{
-display: None;
-}
-input#id_password2{
-display: None;
-}
-input#id_correoElectronico{
-display: None;
-}
-input#id_dni{
-display: None;
-}
-input#id_apellido{
-display: None;
-}
-input#id_nombre{
-display: None;
-}
+    div#datosTutores {
+        background-color: rgba(212, 250, 228, 0.411);
+        padding: 2%;
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 2px solid #009765c5;
+        margin-bottom: 2%;
+    }
+
+    body#total {
+        background-color: rgba(224, 224, 224, 0.747);
+    }
+
+    div#titulon {
+        font-size: 22px;
+        color: black;
+    }
+
+    label.sub {
+        color: black;
+    }
+
+    div#cabeza {
+        background-color: #4e73df;
+    }
+
+    input#tuOtroTutor {
+        display: none;
+    }
+
+    select#country {
+        display: inline-block;
+        width: 80%;
+    }
+
+    button#agregarMusic {
+        display: inline-block;
+
+    }
+
+    input#id_username {
+
+        display: None;
+
+    }
+
+    input#id_first_name {
+        display: None;
+    }
+
+    input#id_last_name {
+        display: None;
+    }
+
+    input#id_email {
+        display: None;
+    }
+
+    input#id_password1 {
+        display: None;
+    }
+
+    input#id_password2 {
+        display: None;
+    }
+
+    input#id_correoElectronico {
+        display: None;
+    }
+
+    input#id_dni {
+        display: None;
+    }
+
+    input#id_apellido {
+        display: None;
+    }
+
+    input#id_nombre {
+        display: None;
+    }
 
 
-input#id_domicilio{
-display: None;
-}
-input#id_telefono{
-display: None;
-}
+    input#id_domicilio {
+        display: None;
+    }
 
-
+    input#id_telefono {
+        display: None;
+    }
 </style>
 
 
 
 
 <body id="total">
-        <div id="cuadroCabeza">
-                <strong>Pre-Inscripcion Alumno</strong>
-                        
-                
+    <div id="cuadroCabeza">
+        <strong>Pre-Inscripcion Alumno</strong>
 
-        </div>
+
+
+    </div>
     <div id="cuadroPrincipal">
 
-            
 
 
-            <form class="user" method="POST">
-                    {% csrf_token %}
 
-                        {{form.username}}
-                        {{form.first_name}}
-                        {{form.last_name}}
+        <form class="user" method="POST">
+            {% csrf_token %}
 
-                        {{form.email}} 
-                        {{form.password1}}
-                        {{form.password2}}
+            {{form.username}}
+            {{form.first_name}}
+            {{form.last_name}}
 
-                        {{alumno_form.correoElectronico}}
+            {{form.email}}
+            {{form.password1}}
+            {{form.password2}}
 
-                        {{alumno_form.dni}} 
-                        {{alumno_form.apellido}} 
-                        {{alumno_form.nombre}} 
-                        
-                        
-                        {{alumno_form.domicilio}} 
-                        {{alumno_form.telefono}} 
-                        
-                                        
+            {{alumno_form.correoElectronico}}
+
+            {{alumno_form.dni}}
+            {{alumno_form.apellido}}
+            {{alumno_form.nombre}}
 
 
-                
-                <div>
-                    {%if error != None%}
-                        {{error}}
-                    {%endif%}
+            {{alumno_form.domicilio}}
+            {{alumno_form.telefono}}
 
+
+
+
+
+            <div>
+                {%if error != None%}
+                {{error}}
+                {%endif%}
+
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress" class="sub">Correo Electronico:</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Correo Electronico" required>
+
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Contraseña</label>
+                    <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Re-escriba la Contraseña</label>
+                    <input type="password" class="form-control" id="inputPassword5" placeholder="Contraseña" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Apellido</label>
+                    <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        maxlength="50">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Nombre</label>
+                    <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required
+                        style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        maxlength="50">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">DNI:</label>
+                    <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento"
+                        onkeyup="this.value=Numeros(this.value)" maxlength="9" required>
                 </div>
 
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
+                    <input type="date" id="id_fechaNac" class="form-control" name="fechaNac" value="2000-07-22"
+                        min="1900-01-01" max="2014-01-01" required>
 
-                <div class="form-group">
-                  <label for="inputAddress" class="sub">Correo Electronico:</label>
-                  <input type="email" class="form-control" id="inputEmail4" placeholder="Correo Electronico" required>
-                  
                 </div>
+            </div>
+
+            <div id="datosTutores">
+                <p style="color: black;"><strong>Datos de Tutor/a:</strong></p>
+
 
                 <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Contraseña</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Re-escriba la Contraseña</label>
-                          <input type="password" class="form-control" id="inputPassword5" placeholder="Contraseña" required>
-                        </div>
-                </div>
-
-                <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Apellido</label>
-                            <input type="text" class="form-control" id="apellidoIn" placeholder="Apellido" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputPassword4" class="sub">Nombre</label>
-                          <input type="text" class="form-control" id="nombreIn" placeholder="Nombre" required style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
-                        </div>
-                </div>
-
-                <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">DNI:</label>
-                            <input type="text" class="form-control" id="elDNI" placeholder="Numero Documento" onkeyup="this.value=Numeros(this.value)"  maxlength="9" required>
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="sub">Fecha Nacimiento:</label>
-                            <input type="date" id="id_fechaNac"  class="form-control" name="fechaNac" value="2000-07-22" min="1900-01-01" max="2014-01-01" required>
-                            
-                          </div>
-                </div>
-
-                <div  id="datosTutores">
-                    <p style="color: black;">Datos de Tutor/a:</p>
-                    
-                        
-                        <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4" class="sub">Apellido</label>
-                                    <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor" placeholder="Apellido" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="inputPassword4" class="sub">Nombre</label>
-                                  <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor" placeholder="Nombre" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
-                                </div>
-                        </div>
-                        <div class="form-row"> 
-
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4" class="sub">DNI:</label>
-                                    <input type="text" class="form-control" id="elDNItutor" name="dniTutor" onkeyup="this.value=Numeros(this.value)" maxlength="9"  placeholder="Numero Documento">
-                                </div>
-                                <div class="form-group col-md-6">
-                                        <label for="inputPassword4" class="sub">Telefono del tutor:</label>
-                                        <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor" onkeyup="this.value=Numeros(this.value)" maxlength="15"    placeholder="Numero telefono tutor..." >
-                                    </div>
-
-                                
-                                </div>
-                                <div class="form-row"> 
-                                        <!--jh-->
-                                        <div class="form-group col-md-6" >
-                                    
-                                                <label for="inputPassword4" class="sub">Relacion:</label><br>
-                                                <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre" checked>
-                                                        <label class="form-check-label" for="exampleRadios1">
-                                                          Padre
-                                                        </label>
-                                                </div>
-                                                <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
-                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre" >
-                                                        <label class="form-check-label" for="exampleRadios1">
-                                                          Madre
-                                                        </label>
-                                                </div>
-                                                <div class="form-check" style="display: inline-block;" >
-                                                        <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro" >
-                                                        <label class="form-check-label" for="exampleRadios1">
-                                                          Otro:
-                                                        </label>
-                                                        
-                                                        
-        
-                                                        
-                                                        <input type="text" id="tuOtroTutor" name ="otroTutor" class="form-control" >
-                                                </div>
-                                        <!---->
-                                </div>
-
-                        </div>  
-                        
-
-                </div>
-
-                
-
-               
-
-                <div class="form-row">
-                        <div class="form-group col-md-4">
-                                <label for="inputPassword4" class="sub">Musica Preferida:</label>
-                                
-                                <select id="country" class="form-control" name="nombreMusica" required>
-                                    <option value='' selected id="optionId">------</option>
-                                        {%for musi in losTiposMusicas%}
-                                                
-                                                <option value='{{musi.id}}'>{{musi.nombreMusica}}</option>
-
-                                        {%endfor%}
-                                        
-                                </select>
-                                <button type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
-                                        <i class="fas fa-plus"></i>
-                                </button>
-
-
-                              </div>
-                        <div class="form-group col-md-4">
-                          <label for="inputPassword4" class="sub">En que desea Especializarce:</label>
-                          <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control" required>
-
-                                {% for esp in especialidadesTodas %}
-                                             <option value='{{esp.id}}'>{{esp.nombre}}</option>
-
-                                  {% endfor %}
-                              </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                                <label for="inputPassword4" class="sub">Nivel Actual en la Especialidad:</label>
-                                <select id="id_especialidadnivel" name="nivel" class="form-control" required>
-                                        <option value='Principiante'>Principiante</option>
-                                        <option value='Medio'>Medio</option>
-                                        <option value='Avanzado'>Avanzado</option>
-                                      
-                                    </select>
-                              </div>
-                </div>
-                <div class="form-group">
-                        <label for="inputAddress2" class="sub">Direccion</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio" required>
-                      </div>
-      
-                      <div class="form-row">
-                              <div class="form-group col-md-6">
-                                  <label for="inputPassword4" class="sub">Telefono:</label>
-                                  <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)" maxlength="15"     placeholder="Numero telefono" required>
-                              </div>
-                              <div class="form-group col-md-6">
-                                  <label for="inputPassword4" class="sub">Sexo:</label>
-                                  <select name="sexo" id="id_sexo" class="form-control" required>
-                                        <option selected>Masculino</option>
-                                        <option>Femenino</option>
-                                      </select>
-                                </div>
-                      </div>
-
-                <!--pr-->
-              <div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content" id="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Agregar Nueva Musica</h4>
-                                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span aria-hidden="true">×</span>
-                                                                        </button>
-                                
-                            </div>
-
-                            
-                            
-                            <div id="modalOculto">
-                                    <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="formGroupExampleInput" style="color: black">Nombre de Tipo de Musica:</label>
-                                                <input type="text" class="form-control" id="id_nombreTipo" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"  placeholder="Nombre o Identificacion de Musica..." >
-                                            </div>                                         
-                                    </div>
-
-                                    <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiar()">Close</button>
-                                        
-                                            <button type="button" class="btn btn-primary" id="cargar-musica"  onclick="cargaMusic()">Cargar</button>
-                                        
-                                    </div>
-                            </div>
-
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4" class="sub">Apellido</label>
+                        <input type="text" class="form-control" id="apellidoInTutor" name="apellidoTutor"
+                            placeholder="Apellido" style="text-transform:uppercase;"
+                            onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                     </div>
-              </div>
-              <!--pp-->
-                
-                
-                <button type="submit" class="btn btn-primary">Cargar Formulario</button>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4" class="sub">Nombre</label>
+                        <input type="text" class="form-control" name="nombreTutor" id="nombreInTutor"
+                            placeholder="Nombre" style="text-transform:uppercase;"
+                            onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-row">
 
-                <a href="{% url 'login'%}">
-                        <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
-                        </a>
-              </form>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4" class="sub">DNI:</label>
+                        <input type="text" class="form-control" id="elDNItutor" name="dniTutor"
+                            onkeyup="this.value=Numeros(this.value)" maxlength="9" placeholder="Numero Documento">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4" class="sub">Telefono del tutor:</label>
+                        <input type="text" class="form-control" name="telefonoTutor" id="elTelefonoTutor"
+                            onkeyup="this.value=Numeros(this.value)" maxlength="15"
+                            placeholder="Numero telefono tutor...">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4" class="sub">Correo Electronico:</label>
+                        <input type="email" class="form-control" name="emailTutor" id="elCorreoTutor" maxlength="75"
+                            placeholder="Correo Electronico del tutor...">
+                    </div>
+
+
+                </div>
+                <div class="form-row">
+                    <!--jh-->
+                    <div class="form-group col-md-6">
+
+                        <label for="inputPassword4" class="sub">Relacion:</label><br>
+                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="Padre"
+                                checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Padre
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: inline-block;" style="vertical-align: top;">
+                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="Madre">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Madre
+                            </label>
+                        </div>
+                        <div class="form-check" style="display: inline-block;">
+                            <input class="form-check-input" type="radio" name="tipo" id="exampleRadios3" value="otro">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Otro:
+                            </label>
+
+
+
+
+                            <input type="text" id="tuOtroTutor" name="otroTutor" class="form-control">
+                        </div>
+                        <!---->
+                    </div>
+
+                </div>
+
+
             </div>
 
 
 
-    
-              {%block archivos%}
-              <!-- Bootstrap core JavaScript-->
-              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-              <!-- Core plugin JavaScript-->
-              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-            
-              <!-- Custom scripts for all pages-->
-              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-            
-              <!-- Page level plugins -->
-              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-            
-              <!-- Page level custom scripts -->
-              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-              {%endblock archivos%} 
+
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">Musica Preferida:</label>
+
+                    <select id="country" class="form-control" name="nombreMusica" required>
+                        <option value='' selected id="optionId">------</option>
+                        {%for musi in losTiposMusicas%}
+
+                        <option value='{{musi.id}}'>{{musi.nombreMusica}}</option>
+
+                        {%endfor%}
+
+                    </select>
+                    <button type="button" id="agregarMusic" data-toggle="modal" data-target=".bs-example-modal-lg787">
+                        <i class="fas fa-plus"></i>
+                    </button>
+
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">En que desea Especializarce:</label>
+                    <select id="id_especialidadRequerida" name="especialidadRequerida" class="form-control" required>
+
+                        {% for esp in especialidadesTodas %}
+                        <option value='{{esp.id}}'>{{esp.nombre}}</option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputPassword4" class="sub">Nivel Actual en la Especialidad:</label>
+                    <select id="id_especialidadnivel" name="nivel" class="form-control" required>
+                        <option value='Principiante'>Principiante</option>
+                        <option value='Medio'>Medio</option>
+                        <option value='Avanzado'>Avanzado</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2" class="sub">Direccion</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Direccion de domicilio"
+                    required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Telefono:</label>
+                    <input type="text" class="form-control" id="elTelefono" onkeyup="this.value=Numeros(this.value)"
+                        maxlength="15" placeholder="Numero telefono" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4" class="sub">Sexo:</label>
+                    <select name="sexo" id="id_sexo" class="form-control" required>
+                        <option selected>Masculino</option>
+                        <option>Femenino</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--pr-->
+            <div class="modal fade bs-example-modal-lg787" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Agregar Nueva Musica</h4>
+                            <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span
+                                    aria-hidden="true">×</span>
+                            </button>
+
+                        </div>
+
+
+
+                        <div id="modalOculto">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput" style="color: black">Nombre de Tipo de
+                                        Musica:</label>
+                                    <input type="text" class="form-control" id="id_nombreTipo"
+                                        style="text-transform:uppercase;"
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                        placeholder="Nombre o Identificacion de Musica...">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    onclick="limpiar()">Close</button>
+
+                                <button type="button" class="btn btn-primary" id="cargar-musica"
+                                    onclick="cargaMusic()">Cargar</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--pp-->
+
+
+            <button type="submit" class="btn btn-primary">Cargar Formulario</button>
+
+            <a href="{% url 'login'%}">
+                <button type="button" id="salirBoton" class="btn btn-secondary">Salir</button>
+            </a>
+        </form>
+    </div>
+
+
+
+
+    {%block archivos%}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    {%endblock archivos%}
 </body>
 <script type="text/javascript">
 
     //document.getElementById("id_fechaNac").max = new Date().toISOString().split("T")[0];
 
-        
+
 </script>
 <script>
-        $(document).ready(function(){
-           
-            $("#id_fechaNac").change(function () {
+    $(document).ready(function () {
+
+        $("#id_fechaNac").change(function () {
             var fecha = $(this).val();
-             
+
             var hoy = new Date();
             var cumpleanos = new Date(fecha);
             var edad = hoy.getFullYear() - cumpleanos.getFullYear();
@@ -557,86 +607,89 @@ display: None;
                 edad--;
             }
 
-            if (edad < 18){
+            if (edad < 18) {
                 document.getElementById("datosTutores").style.display = "block";
-                $("#apellidoInTutor").prop('required',true);
-                $("#nombreInTutor").prop('required',true);
-                $("#elDNItutor").prop('required',true);
-                $("#elTelefonoTutor").prop('required',true);
-                
-            }else{
+                $("#apellidoInTutor").prop('required', true);
+                $("#nombreInTutor").prop('required', true);
+                $("#elDNItutor").prop('required', true);
+                $("#elTelefonoTutor").prop('required', true);
+                $("#elCorreoTutor").prop('required', true);
+
+            } else {
                 document.getElementById("datosTutores").style.display = "none";
-                $("#apellidoInTutor").prop('required',false);
-                $("#nombreInTutor").prop('required',false);
-                $("#elDNItutor").prop('required',false);
-                $("#elTelefonoTutor").prop('required',false);
+                $("#apellidoInTutor").prop('required', false);
+                $("#nombreInTutor").prop('required', false);
+                $("#elDNItutor").prop('required', false);
+                $("#elTelefonoTutor").prop('required', false);
+                $("#elCorreoTutor").prop('required', false);
             }
-       
-           });
-           $("#exampleRadios1").change(function () {
-               
+
+        });
+        $("#exampleRadios1").change(function () {
+
             var seleccionado = $(this).val();
-        
-
-            
-                document.getElementById("tuOtroTutor").style.display = "none";
-            
-
-       
-           });
-           $("#exampleRadios2").change(function () {
-               
-               var seleccionado = $(this).val();
-           
-   
-              
-                document.getElementById("tuOtroTutor").style.display = "none";
-               
-   
-          
-              });
-              $("#exampleRadios3").change(function () {
-               
-               var seleccionado = $(this).val();
-               
-                document.getElementById("tuOtroTutor").style.display = "inline-block";
-             
-
-               
-   
-          
-              });
-              $("#exampleRadios3").change(function () {
-                    var fecha = $("#id_fechaNac").val();
-             
-                    var hoy = new Date();
-                    var cumpleanos = new Date(fecha);
-                    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-                    var m = hoy.getMonth() - cumpleanos.getMonth();
- 
-                    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                        edad--;
-                    }
-                    if(edad < 18){
-                        $("#tuOtroTutor").prop('required',true);
 
 
-                    }
-              });
-              $("#exampleRadios2").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
+
+            document.getElementById("tuOtroTutor").style.display = "none";
 
 
-                    
-              });
-              $("#exampleRadios1").change(function () {
-                    
-                        $("#tuOtroTutor").prop('required',false);
+
+        });
+        $("#exampleRadios2").change(function () {
+
+            var seleccionado = $(this).val();
 
 
-                    
-              });
-       });
-         </script>
+
+            document.getElementById("tuOtroTutor").style.display = "none";
+
+
+
+        });
+        $("#exampleRadios3").change(function () {
+
+            var seleccionado = $(this).val();
+
+            document.getElementById("tuOtroTutor").style.display = "inline-block";
+
+
+
+
+
+        });
+        $("#exampleRadios3").change(function () {
+            var fecha = $("#id_fechaNac").val();
+
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+            if (edad < 18) {
+                $("#tuOtroTutor").prop('required', true);
+
+
+            }
+        });
+        $("#exampleRadios2").change(function () {
+
+            $("#tuOtroTutor").prop('required', false);
+
+
+
+        });
+        $("#exampleRadios1").change(function () {
+
+            $("#tuOtroTutor").prop('required', false);
+
+
+
+        });
+    });
+</script>
+
 </html>

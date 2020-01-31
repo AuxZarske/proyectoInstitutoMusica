@@ -81,16 +81,18 @@
       //me pregunto cual mustro
 
       var reputacion = document.getElementById(valorDni).value;
+
+
       if (reputacion < 61) {
-        document.getElementById("bien").style.display = "none";
+      
         document.getElementById("mal").style.display = "block";
       } else {
-        document.getElementById("bien").style.display = "block";
+        
         document.getElementById("mal").style.display = "none";
       }
     } else {
       //oculto los dos
-      document.getElementById("bien").style.display = "none";
+      
       document.getElementById("mal").style.display = "none";
     }
   }
@@ -255,18 +257,21 @@
     -webkit-border-radius: 18px 18px 18px 18px;
     padding: 3%;
   }
-button#b3c{
-  margin: 2%;
- 
+
+  button#b3c {
+    margin: 2%;
+
     color: black;
     background-color: #ffc107;
-    
-}
-button#b4c{
-  margin: 2%;
-  color: black;
-  background-color:#E85A61;
-}
+
+  }
+
+  button#b4c {
+    margin: 2%;
+    color: black;
+    background-color: #E85A61;
+  }
+
   div#mal {
 
 
@@ -601,7 +606,8 @@ button#b4c{
 
 
                       {%for alu in alumnos%}
-                      <option id="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.apellido}} {{alu.nombre}}</option>
+                      <option id="{{alu.dni}}op" name="{{alu.nombre}}" value='{{alu.dni}}'>{{alu.apellido}}
+                        {{alu.nombre}}</option>
 
 
                       {%endfor%}
@@ -630,15 +636,15 @@ button#b4c{
                     <label for="inputAddress2" class="sub" style="color: black">Duracion dias:</label>
 
                     <div class="form-row" id="edadInput">
-                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" value="7" min="1" max="30"
-                        required>
+                      <input type="number" id="numeroDias" class="form-control" name="duracionDias" value="7" min="1"
+                        max="30" required>
 
                     </div>
 
                   </div>
 
 
-                  <button type="button" class="btn btn-facebook" onclick="mensaje()" style="vertical-align: bottom;"
+                  <button type="button" id="botonPrestamito" class="btn btn-facebook" onclick="mensaje()" style="vertical-align: bottom;"
                     data-toggle="modal" data-target=".bs-example-modal-lg2371">Establecer Prestamo</button>
                   <div class="form-group" style="vertical-align: bottom;">
 
@@ -664,14 +670,16 @@ button#b4c{
 
 
                             <div id="mal">
-                              <p>Tenga en cuenta que la reputacion del Alumno conforme a la entrega de prestamos esta afectada de forma negativa por las siguientes razones:</p>
+                              <p>Tenga en cuenta que la reputacion del Alumno conforme a la entrega de prestamos esta
+                                afectada de forma negativa por las siguientes razones:</p>
                               <div id="atrazado">
                                 <button class="btn btn-warning" type="button" data-toggle="collapse"
                                   data-target="#divReco" id="b3c" aria-expanded="false" aria-controls="collapseThree">
-                                  <b>Prestamos devueltos con atrazo en fecha de entrega</b> <span class="icon text-white-50">
-                                      <i class="fas fa-arrow-down"></i>
-          
-                                    </span>
+                                  <b>Prestamos devueltos con atrazo en fecha de entrega</b> <span
+                                    class="icon text-white-50">
+                                    <i class="fas fa-arrow-down"></i>
+
+                                  </span>
                                 </button>
 
                                 <!--table reco-->
@@ -704,7 +712,7 @@ button#b4c{
 
                                               <tr>
 
-                                                
+
                                                 <td>{{t.descripcion}}</td>
                                                 <td>{{t.nombre}}</td>
                                                 <td>{{t.descripcion}}</td>
@@ -827,11 +835,11 @@ button#b4c{
                                     data-target="#divReco2" id="b4c" aria-expanded="false"
                                     aria-controls="collapseThree">
                                     <b>Prestamos recibidos en malas condiciones </b>
-                                    
+
                                     <span class="icon text-white-50">
-                                        <i class="fas fa-arrow-down"></i>
-            
-                                      </span>
+                                      <i class="fas fa-arrow-down"></i>
+
+                                    </span>
                                   </button>
                                   <!--table reco-->
                                   <div id="divReco2" class="collapse" aria-labelledby="headingThree"
@@ -861,7 +869,7 @@ button#b4c{
                                                 </tr>
                                               </thead>
 
-                                              <tbody id = "cuerpoT2">
+                                              <tbody id="cuerpoT2">
                                                 {% for par in prestamos%}
 
 
@@ -891,7 +899,7 @@ button#b4c{
                                                           </div>
                                                         </center>
 
-                                                        
+
 
 
 
@@ -930,141 +938,138 @@ button#b4c{
                           </div>
                         </div>
                       </div>
-                      </div>
-                      <!--mmm-->
-
-
-
-
                     </div>
+                    <!--mmm-->
+
 
 
 
                   </div>
+
+
+
                 </div>
               </div>
+            </div>
           </form>
 
           {%endif%}
           <br>
           <!--tyty-->
-          <div class="modal fade bs-example-modal-lg34MalasCondiciones"
-                                                          id="myModal34MalasCondiciones" tabindex="-1" role="dialog"
-                                                          aria-hidden="true">
-                                                          <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content" id="elgrando">
-                                                              <div class="modal-header">
-                                                                <h4 class="modal-title" id="myModalLabelMalasCondiciones">Datos
-                                                                </h4>
-                                                                <button type="button" class="close"
-                                                                  data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                </button>
+          <div class="modal fade bs-example-modal-lg34MalasCondiciones" id="myModal34MalasCondiciones" tabindex="-1"
+            role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content" id="elgrando">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabelMalasCondiciones">Datos
+                  </h4>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
 
-                                                              </div>
-                                                              <div class="modal-body">
-                                                                
+                </div>
+                <div class="modal-body">
 
-                                                                  <div class="alinealoNomas">
-                                                                      <label class="izquierda">Numero de Identificacion: </label>
-                                                                      <div class="derecha" id= "idMal">
-                                                                        {{par.id}}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
-                                                                      <div class="derecha" id= "aluMal">
-                                                                        {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Instrumento:</label>
-                                                                      <div class="derecha" id= "instruMal">
-                                                                        {{par.instrumentoPrestado.nombre}}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
-                                                                      <div class="derecha" id= "fcreaMal">
-                                                                        {{par.fechaCreacion}}
-                                                                      </div>
-                                                                    </div>
-                                  
-                                                                    {% if par.estadoPrestamo %}
-                                  
-                                                                    {%else%}
-                                  
-                                  
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Fecha de Recepcion:</label>
-                                                                      <div class="derecha" id= "fcierreMal">
-                                                                        {{par.fechaCierre}}
-                                                                      </div>
-                                                                    </div>
-                                                                    {%endif%}
-                                  
-                                  
-                                  
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
-                                                                      <div class="derecha" id= "diasMal">
-                                                                        {{par.duracionDias}}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
-                                                                      <div class="derecha" id= "estadoMal">
-                                                                        {% if par.estadoPrestamo %}
-                                                                        Activo
-                                                                        {%else%}
-                                                                        Finalizado
-                                                                        {%endif%}
-                                                                      </div>
-                                                                    </div>
-                                                                    {%if par.estadoProfesor == "Entregador"%}
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Profesor Responsable del
-                                                                        prestamo:</label>
-                                                                      <div class="derecha" id= "pro1Mal">
-                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
-                                                                      </div>
-                                                                    </div>
-                                                                    {%else%}
-                                  
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
-                                                                      <div class="derecha" id= "pro2Mal">
-                                                                        {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
-                                                                      </div>
-                                                                    </div>
-                                  
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
-                                                                      <div class="derecha" id= "obserMal">
-                                                                        {{par.observaciones}}
-                                                                      </div>
-                                                                    </div>
-                                  
-                                                                    <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Estado del instrumento:</label>
-                                                                      <div class="derecha" id= "condicionMal">
-                                                                        {{par.condicion}}
-                                                                      </div>
-                                                                    </div>
-                                  
-                                                                    {%endif%}
+
+                  <div class="alinealoNomas">
+                    <label class="izquierda">Numero de Identificacion: </label>
+                    <div class="derecha" id="idMal">
+                      {{par.id}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Alumno Responsable:</label>
+                    <div class="derecha" id="aluMal">
+                      {{par.alumnoResponsable.apellido}}, {{par.alumnoResponsable.nombre}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Instrumento:</label>
+                    <div class="derecha" id="instruMal">
+                      {{par.instrumentoPrestado.nombre}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                    <div class="derecha" id="fcreaMal">
+                      {{par.fechaCreacion}}
+                    </div>
+                  </div>
+
+                  {% if par.estadoPrestamo %}
+
+                  {%else%}
+
+
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Fecha de Recepcion:</label>
+                    <div class="derecha" id="fcierreMal">
+                      {{par.fechaCierre}}
+                    </div>
+                  </div>
+                  {%endif%}
 
 
 
-                                                              </div>
-                                                              <div class="modal-footer">
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Duracion Dias:</label>
+                    <div class="derecha" id="diasMal">
+                      {{par.duracionDias}}
+                    </div>
+                  </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Estado de Prestamo:</label>
+                    <div class="derecha" id="estadoMal">
+                      {% if par.estadoPrestamo %}
+                      Activo
+                      {%else%}
+                      Finalizado
+                      {%endif%}
+                    </div>
+                  </div>
+                  {%if par.estadoProfesor == "Entregador"%}
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Profesor Responsable del
+                      prestamo:</label>
+                    <div class="derecha" id="pro1Mal">
+                      {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                    </div>
+                  </div>
+                  {%else%}
 
-                                                                <button type="button" class="btn btn-primary"
-                                                                  data-dismiss="modal">Cerrar</button>
-                                                              </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Profesor que recibio:</label>
+                    <div class="derecha" id="pro2Mal">
+                      {{par.profesorReferencia.apellido}}, {{par.profesorReferencia.nombre}}
+                    </div>
+                  </div>
 
-                                                            </div>
-                                                          </div>
-                                                        </div>
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Condicion en que recibio:</label>
+                    <div class="derecha" id="obserMal">
+                      {{par.observaciones}}
+                    </div>
+                  </div>
+
+                  <div class="alinealoNomas">
+                    <label for="inputEmail3" class="izquierda">Estado del instrumento:</label>
+                    <div class="derecha" id="condicionMal">
+                      {{par.condicion}}
+                    </div>
+                  </div>
+
+                  {%endif%}
+
+
+
+                </div>
+                <div class="modal-footer">
+
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
           <!--tyty-->
           <br>
           <h1 class="h3 mb-2 text-gray-800">Prestamos</h1>
@@ -1662,7 +1667,45 @@ button#b4c{
 
 
   <script>
+
+    function cambioBoton(){
+
+      var v1 = document.getElementById("country").value;
+      var v2 = document.getElementById("country2").value;
+      var v3 = document.getElementById("numeroDias").value;
+      
+      if(v1 != "" && v2 != "" && v3 > 0 && v3 < 99){
+        document.getElementById("botonPrestamito").disabled = false;
+      }else{
+        document.getElementById("botonPrestamito").disabled = true;
+      }
+
+    };
+
+
+
+
+    $( "#country" ).change(function() {
+  cambioBoton();
+});
+$( "#country2" ).change(function() {
+  cambioBoton();
+});
+$( "#numeroDias" ).change(function() {
+  cambioBoton();
+});
+
+
+
     $(document).ready(function () {
+
+      
+      document.getElementById("botonPrestamito").disabled = true;
+      cambioBoton();
+
+
+
+
       var table = $('#dataTable').DataTable();
 
 
@@ -1764,203 +1807,204 @@ button#b4c{
     });
   </script>
   <script>
-      function nombreInstru(idpas, num){
-        if (num != ""){
-        
-          
+    function nombreInstru(idpas, num) {
+      if (num != "") {
+
+
         $.ajax({
-           
-              url: '{% url "gestionMusical:nom_instru" %}',
-              data: {
-                
-                'num': num
-              },
-              dataType: 'json',
 
-              success: function (data) {
-                
-              
-              document.getElementById(idpas).innerHTML = data['nombre'];
-              }
-          });}
+          url: '{% url "gestionMusical:nom_instru" %}',
+          data: {
+
+            'num': num
+          },
+          dataType: 'json',
+
+          success: function (data) {
+
+
+            document.getElementById(idpas).innerHTML = data['nombre'];
+          }
+        });
       }
-      
-      $('#country').change(function(){
-        updateTable();
-        updateTableYellow();
-          
-      });
-      function updateTableYellow(){
-       
-          var table = $('#dataTable7').DataTable();
-          $('#dataTable7').DataTable().clear();
-          $('#dataTable7').DataTable().draw();
-          var rn = $("#country").val();
-      
-          $.ajax({
-              url: '{% url "gestionMusical:grupo_TableYellow" %}',
-              data: {
-                  'alumno': rn,
-              },
-              dataType: 'json',
-              success: function(data) {
-                  var instrumento = "";
-                  var dias = "";
-                  var atrazoDias = "";
-                  var acciones = "";
-                  var nid;
-                  var prestamoID = "0"
-                  console.log(data);
-                  console.log(data['info'].length);
-                  for (var i = 0; i < data['info'].length; i++) {
-                      
-                      
-                      instrumento = data['info'][i]['nombreInstru'];
-                      dias = data['info'][i]['duracionDias'] ;
-                      atrazoDias = 999;
-                      prestamoID = data['info'][i]['id'] ;
-                      c = " ' "+prestamoID+" ' ";
-                      cosa = 'onclick="updateModal('+c+')"' ;
-                      acciones = " <center><div class='btn-group'><center><div><button type='button' "+ cosa +"  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>"; 
-                      
- 
-                      table.row.add( [ instrumento, dias, atrazoDias, acciones] ).draw();
-                      
-                  }
-                  //$('#cuerpoT2').html(html);
-     
-                    
-                    
+    }
 
-                  
-              }
-          })
+    $('#country').change(function () {
+      updateTable();
+      updateTableYellow();
+
+    });
+    function updateTableYellow() {
+
+      var table = $('#dataTable7').DataTable();
+      $('#dataTable7').DataTable().clear();
+      $('#dataTable7').DataTable().draw();
+      var rn = $("#country").val();
+
+      $.ajax({
+        url: '{% url "gestionMusical:grupo_TableYellow" %}',
+        data: {
+          'alumno': rn,
+        },
+        dataType: 'json',
+        success: function (data) {
+          var instrumento = "";
+          var dias = "";
+          var atrazoDias = "";
+          var acciones = "";
+          var nid;
+          var prestamoID = "0"
+          console.log(data);
+          console.log(data['info'].length);
+          for (var i = 0; i < data['info'].length; i++) {
 
 
-      };
-      function updateTable(){
-        console.log('cambio alumno');
-          var table = $('#dataTable88').DataTable();
-          $('#dataTable88').DataTable().clear();
-          $('#dataTable88').DataTable().draw();
-          var rn = $("#country").val();
-          console.log(rn);
-          $.ajax({
-              url: '{% url "gestionMusical:grupo_Table" %}',
-              data: {
-                  'alumno': rn,
-              },
-              dataType: 'json',
-              success: function(data) {
-                  var instrumento = "";
-                  var condicion = "";
-                  var descripcion = "";
-                  var acciones = "";
-                  var nid;
-                  var prestamoID = "0"
-                  console.log(data);
-                  console.log(data['info'].length);
-                  for (var i = 0; i < data['info'].length; i++) {
-                      
-                      
-                      instrumento = data['info'][i]['nombreInstru'];
-                      condicion = data['info'][i]['condicion'] ;
-                      descripcion = data['info'][i]['observaciones'];
-                      prestamoID = data['info'][i]['id'] ;
-                      c = " ' "+prestamoID+" ' ";
-                      cosa = 'onclick="updateModal('+c+')"' ;
-                      acciones = " <center><div class='btn-group'><center><div><button type='button' "+ cosa +"  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>"; 
-                      
- 
-                      table.row.add( [ instrumento, condicion, descripcion, acciones] ).draw();
-                      
-                  }
-                  //$('#cuerpoT2').html(html);
-     
-                    
-                    
-
-                  
-              }
-          })
+            instrumento = data['info'][i]['nombreInstru'];
+            dias = data['info'][i]['duracionDias'];
+            atrazoDias = 999;
+            prestamoID = data['info'][i]['id'];
+            c = " ' " + prestamoID + " ' ";
+            cosa = 'onclick="updateModal(' + c + ')"';
+            acciones = " <center><div class='btn-group'><center><div><button type='button' " + cosa + "  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>";
 
 
-      };
-      //updateTable();
-      function updateModal(ida){
-       
-        var id = parseInt(ida);
-        
-          
-         
-          $.ajax({
-              url: '{% url "gestionMusical:grupo_Presta" %}',
-              data: {
-                  'idPresta': id,
-              },
-              dataType: 'json',
-              success: function(data) {
-                  var instrumento = "";
-                  var condicion = "";
-                  var descripcion = "";
-                  var acciones = "";
-                  var nid;
-                  var prestamoID = "0";
-                  console.log(data);
-                  
-                      
-                  /* 
-                  instrumento = data['info'][i]['nombreInstru'];
-                  condicion = data['info'][i]['condicion'] ;
-                  descripcion = data['info'][i]['observaciones'];
-                  prestamoID = data['id'] + "identiPresta";
-                  //completar otro*/
-                  //cargar a modal
-                  document.getElementById("idMal").innerHTML = data['id'] ;
+            table.row.add([instrumento, dias, atrazoDias, acciones]).draw();
 
-                  document.getElementById("aluMal").innerHTML = data['nombreAlu'] ;
-                  document.getElementById("instruMal").innerHTML = data['nombreInstru'] ;
-
-                  document.getElementById("fcreaMal").innerHTML = data['fechaCreacion'] ;
-                  document.getElementById("fcierreMal").innerHTML = data['fechaCierre'] ;
-
-                  document.getElementById("diasMal").innerHTML = data['duracionDias'] ;
-
-                  if(data['estadoPrestamo'] == "True"){
-                    document.getElementById("estadoMal").innerHTML = "Activo" ;
-                  }else{
-                    document.getElementById("estadoMal").innerHTML = "Finalizado" ;
-                  }
-
-                    document.getElementById("estadoMal").innerHTML = data['id'] ;
-
-                
-                  document.getElementById("pro2Mal").innerHTML = data['nombreProfe'] ;
-
-                  document.getElementById("obserMal").innerHTML = data['observaciones'] ;
-                  document.getElementById("condicionMal").innerHTML = data['condicion'] ;
-                  
-                      
-                      
-                  
-                  
-     
-                    
-                    
-
-                  
-              }
-          })
+          }
+          //$('#cuerpoT2').html(html);
 
 
-      };
+
+
+
+        }
+      })
+
+
+    };
+    function updateTable() {
+      console.log('cambio alumno');
+      var table = $('#dataTable88').DataTable();
+      $('#dataTable88').DataTable().clear();
+      $('#dataTable88').DataTable().draw();
+      var rn = $("#country").val();
+      console.log(rn);
+      $.ajax({
+        url: '{% url "gestionMusical:grupo_Table" %}',
+        data: {
+          'alumno': rn,
+        },
+        dataType: 'json',
+        success: function (data) {
+          var instrumento = "";
+          var condicion = "";
+          var descripcion = "";
+          var acciones = "";
+          var nid;
+          var prestamoID = "0"
+          console.log(data);
+          console.log(data['info'].length);
+          for (var i = 0; i < data['info'].length; i++) {
+
+
+            instrumento = data['info'][i]['nombreInstru'];
+            condicion = data['info'][i]['condicion'];
+            descripcion = data['info'][i]['observaciones'];
+            prestamoID = data['info'][i]['id'];
+            c = " ' " + prestamoID + " ' ";
+            cosa = 'onclick="updateModal(' + c + ')"';
+            acciones = " <center><div class='btn-group'><center><div><button type='button' " + cosa + "  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34MalasCondiciones'> <i class='fa fa-eye'></i></button></div></center></center>";
+
+
+            table.row.add([instrumento, condicion, descripcion, acciones]).draw();
+
+          }
+          //$('#cuerpoT2').html(html);
+
+
+
+
+
+        }
+      })
+
+
+    };
+    //updateTable();
+    function updateModal(ida) {
+
+      var id = parseInt(ida);
+
+
+
+      $.ajax({
+        url: '{% url "gestionMusical:grupo_Presta" %}',
+        data: {
+          'idPresta': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+          var instrumento = "";
+          var condicion = "";
+          var descripcion = "";
+          var acciones = "";
+          var nid;
+          var prestamoID = "0";
+          console.log(data);
+
+
+          /* 
+          instrumento = data['info'][i]['nombreInstru'];
+          condicion = data['info'][i]['condicion'] ;
+          descripcion = data['info'][i]['observaciones'];
+          prestamoID = data['id'] + "identiPresta";
+          //completar otro*/
+          //cargar a modal
+          document.getElementById("idMal").innerHTML = data['id'];
+
+          document.getElementById("aluMal").innerHTML = data['nombreAlu'];
+          document.getElementById("instruMal").innerHTML = data['nombreInstru'];
+
+          document.getElementById("fcreaMal").innerHTML = data['fechaCreacion'];
+          document.getElementById("fcierreMal").innerHTML = data['fechaCierre'];
+
+          document.getElementById("diasMal").innerHTML = data['duracionDias'];
+
+          if (data['estadoPrestamo'] == "True") {
+            document.getElementById("estadoMal").innerHTML = "Activo";
+          } else {
+            document.getElementById("estadoMal").innerHTML = "Finalizado";
+          }
+
+          document.getElementById("estadoMal").innerHTML = data['id'];
+
+
+          document.getElementById("pro2Mal").innerHTML = data['nombreProfe'];
+
+          document.getElementById("obserMal").innerHTML = data['observaciones'];
+          document.getElementById("condicionMal").innerHTML = data['condicion'];
+
+
+
+
+
+
+
+
+
+
+        }
+      })
+
+
+    };
   </script>
-   <script>
-      $(document).ready(function () {
-        updateTable();
-        updateTableYellow();
-      });
-      </script>
+  <script>
+    $(document).ready(function () {
+      updateTable();
+      updateTableYellow();
+    });
+  </script>
 
   {%endblock archivos%}
 </body>
