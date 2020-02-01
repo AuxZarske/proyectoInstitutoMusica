@@ -1414,6 +1414,23 @@ def crearCompositor(request):
     print(data)
     return JsonResponse(data)
 
+def eliminartipotarea(request):
+
+    peticion = request.GET.copy()
+    lista = peticion.pop('lista[]')
+    for t in lista:
+        try:
+            tp = TipoTarea.objects.get(id = t)
+            tp.delete()
+        except:
+            pass
+
+    data = {}
+      
+    print(data)
+    return JsonResponse(data)
+
+
 def agregarTipoTarea(request):
     nombre = request.GET.get('nombre', None)
     
@@ -1904,7 +1921,7 @@ def eliminarAsistencia(request, id):
         messages.error(request, " Error - no puede eliminarse")
     return asistenciaClase(request, num)
 
-def eliminarReco(request,id):
+def eliminarReco(request,id,dni,idC):
     reco = Recomendacion.objects.get(id = id)
     
     try:
@@ -1912,9 +1929,9 @@ def eliminarReco(request,id):
         messages.success(request, "eliminado Correcto!")
     except:
         messages.error(request, " Error - no puede eliminarse")
-    return redirect('gestionMusical:clases')
+    return verAlumnoClase(request,dni,idC)
 
-def realizarReco(request,id):
+def realizarReco(request,id, dni, idC):
     reco = Recomendacion.objects.get(id = id)
     
     try:
@@ -1923,7 +1940,7 @@ def realizarReco(request,id):
         messages.success(request, "Correcto!")
     except:
         messages.error(request, " Error ")
-    return redirect('gestionMusical:clases')
+    return verAlumnoClase(request,dni,idC)
 
 def eliminarMusica(request,id):
     musica = MusicaTipo.objects.get(id = id)
@@ -2591,7 +2608,8 @@ def editarAlumno(request,dni):
 
 def configTodo(request):
     clases = Clase.objects.all()
-    return render(request,'configtodo.html',{'clases':clases})
+    tipoRecoTodas = TipoTarea.objects.all()
+    return render(request,'configtodo.html',{'clases':clases,'tipoRecoTodas':tipoRecoTodas})
 
 def configDirectores(request):
     profesoresStandbay = Profesor.objects.all()
@@ -3947,6 +3965,7 @@ def verAlumnoClase(request,dni,idC):
     partiturasTodas = None
     completoparti = list(Partitura.objects.all())
     temasTodos = None
+    tipoRecoTodas = list(TipoTarea.objects.all())
     
     todasRecomendaciones = []
     try:
@@ -4044,7 +4063,7 @@ def verAlumnoClase(request,dni,idC):
     except:
         
         return render(request,'una_clase.html',{'laClase':laClase})
-    return render(request,'una_clase.html',{'laClase':laClase,'partiturasInteligentes':partiturasInteligentes,'habilitado':habilitado,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
+    return render(request,'una_clase.html',{'laClase':laClase,'partiturasInteligentes':partiturasInteligentes,'tipoRecoTodas':tipoRecoTodas,'habilitado':habilitado,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):

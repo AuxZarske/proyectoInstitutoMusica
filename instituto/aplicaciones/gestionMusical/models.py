@@ -285,7 +285,7 @@ class Prestamo(models.Model):
 
 class TipoTarea(models.Model):
     id = models.AutoField(primary_key = True)
-    nombre = models.CharField('Nombre de la recomendacion', max_length = 100, null = False, blank = False)
+    nombre = models.CharField('Nombre de la tipo tarea', max_length = 100, null = False, blank = False)
     class Meta:
         verbose_name = 'TipoTarea'
         verbose_name_plural = 'TipoTareas'

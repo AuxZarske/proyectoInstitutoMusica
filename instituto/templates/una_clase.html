@@ -621,6 +621,7 @@
     width: 60%;
 
 
+
   }
 </style>
 {%endblock estilos%}
@@ -2510,8 +2511,8 @@
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
 
-                  <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Tareas/recomendaciones de Practica
-                    Musical:</h6>
+                  <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Tareas/recomendaciones de Practica 
+                    Musical para  {{elAlumno.apellido}}, {{elAlumno.nombre}}:</h6>
                   <!--modal-->
 
 
@@ -2538,7 +2539,7 @@
                         <thead>
                           <tr>
 
-
+                            <th> Estado Actual</th>
                             <th> Nombre</th>
 
                             <th> Descripcion</th>
@@ -2552,7 +2553,20 @@
 
 
                           <tr>
+                            <td>
+                              {%if t.estadoReco%}
+                              <h4>
+                                <span class="badge badge-secondary" >Finalizado</span>
+                              </h4>
 
+                              
+                                {%else%}
+                                <h4>
+                                  <span class="badge badge-success" >Activo</span>
+                                </h4>
+                              
+                              {%endif%}
+                            </td>
                             <td>{{t.nombre}}</td>
                             <td>{{t.descripcion}}</td>
 
@@ -2628,7 +2642,11 @@
                                           <div class="alinealoNomas">
                                             <label for="inputEmail3" class="izquierda">Partitura Recomendada:</label>
                                             <div class="derecha">
-                                              {{t.partiMusicReco.nombreIdentificador}}
+                                              {%if t.partiMusicReco%}
+                                              {{t.partiMusicReco.nombre}}
+                                              {%else%}
+                                              Ninguna
+                                              {%endif%}
                                             </div>
                                           </div>
 
@@ -2672,7 +2690,7 @@
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-default"
                                             data-dismiss="modal">Close</button>
-                                          <a href="{% url 'gestionMusical:realizar_reco' t.id %}">
+                                          <a href="{% url 'gestionMusical:realizar_reco' t.id elAlumno.dni laClase.id %}">
                                             <button type="button" class="btn btn-primary">Confirmar</button>
                                           </a>
                                         </div>
@@ -2712,7 +2730,7 @@
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-default"
                                               data-dismiss="modal">Close</button>
-                                            <a href="{% url 'gestionMusical:eliminar_reco' t.id %}">
+                                            <a href="{% url 'gestionMusical:eliminar_reco' t.id elAlumno.dni laClase.id %}">
                                               <button type="button" class="btn btn-primary">Confirmar
                                                 Eliminacion</button>
                                             </a>
@@ -2751,26 +2769,26 @@
                         <label for=""><strong>Nombre:</strong></label>
                         <div style="margin-left: 5%;">
                           <div class="form-row">
-                            <div class="form-check">
+                            <div class="form-check" style="margin-right: 3%;">
                               <input class="form-check-input" type="radio" name="exampleRadios99" id="exampleRadios188"
                                 value="option188" checked>
                               <label class="form-check-label" for="exampleRadios1">
                                 Lista disponible
                               </label>
                             </div>
-                            <select id="countryTarea" class="form-control" name="nombresTareas">
+                            <select id="countryTarea" class="form-control" name="nombresTareas" required>
                               <option value=''>-----</option>
 
 
-                              {%for compo in partituras%}
-                              <option value='{{compo.id}}'>{{compo.nombre}}</option>
+                              {%for compo in tipoRecoTodas%}
+                              <option value='{{compo.nombre}}'>{{compo.nombre}}</option>
                               {%endfor%}
 
                             </select>
                           </div>
                           <br>
                           <div class="form-row">
-                            <div class="form-check">
+                            <div class="form-check" style="margin-right: 3%;">
                               <input class="form-check-input" type="radio" name="exampleRadios99" id="exampleRadios199"
                                 value="option199">
                               <label class="form-check-label" for="exampleRadios1">
@@ -3158,10 +3176,33 @@
     <script>
       $("#countryTarea").select2({
         placeholder: "Seleccione Nombre",
-        allowClear: false
+        allowClear: true
       });
     </script>
     <script>
+
+      $("#exampleRadios188").change(function () {
+        $("#inputRecoCrear2").prop('required', false);
+        document.getElementById("inputRecoCrear2").disabled = true;
+        document.getElementById("inputRecoCrear2").value = "";
+
+        $("#countryTarea").prop('required', true);
+        document.getElementById("countryTarea").disabled = false;
+
+
+      });
+      $("#exampleRadios199").change(function () {
+        document.getElementById("inputRecoCrear2").disabled = false;
+
+        $("#inputRecoCrear2").prop('required', true);
+
+        $("#countryTarea").prop('required', false);
+        $('#countryTarea').val(null).trigger('change');
+        document.getElementById("countryTarea").disabled = true;
+
+
+
+      });
 
       function editacion(id) {
 
@@ -3274,7 +3315,10 @@
 
         $("#botonCrearReco").click(function () {
 
-          var username = $("#inputRecoCrear").val();
+          var username = $("#countryTarea").val();
+          if(username == ""){
+            username = $("#inputRecoCrear2").val();
+          }
           var descripcion = $("#inputRecoDesCrear").val();
           var dias = $("#inputRecoDias").val();
           var parti = $("#country").val();
@@ -3303,8 +3347,7 @@
               success: function (data) {
 
                 if (data.is_taken) {
-                  alert("Ese nombre ya lo tiene otro tipo de musica ");
-                  document.getElementById("inputMusicaCrear").value = "";
+                  console.log("error");
                 } else {
 
                   location.reload();
