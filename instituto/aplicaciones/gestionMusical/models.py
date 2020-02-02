@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from simple_history.models import HistoricalRecords
 from datetime import datetime, date, time, timedelta
 import calendar
 
@@ -13,6 +14,7 @@ class Especialidad(models.Model):
     descripcion = models.TextField('Descripcion de la especialidad', null = False, blank = False)
     estadoEsp = models.BooleanField('activo/inactivo', default = True)
     fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Especialidad'
@@ -26,6 +28,7 @@ class Especialidad(models.Model):
 class MusicaTipo(models.Model):
     id = models.AutoField(primary_key = True)
     nombreMusica = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
+    history = HistoricalRecords()
     
     class Meta:
         verbose_name = 'Musica'
@@ -39,7 +42,7 @@ class MusicaTipo(models.Model):
 class Compositor(models.Model):
     id = models.AutoField(primary_key = True)
     nombreIdentificador = models.CharField('Nombre de compositor', max_length = 150, null = False, blank = False)
-    
+    history = HistoricalRecords()
     
     class Meta:
         verbose_name = 'Compositor'
@@ -59,7 +62,7 @@ class Partitura(models.Model):
     archivo = models.BinaryField(blank=True, null=True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     especialidadesAcordes = models.ManyToManyField(Especialidad, blank = True )
-
+    history = HistoricalRecords()
    
 
     class Meta:
@@ -77,6 +80,7 @@ class Tutor(models.Model):
    # tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
     telefonoTutor = models.CharField('telefono del usuario', max_length = 20, null = False, blank = False)
     emailTutor = models.EmailField('Correo electronico del tutor', null =  True, blank = True, default = None)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Tutor'
@@ -95,7 +99,7 @@ class Tema(models.Model):
     tipo = models.CharField('Tipo de la tema', max_length = 100, null = False, blank = False)
    
     archivo = models.BinaryField(blank=True, null=True)
-   
+    history = HistoricalRecords()
 
 
     class Meta:
@@ -109,6 +113,7 @@ class Rol (models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre del rol', max_length = 100, null = False, blank = False)
     descripcion = models.TextField('Descripcion del rol', null = True, blank = True)
+    
 
     class Meta:
         verbose_name = 'Rol'
@@ -130,7 +135,7 @@ class Usuario (models.Model):
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
     fechaInscripcion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
-    
+
     
     class Meta:
         verbose_name = 'Usuario'
@@ -150,6 +155,7 @@ class Profesor(Usuario):
     especialidades = models.ManyToManyField(Especialidad, blank = True)
     historiaPrevia = models.TextField('Observaciones del Profesor', null = True, blank = True)
     objects = models.Manager()
+    history = HistoricalRecords()
     
 
     class Meta:
@@ -169,7 +175,7 @@ class Alumno(Usuario):
     tutor = models.ManyToManyField(Tutor, through='TipoRelacion')
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     reputacion = models.IntegerField('numero de reputacion max 100', default=100, null = False, blank = False)
-     
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Alumno'
@@ -180,6 +186,7 @@ class TipoRelacion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
+    history = HistoricalRecords()
 
 class InstitutoDato(models.Model):
     
@@ -190,7 +197,7 @@ class InstitutoDato(models.Model):
     domicilio = models.CharField('Domicilio del usuario', max_length = 100, null = False, blank = False)
     horario = models.CharField('horario', max_length = 100, null = False, blank = False)
     archivo = models.BinaryField(blank=True, null=True)
-
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'InstitutoDato'
@@ -211,7 +218,7 @@ class Instrumento(models.Model):
     estadoUso = models.CharField('estado de uso del instrumento', max_length = 100, null = False, blank = False)
     fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
     archivo = models.BinaryField(blank=True, null=True)
-
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Instrumento'
@@ -226,7 +233,7 @@ class Horario(models.Model):
     diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
     horario_inicio = models.TimeField(blank = False, null = True)
     horario_final = models.TimeField(blank = False, null = True)
-    
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'horario'
@@ -251,7 +258,7 @@ class Clase(models.Model):
     historica =  models.BooleanField('estado de clase en tiempo activo/inactivo', default = False)
     profesorCargo = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     cantidadAsistida = models.IntegerField('cantidad de asistencias totales a clase', null = False, blank = False, default=0)
-    
+    history = HistoricalRecords()
     
     class Meta:
         verbose_name = 'Clase'
@@ -275,6 +282,7 @@ class Prestamo(models.Model):
     fechaCierre = models.DateField('Fecha de entrega', null = True, blank = True)
     estadoPrestamo =  models.BooleanField('estado de prestamo activo/inactivo', default = False)
     duracionDias = models.IntegerField('duracion de la prestamo', null = False, blank = False, default=1)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Prestamo'
@@ -286,6 +294,9 @@ class Prestamo(models.Model):
 class TipoTarea(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la tipo tarea', max_length = 100, null = False, blank = False)
+    history = HistoricalRecords()
+
+
     class Meta:
         verbose_name = 'TipoTarea'
         verbose_name_plural = 'TipoTareas'
@@ -304,6 +315,7 @@ class Recomendacion(models.Model):
     fechaCierre = models.DateField('Fecha de fin', null = True, blank = True)
     estadoReco =  models.BooleanField('estado de reco activo/inactivo', default = False)
     partiMusicReco = models.ForeignKey(Partitura, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Recomendacion'
@@ -321,6 +333,7 @@ class Asistencia(models.Model):
     estadoReco =  models.BooleanField('estado de asistencia activo/inactivo', default = False)
     claseReferencia = models.ForeignKey(Clase, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
     profesorReferencia = models.ForeignKey(Profesor, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = 'Asistencia'

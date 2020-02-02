@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'aplicaciones.gestionMusical',
     'directmessages',
     'easyaudit',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'instituto.urls'
