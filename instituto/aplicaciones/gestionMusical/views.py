@@ -1210,7 +1210,7 @@ def listarAuditoria(request):
     listaTema = []
     listaTutor = []
 
-    listaAlumno = Alumno.history.all()
+    #listaAlumno = Alumno.history.all()
     aux = []
     for e in listaAlumno:
        
@@ -1220,7 +1220,14 @@ def listarAuditoria(request):
         else:
             e.history_user_id = e.correoElectronico
         nuevo = e.__dict__
-        viejo = list(Alumno.history.filter(history_id=7) )[0]
+
+        listaSize = list(Alumno.history.filter(dni = e.dni) )
+        if len(listaSize) > 4:
+            numLista = len(listaSize)
+            viejo = list(Alumno.history.filter(dni = e.dni) )[numLista - 5]
+        else:
+            viejo = list(Alumno.history.filter(dni = e.dni) )[0]
+        
        
         
         nuevo['cosota'] = viejo.__dict__
@@ -1232,8 +1239,69 @@ def listarAuditoria(request):
 
 
 
-    listaAsistencia = Asistencia.history.all()
+    #listaAsistencia = Asistencia.history.all()
+    aux = []
+    for e in listaAsistencia:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Asistencia.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Asistencia.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Asistencia.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaAsistencia = aux.copy()
+
+
+
+
+
+
     listaClase = Clase.history.all()
+    aux = []
+    for e in listaClase:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Clase.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Clase.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Clase.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaClase = aux.copy()
+
+
+
+
+
     listaCompositor = Compositor.history.all()
     listaEspecialidad = Especialidad.history.all()
     listaInstituto = InstitutoDato.history.all()
