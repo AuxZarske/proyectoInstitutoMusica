@@ -71,6 +71,12 @@
 
 </script>
 <script type="text/javascript">
+
+
+
+
+
+
   function ocultarFiltro() {
 
 
@@ -653,18 +659,36 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for com in objetoss%}
+
+                      {% for com in listaAlumno%}
                       <tr>
 
-                        <td>{{com.accion}}</td>
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
 
-                        <td>{{com.fecha}}</td>
-                        <td>{{com.modelo}}</td>
+                          {% endif %}
 
-                        <td>{{com.idUsuario}}</td>
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Alumno</td>
+
+                        <td>
+                          
+                          {{com.history_user_id }}
+
+                        </td>
                         <td>
                           <center>
-
+                            {{com.cosota.nombre }}
                             boton aqui
 
                           </center>
@@ -673,6 +697,7 @@
                       </tr>
 
                       {%endfor%}
+
                     </tbody>
                   </table>
 

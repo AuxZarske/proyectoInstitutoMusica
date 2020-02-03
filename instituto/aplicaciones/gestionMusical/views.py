@@ -1123,7 +1123,10 @@ def listartutores(request):
         pass 
     return render(request, 'tutores.html', context={'tutores': tutores,'pedidor':pedidor,'filtro':filtro,'listaAlumnosDisponible':listaAlumnosDisponible})
 
-
+def obtenerCorreoUser(num):
+    us = User.objects.get(id = num)
+    correo = us.email
+    return correo
 
 
 def listarAuditoria(request):
@@ -1190,7 +1193,59 @@ def listarAuditoria(request):
     tablas = ContentType.objects.all()
     for tabla in tablas:
         tabla.model =  tabla.model.capitalize()
-    return render(request,'auditoria.html',{'logs':logs,'tablas':tablas, 'objetoss':objetoss})
+
+
+    #de aqui lo nuevo 12 listas, llenerla, in html carga
+    
+    listaAlumno = []
+    listaAsistencia = []
+    listaClase = []
+    listaCompositor = []
+    listaEspecialidad = []
+    listaInstituto = []
+    listaInstrumento = []
+    listaPartitura = []
+    listaPrestamo = []
+    listaProfesor = []
+    listaTema = []
+    listaTutor = []
+
+    listaAlumno = Alumno.history.all()
+    aux = []
+    for e in listaAlumno:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = e.correoElectronico
+        nuevo = e.__dict__
+        viejo = list(Alumno.history.filter(history_id=7) )[0]
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaAlumno = aux.copy()
+
+
+
+    listaAsistencia = Asistencia.history.all()
+    listaClase = Clase.history.all()
+    listaCompositor = Compositor.history.all()
+    listaEspecialidad = Especialidad.history.all()
+    listaInstituto = InstitutoDato.history.all()
+    listaInstrumento = Instrumento.history.all()
+    listaPartitura = Partitura.history.all()
+    listaPrestamo = Prestamo.history.all()
+    listaProfesor = Profesor.history.all()
+    listaTema = Tema.history.all()
+    listaTutor = Tutor.history.all()
+
+    
+    return render(request,'auditoria.html',{'logs':logs,'tablas':tablas, 'objetoss':objetoss,'listaAlumno':listaAlumno,'listaAsistencia':listaAsistencia,'listaClase':listaClase,'listaCompositor':listaCompositor,'listaEspecialidad':listaEspecialidad,'listaInstituto':listaInstituto,'listaInstrumento':listaInstrumento,'listaPartitura':listaPartitura,'listaPrestamo':listaPrestamo,'listaProfesor':listaProfesor,'listaTema':listaTema,'listaTutor':listaTutor})
 
 
 
@@ -2545,7 +2600,7 @@ def editarAlumno(request,dni):
             else:
                 tipoMusic = MusicaTipo.objects.get(id = tipoMusic)
             
-            if int(numero) >= 18:
+            if int(numero) >= 1:
                 if alumno_form.is_valid():
                     alum = alumno_form.save()
                     if validamusica == 1:
@@ -2575,27 +2630,7 @@ def editarAlumno(request,dni):
 
                 else:
                     messages.error(request, " Error - No se pudo cargar")
-            else:
-                creado = False
-                dniTu = request.POST['dniTutor']
-                creado = Tutor.objects.filter(dniTutor = dniTu).exists()
-                formTutor = TutorForm(request.POST) 
-                if alumno_form.is_valid() and ( formTutor.is_valid() or creado ):
-                    alum = alumno_form.save()
-                    if formTutor.is_valid():
-                        tuto = formTutor.save()
-                    else:
-                        tuto = Tutor.objects.get(dniTutor = dniTu)
-
-                    if validamusica == 1:
-                        tipoMusic = laMusica.save()
-
-                    alum.musica = tipoMusic
-                    alum.tutor = tuto
-                    alum.save()
-                    messages.success(request, "Registro Correcto!")
-                else:
-                    messages.error(request, " Error - No se pudo cargar")
+            
 
 
             return redirect('gestionMusical:alumnos')

@@ -28,7 +28,7 @@ class Especialidad(models.Model):
 class MusicaTipo(models.Model):
     id = models.AutoField(primary_key = True)
     nombreMusica = models.CharField('Nombre del musica', max_length = 100, null = False, blank = False)
-    history = HistoricalRecords()
+   
     
     class Meta:
         verbose_name = 'Musica'
@@ -186,7 +186,7 @@ class TipoRelacion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
-    history = HistoricalRecords()
+   
 
 class InstitutoDato(models.Model):
     
@@ -233,7 +233,7 @@ class Horario(models.Model):
     diaSemanal = models.CharField('dia de la semana', max_length = 100, null = False, blank = False)
     horario_inicio = models.TimeField(blank = False, null = True)
     horario_final = models.TimeField(blank = False, null = True)
-    history = HistoricalRecords()
+    
 
     class Meta:
         verbose_name = 'horario'
@@ -294,7 +294,7 @@ class Prestamo(models.Model):
 class TipoTarea(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la tipo tarea', max_length = 100, null = False, blank = False)
-    history = HistoricalRecords()
+    
 
 
     class Meta:
@@ -315,7 +315,7 @@ class Recomendacion(models.Model):
     fechaCierre = models.DateField('Fecha de fin', null = True, blank = True)
     estadoReco =  models.BooleanField('estado de reco activo/inactivo', default = False)
     partiMusicReco = models.ForeignKey(Partitura, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
-    history = HistoricalRecords()
+    
 
     class Meta:
         verbose_name = 'Recomendacion'
