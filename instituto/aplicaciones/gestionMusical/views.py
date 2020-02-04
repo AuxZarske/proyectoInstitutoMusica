@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect
 from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management import call_command
 from django.views.generic import View
 from django.http import HttpResponseRedirect
 from django.contrib import messages 
@@ -1134,6 +1135,8 @@ def listarAuditoria(request):
     log = {}
     logs = []
     objetoss = []
+    #call_command('python manage.py clean_duplicate_history --auto', 'foo', bar='baz')
+    #call_command('clean_duplicate_history --auto')
     conexion1 = psycopg2.connect(database="todo17", user="postgres", password="1234",port=1234)
     cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"

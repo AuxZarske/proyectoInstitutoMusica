@@ -663,11 +663,11 @@
                     <thead>
                       <tr>
 
-                        <th>accion</th>
-                        <th>fecha</th>
-                        <th>tabla</th>
+                        <th>Accion</th>
+                        <th>Fecha</th>
+                        <th>Tabla</th>
 
-                        <th>idusuario</th>
+                        <th>Usuario Involucrado</th>
 
                         <th class="noExport">Acciones</th>
                       </tr>
@@ -692,7 +692,9 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}} </td>
+
+
                         <td>Alumno</td>
 
                         <td>
@@ -735,7 +737,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -826,7 +830,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -961,7 +967,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Asistencia</td>
 
                         <td>
@@ -1004,7 +1010,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1041,7 +1049,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1125,7 +1135,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Clase</td>
 
                         <td>
@@ -1168,7 +1178,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -1211,7 +1223,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1296,7 +1310,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Compositor</td>
 
                         <td>
@@ -1339,7 +1353,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -1357,7 +1373,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1417,7 +1435,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Especialidad</td>
 
                         <td>
@@ -1460,7 +1478,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -1497,7 +1517,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1575,7 +1597,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Instituto</td>
 
                         <td>
@@ -1618,7 +1640,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -1667,7 +1691,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -1758,7 +1784,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Instrumento</td>
 
                         <td>
@@ -1801,7 +1827,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -1844,7 +1872,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
 
@@ -1931,7 +1961,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Partitura</td>
 
                         <td>
@@ -1974,7 +2004,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -2012,7 +2044,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           
@@ -2092,7 +2126,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Prestamo</td>
 
                         <td>
@@ -2135,7 +2169,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -2196,7 +2232,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -2299,7 +2337,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Profesor</td>
 
                         <td>
@@ -2342,7 +2380,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -2400,7 +2440,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           
@@ -2502,7 +2544,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Tema</td>
 
                         <td>
@@ -2545,7 +2587,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -2589,7 +2633,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -2675,7 +2721,7 @@
 
                         </td>
 
-                        <td>{{com.history_date}}</td>
+                        <td>{{com.history_date|time:'H:i'}} {{com.history_date|date:'m/d/Y'}}</td>
                         <td>Tutor</td>
 
                         <td>
@@ -2718,7 +2764,9 @@
                                     <div class="modal-body" style="width: auto;">
 
                                       <div class="form-row">
-                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                        <div style="border: rgb(35, 235, 125) solid 2px; margin-left: auto; margin-right: auto; background-color: rgb(170, 255, 170); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Actual</strong></label>
                                           </center>
                                           
@@ -2761,7 +2809,9 @@
 
                                         </div>
                                         {% if com.history_type == "~" %}
-                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                        <div style="border: rgb(250, 73, 73) solid 2px; margin-left: 4%; margin-right: auto; background-color: rgb(233, 169, 169); color: black;border-radius: 10px 10px 10px 10px;
+                                        -moz-border-radius: 10px 10px 10px 10px;
+                                        -webkit-border-radius: 10px 10px 10px 10px;">
                                           <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
                                           </center>
                                           <div class="alinealoNomas">
@@ -2852,14 +2902,14 @@
               <br><br>
               <div class="card-body" id="cuerpoTable">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="dataTable775544ty" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Accion</th>
                         <th>Usuario</th>
                         <th>Fecha</th>
-                        <th>Ip</th>
-                        <th>Acciones</th>
+                        <th>Ip registrada</th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -2871,15 +2921,9 @@
                         <td>Entrada</td>
                         {%endif%}
                         <td>{{com.usuario}}</td>
-                        <td>{{com.fecha}}</td>
+                        <td>{{com.fecha|time:'H:i'}} {{com.fecha|date:'m/d/Y'}} </td>
                         <td>{{com.ip}}</td>
-                        <td>
-                          <center>
-
-                            boton aqui
-
-                          </center>
-                        </td>
+                   
 
                       </tr>
 
@@ -3188,6 +3232,25 @@
   </script>
   <script>
     $(document).ready(function () {
+
+
+      function stringToDate(_date,_format,_delimiter)
+{
+            var formatLowerCase=_format.toLowerCase();
+            var formatItems=formatLowerCase.split(_delimiter);
+            var dateItems=_date.split(_delimiter);
+            var monthIndex=formatItems.indexOf("mm");
+            var dayIndex=formatItems.indexOf("dd");
+            var yearIndex=formatItems.indexOf("yyyy");
+            var month=parseInt(dateItems[monthIndex]);
+            month-=1;
+            var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+            return formatedDate;
+}
+
+
+
+
       var table = $('#dataTable').DataTable();
 
 
@@ -3263,20 +3326,28 @@
           if (filtro2 != "") {
             if (filtro3 != "" && filtro4 != "") {
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
-                console.log(data[0]);
-
-                if (tablas == String(data[2]) && accion == String(data[0]) && Date.parse(String(fechaMIN)) <= Date.parse(String(data[1]))) {
+                
+                if(tablas == String(data[2])){
+                  console.log("g");
+                  console.log(Date.parse(String(fechaMAX))+86399000)
+                  console.log(Date.parse(String(data[1])));
+                }
+                
+                if (tablas == String(data[2]) && accion == String(data[0]) && (Date.parse(String(fechaMIN))+86399000) <= Date.parse(String(data[1]))  && (Date.parse(String(fechaMAX))+86399000) >= Date.parse(String(data[1]))   ) {
                   return true;
+                  
 
                 } else {
                   return false;
-
+                  
                 }
               }
 
               $.fn.dataTable.ext.search.push(filtradoTabla)
               table.draw()
-              var nombre = "Filtrado por: Tabla " + String(filtro1) + ", Accion " + String(filtro2) + ", y fecha entre: " + String(filtro3) + " y " + String(filtro4);
+              filtro3 = filtro3[8] + filtro3[9] + "/"+filtro3[5] + filtro3[6]+"/" + filtro3[0] + filtro3[1] + filtro3[2] + filtro3[3]
+              filtro4 = filtro4[8] + filtro4[9] + "/"+filtro4[5] + filtro4[6]+"/" + filtro4[0] + filtro4[1] + filtro4[2] + filtro4[3]
+              var nombre = "Filtrado por: Tabla " + String(filtro1) +", Accion " + String(filtro2) + ", y fecha entre: " + String(filtro3) + " y " + String(filtro4);
               document.getElementById("filtrado").value = nombre;
             } else {
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
@@ -3300,7 +3371,7 @@
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
                 console.log(data[0]);
 
-                if (tablas == String(data[2]) && Date.parse(String(fechaMIN)) <= Date.parse(String(data[1]))) {
+                if (tablas == String(data[2]) && (Date.parse(String(fechaMIN))+86399000) <= Date.parse(String(data[1])) && (Date.parse(String(fechaMAX))+86399000) >= Date.parse(String(data[1])) ) {
                   return true;
 
                 } else {
@@ -3311,6 +3382,8 @@
 
               $.fn.dataTable.ext.search.push(filtradoTabla)
               table.draw()
+              filtro3 = filtro3[8] + filtro3[9] + "/"+filtro3[5] + filtro3[6]+"/" + filtro3[0] + filtro3[1] + filtro3[2] + filtro3[3]
+              filtro4 = filtro4[8] + filtro4[9] + "/"+filtro4[5] + filtro4[6]+"/" + filtro4[0] + filtro4[1] + filtro4[2] + filtro4[3]
               var nombre = "Filtrado por: Tabla " + String(filtro1) + ", y fecha entre: " + String(filtro3) + " y " + String(filtro4);
               document.getElementById("filtrado").value = nombre;
             } else {
@@ -3337,7 +3410,7 @@
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
                 console.log(data[0]);
 
-                if (accion == String(data[0]) && Date.parse(String(fechaMIN)) <= Date.parse(String(data[1]))) {
+                if (accion == String(data[0]) && (Date.parse(String(fechaMIN))+86399000) <= Date.parse(String(data[1])) && (Date.parse(String(fechaMAX))+86399000) >= Date.parse(String(data[1])) ) {
                   return true;
 
                 } else {
@@ -3348,6 +3421,8 @@
 
               $.fn.dataTable.ext.search.push(filtradoTabla)
               table.draw()
+              filtro3 = filtro3[8] + filtro3[9] + "/"+filtro3[5] + filtro3[6]+"/" + filtro3[0] + filtro3[1] + filtro3[2] + filtro3[3]
+              filtro4 = filtro4[8] + filtro4[9] + "/"+filtro4[5] + filtro4[6]+"/" + filtro4[0] + filtro4[1] + filtro4[2] + filtro4[3]
               var nombre = "Filtrado por:  Accion " + String(filtro2) + ", y fecha entre: " + String(filtro3) + " y " + String(filtro4);
               document.getElementById("filtrado").value = nombre;
             } else {
@@ -3372,7 +3447,7 @@
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
                 console.log(data[0]);
 
-                if (Date.parse(String(fechaMIN)) <= Date.parse(String(data[1]))) {
+                if ((Date.parse(String(fechaMIN))+86399000) <= Date.parse(String(data[1])) && (Date.parse(String(fechaMAX))+86399000) >= Date.parse(String(data[1])) ) {
                   return true;
 
                 } else {
