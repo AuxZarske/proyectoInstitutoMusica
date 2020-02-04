@@ -581,9 +581,23 @@
                         <div class="form-row">
                           <select id="tablas" class="form-control" single>
                             <option value=''>-------</option>
-                            {%for t in tablas%}
-                            <option value="{{t.model}}">{{t.model}}</option>
-                            {%endfor%}
+                            
+                            <option value="Alumno">Alumno</option>
+                            <option value="Tutor">Tutor</option>
+                            <option value="Especialidad">Especialidad</option>
+                            <option value="Partitura">Partitura</option>
+                            <option value="Tema">Tema</option>
+                            <option value="Profesor">Profesor</option>
+
+                            <option value="Instituto">Instituto</option>
+                            <option value="Compositor">Compositor</option>
+                            <option value="Asistencia">Asistencia</option>
+                            <option value="Clase">Clase</option>
+                            <option value="Prestamo">Prestamo</option>
+                            <option value="Instrumento">Instrumento</option>
+
+
+                           
 
 
                           </select>
@@ -1262,6 +1276,1558 @@
 
                       {%endfor%}
                       <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaCompositor%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Compositor</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgCompositor{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgCompositor{{com.history_id}}"
+                                id="myModalCompositor{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelCompositor{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombreIdentificador}}
+                                            </div>
+                                          </div>
+                                          
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombreIdentificador}}
+                                            </div>
+                                          </div>
+                                          
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaEspecialidad%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Especialidad</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgEspecialidad{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgEspecialidad{{com.history_id}}"
+                                id="myModalEspecialidad{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelEspecialidad{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Estado:</label>
+                                            <div class="derecha">
+                                              
+                                              {%if com.estadoEsp%} 
+                                              Alta
+                                              {%else%}
+                                              Baja
+                                              {%endif%}
+                                            </div>
+                                          </div>
+                     
+                                            
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Estado:</label>
+                                            <div class="derecha">
+                                              {%if com.cosota.estadoEsp%} 
+                                              Alta
+                                              {%else%}
+                                              Baja
+                                              {%endif%}
+                                            </div>
+                                          </div>
+                     
+                                            
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaInstituto%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Instituto</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgInstituto{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgInstituto{{com.history_id}}"
+                                id="myModalInstituto{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelInstituto{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                            <div class="derecha">
+                                              {{com.telefono}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Correo electronico:</label>
+                                            <div class="derecha">
+                                              {{com.correoElectronico}}
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                              <div class="derecha">
+                                                {{com.domicilio}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Horario:</label>
+                                              <div class="derecha">
+                                                {{com.horario}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.archivo}}
+                                              </div>
+                                            </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.telefono}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Correo electronico:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.correoElectronico}}
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.domicilio}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Horario:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.horario}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.archivo}}
+                                              </div>
+                                            </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaInstrumento%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Instrumento</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgInstrumento{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgInstrumento{{com.history_id}}"
+                                id="myModalInstrumento{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelInstrumento{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Color:</label>
+                                            <div class="derecha">
+                                              {{com.color}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Estado de uso:</label>
+                                              <div class="derecha">
+                                                {{com.estadoUso}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.archivo}}
+                                              </div>
+                                            </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Color:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.color}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Estado de uso:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.estadoUso}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.archivo}}
+                                              </div>
+                                            </div>
+                  
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaPartitura%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Partitura</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgPartitura{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgPartitura{{com.history_id}}"
+                                id="myModalPartitura{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelPartitura{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                            <div class="derecha">
+                                              {{com.nivel}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.archivo}}
+                                              </div>
+                                            </div>
+                                            
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.nivel}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.archivo}}
+                                              </div>
+                                            </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaPrestamo%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Prestamo</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgPrestamo{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgPrestamo{{com.history_id}}"
+                                id="myModalPrestamo{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelPrestamo{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Alumno:</label>
+                                            <div class="derecha">
+      
+                                              {{com.alumnoResponsable_id}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Instrumento:</label>
+                                            <div class="derecha">
+                                              {{com.instrumentoPrestado_id}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                            <div class="derecha">
+                                              {{com.profesorReferencia_id}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Duracion dias:</label>
+                                              <div class="derecha">
+                                                {{com.duracionDias}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Condicion:</label>
+                                              <div class="derecha">
+                                                {{com.condicion}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                              <div class="derecha">
+                                                {{com.observaciones}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                                              <div class="derecha">
+                                                {{com.fechaCreacion}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Fecha de Cierre:</label>
+                                              <div class="derecha">
+                                                {{com.fechaCierre}}
+                                              </div>
+                                            </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Alumno:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.alumnoResponsable_id}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Instrumento:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.instrumentoPrestado_id}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Profesor a Cargo:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.profesorReferencia_id}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Duracion dias:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.duracionDias}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Condicion:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.condicion}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.observaciones}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Fecha de Creacion:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.fechaCreacion}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Fecha de Cierre:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.fechaCierre}}
+                                              </div>
+                                            </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaProfesor%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Profesor</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgProfesor{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgProfesor{{com.history_id}}"
+                                id="myModalProfesor{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelProfesor{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">DNI: </label>
+                                            <div class="derecha">
+                                              {{com.dni}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                              <div class="derecha">
+                                                  {{com.apellido}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                <div class="derecha">
+                                                    {{com.nombre}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                  <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                  <div class="derecha">
+                                                      {{com.sexo}}
+                                                  </div>
+                                                </div>
+                                                <div class="alinealoNomas">
+                                                    <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                    <div class="derecha">
+                                                        {{com.fechaNac}}
+                                                    </div>
+                                                  </div>
+                                                  <div class="alinealoNomas">
+                                                      <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                      <div class="derecha">
+                                                          {{com.domicilio}}
+                                                      </div>
+                                                    </div>
+                                                    <div class="alinealoNomas">
+                                                        <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                        <div class="derecha">
+                                                            {{com.telefono}}
+                                                        </div>
+                                                      </div>
+                                                      <div class="alinealoNomas">
+                                                          <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                          <div class="derecha">
+                                                              {{com.correoElectronico}}
+                                                          </div>
+                                                        </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">DNI: </label>
+                                            <div class="derecha">
+                                              {{com.cosota.dni}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                              <div class="derecha">
+                                                  {{com.cosota.apellido}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                <div class="derecha">
+                                                    {{com.cosota.nombre}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                  <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                  <div class="derecha">
+                                                      {{com.cosota.sexo}}
+                                                  </div>
+                                                </div>
+                                                <div class="alinealoNomas">
+                                                    <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                    <div class="derecha">
+                                                        {{com.cosota.fechaNac}}
+                                                    </div>
+                                                  </div>
+                                                  <div class="alinealoNomas">
+                                                      <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                      <div class="derecha">
+                                                          {{com.cosota.domicilio}}
+                                                      </div>
+                                                    </div>
+                                                    <div class="alinealoNomas">
+                                                        <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                        <div class="derecha">
+                                                            {{com.cosota.telefono}}
+                                                        </div>
+                                                      </div>
+                                                      <div class="alinealoNomas">
+                                                          <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                          <div class="derecha">
+                                                              {{com.cosota.correoElectronico}}
+                                                          </div>
+                                                        </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaTema%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Tema</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgTema{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgTema{{com.history_id}}"
+                                id="myModalTema{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelTema{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                              <div class="derecha">
+                                                {{com.nivel}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Tipo:</label>
+                                              <div class="derecha">
+                                                {{com.tipo}} 
+                                              </div>
+                                            </div>
+                       
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                                <div class="derecha">
+                                                  {{com.archivo}}
+                                                </div>
+                                              </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.nombre}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Descripcion:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.descripcion}}
+                                            </div>
+                                          </div>
+      
+                                          
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.nivel}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Tipo:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.tipo}} 
+                                              </div>
+                                            </div>
+                       
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                                <div class="derecha">
+                                                  {{com.cosota.archivo}}
+                                                </div>
+                                              </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      <!--otro tabla-->
+
+                      {% for com in listaTutor%}
+                      <tr>
+
+                        <td>
+                          {% if com.history_type == "+" %}
+                          Creación
+                          {%else%}
+                          {% if com.history_type == "~" %}
+                          Modificación
+                          {%else%}
+                          Eliminación
+                          {% endif %}
+
+                          {% endif %}
+
+
+                        </td>
+
+                        <td>{{com.history_date}}</td>
+                        <td>Tutor</td>
+
+                        <td>
+
+                          {{com.history_user_id }}
+
+                        </td>
+                        <td>
+                          <center>
+                            <!--boton aqui-->
+                            <div class="btn-group">
+                              <center>
+                                <div>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bs-example-modal-lgTutor{{com.history_id}}">
+
+                                    <i class="fa fa-eye"></i>
+
+                                  </button>
+                                </div>
+                              </center>
+                              <div class="modal fade bs-example-modal-lgTutor{{com.history_id}}"
+                                id="myModalTutor{{com.history_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" style="width: auto;">
+                                  {% if com.history_type == "~" %}
+                                  <div class="modal-content"  style="width: auto;">
+                                  {%else%}
+                                  <div class="modal-content"  style="width: 400px;">
+                                  {% endif %}
+                                  
+                                    <div class="modal-header" style="width: auto;">
+                                      <h4 class="modal-title" id="myModalLabelTema{{com.history_id}}">
+                                        Datos del registro
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body" style="width: auto;">
+
+                                      <div class="form-row">
+                                        <div style="border: black solid 2px; margin-left: auto; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Actual</strong></label>
+                                          </center>
+                                          
+
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">DNI:</label>
+                                            <div class="derecha">
+      
+                                              {{com.dniTutor}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                            <div class="derecha">
+                                              {{com.apellidoTutor}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+                                              {{com.nombreTutor}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                              <div class="derecha">
+                                                {{com.telefonoTutor}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Correo electronico:</label>
+                                              <div class="derecha">
+                                                {{com.emailTutor}}
+                                              </div>
+                                            </div>
+                                          
+                                          
+
+                                        </div>
+                                        {% if com.history_type == "~" %}
+                                        <div style="border: black solid 2px; margin-left: 4%; margin-right: auto;">
+                                          <center><label style="font-size: 20px;"><strong>Anterior</strong></label>
+                                          </center>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">DNI:</label>
+                                            <div class="derecha">
+      
+                                              {{com.cosota.dniTutor}}
+                                            </div>
+                                          </div>
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.apellidoTutor}}
+                                            </div>
+                                          </div>
+      
+                                          <div class="alinealoNomas">
+                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                            <div class="derecha">
+                                              {{com.cosota.nombreTutor}} 
+                                            </div>
+                                          </div>
+                     
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.telefonoTutor}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda">Correo electronico:</label>
+                                              <div class="derecha">
+                                                {{com.cosota.emailTutor}}
+                                              </div>
+                                            </div>
+                                         
+
+
+                                        </div>
+                                        {% endif %}
+                                        
+                                      </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--boton aqui-->
+
+                          </center>
+                        </td>
+
+                      </tr>
+
+                      {%endfor%}
+                      <!--otro tabla-->
+                      
+
 
 
 
@@ -1673,6 +3239,7 @@
 
         if (filtro1 != "") {
           var tablas = String($('#tablas option:selected').val());
+          
 
         }
         if (filtro2 != "") {

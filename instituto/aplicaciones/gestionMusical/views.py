@@ -1210,7 +1210,7 @@ def listarAuditoria(request):
     listaTema = []
     listaTutor = []
 
-    #listaAlumno = Alumno.history.all()
+    listaAlumno = Alumno.history.all()
     aux = []
     for e in listaAlumno:
        
@@ -1239,7 +1239,7 @@ def listarAuditoria(request):
 
 
 
-    #listaAsistencia = Asistencia.history.all()
+    listaAsistencia = Asistencia.history.all()
     aux = []
     for e in listaAsistencia:
        
@@ -1303,14 +1303,276 @@ def listarAuditoria(request):
 
 
     listaCompositor = Compositor.history.all()
+    aux = []
+    for e in listaCompositor:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Compositor.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Compositor.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Compositor.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaCompositor = aux.copy()
+
     listaEspecialidad = Especialidad.history.all()
+    aux = []
+    for e in listaEspecialidad:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Especialidad.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Especialidad.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Especialidad.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaEspecialidad = aux.copy()
+    
+
+
+
+
+
     listaInstituto = InstitutoDato.history.all()
+    aux = []
+    for e in listaInstituto:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(InstitutoDato.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(InstitutoDato.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(InstitutoDato.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaInstituto = aux.copy()
+
+
+
+
     listaInstrumento = Instrumento.history.all()
+    aux = []
+    for e in listaInstrumento:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Instrumento.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Instrumento.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Instrumento.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaInstrumento = aux.copy()
+
+
+
+
     listaPartitura = Partitura.history.all()
+    aux = []
+    for e in listaPartitura:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Partitura.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Partitura.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Partitura.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaPartitura = aux.copy()
+
+
+
+
+
+
     listaPrestamo = Prestamo.history.all()
+    aux = []
+    for e in listaPrestamo:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Prestamo.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Prestamo.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Prestamo.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaPrestamo = aux.copy()
+
+
+
+
+    
     listaProfesor = Profesor.history.all()
-    listaTema = Tema.history.all()
-    listaTutor = Tutor.history.all()
+    aux = []
+    for e in listaProfesor:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Profesor.history.filter(dni = e.dni) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Profesor.history.filter(dni = e.dni) )[numLista - 1]
+        else:
+            viejo = list(Profesor.history.filter(dni = e.dni) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaProfesor = aux.copy()
+
+
+
+
+
+    listaTema = Tema.history.all() 
+    aux = []
+    for e in listaTema:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Tema.history.filter(id = e.id) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Tema.history.filter(id = e.id) )[numLista - 1]
+        else:
+            viejo = list(Tema.history.filter(id = e.id) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaTema = aux.copy()
+
+
+
+
+    listaTutor = Tutor.history.all() 
+    aux = []
+    for e in listaTutor:
+       
+        
+        if e.history_user_id:
+           e.history_user_id = obtenerCorreoUser(e.history_user_id) 
+        else:
+            e.history_user_id = "Admin"
+        nuevo = e.__dict__
+
+        listaSize = list(Tutor.history.filter(dniTutor = e.dniTutor) )
+        if len(listaSize) > 0:
+            numLista = len(listaSize)
+            viejo = list(Tutor.history.filter(dniTutor = e.dniTutor) )[numLista - 1]
+        else:
+            viejo = list(Tutor.history.filter(dniTutor = e.dniTutor) )[0]
+        
+       
+        
+        nuevo['cosota'] = viejo.__dict__
+        #print(nuevo)
+        elemento = nuevo  
+        aux.append(elemento) 
+
+    listaTutor = aux.copy()
+
+
 
     
     return render(request,'auditoria.html',{'logs':logs,'tablas':tablas, 'objetoss':objetoss,'listaAlumno':listaAlumno,'listaAsistencia':listaAsistencia,'listaClase':listaClase,'listaCompositor':listaCompositor,'listaEspecialidad':listaEspecialidad,'listaInstituto':listaInstituto,'listaInstrumento':listaInstrumento,'listaPartitura':listaPartitura,'listaPrestamo':listaPrestamo,'listaProfesor':listaProfesor,'listaTema':listaTema,'listaTutor':listaTutor})
@@ -2370,7 +2632,7 @@ def editarProfesor(request,dni):
     profesor_form = None
     error = None
     editacion = 1
-    especialidadesTodas = list(Especialidad.objects.filter(estadoEsp = True))
+    especialidadesTodas = list(Especialidad.objects.filter())
     espePro = []
     try:
         
