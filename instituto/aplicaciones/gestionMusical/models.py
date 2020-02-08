@@ -168,8 +168,8 @@ class Alumno(Usuario):
     observaciones = models.TextField('Observaciones del Alumno', null = True, blank = True)
     conocimientoPrevio = models.TextField('El nivel que tiene el alumno', null = True, blank = True)
     especialidadRequerida = models.ForeignKey(Especialidad, on_delete = models.DO_NOTHING,  null = True, blank = True)
-    partiturasAsociadas = models.ManyToManyField(Partitura)
-    temasAsociadas = models.ManyToManyField(Tema)
+    partiturasAsociadas = models.ManyToManyField(Partitura, through='TipoRelacionPartitura')
+    temasAsociadas = models.ManyToManyField(Tema, through='TipoRelacionTema')
     musica = models.ForeignKey(MusicaTipo, on_delete = models.DO_NOTHING,  null = True, blank = True)
     #tutor = models.ForeignKey(Tutor, on_delete = models.DO_NOTHING,  null = True, blank = True)
     tutor = models.ManyToManyField(Tutor, through='TipoRelacion')
@@ -186,6 +186,16 @@ class TipoRelacion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     tipo = models.CharField('que relacion de tutor es', max_length = 30, null = True, blank = True)
+
+class TipoRelacionPartitura(models.Model):
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    partitura = models.ForeignKey(Partitura, on_delete=models.CASCADE)
+    claseInt = models.IntegerField('id clase', null = True, blank = True)
+
+class TipoRelacionTema(models.Model):
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
+    claseInt = models.IntegerField('id clase', null = True, blank = True)
    
 
 class InstitutoDato(models.Model):
@@ -218,6 +228,7 @@ class Instrumento(models.Model):
     estadoUso = models.CharField('estado de uso del instrumento', max_length = 100, null = False, blank = False)
     fechaCreacion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
     archivo = models.BinaryField(blank=True, null=True)
+    estado = models.BooleanField('activo/inactivo', default = True)
     history = HistoricalRecords()
 
     class Meta:
@@ -315,6 +326,8 @@ class Recomendacion(models.Model):
     fechaCierre = models.DateField('Fecha de fin', null = True, blank = True)
     estadoReco =  models.BooleanField('estado de reco activo/inactivo', default = False)
     partiMusicReco = models.ForeignKey(Partitura, on_delete = models.DO_NOTHING, default = None, null = True, blank = True)
+    claseReferencia = models.ForeignKey(Clase, on_delete = models.DO_NOTHING, default = None, null = False, blank = False)
+
     
 
     class Meta:

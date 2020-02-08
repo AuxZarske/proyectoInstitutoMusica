@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea, TipoRelacionPartitura, TipoRelacionTema
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
@@ -1137,7 +1137,7 @@ def listarAuditoria(request):
     objetoss = []
     #call_command('python manage.py clean_duplicate_history --auto', 'foo', bar='baz')
     #call_command('clean_duplicate_history --auto')
-    conexion1 = psycopg2.connect(database="todo17", user="postgres", password="1234",port=1234)
+    conexion1 = psycopg2.connect(database="todo19", user="postgres", password="1234",port=1234)
     cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"
     cursor1.execute(sql)
@@ -1150,7 +1150,7 @@ def listarAuditoria(request):
     conexion1.close()
 
 
-    conexion2 = psycopg2.connect(database="todo17", user="postgres", password="1234",port=1234)
+    conexion2 = psycopg2.connect(database="todo19", user="postgres", password="1234",port=1234)
     cursor2=conexion2.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql = "select id, event_type, datetime, content_type_id, user_id from easyaudit_crudevent ORDER BY datetime DESC"
     cursor2.execute(sql)
@@ -1598,7 +1598,8 @@ def listarprestamos(request, numer):
         prestamo_form = PrestamoForm(request.POST)
         alu = request.POST['alumnoResponsable']
         instru = request.POST['instrumentoPrestado']
-        if prestamo_form.is_valid() and not (Prestamo.objects.filter(alumnoResponsable = alu, estadoPrestamo = True).exists()) or not(Prestamo.objects.filter(instrumentoPrestado = instru, estadoPrestamo = True).exists()):
+        elInstrum = Instrumento.objects.get(id = instru)
+        if prestamo_form.is_valid() and not (Prestamo.objects.filter(alumnoResponsable = alu, estadoPrestamo = True).exists()) or not(Prestamo.objects.filter(instrumentoPrestado = instru, estadoPrestamo = True).exists()) and (elInstrum.estado == True): 
         
             try:
                 prestamo = prestamo_form.save(commit=False)
@@ -1617,6 +1618,7 @@ def listarprestamos(request, numer):
             print(request.POST)
             print(prestamo_form.errors.as_data())
             messages.error(request, " Error - No se pudo cargar")
+            
 
 
 
@@ -1644,11 +1646,14 @@ def listarprestamos(request, numer):
   
 
     
-    instrumentos = list(Instrumento.objects.all())
+    instrumentos = list(Instrumento.objects.filter(estado = True))
     instruPresAUX = instruPres.copy()
     for e in instruPresAUX:
         print(e)
-        instrumentos.remove(Instrumento.objects.get(id = e['instrumentoPrestado']))
+        try:
+            instrumentos.remove(Instrumento.objects.get(id = e['instrumentoPrestado']))
+        except:
+            pass
 
     try:
         pedidor = str(request.user.username)
@@ -2152,6 +2157,8 @@ def crearRecomendacion(request):
     descripcion = request.GET.get('descripcion', None)
     dias = request.GET.get('dias', None)
     parti = request.GET.get('parti', None)
+    claseAso = request.GET.get('claseAso', None)
+    print(claseAso)
     print(parti)
     alumno = request.GET.get('alumno', None)
     data = {
@@ -2170,8 +2177,8 @@ def crearRecomendacion(request):
             pedidor = str(request.user.username)
             
             elProfe = Profesor.objects.get(correoElectronico = pedidor)
-            
-
+            laClaseAso = Clase.objects.get(id = claseAso) 
+            tarea.claseReferencia = laClaseAso
             tarea.profesorReferencia = elProfe
             elAlu = Alumno.objects.get(dni = alumno)
             tarea.alumnoReco = elAlu
@@ -3386,6 +3393,7 @@ def editarUsuario(request):
 def mostrarClase (request,id):
     laClase = Clase.objects.get(id = id)
     listAlumnos = list(laClase.alumnoAsociados.all())
+    print(listAlumnos)
     habilitado = 0
     
     
@@ -3462,7 +3470,7 @@ def mostrarClase (request,id):
     ano = datetime.now().year
     #listAlumnos = listAlumnos.prefetch_related('Asistencia')
     asistenciasHoy = Asistencia.objects.filter(claseReferencia = laClase, creada__day = dia, creada__month = mes, creada__year = ano, horario = horarioActualClase(laClase)) 
-    print(habilitado)
+    print(listAlumnos)
     return render(request,'una_clase.html',{'laClase':laClase,'habilitado':habilitado,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'pedidor':pedidor,'asistenciasHoy':asistenciasHoy})
 
 
@@ -4017,9 +4025,16 @@ def editarInstrumento(request,id):
 def eliminarInstrumento(request,id):
     try:
         instrumento = Instrumento.objects.get(id=id)
-        instrumento.delete()
-        messages.success(request, "Correcta Eliminacion!")
-    except:
+        print(instrumento)
+        if len(list(Prestamo.objects.filter(instrumentoPrestado = instrumento, estadoPrestamo = True))) > 0:
+            messages.error(request, " Error - El instrumento tiene un prestamo activo ")
+        else:
+            instrumento.estado = False
+            instrumento.save()
+            messages.success(request, "Correcta Eliminacion!")
+        
+    except error:
+        print(error)
         messages.error(request, " Error - No se pudo eliminar ")
   
     return redirect('gestionMusical:instrumentos')
@@ -4255,7 +4270,7 @@ def editarTema(request,id):
 
 
 def listarinstrumentos(request):
-    instrumentos = Instrumento.objects.all()
+    instrumentos = Instrumento.objects.filter(estado = True)
     pedidor = str(request.user.username)
     filtro = ''
     pedidor = ''
@@ -4284,17 +4299,17 @@ def listarinstrumentos(request):
             try:
                 if estado:
                     if color:
-                        instrumentos = Instrumento.objects.filter(estadoUso = estado, color = color)
+                        instrumentos = Instrumento.objects.filter(estadoUso = estado, color = color, estado = True)
                         filtro = 'Listado filtrado por Color: '+str(color) +', y estado de uso: '+str(estado)
                     else:
-                        instrumentos = Instrumento.objects.filter(estadoUso = estado)
+                        instrumentos = Instrumento.objects.filter(estadoUso = estado, estado = True)
                         filtro = 'Listado filtrado por estado de uso: '+str(estado)
                 else:
                     if color:
-                        instrumentos = Instrumento.objects.filter(color = color)
+                        instrumentos = Instrumento.objects.filter(color = color, estado = True)
                         filtro = 'Listado filtrado por Color: '+str(color) 
                     else:
-                        instrumentos = Instrumento.objects.all()
+                        instrumentos = Instrumento.objects.filter(estado = True)
                         
                 messages.success(request, "Filtrado Correcto!")
             except:
@@ -4334,7 +4349,7 @@ def verAlumnoClase(request,dni,idC):
     completoparti = list(Partitura.objects.all())
     temasTodos = None
     tipoRecoTodas = list(TipoTarea.objects.all())
-    
+    laClase = Clase.objects.get(id = idC)
     todasRecomendaciones = []
     try:
         if dni == 0:
@@ -4343,15 +4358,16 @@ def verAlumnoClase(request,dni,idC):
             print(correo) 
             elAlumno = list(Alumno.objects.filter(correoElectronico = correo))
             elAlumno = elAlumno[0]
+            todasRecomendaciones = list(Recomendacion.objects.filter(alumnoReco = elAlumno, claseReferencia = laClase))
         else:
             
             elAlumno = Alumno.objects.get(dni = dni)
-            todasRecomendaciones = list(Recomendacion.objects.filter(alumnoReco = elAlumno))
+            todasRecomendaciones = list(Recomendacion.objects.filter(alumnoReco = elAlumno, claseReferencia = laClase))
     except:
-        print("jjiji")
+        print("error5656")
         
     
-    laClase = Clase.objects.get(id = idC)
+    
     print("jjhj")
     try:
         print("jj33iji")
@@ -4399,8 +4415,15 @@ def verAlumnoClase(request,dni,idC):
         temas = []
         if elAlumno != None:
             
-            partituras = list(elAlumno.partiturasAsociadas.all())
-            temas = list(elAlumno.temasAsociadas.all()) 
+            relacionesPartituras = list(TipoRelacionPartitura.objects.filter(alumno = elAlumno, claseInt= idC))
+            for ty in relacionesPartituras:
+                partituras.append(Partitura.objects.get(id = ty.partitura.id))
+            
+
+            
+            relacionesTemas = list(TipoRelacionTema.objects.filter(alumno = elAlumno, claseInt= idC))
+            for ty in relacionesTemas:
+                temas.append(Tema.objects.get(id = ty.tema.id))
             
             partiturasTodas = list(Partitura.objects.all())
             
@@ -4428,26 +4451,42 @@ def verAlumnoClase(request,dni,idC):
                         partiturasInteligentes.append(p)
                 print(p)
         #partiturasInteligentes 
-    except:
-        
+    except error:
+        print(error)
+        messages.error(request, " Error - no tiene permisos")
         return render(request,'una_clase.html',{'laClase':laClase})
     return render(request,'una_clase.html',{'laClase':laClase,'partiturasInteligentes':partiturasInteligentes,'tipoRecoTodas':tipoRecoTodas,'habilitado':habilitado,'todasRecomendaciones':todasRecomendaciones,'listAlumnos':listAlumnos,'listAlumnosTotal':listAlumnosTotal,'elAlumno':elAlumno,'partituras':partituras,'temas':temas,'partiturasTodas':partiturasTodas,'temasTodos':temasTodos,'completoparti':completoparti,'asistenciasHoy':asistenciasHoy})
 
 
 def asociarPartituraAlumno(request,dni,idP, idC):
     #asocia
-    elAlumno = Alumno.objects.get(dni = dni)
-    elAlumno.partiturasAsociadas.add(Partitura.objects.get(id = idP))
-    elAlumno.save()
+    try:
+        alum = Alumno.objects.get(dni = dni)
+        par = Partitura.objects.get(id = idP)
+        numero = idC
+        tipoRelacionp = TipoRelacionPartitura(alumno=alum, partitura=par,  claseInt=numero)
+        tipoRelacionp.save()
+        messages.success(request, "Asociacion Correcta!")
+    except:
+        messages.error(request, " Error - no puede asociarce")
+    
 
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
 
 
 def desasociarAlumnoPartitura(request,dni,idP, idC):
     #desasocia
-    elAlumno = Alumno.objects.get(dni = dni)
-    elAlumno.partiturasAsociadas.remove(Partitura.objects.get(id = idP))
-    elAlumno.save()
+    try:
+        alum = Alumno.objects.get(dni = dni)
+        par = Partitura.objects.get(id = idP)
+        numero = idC
+        relacion = list(TipoRelacionPartitura.objects.filter(alumno = alum, partitura = par, claseInt=numero))
+        relacion = relacion[0]
+    
+        relacion.delete()
+        messages.success(request, "La partitura se desasocio sin problemas!")
+    except:
+        messages.error(request, " Error - recarge la pagina")
         
 
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
@@ -4455,9 +4494,15 @@ def desasociarAlumnoPartitura(request,dni,idP, idC):
 
 def asociarTemaAlumno(request,dni,idT, idC):
     #asocia
-    elAlumno = Alumno.objects.get(dni = dni)
-    elAlumno.temasAsociadas.add(Tema.objects.get(id = idT))
-    elAlumno.save()
+    try:
+        alum = Alumno.objects.get(dni = dni)
+        par = Tema.objects.get(id = idT)
+        numero = idC
+        tipoRelacionp = TipoRelacionTema(alumno=alum, tema=par,  claseInt=numero)
+        tipoRelacionp.save()
+        messages.success(request, "Asociacion Correcta!")
+    except:
+        messages.error(request, " Error - no puede asociarce")
 
         
 
@@ -4466,9 +4511,17 @@ def asociarTemaAlumno(request,dni,idT, idC):
 
 def desasociarAlumnoTema(request,dni,idT, idC):
     #desasocia
-    elAlumno = Alumno.objects.get(dni = dni)
-    elAlumno.temasAsociadas.remove(Tema.objects.get(id = idT))
-    elAlumno.save()
+    try:
+        alum = Alumno.objects.get(dni = dni)
+        par = Tema.objects.get(id = idT)
+        numero = idC
+        relacion = list(TipoRelacionPartitura.objects.filter(alumno = alum, tema = par, claseInt=numero))
+        relacion = relacion[0]
+    
+        relacion.delete()
+        messages.success(request, "El tema se desasocio sin problemas!")
+    except:
+        messages.error(request, " Error - recarge la pagina")
     return redirect('gestionMusical:ver_alumno_clase',dni,idC)
 
 def crearCompo(request):

@@ -3324,6 +3324,7 @@
           var parti = $("#country").val();
 
           var alumno = "{{elAlumno.dni}}";
+          var claseAso = "{{laClase.id}}";
 
 
           if (username == "" || descripcion == "" || dias == "") {
@@ -3340,6 +3341,7 @@
                 'descripcion': descripcion,
                 'dias': dias,
                 'alumno': alumno,
+                'claseAso': claseAso,
                 'parti': parti
               },
               dataType: 'json',
