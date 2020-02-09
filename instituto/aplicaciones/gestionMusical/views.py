@@ -1,7 +1,7 @@
 from django.contrib.auth import login as dj_login, logout, authenticate
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea, TipoRelacionPartitura, TipoRelacionTema
+from .models import Especialidad, Profesor, Alumno, Clase, Partitura, Tema, Compositor, Usuario, MusicaTipo, Instrumento, Prestamo, Recomendacion, Asistencia, Horario, Rol, TipoRelacion, TipoTarea, TipoRelacionPartitura, TipoRelacionTema, Filmina
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management import call_command
@@ -130,10 +130,28 @@ def obtenerInsti():
     return datosi
 
 class Inicio(View):
+    def post(self,request,*args,**kwargs):
+        filmina_form = FilminaForm(request.POST)
+        if filmina_form.is_valid():
+
+            filmi = filmina_form.save(commit=False)
+            filmi.archivo =request.FILES['archivo'].file.read()
+
+            filmi.save()
+
+
+
+
+        clases = Clase.objects.all() 
+        insti = obtenerInsti()
+        filminasTodas = Filmina.objects.all()
+        return render(request,'index.html',  {'clases':clases,'insti':insti,'filminasTodas':filminasTodas})
+   
     def get(self,request,*args,**kwargs):
         clases = Clase.objects.all()
         insti = obtenerInsti() 
-        return render(request,'index.html',  {'clases':clases,'insti':insti})
+        filminasTodas = Filmina.objects.all()
+        return render(request,'index.html',  {'clases':clases,'insti':insti,'filminasTodas':filminasTodas})
 
 
 def obtenerInfo(request):
@@ -1806,6 +1824,24 @@ def crearCompositor(request):
         data['error_message'] = 'creado exitosamente.'
     print(data)
     return JsonResponse(data)
+
+def eliminarFilmina(request, id):
+
+    try:
+        fil = Filmina.objects.get(id = id)
+        fil.delete()
+        messages.success(request, "Eliminado Correcto!")
+    except:
+        messages.error(request, " Error - Recarge la pagina")
+
+
+
+
+
+    clases = Clase.objects.all() 
+    insti = obtenerInsti()
+    filminasTodas = Filmina.objects.all()
+    return render(request,'index.html',  {'clases':clases,'insti':insti,'filminasTodas':filminasTodas})
 
 def eliminartipotarea(request):
 

@@ -216,7 +216,15 @@ class InstitutoDato(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Filmina(models.Model):
+    id = models.AutoField(primary_key = True)
+    titulo = models.CharField('Nombre de la imagen', max_length = 200, null = False, blank = False)
+    descripcion = models.TextField('Descripcion de la imagen', null = True, blank = True)
+    link = models.CharField('link de la imagen', max_length = 400, null = True, blank = True)
+    archivo = models.BinaryField(blank=True, null=True)
 
+    def __str__(self):
+        return str(self.id)
 
 
 class Instrumento(models.Model):

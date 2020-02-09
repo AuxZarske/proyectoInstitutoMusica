@@ -2511,8 +2511,8 @@
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
 
-                  <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Tareas/recomendaciones de Practica 
-                    Musical para  {{elAlumno.apellido}}, {{elAlumno.nombre}}:</h6>
+                  <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Tareas/recomendaciones de Practica
+                    Musical para {{elAlumno.apellido}}, {{elAlumno.nombre}}:</h6>
                   <!--modal-->
 
 
@@ -2556,15 +2556,15 @@
                             <td>
                               {%if t.estadoReco%}
                               <h4>
-                                <span class="badge badge-secondary" >Finalizado</span>
+                                <span class="badge badge-secondary">Finalizado</span>
                               </h4>
 
-                              
-                                {%else%}
-                                <h4>
-                                  <span class="badge badge-success" >Activo</span>
-                                </h4>
-                              
+
+                              {%else%}
+                              <h4>
+                                <span class="badge badge-success">Activo</span>
+                              </h4>
+
                               {%endif%}
                             </td>
                             <td>{{t.nombre}}</td>
@@ -2690,7 +2690,8 @@
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-default"
                                             data-dismiss="modal">Close</button>
-                                          <a href="{% url 'gestionMusical:realizar_reco' t.id elAlumno.dni laClase.id %}">
+                                          <a
+                                            href="{% url 'gestionMusical:realizar_reco' t.id elAlumno.dni laClase.id %}">
                                             <button type="button" class="btn btn-primary">Confirmar</button>
                                           </a>
                                         </div>
@@ -2730,7 +2731,8 @@
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-default"
                                               data-dismiss="modal">Close</button>
-                                            <a href="{% url 'gestionMusical:eliminar_reco' t.id elAlumno.dni laClase.id %}">
+                                            <a
+                                              href="{% url 'gestionMusical:eliminar_reco' t.id elAlumno.dni laClase.id %}">
                                               <button type="button" class="btn btn-primary">Confirmar
                                                 Eliminacion</button>
                                             </a>
@@ -3078,7 +3080,7 @@
                                 <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion de Eliminacion
+                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion
                                       </h4>
                                       <button type="button" class="close" data-dismiss="modal"><span
                                           aria-hidden="true">×</span>
@@ -3316,7 +3318,7 @@
         $("#botonCrearReco").click(function () {
 
           var username = $("#countryTarea").val();
-          if(username == ""){
+          if (username == "") {
             username = $("#inputRecoCrear2").val();
           }
           var descripcion = $("#inputRecoDesCrear").val();

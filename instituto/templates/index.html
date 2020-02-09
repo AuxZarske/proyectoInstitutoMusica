@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load poll_extras %}
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
@@ -11,17 +12,21 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  
-  
+
+
   <title id="titulll">Todo Por Arte</title>
-  
+
   <!-- Custom fonts for this template-->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Custom styles for this page -->
+  <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+  <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+  <link rel="stylesheet" href="{%static 'css/select2.min.css'%}" />
 </head>
 {%endblock head%}
 {%block scrip%}
@@ -29,16 +34,50 @@
 {%endblock scrip%}
 {%block estilos%}
 <style type="text/css">
-  h1#tituloni{
+  h1#tituloni {
     font-size: 105px;
   }
-  div#parrafos{
+
+  button.btn-secondary {
+    background-color: #ff004b;
+  }
+  p#msj {
+    font-size: 17px;
+  }
+
+  div.dataTables_length {
+    display: inline-block;
+    margin-left: 3%;
+  }
+
+  div.dataTables_filter {
+    float: right;
+
+  }
+
+  div.alinealoNomas {
+    text-align: left;
+  }
+
+  div.form-group {
+    width: 30%;
+    display: inline-block;
+  }
+
+  div#parrafos {
     font-size: 25px;
   }
 
-
+  div#fraseBoton {
+    display: inline-block;
+    padding-top: 5px;
+    padding-right: 5px;
+    margin-left: 5%;
+    font-size: 18px;
+  }
 </style>
 {%endblock estilos%}
+
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -48,7 +87,7 @@
     {%if perms.gestionMusical.es_pre_alumno%}
 
     {%else%}
-   
+
     {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff %}
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -57,12 +96,12 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        
-       
+
+
         <div class="sidebar-brand-text mx-3" id="tidosti">TODO<sup>x</sup>ARTE</div>
 
-        
-  
+
+
       </a>
 
       <!-- Divider -->
@@ -75,7 +114,7 @@
           <span>Inicio</span></a>
       </li>
 
-      
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -87,31 +126,31 @@
       {%if  perms.gestionMusical.es_director %}
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link" href="{% url 'gestionMusical:clases'  %}">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Clases</span>
-          </a>
-        </li>
-          {%else%}
-          {%if  perms.gestionMusical.es_profesor %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'gestionMusical:clasesProfe'  %}">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Clases</span>
-          </a>
-        </li>
-        {%else%}
-        {%if  perms.gestionMusical.es_alumno %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'gestionMusical:clasesAlumno'  %}">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Clases</span>
-          </a>
-        </li>
-        {%endif%}
-        {%endif%}
-        {%endif%}
-      
+        <a class="nav-link" href="{% url 'gestionMusical:clases'  %}">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Clases</span>
+        </a>
+      </li>
+      {%else%}
+      {%if  perms.gestionMusical.es_profesor %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'gestionMusical:clasesProfe'  %}">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Clases</span>
+        </a>
+      </li>
+      {%else%}
+      {%if  perms.gestionMusical.es_alumno %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'gestionMusical:clasesAlumno'  %}">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Clases</span>
+        </a>
+      </li>
+      {%endif%}
+      {%endif%}
+      {%endif%}
+
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
@@ -131,70 +170,73 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+          aria-controls="collapseOne">
           <i class="fas fa-fw fa-folder"></i>
           <span>Usuarios</span>
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            
+
             <a class="collapse-item" href="{% url 'gestionMusical:alumnos'  %}">Alumnos</a>
             <a class="collapse-item" href="{% url 'gestionMusical:tutores'  %}">Tutores</a>
             {%if perms.gestionMusical.es_director  %}
             <a class="collapse-item" href="{% url 'gestionMusical:profesores'  %}">Profesores</a>
             {%endif%}
-            
+
           </div>
         </div>
       </li>
 
-      
+
 
 
       {%if perms.gestionMusical.es_director and not perms.gestionMusical.es_alumno  %}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="true" aria-controls="collapseOne">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Adicionales</span>
-          </a>
-          <div id="collapseOne3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-              
-              <a class="collapse-item" href="{% url 'gestionMusical:especialidades'  %}">Especialidades</a>
-              <a class="collapse-item" href="{% url 'gestionMusical:compoMusic'  %}">Compositores y Musicas</a>
-              
-              
-            </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="true"
+          aria-controls="collapseOne">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Adicionales</span>
+        </a>
+        <div id="collapseOne3" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+
+            <a class="collapse-item" href="{% url 'gestionMusical:especialidades'  %}">Especialidades</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:compoMusic'  %}">Compositores y Musicas</a>
+
+
           </div>
-        </li>
-       
-         <!-- Nav Item - Dashboard -->
-      
+        </div>
+      </li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne387" aria-expanded="true" aria-controls="collapseOne">
-              <i class="fas fa-fw fa-chart-bar"></i>
-              <span>Estadisticas</span>
-            </a>
-            <div id="collapseOne387" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-              <div class="bg-white py-2 collapse-inner rounded">
-                
-                <a class="collapse-item" href="{% url 'gestionMusical:estadisticas' 2019 %}">Inscripciones Anuales</a>
-                <a class="collapse-item" href="{% url 'gestionMusical:estadisticasalu' 0 %}">Alumnos del Instituto</a>
-                <a class="collapse-item" href="{% url 'gestionMusical:estadisticasparti' 0 %}">Uso de Partitura</a>
-                <a class="collapse-item" href="{% url 'gestionMusical:estadisticaspresta' 0 %}">Informacion de Prestamos</a>
-                
-              </div>
-            </div>
-          </li>
+      <!-- Nav Item - Dashboard -->
 
 
-        {%endif%}
-  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne387" aria-expanded="true"
+          aria-controls="collapseOne">
+          <i class="fas fa-fw fa-chart-bar"></i>
+          <span>Estadisticas</span>
+        </a>
+        <div id="collapseOne387" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
 
-      
+            <a class="collapse-item" href="{% url 'gestionMusical:estadisticas' 2019 %}">Inscripciones Anuales</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:estadisticasalu' 0 %}">Alumnos del Instituto</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:estadisticasparti' 0 %}">Uso de Partitura</a>
+            <a class="collapse-item" href="{% url 'gestionMusical:estadisticaspresta' 0 %}">Informacion de Prestamos</a>
+
+          </div>
+        </div>
+      </li>
+
+
+      {%endif%}
+
+
+
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -206,41 +248,43 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesOne" aria-expanded="true" aria-controls="collapsePagesOne">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesOne"
+          aria-expanded="true" aria-controls="collapsePagesOne">
           <i class="fas fa-fw fa-folder-open"></i>
           <span>Documentacion</span>
         </a>
         <div id="collapsePagesOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            
+
             <a class="collapse-item" href="{% url 'gestionMusical:partituras'  %}">Partituras</a>
             <a class="collapse-item" href="{% url 'gestionMusical:temas'  %}">Temas/Actividades</a>
-            
+
           </div>
         </div>
       </li>
 
-      
+
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne5" aria-expanded="true" aria-controls="collapseOne">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne5" aria-expanded="true"
+          aria-controls="collapseOne">
           <i class="fas fa-fw fa-guitar"></i>
           <span>Gestion Utilidades</span>
         </a>
         <div id="collapseOne5" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            
+
             <a class="collapse-item" href="{% url 'gestionMusical:instrumentos'  %}">Instrumentos</a>
             <a class="collapse-item" href="{% url 'gestionMusical:prestamos' 0  %}">Prestamos</a>
-            
-            
+
+
           </div>
         </div>
       </li>
 
 
-      
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
       {%if perms.gestionMusical.es_director  %}
@@ -250,9 +294,10 @@
       </div>
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-tools"></i>
-            <span>Configuracion</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-tools"></i>
+          <span>Configuracion</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -271,11 +316,11 @@
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link" href="{% url 'gestionMusical:auditoria'  %}">
-            <i class="fas fa-fw fa-pager"></i>
-            <span>Auditoria</span>
-          </a>
-        </li>
+        <a class="nav-link" href="{% url 'gestionMusical:auditoria'  %}">
+          <i class="fas fa-fw fa-pager"></i>
+          <span>Auditoria</span>
+        </a>
+      </li>
 
 
 
@@ -284,46 +329,47 @@
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
       {%endif%}
-        {%endif%}
-        {%if perms.gestionMusical.es_profesor%}
+      {%endif%}
+      {%if perms.gestionMusical.es_profesor%}
 
-        {%else%}
-        {%if perms.gestionMusical.es_alumno and not is_staff %}
-          <!-- Nav Item - Pages Collapse Menu -->
+      {%else%}
+      {%if perms.gestionMusical.es_alumno and not is_staff %}
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne73" aria-expanded="true" aria-controls="collapseOne">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Gestion</span>
-          </a>
-          <div id="collapseOne73" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-              
-              <a class="collapse-item" href="{% url 'gestionMusical:prestamos' 1  %}">Prestamos</a>
-              
-              
-              
-            </div>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne73" aria-expanded="true"
+          aria-controls="collapseOne">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Gestion</span>
+        </a>
+        <div id="collapseOne73" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+
+            <a class="collapse-item" href="{% url 'gestionMusical:prestamos' 1  %}">Prestamos</a>
+
+
+
           </div>
-        </li>
-        <!-- Divider -->
+        </div>
+      </li>
+      <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
       {%endif%}
-        {%endif%}
+      {%endif%}
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-      
+
 
     </ul>
     {%else%}
 
-      {%endif%}
-      {%endif%}
-      {%endblock sidebar%}
+    {%endif%}
+    {%endif%}
+    {%endblock sidebar%}
     <!-- End of Sidebar -->
-    
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -332,22 +378,22 @@
         {%block barra%}
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            {%if perms.instituto.view_clase %}
+          {%if perms.instituto.view_clase %}
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
           {%else%}
 
-      {%endif%}
-      {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
-      {%else%}
-      {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
-      <a href="{% url 'index'  %}">
-<button class="btn btn-primary"> Inicio</button>
-</a>
-{%endif%}
-{%endif%}
+          {%endif%}
+          {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
+          {%else%}
+          {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
+          <a href="{% url 'index'  %}">
+            <button class="btn btn-primary"> Inicio</button>
+          </a>
+          {%endif%}
+          {%endif%}
           <!-- Topbar Search 
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
@@ -361,17 +407,19 @@
           </form>
 
            Topbar Navbar -->
-           {%endblock barra%}
+          {%endblock barra%}
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              
+
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -384,228 +432,597 @@
 
             {%if perms.gestionMusical.es_pre_alumno%}
 
-    {%else%}
-             
+            {%else%}
+
             {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-dangenter"></span>
               </a>
-              
+
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 dropdown-header">
                   Message Center
                 </h6>
-               
+
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
 
             </li>
-{%endif%}
-{%endif%}
+            {%endif%}
+            {%endif%}
             <div class="topbar-divider d-none d-sm-block"></div>
-            
-             <!-- Nav Item - User Information -->
-             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                    {%else%}
-                    
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
-                  {%endif%}
-                  <img class="img-profile rounded-circle" src="https://source.unsplash.com/rPOmLGwai2w/60x60">
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                {%else%}
+
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
+                {%endif%}
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/rPOmLGwai2w/60x60">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
+                <a class="dropdown-item" data-toggle="modal" data-target=".bs-example-modal-lg6347">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Cambiar Contraseña
                 </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    {%if perms.gestionMusical.es_pre_alumno and perms.gestionMusical.es_alumno%}
-                    <a class="dropdown-item"  data-toggle="modal"
-                    data-target=".bs-example-modal-lg6347">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Cambiar Contraseña
-                      </a>
-                      <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div>
 
 
-                      
 
-    {%else%}
-                  <a class="dropdown-item" href="{% url 'gestionMusical:editar_usuario'  %}">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Ver Perfil
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  {%endif%}
-                  
-                  
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Cerrar Sesion
-                  </a>
-                </div>
-              </li>
-  
-            </ul>
-  
-          </nav>
-          <!-- End of Topbar -->
-      
-      <div class = "container-fluid">
-      {%block contenidiPagina%}
-      {% if  perms.gestionMusical.es_pre_profesor and perms.gestionMusical.es_pre_alumno %}
-      <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'gestionMusical:configDirectores'  %}">
-      {%else%}
-      {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
+
+                {%else%}
+                <a class="dropdown-item" href="{% url 'gestionMusical:editar_usuario'  %}">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Ver Perfil
+                </a>
+                <div class="dropdown-divider"></div>
+                {%endif%}
+
+
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Cerrar Sesion
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <div class="container-fluid">
+          {%block contenidiPagina%}
+          {% if  perms.gestionMusical.es_pre_profesor and perms.gestionMusical.es_pre_alumno %}
+          <META HTTP-EQUIV="REFRESH" CONTENT="0;URL={% url 'gestionMusical:configDirectores'  %}">
+          {%else%}
+          {%if  perms.gestionMusical.es_pre_profesor or perms.gestionMusical.es_pre_alumno%}
           <h1 id="tituloni">Bienvenido</h1>
           <div id="parrafos">
-          <p>"Su pre-inscripcion fue correcta, actualmente no podra acceder a las funciones del sistema hasta que los datos de su pre-inscripcion sean verificados por un superior del Instituto {{insti.nombre}}"</p>
-          <p>Para lo cual debera dirigirse al mismo en el horario de {{insti.horario}}, ubicado en {{insti.domicilio}}</p>
-          <p>Para mas informacion contactarce al Tel: {{insti.telefono}};  o por correo electronico {{insti.correoElectronico}}</p>
-          <p>Muchas Gracias</p>
+            <p>"Su pre-inscripcion fue correcta, actualmente no podra acceder a las funciones del sistema hasta que los
+              datos de su pre-inscripcion sean verificados por un superior del Instituto {{insti.nombre}}"</p>
+            <p>Para lo cual debera dirigirse al mismo en el horario de {{insti.horario}}, ubicado en {{insti.domicilio}}
+            </p>
+            <p>Para mas informacion contactarce al Tel: {{insti.telefono}}; o por correo electronico
+              {{insti.correoElectronico}}</p>
+            <p>Muchas Gracias</p>
+          </div>
+          {%else%}
+
+          <!--contenido inicial-->
+          <div id="cuadroMensajes">
+
+            {% if messages %}
+            {% for message in messages %}
+        
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+            </ul>
+            {%endif%}
+        
+            {% endfor %}
+            {% endif %}
+          </div>
+          <h1 style="display:inline-block"><strong>BIENVENIDO</strong></h1>
+
+          <button class="btn btn-info" style="float: right;" data-toggle="modal" data-target=".bs-example-modal-lg5">
+            <div style="display: inline-block;">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <div id="fraseBoton"> Editar</div>
+          </button>
+          <!--modal-->
+          <div class="modal fade bs-example-modal-lg5" id="myModal8" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Imagenes Presentadas: </h4>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                  </button>
+
+                </div>
+                <div class="modal-body">
+                  <!--lista escrolleable de alumnos, ver, desasociar, asistencia check-->
+                  <div id="" style="overflow-y:scroll; height:400px;">
+
+
+
+                    <!--tabla-->
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <button class="btn btn-success" style="margin-bottom: 3%;" data-toggle="modal"
+                          data-target=".bs-example-modal-lg777">Agregar nuevo</button>
+                        <!--modal3-->
+                        <!--pr-->
+                        <form class="user" method="POST" enctype="multipart/form-data">
+                          {% csrf_token %}
+                        <div class="modal fade bs-example-modal-lg777" id="myModal2" tabindex="-1" role="dialog"
+                          aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content" id="modal-content2">
+                              <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel2">Agregar nueva imagen</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span
+                                    aria-hidden="true">×</span>
+                                </button>
+
+                              </div>
+
+
+                              
+                                <div id="modalOculto">
+                                  <div class="modal-body" style="padding: 5%;">
+                                    <div class="form-row">
+                                      <label for="formGroupExampleInput" style="color: black">Titulo:</label>
+                                      <input type="text" class="form-control" style="text-transform:uppercase;"
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                        name="titulo"
+                                        placeholder="Titulo para la imagen..." required>
+                                    </div>
+                                    <br>
+                                    <div class="form-row">
+                                      <label for="formGroupExampleInput" style="color: black">Descripcion:
+                                        (Opcional)</label>
+                                      <input type="text" class="form-control" style="text-transform:uppercase;"
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                        name="descripcion"
+                                        placeholder="Alguna descripcion extra..." >
+                                    </div>
+                                    <br>
+                                    <div class="form-row">
+                                      <label for="formGroupExampleInput" style="color: black">Link: (Opcional)</label>
+                                      <input type="text" class="form-control" style="text-transform:uppercase;"
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                        name="link"
+                                        placeholder="www.youtube.com/watch/..." >
+                                    </div>
+                                    <br>
+                                    <div class="form-row">
+                                      <label for="inputZip" style="color: black">Imagen:</label>
+                                      {%if editacion != 1%}
+                                      <input type="file" class="form-control mb-2" name="archivo" id="txtDocNuevo"
+                                        required>
+                                      {%else%}
+                                      <div>
+                                        <input type="file" class="form-control mb-2" name="archivo" id="txtDoc">
+                                        <!--<label for="inputZip" id="label2">Doc: {{elDoc}}</label>-->
+                                        <label for="inputZip" id="label2">Imagen ya subida!!!</label>
+                                      </div>
+                                      {%endif%}
+                                    </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                    <button type="submit" class="btn btn-primary" >Cargar</button>
+
+                                  </div>
+                                </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                        <!--pp-->
+
+                        <!--modal3-->
+                        <table class="table table-bordered" id="dataTable907869" width="100%" cellspacing="0">
+                          <thead>
+                            <tr>
+
+                              <th>#</th>
+                              <th>Titulo</th>
+                              <th>Acciones</th>
+
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            
+                            {% for f in filminasTodas%}
+
+                            
+
+                            <tr>
+
+                              <td>{{f.id}}</td>
+                              <td>{{f.titulo}}</td>
+
+                              <td>
+
+                                <center>
+                                  <div class="btn-group">
+                                    <center>
+                                      <div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg88{{f.id}}">
+
+                                          <i class="fa fa-eye"></i>
+
+                                        </button>
+                                      </div>
+                                    </center>
+                                    <div class="modal fade bs-example-modal-lg88{{f.id}}" id="myModal{{f.id}}"
+                                      tabindex="-1" role="dialog" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg">
+                                        <div class="modal-content" id="elgrando">
+                                          <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel{{f.id}}">Datos</h4>
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                            </button>
+
+                                          </div>
+                                          <div class="modal-body" id="cuerpoModal">
+
+
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda"><strong>Titulo:</strong></label>
+                                              <div class="derecha">
+                                                {{f.titulo}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda"><strong>Descripcion:</strong></label>
+                                              <div class="derecha">
+                                                {{f.descripcion}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda"><strong>Link:</strong></label>
+                                              <div class="derecha">
+                                                {{f.link}}
+                                              </div>
+                                            </div>
+                                            <div class="alinealoNomas">
+                                              <label for="inputEmail3" class="izquierda"><strong>Imagen:</strong></label>
+                                              <div class="derecha">
+                                                      
+                                                  <img src="data:image/png;base64, {{f.archivo|binary_to_image}}" height="200" >
+                                              </div>
+                                            </div>
+
+
+
+
+
+
+
+                                          </div>
+                                          <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-primary"
+                                              data-dismiss="modal">Cerrar</button>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                    <div class="btn-group" >
+                                      <center>
+                                        <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg2{{f.id}}" style="border: rgb(255, 0, 0) solid 2px; padding-left: 10px;padding-right: 10px;padding-bottom: 6px;padding-top: 6px; margin-left: 5px;">
+                                          <div id="icon8">
+                                            <i class="fas fa-trash"></i>
+                                          </div>
+                                        </button>
+                                      </center>
+
+                                      <div class="modal fade bs-example-modal-lg2{{f.id}}" id="myModal2{{f.id}}"
+                                        tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title" id="myModalLabel{{f.id}}">Confirmacion de
+                                                Eliminacion
+                                              </h4>
+                                              <button type="button" class="close" data-dismiss="modal"><span
+                                                  aria-hidden="true">×</span>
+                                              </button>
+
+                                            </div>
+                                            <div class="modal-body">
+                                              <h4>Esta seguro de eliminar la imagen
+                                                ???</h4>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Close</button>
+                                              <a
+                                                href="{% url 'gestionMusical:eliminar_filmina' f.id %}">
+                                                <button type="button" class="btn btn-primary">Confirmar </button>
+                                              </a>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                </center>
+
+                              </td>
+
+                            </tr>
+                            
+                            {%endfor%}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+
+
+                    <!--fin tabla-->
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!--modal-->
+          
+
+          <br>
+          
+
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              {%for f in filminasTodas%}
+              
+              {%if forloop.counter  == 1 %}
+              
+              <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
+              {%else%}
+              <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter }}" ></li>
+              {%endif%}
+              {%endfor%}
+            </ol>
+            <div class="carousel-inner">
+              {%for f in filminasTodas%}
+              
+              {%if forloop.counter  == 1 %}
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="data:image/png;base64, {{f.archivo|binary_to_image}}" height="700"
+                  alt="Third slide">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{f.titulo}}</h5>
+                  <p>{{f.descripcion}}
+                    {%if f.link%}
+                    <a href="https://{{ f.link}}">Enlace adjunto</a>
+                    {%endif%}
+                  </p>
+                </div>
+              </div>
+              {%else%}
+              <div class="carousel-item">
+                <img class="d-block w-100" src="data:image/png;base64, {{f.archivo|binary_to_image}}" height="700"
+                  alt="Third slide">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{f.titulo}}</h5>
+                  <p>{{f.descripcion}} 
+                    
+                    {%if f.link%}
+                    <a href="https://{{ f.link}}">Enlace adjunto</a>
+                    {%endif%}
+                  </p>
+                </div>
+              </div>
+              {%endif%}
+              {%endfor%}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+
+
+
+          <div class="carousel-item">
+            <img class="d-block w-100" src="https://source.unsplash.com/rPOmLGwai2w/60x60" height="200"
+              alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>...</h5>
+              <p>...</p>
+            </div>
+          </div>
+
+          <!--contenido inicial-->
+
+          {%endif%}
+          {%endif%}
+
+          {% endblock contenidiPagina %}
         </div>
-      {%else%}
-            <p>bienvenido {{ user.username | upper}}</p>
-      {%endif%}
-      {%endif%}
 
-      {% endblock contenidiPagina %}
-      </div>
-      
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white" style="margin-top: 11%;">
-          <div class="container my-auto" >
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white" style="margin-top: 11%;">
+          <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              
-              
+
+
               <span id="copycopy">Copyright &copy; TodoXarte 2019</span>
-  
-              
+
+
             </div>
           </div>
         </footer>
         <!-- End of Footer -->
-  
-      
+
+
+
+      </div>
+      <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-  {% block logModal %}
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesion?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Seleccione "Deslogear" para cerrar la sesion actualmente abierta.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="{% url 'user_logout'%}">Deslogear</a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+    {% block logModal %}
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesion?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Seleccione "Deslogear" para cerrar la sesion actualmente abierta.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'user_logout'%}">Deslogear</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  {% endblock logModal%}
-  {%block archivos%}
-  <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-
-  <!-- Page level plugins -->
-  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-  <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-    <script src="{%static 'js/selectMul.js'%}"></script>
+    {% endblock logModal%}
+    {%block archivos%}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
+    <script src="{%static 'js/select2.min.js'%}"></script>
+    <script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+      href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-    <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
-    
-  {%endblock archivos%}
-  {%block archivos2%}
-  <script>
-      
+
+    {%endblock archivos%}
+    {%block archivos2%}
+    <script>
+      $('.carousel').carousel()
+
       var insti = 0;
       var nomInsti = "";
       var desInsti = "";
-  var telInsti = "";
-  var correoInsti = "";
-  var logoInsti;
-  function nombreii(){
-    return nomInsti
-  }
-  function direcii(){
-    return desInsti;
-  }
-  function teliii(){
-    return telInsti;
-  }
-  function correii(){
-    return correoInsti;
-  }
-  function archiii(){
-    return logoInsti;
-  }
+      var telInsti = "";
+      var correoInsti = "";
+      var logoInsti;
+      function nombreii() {
+        return nomInsti
+      }
+      function direcii() {
+        return desInsti;
+      }
+      function teliii() {
+        return telInsti;
+      }
+      function correii() {
+        return correoInsti;
+      }
+      function archiii() {
+        return logoInsti;
+      }
       $.ajax({
-      
-      url: '{% url "gestionMusical:obtenerInfo" %}',
-      data: {
-          
+
+        url: '{% url "gestionMusical:obtenerInfo" %}',
+        data: {
+
           'insti': insti
-      },
-      dataType: 'json',
-      
-      success: function (data) {
-      
+        },
+        dataType: 'json',
+
+        success: function (data) {
+
           if (data.is_taken) {
-              alert("Error al obtener datos del Instituto");
+            alert("Error al obtener datos del Instituto");
           } else {
             nomInsti = data.nombre;
             desInsti = data.direccion;
             telInsti = data.telefono;
             correoInsti = data.correo;
             logoInsti = data.archivo;
-             
-              document.getElementById('tidosti').innerHTML = data.nombre;
-              
-              
-              var nombre = "Copyright &copy;   "+data.nombre+ "   2019";
-              document.getElementById('copycopy').innerHTML = nombre;
-              document.getElementById('titulll').innerHTML = data.nombre;
-              
-              
+
+            document.getElementById('tidosti').innerHTML = data.nombre;
+
+
+            var nombre = "Copyright &copy;   " + data.nombre + "   2019";
+            document.getElementById('copycopy').innerHTML = nombre;
+            document.getElementById('titulll').innerHTML = data.nombre;
+
+
           }
-      }
+        }
       });
-      
-      </script>
-      {%endblock archivos2%}
+
+    </script>
+    {%endblock archivos2%}
 </body>
 
 </html>
