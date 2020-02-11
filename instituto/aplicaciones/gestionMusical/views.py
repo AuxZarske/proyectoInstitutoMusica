@@ -446,7 +446,7 @@ def listarestadisticaspresta(request,num):
 
 
 def GrupoTableYellow(request):
-    print(request.GET)
+    print(request.GET) 
     alumno= request.GET.get('alumno',None)
     alu = Alumno.objects.get(dni = alumno)
     prestamost = list(Prestamo.objects.filter(Q(alumnoResponsable = alu), Q(condicion = "Regular") | Q(condicion = "Mal estado") )) 

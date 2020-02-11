@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="{%static 'css/select2.min.css'%}" />
 </head>
 {%endblock head%}
+<link href="{% static 'css/introjs.min.css'%}" rel="stylesheet">
 {%block scrip%}
 
 {%endblock scrip%}
@@ -41,6 +42,7 @@
   button.btn-secondary {
     background-color: #ff004b;
   }
+
   p#msj {
     font-size: 17px;
   }
@@ -58,6 +60,7 @@
   div.alinealoNomas {
     text-align: left;
   }
+  
 
   div.form-group {
     width: 30%;
@@ -436,25 +439,7 @@
 
             {%if  perms.gestionMusical.es_profesor or perms.gestionMusical.es_alumno or perms.gestionMusical.es_director or user.is_staff%}
             <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-dangenter"></span>
-              </a>
-
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="messagesDropdown">
-                <h6 dropdown-header">
-                  Message Center
-                </h6>
-
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
-
-            </li>
+            
             {%endif%}
             {%endif%}
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -527,37 +512,58 @@
 
             {% if messages %}
             {% for message in messages %}
-        
+
             {% if message.tags == 'success'%}
             <ul class="alert alert-success alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
             </ul>
             {%endif%}
             {% if message.tags == 'error'%}
             <ul class="alert alert-danger alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong></p>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
             </ul>
             {%endif%}
-        
+
             {% endfor %}
             {% endif %}
           </div>
           <h1 style="display:inline-block"><strong>BIENVENIDO</strong></h1>
 
-          <button class="btn btn-info" style="float: right;" data-toggle="modal" data-target=".bs-example-modal-lg5">
-            <div style="display: inline-block;">
-              <i class="fas fa-paint-brush"></i>
-            </div>
-            <div id="fraseBoton"> Editar</div>
-          </button>
+          <div style="float: right; width: auto;" class="inicioUno">
+
+            <button style="display: inline-block;"
+            class="btn btn-info"
+              data-toggle="modal" data-target=".bs-example-modal-lg5">
+              <div style="display: inline-block;">
+                <i class="fas fa-paint-brush"></i>
+              </div>
+              <div id="fraseBoton"> Editar</div>
+            </button>
+
+            
+              <div style="display: inline-block;">
+                <div class="fa-hover">
+                  <a target="_blank"  href="https://youtu.be/oOje7ZUjriI">
+                    <i class="fa fa-question-circle" ></i>
+                  </a>
+                </div>
+              </div>
+
+          </div>
+
+
           <!--modal-->
           <div class="modal fade bs-example-modal-lg5" id="myModal8" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="myModalLabel">Imagenes Presentadas: </h4>
+                  <h4 class="modal-title" id="myModalLabel">Imagenes Presentadas:
+                    
+                  </h4>
                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                   </button>
 
@@ -569,35 +575,35 @@
 
 
                     <!--tabla-->
-                    <div class="card-body">
+                    <div class="card-body" id="contenido8">
                       <div class="table-responsive">
                         <button class="btn btn-success" style="margin-bottom: 3%;" data-toggle="modal"
-                          data-target=".bs-example-modal-lg777">Agregar nuevo</button>
+                          data-target=".bs-example-modal-lg777"  >Agregar nuevo</button>
+                         
                         <!--modal3-->
                         <!--pr-->
                         <form class="user" method="POST" enctype="multipart/form-data">
                           {% csrf_token %}
-                        <div class="modal fade bs-example-modal-lg777" id="myModal2" tabindex="-1" role="dialog"
-                          aria-hidden="true">
-                          <div class="modal-dialog modal-lg">
-                            <div class="modal-content" id="modal-content2">
-                              <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel2">Agregar nueva imagen</h4>
-                                <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span
-                                    aria-hidden="true">×</span>
-                                </button>
+                          <div class="modal fade bs-example-modal-lg777" id="myModal2" tabindex="-1" role="dialog"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content" id="modal-content2">
+                                <div class="modal-header">
+                                  <h4 class="modal-title" id="myModalLabel2">Agregar nueva imagen</h4>
+                                  <button type="button" class="close" data-dismiss="modal" onclick="limpiar()"><span
+                                      aria-hidden="true">×</span>
+                                  </button>
 
-                              </div>
+                                </div>
 
 
-                              
+
                                 <div id="modalOculto">
                                   <div class="modal-body" style="padding: 5%;">
                                     <div class="form-row">
                                       <label for="formGroupExampleInput" style="color: black">Titulo:</label>
                                       <input type="text" class="form-control" style="text-transform:uppercase;"
-                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                        name="titulo"
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();" name="titulo"
                                         placeholder="Titulo para la imagen..." required>
                                     </div>
                                     <br>
@@ -605,17 +611,15 @@
                                       <label for="formGroupExampleInput" style="color: black">Descripcion:
                                         (Opcional)</label>
                                       <input type="text" class="form-control" style="text-transform:uppercase;"
-                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                        name="descripcion"
-                                        placeholder="Alguna descripcion extra..." >
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();" name="descripcion"
+                                        placeholder="Alguna descripcion extra...">
                                     </div>
                                     <br>
                                     <div class="form-row">
                                       <label for="formGroupExampleInput" style="color: black">Link: (Opcional)</label>
                                       <input type="text" class="form-control" style="text-transform:uppercase;"
-                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                        name="link"
-                                        placeholder="www.youtube.com/watch/..." >
+                                        onkeyup="javascript:this.value=this.value.toUpperCase();" name="link"
+                                        placeholder="www.youtube.com/watch/...">
                                     </div>
                                     <br>
                                     <div class="form-row">
@@ -636,15 +640,15 @@
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                                    <button type="submit" class="btn btn-primary" >Cargar</button>
+                                    <button type="submit" class="btn btn-primary">Cargar</button>
 
                                   </div>
                                 </div>
-                              
+
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </form>
+                        </form>
                         <!--pp-->
 
                         <!--modal3-->
@@ -660,10 +664,10 @@
                           </thead>
 
                           <tbody>
-                            
+
                             {% for f in filminasTodas%}
 
-                            
+
 
                             <tr>
 
@@ -699,13 +703,15 @@
 
 
                                             <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda"><strong>Titulo:</strong></label>
+                                              <label for="inputEmail3"
+                                                class="izquierda"><strong>Titulo:</strong></label>
                                               <div class="derecha">
                                                 {{f.titulo}}
                                               </div>
                                             </div>
                                             <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda"><strong>Descripcion:</strong></label>
+                                              <label for="inputEmail3"
+                                                class="izquierda"><strong>Descripcion:</strong></label>
                                               <div class="derecha">
                                                 {{f.descripcion}}
                                               </div>
@@ -717,10 +723,12 @@
                                               </div>
                                             </div>
                                             <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda"><strong>Imagen:</strong></label>
+                                              <label for="inputEmail3"
+                                                class="izquierda"><strong>Imagen:</strong></label>
                                               <div class="derecha">
-                                                      
-                                                  <img src="data:image/png;base64, {{f.archivo|binary_to_image}}" height="200" >
+
+                                                <img src="data:image/png;base64, {{f.archivo|binary_to_image}}"
+                                                  height="200">
                                               </div>
                                             </div>
 
@@ -742,10 +750,11 @@
                                     </div>
 
 
-                                    <div class="btn-group" >
+                                    <div class="btn-group">
                                       <center>
                                         <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
-                                          data-target=".bs-example-modal-lg2{{f.id}}" style="border: rgb(255, 0, 0) solid 2px; padding-left: 10px;padding-right: 10px;padding-bottom: 6px;padding-top: 6px; margin-left: 5px;">
+                                          data-target=".bs-example-modal-lg2{{f.id}}"
+                                          style="border: rgb(255, 0, 0) solid 2px; padding-left: 10px;padding-right: 10px;padding-bottom: 6px;padding-top: 6px; margin-left: 5px;">
                                           <div id="icon8">
                                             <i class="fas fa-trash"></i>
                                           </div>
@@ -773,8 +782,7 @@
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">Close</button>
-                                              <a
-                                                href="{% url 'gestionMusical:eliminar_filmina' f.id %}">
+                                              <a href="{% url 'gestionMusical:eliminar_filmina' f.id %}">
                                                 <button type="button" class="btn btn-primary">Confirmar </button>
                                               </a>
                                             </div>
@@ -787,7 +795,7 @@
                               </td>
 
                             </tr>
-                            
+
                             {%endfor%}
                           </tbody>
                         </table>
@@ -817,26 +825,26 @@
           </div>
 
           <!--modal-->
-          
+
 
           <br>
-          
+
 
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
               {%for f in filminasTodas%}
-              
+
               {%if forloop.counter  == 1 %}
-              
+
               <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
               {%else%}
-              <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter }}" ></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter }}"></li>
               {%endif%}
               {%endfor%}
             </ol>
             <div class="carousel-inner">
               {%for f in filminasTodas%}
-              
+
               {%if forloop.counter  == 1 %}
               <div class="carousel-item active">
                 <img class="d-block w-100" src="data:image/png;base64, {{f.archivo|binary_to_image}}" height="700"
@@ -856,8 +864,8 @@
                   alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>{{f.titulo}}</h5>
-                  <p>{{f.descripcion}} 
-                    
+                  <p>{{f.descripcion}}
+
                     {%if f.link%}
                     <a href="https://{{ f.link}}">Enlace adjunto</a>
                     {%endif%}
@@ -944,6 +952,8 @@
       </div>
     </div>
     {% endblock logModal%}
+    <script type="text/javascript" src="{% static 'js/intro.min.js'%}"></script>
+
     {%block archivos%}
     <!-- Bootstrap core JavaScript-->
     <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
@@ -966,6 +976,7 @@
     {%endblock archivos%}
     {%block archivos2%}
     <script>
+    
       $('.carousel').carousel()
 
       var insti = 0;
