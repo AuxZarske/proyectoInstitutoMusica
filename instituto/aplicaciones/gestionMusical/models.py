@@ -135,7 +135,7 @@ class Usuario (models.Model):
     correoElectronico = models.EmailField('Correo electronico del usuario', null =  False, blank = False)
     estado = models.BooleanField('Usuario activo/inactivo', default = False)
     fechaInscripcion = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
-
+    archivo = models.BinaryField(blank=True, null=True)
     
     class Meta:
         verbose_name = 'Usuario'

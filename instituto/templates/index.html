@@ -70,6 +70,13 @@
   div#parrafos {
     font-size: 25px;
   }
+  div.derecha {
+    display: inline-block;
+
+    margin-left: 5%;
+
+
+  }
 
   div#fraseBoton {
     display: inline-block;
@@ -547,7 +554,7 @@
             
               <div style="display: inline-block;">
                 <div class="fa-hover">
-                  <a target="_blank"  href="https://youtu.be/oOje7ZUjriI">
+                  <a target="_blank"  href="https://youtu.be/NgWXo0VmZv0">
                     <i class="fa fa-question-circle" ></i>
                   </a>
                 </div>
@@ -690,8 +697,8 @@
                                     </center>
                                     <div class="modal fade bs-example-modal-lg88{{f.id}}" id="myModal{{f.id}}"
                                       tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                        <div class="modal-content" id="elgrando">
+                                      <div class="modal-dialog modal-lg88{{f.id}}">
+                                        <div class="modal-content" id="elgrando88{{f.id}}" style="width: 500px; background-color: rgb(255, 245, 230); margin-top: 10%;margin-right: 10%; border: rgb(171, 171, 255) solid 2px;">
                                           <div class="modal-header">
                                             <h4 class="modal-title" id="myModalLabel{{f.id}}">Datos</h4>
                                             <button type="button" class="close" data-dismiss="modal"><span
@@ -725,7 +732,7 @@
                                             <div class="alinealoNomas">
                                               <label for="inputEmail3"
                                                 class="izquierda"><strong>Imagen:</strong></label>
-                                              <div class="derecha">
+                                              <div >
 
                                                 <img src="data:image/png;base64, {{f.archivo|binary_to_image}}"
                                                   height="200">

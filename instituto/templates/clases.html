@@ -157,14 +157,7 @@ if (v == "none") {
   div#historicoClases {
     display: none;
     background: rgba(201, 229, 255, 1);
-    background: -moz-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
-    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(201, 229, 255, 1)), color-stop(27%, rgba(180, 180, 250, 1)), color-stop(61%, rgba(150, 150, 255, 1)), color-stop(92%, rgba(68, 68, 245, 1)), color-stop(99%, rgba(6, 6, 196, 1)), color-stop(100%, rgba(32, 124, 229, 1)));
-    background: -webkit-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
-    background: -o-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
-    background: -ms-linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
-    background: linear-gradient(45deg, rgba(201, 229, 255, 1) 0%, rgba(180, 180, 250, 1) 27%, rgba(150, 150, 255, 1) 61%, rgba(68, 68, 245, 1) 92%, rgba(6, 6, 196, 1) 99%, rgba(32, 124, 229, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9e5ff', endColorstr='#207ce5', GradientType=1);
-
+    
     border-radius: 13px 0px 13px 13px;
     -moz-border-radius: 13px 0px 13px 13px;
     -webkit-border-radius: 13px 0px 13px 13px;
@@ -460,7 +453,7 @@ if (v == "none") {
         {%block contenidiPagina%}
         <div style="float: right;">
           <div class="fa-hover">
-            <a target="_blank"  href="https://youtu.be/oOje7ZUjriI">
+            <a target="_blank"  href="https://youtu.be/pgsKwmBQ47E">
               <i class="fa fa-question-circle" ></i>
             </a>
           </div>
@@ -494,7 +487,7 @@ if (v == "none") {
 
           <!-- Page Heading -->
           {%if  perms.gestionMusical.es_director %}
-          <button  onclick="cambioOcultarCalendario()" class="btn btn-secondary btn-icon-split" style="float: right;">
+          <button  onclick="cambioOcultarCalendario()" class="btn btn-secondary btn-icon-split" style="float: right;display: none;">
             <span class="icon text-white-50">
             <i class="fas fa-calendar-day"></i>
           </span>
@@ -511,7 +504,7 @@ if (v == "none") {
           {%endif%}
 
           {%if  perms.gestionMusical.es_director %}
-          <button  onclick="cambioOcultarEstadistica()" class="btn btn-info btn-icon-split" style="float: right;"><span
+          <button  onclick="cambioOcultarEstadistica()" class="btn btn-info btn-icon-split" style="float: right;display: none;"><span
             class="icon text-white-50">
             <i class="fas fa-people-carry"></i>
           </span>
@@ -530,14 +523,14 @@ if (v == "none") {
 
           {%if  perms.gestionMusical.es_director %}
 
-          <button onclick="cambioOcultarHistorico()" class="btn btn-warning btn-icon-split" style="float: right ;"><span
+          <button onclick="cambioOcultarHistorico()" class="btn btn-warning btn-icon-split" style="float: right ; "><span
               class="icon text-white-50">
               <i class="fas fa-table"></i>
             </span>
             <span class="text">Historico de Clases</span>
           </button>
           <br>
-          <div id="historicoClases">
+          <div id="historicoClases" style="margin-top: 3%;">
 
             <div style=" height: auto;">
 
