@@ -132,11 +132,12 @@ def obtenerInsti():
 class Inicio(View):
     def post(self,request,*args,**kwargs):
         filmina_form = FilminaForm(request.POST)
+        print(filmina_form.errors)
         if filmina_form.is_valid():
 
             filmi = filmina_form.save(commit=False)
             filmi.archivo =request.FILES['archivo'].file.read()
-
+            print("eefe")
             filmi.save()
 
 
@@ -275,7 +276,7 @@ def registrarAlumno(request):
                 alum.save()
 
 
-                dj_login(request, user)
+               
                 messages.success(request, "Registro Correcto!")
                 usuario = User.objects.get(username = alum.correoElectronico) 
                 permission = Permission.objects.get(name='es pre alumno') #permiso de home
@@ -1630,7 +1631,8 @@ def listarprestamos(request, numer):
                 prestamo.profesorReferencia = elProfe
                 prestamo.save()
                 messages.success(request, "Registro Correcto!")
-            except:
+            except e:
+                print(e)
                 messages.error(request, " Error - No se pudo cargar")
         else:
             print(request.POST)
@@ -2566,7 +2568,8 @@ def listarprofesores(request):
             pedidor = elusuario.apellido + ' '+ elusuario.nombre
     except:
         pass 
-    profesoresVivos = Profesor.objects.filter(estado = True)
+    eto = elusuario.dni
+    profesoresVivos = Profesor.objects.filter(estado = True).exclude(dni = eto)
     profesoresStandbay = Profesor.objects.filter(estado = False)
     if request.method == 'POST':
         peticion = request.POST.copy()

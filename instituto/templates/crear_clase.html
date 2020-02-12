@@ -202,13 +202,13 @@
 
 
             <div class="form-group">
-                <label for="inputAddress2" class="sub">Descripcion de la clase:</label>
+                <label for="inputAddress2" class="sub">Descripción de la clase:</label>
                 {%if editacion != 1%}
                 <textarea class="form-control" id="desbr" name="descripcion"
-                    placeholder="Descripcion y detalles de la clase..." required maxlength="250"></textarea>
+                    placeholder="Descripción y detalles de la clase..." required maxlength="250"></textarea>
                 {%else%}
                 <textarea class="form-control" id="desbr" maxlength="250" name="descripcion"
-                    placeholder="Descripcion y detalles de la clase...">{{clase_form.descripcion.value}}</textarea>
+                    placeholder="Descripción y detalles de la clase...">{{clase_form.descripcion.value}}</textarea>
                 {%endif%}
             </div>
 
@@ -291,7 +291,7 @@
 
 
                                 <div class="form-group col-md-4">
-                                    <label for="inputState">Duracion:</label>
+                                    <label for="inputState">Duración:</label>
                                     <input type="time" class="form-control mb-2" id="inputDuracion" name="horaFin"
                                         value={{clase_form.horaFin.value}}>
                                 </div>
@@ -318,7 +318,7 @@
 
 
 
-            <div class="form-row">
+            <div class="form-row" style="color:black">
                 <div class="form-group col-md-4">
                     <label for="inputZip">Cupo de clase:</label>
                     {%if editacion != 1%}
@@ -460,9 +460,9 @@
     <script src="{%static 'js/selectMul.js'%}"></script>
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-
+        <script src="{%static 'js/bootstrap-select.min.js'%}"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    
 
 
 

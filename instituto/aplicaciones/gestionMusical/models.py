@@ -24,6 +24,11 @@ class Especialidad(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Especialidad, self).save(*args, **kwargs)
 
 class MusicaTipo(models.Model):
     id = models.AutoField(primary_key = True)
@@ -39,6 +44,10 @@ class MusicaTipo(models.Model):
     def __str__(self):
         return self.nombreMusica
 
+    def save(self, *args, **kwargs):
+        self.nombreMusica = (self.nombreMusica).upper()
+        return super(MusicaTipo, self).save(*args, **kwargs)
+
 class Compositor(models.Model):
     id = models.AutoField(primary_key = True)
     nombreIdentificador = models.CharField('Nombre de compositor', max_length = 150, null = False, blank = False)
@@ -50,6 +59,10 @@ class Compositor(models.Model):
 
     def __str__(self):
         return self.nombreIdentificador
+    
+    def save(self, *args, **kwargs):
+        self.nombreIdentificador = (self.nombreIdentificador).upper()
+        return super(Compositor, self).save(*args, **kwargs)
 
 
 
@@ -72,6 +85,10 @@ class Partitura(models.Model):
     def __str__(self):
         return self.nombre
 
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Partitura, self).save(*args, **kwargs)
 
 class Tutor(models.Model):
     dniTutor = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
@@ -89,6 +106,11 @@ class Tutor(models.Model):
     def __str__(self):
         return self.apellidoTutor + " "+ self.nombreTutor + "  Tel: "+self.telefonoTutor
 
+    def save(self, *args, **kwargs):
+        self.nombreTutor = (self.nombreTutor).upper()
+        self.apellidoTutor = (self.apellidoTutor).upper()
+        self.emailTutor = (self.emailTutor).upper()
+        return super(Tutor, self).save(*args, **kwargs)
 
 class Tema(models.Model):
     id = models.AutoField(primary_key = True)
@@ -108,6 +130,11 @@ class Tema(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Tema, self).save(*args, **kwargs)
 
 class Rol (models.Model):
     id = models.AutoField(primary_key = True)
@@ -121,6 +148,11 @@ class Rol (models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Rol, self).save(*args, **kwargs)
 
 class Usuario (models.Model):
     dni = models.PositiveIntegerField('DNI', primary_key = True, null = False, blank = False)
@@ -147,6 +179,14 @@ class Usuario (models.Model):
     def __str__(self):
         return self.nombre
 
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.apellido = (self.apellido).upper()
+      
+        self.domicilio = (self.domicilio).upper()
+        
+        return super(Usuario, self).save(*args, **kwargs)
+
     
 
 
@@ -156,6 +196,11 @@ class Profesor(Usuario):
     historiaPrevia = models.TextField('Observaciones del Profesor', null = True, blank = True)
     objects = models.Manager()
     history = HistoricalRecords()
+
+    def save(self, *args, **kwargs):
+        self.historiaPrevia = (self.historiaPrevia).upper()
+        self.observaciones = (self.observaciones).upper()
+        return super(Profesor, self).save(*args, **kwargs)
     
 
     class Meta:
@@ -181,6 +226,11 @@ class Alumno(Usuario):
         verbose_name = 'Alumno'
         verbose_name_plural = 'Alumnos'
         permissions = (("es_alumno", "es alumno"),("es_pre_alumno", "es pre alumno")) 
+
+    def save(self, *args, **kwargs):
+        self.observaciones = (self.observaciones).upper()
+        self.conocimientoPrevio = (self.conocimientoPrevio).upper()
+        return super(Alumno, self).save(*args, **kwargs)
 
 class TipoRelacion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
@@ -216,6 +266,12 @@ class InstitutoDato(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.correoElectronico = (self.correoElectronico).upper()
+        self.domicilio = (self.domicilio).upper()
+        return super(InstitutoDato, self).save(*args, **kwargs)
+
 class Filmina(models.Model):
     id = models.AutoField(primary_key = True)
     titulo = models.CharField('Nombre de la imagen', max_length = 200, null = False, blank = False)
@@ -225,6 +281,11 @@ class Filmina(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def save(self, *args, **kwargs):
+        self.titulo = (self.titulo).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Filmina, self).save(*args, **kwargs)
 
 
 class Instrumento(models.Model):
@@ -245,6 +306,11 @@ class Instrumento(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Instrumento, self).save(*args, **kwargs)
 
 
 class Horario(models.Model):
@@ -285,6 +351,11 @@ class Clase(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Clase, self).save(*args, **kwargs)
 
 
 
@@ -310,6 +381,8 @@ class Prestamo(models.Model):
     def __str__(self):
         return str(self.id)
 
+    
+
 class TipoTarea(models.Model):
     id = models.AutoField(primary_key = True)
     nombre = models.CharField('Nombre de la tipo tarea', max_length = 100, null = False, blank = False)
@@ -322,6 +395,10 @@ class TipoTarea(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        return super(TipoTarea, self).save(*args, **kwargs)
 
 class Recomendacion(models.Model):
     
@@ -345,6 +422,11 @@ class Recomendacion(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def save(self, *args, **kwargs):
+        self.nombre = (self.nombre).upper()
+        self.descripcion = (self.descripcion).upper()
+        return super(Recomendacion, self).save(*args, **kwargs)
+
 class Asistencia(models.Model):
     
     id = models.AutoField(primary_key = True)
@@ -362,3 +444,5 @@ class Asistencia(models.Model):
     
     def __str__(self):
         return str(self.id)
+    
+    

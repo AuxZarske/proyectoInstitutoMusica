@@ -360,8 +360,8 @@
         {%block contenidiPagina%}
         <div style="float: right;">
           <div class="fa-hover">
-            <a target="_blank"  href="https://youtu.be/wA2hcE6pjR8">
-              <i class="fa fa-question-circle" ></i>
+            <a target="_blank" href="https://youtu.be/wA2hcE6pjR8">
+              <i class="fa fa-question-circle"></i>
             </a>
           </div>
         </div>
@@ -985,7 +985,7 @@
                               </div>
                             </div>
 
-                            <div id="ere">
+                            <div id="ere" style="display: none;">
                               <a href="{% url 'gestionMusical:editar_alumno' alu.dni %}"
                                 class="btn btn-warning btn-icon-split">
 
@@ -997,12 +997,16 @@
 
                               </a>
                             </div>
+
+
+
+
                             <div class="btn-group">
                               {%if  perms.gestionMusical.es_director %}
                               <center>
                                 <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                   data-target=".bs-example-modal-lg2{{alu.dni}}">
-                                  <div id="icon8">
+                                  <div style="padding: 10px; width: 40px; height: 40px;">
                                     <i class="fas fa-trash"></i>
                                   </div>
                                 </button>

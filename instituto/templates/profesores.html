@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%block head%}
+
 <head>
 
   <meta charset="utf-8">
@@ -16,7 +17,9 @@
 
   <!-- Custom fonts for this template -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
@@ -26,179 +29,202 @@
 
 </head>
 <script type="text/javascript">
-  function ocultarFiltro(){
-    
-      
-    if(document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "" ){
-        document.getElementById("contenedorFiltro").style.display='block';
-    }
-    else{
-            document.getElementById("contenedorFiltro").style.display='none';
-        }
+  function ocultarFiltro() {
 
-}
+
+    if (document.getElementById("contenedorFiltro").style.display == "none" || document.getElementById("contenedorFiltro").style.display == "") {
+      document.getElementById("contenedorFiltro").style.display = 'block';
+    }
+    else {
+      document.getElementById("contenedorFiltro").style.display = 'none';
+    }
+
+  }
 </script>
 {%endblock head%}
 {%block estilos%}
-    <style type="text/css">
-        h6#fraseTable{
-            display: inline-block;
-            
+<style type="text/css">
+  h6#fraseTable {
+    display: inline-block;
 
-        }
-        a#fraseTableBoton{
-              display: inline-block;
-              margin-bottom: 2%;
-              color: black;
-              float: right;
-             
-              
 
-        }
-        div.verMasNombre{
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      padding: 2px;
-      background-color: rgb(85, 188, 202);
-      margin: auto;
-      margin-right: 2%;
-      
-      text-align: center;
-      border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          float: right;
+  }
 
-    }
-    div#zonaBotones{
-  
-  text-align: right;
-  vertical-align: b
-}
-div#contenedorFiltro{
-  padding: 2%;
-  display: none;
-  background-color: antiquewhite;
-}
-button#fil{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#repo{
-  background-color: aqua;
-  color: black;
-  font-weight: bold;
-}
-button#botonExtra{
-  display: inline-block;
-  background-color: rgb(219, 90, 90);
-  border: 2px solid rgb(32, 32, 32);
-}
-div#elgrando{
-  width: 400px;
-}
-label.izquierda{
-  display: inline-block;
-  margin-left: 5%;
-  
-}
-div.derecha{
-  display: inline-block;
-  
-  margin-left: 5%;
-  
-  
-}
-div.alinealoNomas{
-  text-align: left;
-}
+  a#fraseTableBoton {
+    display: inline-block;
+    margin-bottom: 2%;
+    color: black;
+    float: right;
 
-        label.col-form-label{
-          display: inline-block;
-         
-        }
-        div#icon8{
-          padding: 10px;
-          width: 40px;
-          height: 40px;
-        }
-        div#icon7{
-          
-          width: 100px;
-          height: 100px;
-        }
-        p.nombreLista{
-      display: inline-block;
-      margin-right: 1%;
-    }
-    div.laFilitaUno{
-      border-bottom: 2px solid;
-      text-align: left;
-      padding-left: 2%;
-      padding-right: 4%;
-      height: 50px;
-      padding-top: 10px;
-    }
-    div#masPlus{
-      margin-left: 2%;
 
-    }
-    div.dt-buttons btn-group flex-wrap{
-  
-  position: absolute initial;
-  
-}
-div.dataTables_length{
-  display: inline-block;
-  margin-left: 3%;
-}
-div.dataTables_filter{
-  float: right;
-  
-}
-        div.desasosiarNombre{
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      padding: 2px;
-      background-color: rgb(228, 69, 69);
-      margin: auto;
-      margin-right: 2%;
-      
-      text-align: center;
-      border-radius: 43px 43px 43px 43px;
-          -moz-border-radius: 43px 43px 43px 43px;
-          -webkit-border-radius: 43px 43px 43px 43px;
-          float: right;
-    }
 
-        div#ere{
+  }
 
-margin-right: 2px;
-margin-left: 2px;
-}
-p#msj{
+  div.verMasNombre {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    background-color: rgb(85, 188, 202);
+    margin: auto;
+    margin-right: 2%;
+
+    text-align: center;
+    border-radius: 43px 43px 43px 43px;
+    -moz-border-radius: 43px 43px 43px 43px;
+    -webkit-border-radius: 43px 43px 43px 43px;
+    float: right;
+
+  }
+
+  div#zonaBotones {
+
+    text-align: right;
+    vertical-align: b
+  }
+
+  div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: antiquewhite;
+  }
+
+  button#fil {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#repo {
+    background-color: aqua;
+    color: black;
+    font-weight: bold;
+  }
+
+  button#botonExtra {
+    display: inline-block;
+    background-color: rgb(219, 90, 90);
+    border: 2px solid rgb(32, 32, 32);
+  }
+
+  div#elgrando {
+    width: 400px;
+  }
+
+  label.izquierda {
+    display: inline-block;
+    margin-left: 5%;
+
+  }
+
+  div.derecha {
+    display: inline-block;
+
+    margin-left: 5%;
+
+
+  }
+
+  div.alinealoNomas {
+    text-align: left;
+  }
+
+  label.col-form-label {
+    display: inline-block;
+
+  }
+
+  div#icon8 {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  div#icon7 {
+
+    width: 100px;
+    height: 100px;
+  }
+
+  p.nombreLista {
+    display: inline-block;
+    margin-right: 1%;
+  }
+
+  div.laFilitaUno {
+    border-bottom: 2px solid;
+    text-align: left;
+    padding-left: 2%;
+    padding-right: 4%;
+    height: 50px;
+    padding-top: 10px;
+  }
+
+  div#masPlus {
+    margin-left: 2%;
+
+  }
+
+  div.dt-buttons btn-group flex-wrap {
+
+    position: absolute initial;
+
+  }
+
+  div.dataTables_length {
+    display: inline-block;
+    margin-left: 3%;
+  }
+
+  div.dataTables_filter {
+    float: right;
+
+  }
+
+  div.desasosiarNombre {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    padding: 2px;
+    background-color: rgb(228, 69, 69);
+    margin: auto;
+    margin-right: 2%;
+
+    text-align: center;
+    border-radius: 43px 43px 43px 43px;
+    -moz-border-radius: 43px 43px 43px 43px;
+    -webkit-border-radius: 43px 43px 43px 43px;
+    float: right;
+  }
+
+  div#ere {
+
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  p#msj {
     font-size: 17px;
-}
-div#nivell{
-  width: auto;
-  display: inline-block;
-  margin-left: 3%;
-  margin-right: 3%;
-  
-}
-label#labbel{
-  display: block;
-}
-div#espeNIvel{
-  display: inline-block;
- 
-  
-}
+  }
 
-    </style>
+  div#nivell {
+    width: auto;
+    display: inline-block;
+    margin-left: 3%;
+    margin-right: 3%;
+
+  }
+
+  label#labbel {
+    display: block;
+  }
+
+  div#espeNIvel {
+    display: inline-block;
+
+
+  }
+</style>
 {%endblock estilos%}
 
 
@@ -206,7 +232,7 @@ div#espeNIvel{
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -222,21 +248,24 @@ div#espeNIvel{
             <i class="fa fa-bars"></i>
           </button>
 
-          
+
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -249,13 +278,15 @@ div#espeNIvel{
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
@@ -298,13 +329,15 @@ div#espeNIvel{
 
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
@@ -314,7 +347,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
@@ -324,7 +358,8 @@ div#espeNIvel{
                     <div class="status-indicator"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
                   </div>
                 </a>
@@ -334,7 +369,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-warning"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
@@ -344,7 +380,8 @@ div#espeNIvel{
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
@@ -356,7 +393,8 @@ div#espeNIvel{
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
@@ -390,365 +428,381 @@ div#espeNIvel{
         {%block contenidiPagina%}
         <div style="float: right;">
           <div class="fa-hover">
-            <a target="_blank"  href="https://youtu.be/5ghDVQ7LTqY">
-              <i class="fa fa-question-circle" ></i>
+            <a target="_blank" href="https://youtu.be/5ghDVQ7LTqY">
+              <i class="fa fa-question-circle"></i>
             </a>
           </div>
         </div>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <div id="cuadroMensajes" >
+          <div id="cuadroMensajes">
 
-                {% if messages %}
-                {% for message in messages %}
-  
-                {% if message.tags == 'success'%}
-                <ul class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-                {% if message.tags == 'error'%}
-                <ul class="alert alert-danger alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p {% if message.tags %} class="{{ message.tags }}"{% endif %} id="msj"><strong>{{ message }}</strong></p>
-                </ul> 
-                {%endif%}
-  
-                {% endfor %}
-               {% endif %}
-        </div>
+            {% if messages %}
+            {% for message in messages %}
+
+            {% if message.tags == 'success'%}
+            <ul class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+            {% if message.tags == 'error'%}
+            <ul class="alert alert-danger alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <p {% if message.tags %} class="{{ message.tags }}" {% endif %} id="msj"><strong>{{ message }}</strong>
+              </p>
+            </ul>
+            {%endif%}
+
+            {% endfor %}
+            {% endif %}
+          </div>
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Profesores</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los profesores que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar los profesores que cuenta la institucion actualmente;
+            editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                    <i class="fas fa-file"></i>
-                  </button>
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de profesores que cuenta actualmente:</h6>
-                    <!--modal-->
-                  
-                    
-    
-                        <a id="fraseTableBoton"   class="btn btn-primary btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg52">
-                              
-                            <span class="icon text-white-50">
-                                  <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Añadir Profesor</span>
-                            
-                      
-                        </a>
+              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
+                <i class="fas fa-file"></i>
+              </button>
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de profesores que cuenta
+                actualmente:</h6>
+              <!--modal-->
 
-                        <form class="user" method="POST">
-                            {% csrf_token %}
-                        <div id="contenedorFiltro">
-                            <input type="hidden" id="filtrado" value="{{filtro}}">
-            
-                       
-                          <div id="comboFiltro">
-                              
-                            <div id="zonaInput">
-                              <!--3 div-->
-                              
-            
-              
-            
-            
-            
-            
-                                    <div class="form-group" id="espeNIvel">
-                                        <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
-                                        
-                                        <div class="form-row" id="espec2">
-                                            <select name="espec" id="espec" class="selectpicker" single>
-                                                <option value=''>-------</option>
-                                                {%for e in especialidades%}
-                                                <option value="{{e.id}}">
-                                                    {{e}}
-                                                </option>
-                                                {%endfor%}
-                                            </select>
-                  
-                                        </div>
-                  
-                                      </div>
-            
-            
-            
-                                      <div class="form-group" id="nivell">
-                                          <label for="inputAddress2" class="sub" style="color: black">Sexo:</label>
-                                          
-                                          <div class="form-row" id="espec2">
-                                              <select id="nivel" name ="nivel" class="selectpicker" style="width: auto" single>
-                                                  <option value=''>-------</option>
-                                                <option value='Masculino'>Masculino</option>
-                                                  <option value='Femenino'>Femenino</option>
-                                              </select>
-                                                  
-                    
-                                          </div>
-                    
-                                        </div>
-                                      
-                                  
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                                          
-                                  </div>
-            
-            
-            
-                                  
-            
-                              <!--3dic-->
-                            
-                            <div id="zonaBotones">
-                            <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
-                           
-                            <input type="hidden" id="yolo" name="yolo" value="no cambio">
-                            <input type="hidden" id="custId" name="custId" value="no cambio">
-                             
-                            </div>
-            
-                          </div>
-            
+
+
+              <a id="fraseTableBoton" class="btn btn-primary btn-icon-split" data-toggle="modal"
+                data-target=".bs-example-modal-lg52">
+
+                <span class="icon text-white-50">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Añadir Profesor</span>
+
+
+              </a>
+
+              <form class="user" method="POST">
+                {% csrf_token %}
+                <div id="contenedorFiltro">
+                  <input type="hidden" id="filtrado" value="{{filtro}}">
+
+
+                  <div id="comboFiltro">
+
+                    <div id="zonaInput">
+                      <!--3 div-->
+
+
+
+
+
+
+
+                      <div class="form-group" id="espeNIvel">
+                        <label for="inputAddress2" class="sub" style="color: black">Especialidad Relacionada:</label>
+
+                        <div class="form-row" id="espec2">
+                          <select name="espec" id="espec" class="selectpicker" single>
+                            <option value=''>-------</option>
+                            {%for e in especialidades%}
+                            <option value="{{e.id}}">
+                              {{e}}
+                            </option>
+                            {%endfor%}
+                          </select>
+
                         </div>
+
                       </div>
-                      
-                      </form>
-                    
-                        <div class="modal fade bs-example-modal-lg52" id="myModal33" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Lista de Profesores Pendientes: </h4>
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                </button>
-                                        
-                                    </div>
-                                    <div class="modal-body">
-                                        <!--lista escrolleable de alumnos, ver, desasociar, asistencia check-->
-                                        <div id="" style="overflow-y:scroll; height:400px;">
-                                        
-                                            
-                                            
-                                            <!--tabla-->
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                  <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-                                                    <thead>
-                                                      <tr>
-                                                       
-                                                        <th>Nombre</th>
-                                                        <th>Apellido</th>
-                                                        
-                                                        
-                                                        
-                                                       
-                                                        
-                                                        
-                                                        <th>Acciones</th>
-                                                        
-                                                      </tr>
-                                                    </thead>
-                                                    
-                                                    <tbody>
-                                                      {% for profe in profesoresStandbay%}
-                                                          {%if profe.estado%}
-                                                          {%else%}
-                                                       
-                                                          <tr>
-                                                            
-                                                            <td>{{profe.nombre}}</td>
-                                                            <td>{{profe.apellido}}</td>
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            <td>
-                                                            
-                                                            <center>
-                                                                
-                                                               
-                                  
-                                                                <div class="btn-group">
-                                                                  <center>
-                                                                      <div >
-                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{profe.dni}}">
-                                                                      
-                                                                      <i class="fa fa-eye"></i>
-                                                                    
-                                                                    </button>
-                                                                  </div>
-                                                                  </center>
-                                                                    <div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-lg">
-                                                                            <div class="modal-content" id="elgrando">
-                                                                                <div class="modal-header">
-                                                                                    <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales</h4>
-                                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                                            </button>
-                                                                                    
-                                                                                </div>
-                                                                                <div class="modal-body" id="cuerpoModal">
-                                                                                    <div class="alinealoNomas">
-                                                                                        <label for="inputEmail3" class="izquierda">DNI: </label>
-                                                                                        <div class="derecha">
-                                                                                          {{profe.dni}}
-                                                                                        </div>
-                                                                                      </div>
-                                                                                      <div class="alinealoNomas">
-                                                                                          <label for="inputEmail3" class="izquierda">Apellido:</label>
-                                                                                          <div class="derecha">
-                                                                                              {{profe.apellido}}
-                                                                                          </div>
-                                                                                        </div>
-                                                                                        <div class="alinealoNomas">
-                                                                                            <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                                                                            <div class="derecha">
-                                                                                                {{profe.nombre}}
-                                                                                            </div>
-                                                                                          </div>
-                                                                                          <div class="alinealoNomas">
-                                                                                              <label for="inputEmail3" class="izquierda">Sexo:</label>
-                                                                                              <div class="derecha">
-                                                                                                  {{profe.sexo}}
-                                                                                              </div>
-                                                                                            </div>
-                                                                                            <div class="alinealoNomas">
-                                                                                                <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
-                                                                                                <div class="derecha">
-                                                                                                    {{profe.fechaNac}}
-                                                                                                </div>
-                                                                                              </div>
-                                                                                              <div class="alinealoNomas">
-                                                                                                  <label for="inputEmail3" class="izquierda">Domicilio:</label>
-                                                                                                  <div class="derecha">
-                                                                                                      {{profe.domicilio}}
-                                                                                                  </div>
-                                                                                                </div>
-                                                                                                <div class="alinealoNomas">
-                                                                                                    <label for="inputEmail3" class="izquierda">Telefono:</label>
-                                                                                                    <div class="derecha">
-                                                                                                        {{profe.telefono}}
-                                                                                                    </div>
-                                                                                                  </div>
-                                                                                                  <div class="alinealoNomas">
-                                                                                                      <label for="inputEmail3" class="izquierda">Correo:</label>
-                                                                                                      <div class="derecha">
-                                                                                                          {{profe.correoElectronico}}
-                                                                                                      </div>
-                                                                                                    </div>
-                                                                                                    <div class="alinealoNomas">
-                                                                                                        <label for="inputEmail3" class="izquierda">Observaciones:</label>
-                                                                                                        <div class="derecha">
-                                                                                                            {{profe.observaciones}}
-                                                                                                        </div>
-                                                                                                      </div>
-                                                                                                      <div class="alinealoNomas">
-                                                                                                          <label for="inputEmail3" class="izquierda">Especialidades:</label>
-                                                                                                          <div class="derecha">
-                                                                                                            
-                                                                                                              {%for es in profe.especialidades.all%}
-                                                                              
-                                                                                                                <p> {{es}} </p>
-                                                                                                                {%endfor%}
-                                                                                                          </div>
-                                                                                                        </div>
-                                                                                    
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    
-                                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                                                                </div>
-                                                                            </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                  
-                                                                    
-                                                                <div class="btn-group" id="masPlus">
-                                                                  <center>
-                                                                    <button type="button" class="btn btn-warning btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{profe.dni}}">
-                                                                        <div id="icon8">
-                                                                      <i class="fas fa-plus"></i>
-                                                                    </div>
-                                                                    </button>
-                                                                  </center>
-                                                                  
-                                                                    <div class="modal fade bs-example-modal-lg2{{profe.dni}}" id="myModal2{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-lg">
-                                                                            <div class="modal-content" id="elgrando">
-                                                                                <div class="modal-header">
-                                                                                    <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Confirmacion de Eliminacion</h4>
-                                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                                                            </button>
-                                                                                    
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <h4>Esta seguro de establecer como Profesor al Sr/a {{profe.apellido}} {{profe.nombre}} ???</h4>
-                                                                                    
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                                    <a href="{% url 'gestionMusical:reivindicar_profesor' profe.dni %}">
-                                                                                    <button type="button" class="btn btn-primary" >Confirmar </button>
-                                                                                  </a>
-                                                                                  </div>
-                                                                
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                            </center>
-                                                          
-                                                            </td>
-                                                          
-                                                          </tr>
-                                                          {%endif%}
-                                                      {%endfor%}
-                                                    </tbody>
-                                                  </table>
+
+
+
+                      <div class="form-group" id="nivell">
+                        <label for="inputAddress2" class="sub" style="color: black">Sexo:</label>
+
+                        <div class="form-row" id="espec2">
+                          <select id="nivel" name="nivel" class="selectpicker" style="width: auto" single>
+                            <option value=''>-------</option>
+                            <option value='Masculino'>Masculino</option>
+                            <option value='Femenino'>Femenino</option>
+                          </select>
+
+
+                        </div>
+
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+                    <!--3dic-->
+
+                    <div id="zonaBotones">
+                      <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+
+                      <input type="hidden" id="yolo" name="yolo" value="no cambio">
+                      <input type="hidden" id="custId" name="custId" value="no cambio">
+
+                    </div>
+
+                  </div>
+
+                </div>
+            </div>
+
+            </form>
+
+            <div class="modal fade bs-example-modal-lg52" id="myModal33" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Lista de Profesores Pendientes: </h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+
+                  </div>
+                  <div class="modal-body">
+                    <!--lista escrolleable de alumnos, ver, desasociar, asistencia check-->
+                    <div id="" style="overflow-y:scroll; height:400px;">
+
+
+
+                      <!--tabla-->
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+
+
+
+
+
+
+                                <th>Acciones</th>
+
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {% for profe in profesoresStandbay%}
+                              {%if profe.estado%}
+                              {%else%}
+
+                              <tr>
+
+                                <td>{{profe.nombre}}</td>
+                                <td>{{profe.apellido}}</td>
+
+
+
+
+
+                                <td>
+
+                                  <center>
+
+
+
+                                    <div class="btn-group">
+                                      <center>
+                                        <div>
+                                          <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target=".bs-example-modal-lg{{profe.dni}}">
+
+                                            <i class="fa fa-eye"></i>
+
+                                          </button>
+                                        </div>
+                                      </center>
+                                      <div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}"
+                                        tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                          <div class="modal-content" id="elgrando">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales
+                                              </h4>
+                                              <button type="button" class="close" data-dismiss="modal"><span
+                                                  aria-hidden="true">×</span>
+                                              </button>
+
+                                            </div>
+                                            <div class="modal-body" id="cuerpoModal">
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">DNI: </label>
+                                                <div class="derecha">
+                                                  {{profe.dni}}
                                                 </div>
                                               </div>
-                                            
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                                <div class="derecha">
+                                                  {{profe.apellido}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                <div class="derecha">
+                                                  {{profe.nombre}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                <div class="derecha">
+                                                  {{profe.sexo}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                <div class="derecha">
+                                                  {{profe.fechaNac}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                <div class="derecha">
+                                                  {{profe.domicilio}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                <div class="derecha">
+                                                  {{profe.telefono}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                <div class="derecha">
+                                                  {{profe.correoElectronico}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                                <div class="derecha">
+                                                  {{profe.observaciones}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                                <div class="derecha">
 
-                                            <!--fin tabla-->
+                                                  {%for es in profe.especialidades.all%}
 
+                                                  <p> {{es}} </p>
+                                                  {%endfor%}
+                                                </div>
+                                              </div>
 
-                                            
-                                            
-                                            
-                                            
-                                           
-                                        
+                                            </div>
+                                            <div class="modal-footer">
+
+                                              <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            </div>
                                           </div>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        
-                      <!--fin modal-->
+
+
+                                    <div class="btn-group" id="masPlus">
+                                      <center>
+                                        <button type="button" class="btn btn-warning btn-icon-split" data-toggle="modal"
+                                          data-target=".bs-example-modal-lg2{{profe.dni}}">
+                                          <div id="icon8">
+                                            <i class="fas fa-plus"></i>
+                                          </div>
+                                        </button>
+                                      </center>
+
+                                      <div class="modal fade bs-example-modal-lg2{{profe.dni}}"
+                                        id="myModal2{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                          <div class="modal-content" id="elgrando">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Confirmacion de
+                                                Eliminacion</h4>
+                                              <button type="button" class="close" data-dismiss="modal"><span
+                                                  aria-hidden="true">×</span>
+                                              </button>
+
+                                            </div>
+                                            <div class="modal-body">
+                                              <h4>Esta seguro de establecer como Profesor al Sr/a {{profe.apellido}}
+                                                {{profe.nombre}} ?</h4>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Close</button>
+                                              <a href="{% url 'gestionMusical:reivindicar_profesor' profe.dni %}">
+                                                <button type="button" class="btn btn-primary">Confirmar </button>
+                                              </a>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </center>
+
+                                </td>
+
+                              </tr>
+                              {%endif%}
+                              {%endfor%}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <!--fin tabla-->
+
+
+
+
+
+
+
+
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                  </div>
+
+                </div>
+              </div>
+
+              <!--fin modal-->
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -765,187 +819,195 @@ div#espeNIvel{
 
                       <th class="noExport">Nombre</th>
                       <th class="noExport">Apellido</th>
-                      
-                      
+
+
                       <th class="noExport">Correo Electronico</th>
-                     
-                      
-                      
+
+
+
                       <th class="noExport">Acciones</th>
-                      
+
                     </tr>
                   </thead>
-                  
+
                   <tbody>
                     {% for profe in profesoresVivos%}
-                        {%if profe.estado%}
-                     
-                        <tr>
-                          <td>{{profe.dni}}</td>
+                    {%if profe.estado%}
 
-                          <td style="display: none">{{profe.apellido}}, {{profe.nombre}}</td>
-                          <td style="display: none">{{profe.telefono}}</td>
-                          <td style="display: none">{{profe.fechaNac}}</td>
-                          <td style="display: none">{{profe.sexo}}</td>
-                          <td style="display: none">{{profe.correoElectronico}}</td>
+                    <tr>
+                      <td>{{profe.dni}}</td>
 
-                          <td >{{profe.nombre}}</td>
-                          <td>{{profe.apellido}}</td>
-                          
-                          <td>{{profe.correoElectronico}}</td>
-                          
-                          
-                          
-                          <td>
-                          
-                          <center>
-                              
-                             
+                      <td style="display: none">{{profe.apellido}}, {{profe.nombre}}</td>
+                      <td style="display: none">{{profe.telefono}}</td>
+                      <td style="display: none">{{profe.fechaNac}}</td>
+                      <td style="display: none">{{profe.sexo}}</td>
+                      <td style="display: none">{{profe.correoElectronico}}</td>
 
-                              <div class="btn-group">
-                                <center>
-                                    <div >
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg{{profe.dni}}">
-                                    
-                                    <i class="fa fa-eye"></i>
-                                  
-                                  </button>
-                                </div>
-                                </center>
-                                  <div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                          <div class="modal-content" id="elgrando">
-                                              <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales</h4>
-                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                          </button>
-                                                  
-                                              </div>
-                                              <div class="modal-body">
-                                                  <div class="alinealoNomas">
-                                                      <label for="inputEmail3" class="izquierda">DNI: </label>
-                                                      <div class="derecha">
-                                                        {{profe.dni}}
-                                                      </div>
-                                                    </div>
-                                                    <div class="alinealoNomas">
-                                                        <label for="inputEmail3" class="izquierda">Apellido:</label>
-                                                        <div class="derecha">
-                                                            {{profe.apellido}}
-                                                        </div>
-                                                      </div>
-                                                      <div class="alinealoNomas">
-                                                          <label for="inputEmail3" class="izquierda">Nombre:</label>
-                                                          <div class="derecha">
-                                                              {{profe.nombre}}
-                                                          </div>
-                                                        </div>
-                                                        <div class="alinealoNomas">
-                                                            <label for="inputEmail3" class="izquierda">Sexo:</label>
-                                                            <div class="derecha">
-                                                                {{profe.sexo}}
-                                                            </div>
-                                                          </div>
-                                                          <div class="alinealoNomas">
-                                                              <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
-                                                              <div class="derecha">
-                                                                  {{profe.fechaNac}}
-                                                              </div>
-                                                            </div>
-                                                            <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Domicilio:</label>
-                                                                <div class="derecha">
-                                                                    {{profe.domicilio}}
-                                                                </div>
-                                                              </div>
-                                                              <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Telefono:</label>
-                                                                  <div class="derecha">
-                                                                      {{profe.telefono}}
-                                                                  </div>
-                                                                </div>
-                                                                <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Correo:</label>
-                                                                    <div class="derecha">
-                                                                        {{profe.correoElectronico}}
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Observaciones:</label>
-                                                                      <div class="derecha">
-                                                                          {{profe.observaciones}}
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="alinealoNomas">
-                                                                        <label for="inputEmail3" class="izquierda">Especialidades:</label>
-                                                                        <div class="derecha">
-                                                                            {%for es in profe.especialidades.all%}
-                                                                              
-                                                                            <p> {{es}} </p>
-                                                                            {%endfor%}
-                                                                        </div>
-                                                                      </div>
-                                                  
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <input type="hidden" id="inputOculto" value="{{pedidor}}">
-                                                    <input type="hidden" id="inputOcultoTemplate" value="4">
-                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                              </div>
-                              
-                                          </div>
+                      <td>{{profe.nombre}}</td>
+                      <td>{{profe.apellido}}</td>
+
+                      <td>{{profe.correoElectronico}}</td>
+
+
+
+                      <td>
+
+                        <center>
+
+
+
+                          <div class="btn-group">
+                            <center>
+                              <div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg{{profe.dni}}">
+
+                                  <i class="fa fa-eye"></i>
+
+                                </button>
+                              </div>
+                            </center>
+                            <div class="modal fade bs-example-modal-lg{{profe.dni}}" id="myModal{{profe.dni}}"
+                              tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content" id="elgrando">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Datos Personales</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">×</span>
+                                    </button>
+
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">DNI: </label>
+                                      <div class="derecha">
+                                        {{profe.dni}}
                                       </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                      <div class="derecha">
+                                        {{profe.apellido}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <div class="derecha">
+                                        {{profe.nombre}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                      <div class="derecha">
+                                        {{profe.sexo}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                      <div class="derecha">
+                                        {{profe.fechaNac}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                      <div class="derecha">
+                                        {{profe.domicilio}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                      <div class="derecha">
+                                        {{profe.telefono}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Correo:</label>
+                                      <div class="derecha">
+                                        {{profe.correoElectronico}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Observaciones:</label>
+                                      <div class="derecha">
+                                        {{profe.observaciones}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda">Especialidades:</label>
+                                      <div class="derecha">
+                                        {%for es in profe.especialidades.all%}
+
+                                        <p> {{es}} </p>
+                                        {%endfor%}
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <input type="hidden" id="inputOculto" value="{{pedidor}}">
+                                    <input type="hidden" id="inputOcultoTemplate" value="4">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                                   </div>
 
-                                  <div id="ere">
-                            <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}" class="btn btn-warning btn-icon-split">
-                              
-                                <span class="icon text-white-50">
-                                      <i class="fas fa-paint-brush"></i>
-                                </span>
-                                
-                                
-                          
-                          </a>
+                                </div>
                               </div>
-                              <div class="btn-group">
-                                <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{profe.dni}}">
-                                      <div id="icon8">
+                            </div>
+
+                            <!--
+                            <div style="margin-right: 2px; margin-left: 2px;">
+                              <a href="{% url 'gestionMusical:editar_profesor' profe.dni %}"
+                                class="btn btn-warning btn-icon-split">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-paint-brush"></i>
+                                </span>
+                              </a>
+                            </div>
+                            -->
+
+                            <div class="btn-group">
+                              <center>
+                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                  data-target=".bs-example-modal-lg2{{profe.dni}}">
+                                  <div id="icon8">
                                     <i class="fas fa-trash"></i>
                                   </div>
-                                  </button>
-                                </center>
-                                
-                                  <div class="modal fade bs-example-modal-lg2{{profe.dni}}" id="myModal2{{profe.dni}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg">
-                                          <div class="modal-content">
-                                              <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Confirmacion de Eliminacion</h4>
-                                                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                                                                                          </button>
-                                                  
-                                              </div>
-                                              <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar al Profesor {{profe.apellido}} {{profe.nombre}} ???</h4>
-                                                  
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                  <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
-                                                </a>
-                                                </div>
-                              
-                                          </div>
-                                      </div>
+                                </button>
+                              </center>
+
+                              <div class="modal fade bs-example-modal-lg2{{profe.dni}}" id="myModal2{{profe.dni}}"
+                                tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="myModalLabel{{profe.dni}}">Confirmacion de Eliminacion
+                                      </h4>
+                                      <button type="button" class="close" data-dismiss="modal"><span
+                                          aria-hidden="true">×</span>
+                                      </button>
+
+                                    </div>
+                                    <div class="modal-body">
+                                      <h4>Esta seguro de Eliminar al Profesor {{profe.apellido}} {{profe.nombre}} ???
+                                      </h4>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a href="{% url 'gestionMusical:eliminar_profesor' profe.dni %}">
+                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                      </a>
+                                    </div>
+
                                   </div>
-                          </center>
-                        
-                          </td>
-                        
-                        </tr>
-                        {%endif%}
+                                </div>
+                              </div>
+                        </center>
+
+                      </td>
+
+                    </tr>
+                    {%endif%}
                     {%endfor%}
                   </tbody>
                 </table>
@@ -982,7 +1044,8 @@ div#espeNIvel{
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -1004,7 +1067,7 @@ div#espeNIvel{
 
   <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
-  
+
   <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
@@ -1012,7 +1075,7 @@ div#espeNIvel{
   <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
 
- 
+
 
   <!-- Core plugin JavaScript-->
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
@@ -1023,12 +1086,12 @@ div#espeNIvel{
 
   <script src="{%static 'vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-  
+
   {%endblock archivos%}
 </body>
 

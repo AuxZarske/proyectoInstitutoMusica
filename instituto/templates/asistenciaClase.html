@@ -486,7 +486,7 @@ div#zonaBotones{
                                         <td>{{asist.profesorReferencia.apellido}} {{asist.profesorReferencia.nombre}}</td>                       
                             <td>
                               
-                            <center>
+                           
                                        <!---->
                                        <div class="btn-group">
 
@@ -501,7 +501,7 @@ div#zonaBotones{
                                                       
                                                   </div>
                                                   <div class="modal-body">
-                                                      <label for="">Estado de Asistencia</label>
+                                                      <label for="" >Estado de Asistencia</label>
                                                       <select name="asistio" id="id_asistio{{asist.id}}" class="form-control" required>
                                                             {% if asist.estadoReco %}
 
@@ -519,7 +519,7 @@ div#zonaBotones{
                                                       
                                                   </div>
                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                       
                                                       <button type="button" class="btn btn-primary" onclick="editacion('{{asist.id}}')">Confirmar Cambio</button>
                                                     
@@ -546,19 +546,19 @@ div#zonaBotones{
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel{{asist.id}}">Confirmacion de Eliminacion</h4>
+                                                            <h4 class="modal-title" id="myModalLabel{{asist.id}}">Confirmación de eliminación</h4>
                                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                     </button>
                                                             
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h4>Esta seguro de Eliminar al compositor {{asist.id}}  ???</h4>
+                                                            <h4 style="font-size: 18px;">Esta seguro de <strong>Eliminar</strong>  la asistencia   ?</h4>
                                                             
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                             <a href="{% url 'gestionMusical:eliminar_asistencia' asist.id %}">
-                                                            <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                            <button type="button" class="btn btn-primary" >Confirmar eliminación</button>
                                                           </a>
                                                           </div>
                                         
@@ -566,7 +566,7 @@ div#zonaBotones{
                                                 </div>
                                             </div>
                                        <!---->
-                            </center>
+                            
                             </td>
                           
                           </tr>

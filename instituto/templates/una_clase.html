@@ -445,7 +445,7 @@
     background-color: rgb(220, 241, 255);
     border: 1px solid rgba(255, 182, 99, 0.295);
     border-radius: 2px;
-    
+
   }
 
   button#nuevoAlumno {
@@ -628,8 +628,8 @@
 {%block contenidiPagina%}
 <div style="float: right;">
   <div class="fa-hover">
-    <a target="_blank"  href="https://youtu.be/uyQNm6jbtxs">
-      <i class="fa fa-question-circle" ></i>
+    <a target="_blank" href="https://youtu.be/uyQNm6jbtxs">
+      <i class="fa fa-question-circle"></i>
     </a>
   </div>
 </div>
@@ -762,7 +762,7 @@
 
                           {%if asi.estadoReco%}
 
-                          <label style="font-size: 20px;"> Asistio </label>
+                          <label style="font-size: 20px;"> Asistió </label>
                           {%else%}
                           <label style="font-size: 20px;"> Falto </label>
 
@@ -792,10 +792,10 @@
                                     {% if asi.estadoReco %}
 
 
-                                    <option selected>Asistio</option>
+                                    <option selected>Asistió</option>
                                     <option>Falto</option>
                                     {%else%}
-                                    <option>Asistio</option>
+                                    <option>Asistió</option>
                                     <option selected>Falto</option>
 
                                     {%endif%}
@@ -895,64 +895,65 @@
 
 
                         <td>
+                          
+                          <div class="row" style="margin-left: 12%;">
 
-                          <center>
+                            <div >
+                              <a href="{% url 'gestionMusical:ver_alumno_clase' par.dni laClase.id %}"
+                                style="padding: 10px; width: 37px; height: 37px;">
+                                <button type="button" class="btn btn-primary" >
 
+                                  <i class="fa fa-plus-circle"></i>
 
-
-                            <div class="btn-group">
-                              <center>
-                                <div>
-                                  <a href="{% url 'gestionMusical:ver_alumno_clase' par.dni laClase.id %}">
-                                    <button type="button" class="btn btn-primary">
-
-                                      <i class="fa fa-plus-circle"></i>
-
-                                    </button>
-                                  </a>
-                                </div>
-                              </center>
+                                </button>
+                              </a>
                             </div>
 
 
-                            <div class="btn-group">
-                              <center>
-                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
-                                  data-target=".bs-example-modal-lg23{{par.dni}}">
-                                  <div id="icon8">
-                                    <i class="fas fa-trash"></i>
-                                  </div>
-                                </button>
-                              </center>
+                            <div >
+                              <button type="button" class="btn btn-danger" data-toggle="modal"
+                              data-target=".bs-example-modal-lg23{{par.dni}}">
 
-                              <div class="modal fade bs-example-modal-lg23{{par.dni}}" id="myModal2{{par.dni}}"
-                                tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{par.dni}}">Confirmacion de Eliminacion
-                                      </h4>
-                                      <button type="button" class="close" data-dismiss="modal"><span
-                                          aria-hidden="true">×</span>
-                                      </button>
+                              <i class="fas fa-trash"></i>
 
-                                    </div>
-                                    <div class="modal-body">
-                                      <h4>Esta seguro de Eliminar de la Clase al alumno {{par.apellido}} {{par.nombre}}
-                                        ???</h4>
+                              </button>
+                            </div>
+                            
+                          </div>
+                        
 
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <a href="{% url 'gestionMusical:desasociar_alumno_clase' par.dni  laClase.id %}">
-                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
-                                      </a>
-                                    </div>
 
-                                  </div>
+                          <div class="modal fade bs-example-modal-lg23{{par.dni}}" id="myModal2{{par.dni}}"
+                            tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title" id="myModalLabel{{par.dni}}">Confirmación de eliminación
+                                  </h4>
+                                  <button type="button" class="close" data-dismiss="modal"><span
+                                      aria-hidden="true">×</span>
+                                  </button>
+
                                 </div>
+                                
+                                <div class="modal-body">
+                                  <h4 style="font-size: 18px;">Esta seguro de  <strong>Eliminar</strong> de la Clase al alumno {{par.apellido}}
+                                    {{par.nombre}}
+                                    ?</h4>
+
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  <a href="{% url 'gestionMusical:desasociar_alumno_clase' par.dni  laClase.id %}">
+                                    <button type="button" class="btn btn-primary">Confirmar eliminación</button>
+                                  </a>
+                                </div>
+
                               </div>
-                          </center>
+                            </div>
+
+
+
 
                         </td>
 
@@ -984,7 +985,7 @@
           </div>
           <div class="modal-body">
             <div class="form-row">
-              <label for="inputAddress2" class="sub">Alumno:</label>
+              <label for="inputAddress2" class="sub"><strong>Alumno:</strong> </label>
               <select class="selectpicker" single data-live-search="true" id="alumnoPas" required>
 
 
@@ -999,13 +1000,13 @@
             <br>
             <div class="form-row">
 
-              <label for="inputAddress2" class="sub">Estado de Asistencia:</label>
+              <label for="inputAddress2" class="sub"><strong>Estado de Asistencia:</strong></label>
               <select class="selectpicker" single id="alumnoPasEstado" required>
 
 
 
 
-                <option value='Asistio'>Asistio</option>
+                <option value='Asistio'>Asistió</option>
                 <option value='Falto'>Falto</option>
 
 
@@ -1013,7 +1014,7 @@
             </div>
             <br>
             <div class="form-row">
-              <label for="inputAddress2" class="sub">Fecha de Asistencia:</label>
+              <label for="inputAddress2" class="sub"><strong>Fecha de Asistencia:</strong></label>
               <input type="date" id="id_fechaPasada" class="form-control" name="fechaPasada" value="2019-07-22"
                 min="20-01-01" max="2020-01-01" required>
 
@@ -1022,7 +1023,7 @@
             <br>
             <div class="form-row">
 
-              <label for="inputAddress2" class="sub">Horario de Clase:</label>
+              <label for="inputAddress2" class="sub"><strong>Horario de Clase:</strong></label>
               <select class="selectpicker" single data-live-search="true" id="alumnoPasFecha" required>
 
 
@@ -1101,7 +1102,7 @@
                 <div class="modal fade bs-example-modal-lg878{{elAlumno.dni}}" id="myModal{{elAlumno.dni}}"
                   tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
-                    <div class="modal-content" id="elgrando">
+                    <div class="modal-content" id="elgrando" style="color: black">
                       <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel{{elAlumno.dni}}">Datos Personales</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -2952,7 +2953,7 @@
                             <div class="modal fade bs-example-modal-lg88{{alu.dni}}" id="myModal{{alu.dni}}"
                               tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-lg">
-                                <div class="modal-content" id="elgrando">
+                                <div class="modal-content" id="elgrando" style="color: black;">
                                   <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Datos Personales</h4>
                                     <button type="button" class="close" data-dismiss="modal"><span
@@ -2960,76 +2961,69 @@
                                     </button>
 
                                   </div>
+
                                   <div class="modal-body" id="cuerpoModal">
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">DNI: </label>
+                                      <label for="inputEmail3" class="izquierda"><strong>DNI:</strong> </label>
                                       <div class="derecha">
                                         {{alu.dni}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Apellido:</strong></label>
                                       <div class="derecha">
                                         {{alu.apellido}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                                       <div class="derecha">
                                         {{alu.nombre}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Sexo:</strong></label>
                                       <div class="derecha">
                                         {{alu.sexo}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Fecha
+                                          Nacimiento:</strong></label>
                                       <div class="derecha">
                                         {{alu.fechaNac}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Domicilio:</strong></label>
                                       <div class="derecha">
                                         {{alu.domicilio}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Telefono:</strong></label>
                                       <div class="derecha">
                                         {{alu.telefono}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Correo:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Correo:</strong></label>
                                       <div class="derecha">
                                         {{alu.correoElectronico}}
                                       </div>
                                     </div>
+
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Observaciones:</label>
-                                      <div class="derecha">
-                                        {{alu.observaciones}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Gusto Musical:</strong></label>
                                       <div class="derecha">
                                         {{alu.musica}}
                                       </div>
                                     </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
-                                      <div class="derecha">
-                                        {{alu.conocimientoPrevio}}
-                                      </div>
-                                    </div>
+
 
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Especialidad
+                                          Requerida:</strong></label>
                                       <div class="derecha">
                                         {% if alu.especialidadRequerida   %}
 
@@ -3041,23 +3035,26 @@
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nivel en la especialidad:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nivel en la
+                                          especialidad:</strong></label>
                                       <div class="derecha">
                                         {{alu.nivel}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda" style="color: black;">TUTOR:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Conocimiento
+                                          Previo:</strong></label>
                                       <div class="derecha">
-
-                                        {%if alu.tutor%}
-                                        {{alu.tutor}}
-                                        <a href="#">mas</a>
-                                        {%else%}
-                                        <p>No registrado / mayor de edad</p>
-                                        {%endif%}
+                                        {{alu.conocimientoPrevio}}
                                       </div>
                                     </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda"><strong>Observaciones:</strong></label>
+                                      <div class="derecha">
+                                        {{alu.observaciones}}
+                                      </div>
+                                    </div>
+
 
 
                                   </div>
@@ -3073,9 +3070,9 @@
 
                             <div class="btn-group" id="masPlus">
                               <center>
-                                <button type="button" class="btn btn-warning btn-icon-split" data-toggle="modal"
-                                  data-target=".bs-example-modal-lg2{{alu.dni}}">
-                                  <div id="icon8">
+                                <button style="margin-left: 15%;" type="button" class="btn btn-warning btn-icon-split"
+                                  data-toggle="modal" data-target=".bs-example-modal-lg2{{alu.dni}}">
+                                  <div style="padding: 8px; width: 37px; height: 37px;">
                                     <i class="fas fa-plus"></i>
                                   </div>
                                 </button>
@@ -3086,7 +3083,7 @@
                                 <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion
+                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmación
                                       </h4>
                                       <button type="button" class="close" data-dismiss="modal"><span
                                           aria-hidden="true">×</span>
@@ -3094,8 +3091,9 @@
 
                                     </div>
                                     <div class="modal-body">
-                                      <h4>Esta seguro de establecer como Alumno al Sr/a {{alu.apellido}} {{alu.nombre}}
-                                        ???</h4>
+                                      <h4 style="font-size: 18px;">Esta seguro de establecer como Alumno al Sr/a
+                                        {{alu.apellido}} {{alu.nombre}}
+                                        ?</h4>
 
                                     </div>
                                     <div class="modal-footer">
