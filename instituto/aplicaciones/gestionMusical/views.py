@@ -777,15 +777,18 @@ def listarestadisticasparti(request, num):
         cveces = Partitura.objects.filter(compositor = n).count()
         if cveces != 0:
             
-            nombre = n.nombreIdentificador
+            
             numero = cveces
             globalTotal += numero
+            print(numero)
+            nombre = n.nombreIdentificador + "("+ str(numero) +")"
             dicti[nombre] = numero
     dicti2 = {}
     for k,v in dicti.items():
         por = (v * 100)/globalTotal
         dicti2[k] = por
     dicti = dicti2
+    print(dicti)
 
     dicti4 = {}
     cantccc = list(MusicaTipo.objects.all())

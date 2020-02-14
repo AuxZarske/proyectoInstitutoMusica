@@ -118,9 +118,9 @@
   }
 
   div#contenedorFiltro {
-    padding: 2%;
+    
     display: none;
-    background-color: antiquewhite;
+    
   }
 
   div.alinealoNomas {
@@ -393,17 +393,16 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Alumnos</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los alumnos que cuenta la institucion actualmente;
+          <p class="mb-4">En la siguiente tabla podra visualizar los alumnos que cuenta la institución actualmente;
             editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                <i class="fas fa-file"></i>
-              </button>
+              
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de alumnos que cuenta actualmente:
               </h6>
+              
               <!--modal-->
 
 
@@ -414,15 +413,20 @@
                 <span class="icon text-white-50">
                   <i class="fas fa-plus"></i>
                 </span>
-                <span class="text">Añadir Alumno</span>
+                <span class="text" style="color: white;">Añadir Alumno</span>
 
 
               </a>
               {%endif%}
+              <div>
+              <button class="btn btn-secondary"  onclick="ocultarFiltro()">
+                <i class="fas fa-filter"></i>
+              </button>
+            </div>
               <!---->
               <form class="user" method="POST">
                 {% csrf_token %}
-                <div id="contenedorFiltro">
+                <div id="contenedorFiltro" class="card" style="padding: 2%;">
                   <input type="hidden" id="filtrado" value="{{filtro}}">
 
 
@@ -504,7 +508,7 @@
 
 
 
-
+                      <button type="submit" class="btn btn-primary" id="fil" style="float: right; margin-top: 3%;" onclick="boton(1)">Filtrar</button>
 
                     </div>
 
@@ -514,13 +518,13 @@
 
                     <!--3dic-->
 
-                    <div id="zonaBotones">
-                      <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+                    
+                      
 
                       <input type="hidden" id="yolo" name="yolo" value="no cambio">
                       <input type="hidden" id="custId" name="custId" value="no cambio">
 
-                    </div>
+                  
 
                   </div>
 
@@ -604,102 +608,89 @@
                                             </div>
                                             <div class="modal-body" id="cuerpoModal">
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">DNI: </label>
+                                                <label for="inputEmail3" class="izquierda"><strong>DNI:</strong> </label>
                                                 <div class="derecha">
                                                   {{alu.dni}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Apellido:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.apellido}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.nombre}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Sexo:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.sexo}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Fecha Nacimiento:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.fechaNac}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Domicilio:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.domicilio}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Telefono:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.telefono}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Correo:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Correo:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.correoElectronico}}
                                                 </div>
                                               </div>
+                      
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Observaciones:</label>
-                                                <div class="derecha">
-                                                  {{alu.observaciones}}
-                                                </div>
-                                              </div>
-                                              <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Gusto Musical:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.musica}}
                                                 </div>
                                               </div>
+                      
+                      
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
-                                                <div class="derecha">
-                                                  {{alu.conocimientoPrevio}}
-                                                </div>
-                                              </div>
-
-                                              <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Especialidad
-                                                  Requerida:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Especialidad Requerida:</strong></label>
                                                 <div class="derecha">
                                                   {% if alu.especialidadRequerida == None  %}
                                                   Ninguna Asignada
-
+                      
                                                   {% else %}
                                                   {{alu.especialidadRequerida}}
                                                   {% endif %}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda">Nivel en la
-                                                  especialidad:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Nivel en la especialidad:</strong></label>
                                                 <div class="derecha">
                                                   {{alu.nivel}}
                                                 </div>
                                               </div>
                                               <div class="alinealoNomas">
-                                                <label for="inputEmail3" class="izquierda"
-                                                  style="color: black;">TUTOR:</label>
+                                                <label for="inputEmail3" class="izquierda"><strong>Conocimiento Previo:</strong></label>
                                                 <div class="derecha">
-
-                                                  {%if alu.tutor%}
-                                                  {{alu.tutor}}
-                                                  <a href="#">mas</a>
-                                                  {%else%}
-                                                  <p>No registrado / mayor de edad</p>
-                                                  {%endif%}
+                                                  {{alu.conocimientoPrevio}}
+                                                </div>
+                                              </div>
+                                              <div class="alinealoNomas">
+                                                <label for="inputEmail3" class="izquierda"><strong>Observaciones:</strong></label>
+                                                <div class="derecha">
+                                                  {{alu.observaciones}}
                                                 </div>
                                               </div>
 
@@ -718,9 +709,9 @@
 
                                       <div class="btn-group" id="masPlus">
                                         <center>
-                                          <button type="button" class="btn btn-warning btn-icon-split"
+                                          <button style="margin-left: 15%;" type="button" class="btn btn-warning "
                                             data-toggle="modal" data-target=".bs-example-modal-lg2{{alu.dni}}">
-                                            <div id="icon8">
+                                            <div >
                                               <i class="fas fa-plus"></i>
                                             </div>
                                           </button>
@@ -729,23 +720,23 @@
                                         <div class="modal fade bs-example-modal-lg2{{alu.dni}}" id="myModal2{{alu.dni}}"
                                           tabindex="-1" role="dialog" aria-hidden="true">
                                           <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
+                                            <div class="modal-content" >
                                               <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion de
-                                                  Eliminacion</h4>
+                                                <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmación
+                                                  </h4>
                                                 <button type="button" class="close" data-dismiss="modal"><span
                                                     aria-hidden="true">×</span>
                                                 </button>
 
                                               </div>
                                               <div class="modal-body">
-                                                <h4>Esta seguro de establecer como Alumno al Sr/a {{alu.apellido}}
-                                                  {{alu.nombre}} ???</h4>
+                                                <h4 style="font-size: 18px;">Esta seguro de  <strong>establecer</strong> como Alumno a  {{alu.apellido}}
+                                                  {{alu.nombre}} ?</h4>
 
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-default"
-                                                  data-dismiss="modal">Close</button>
+                                                  data-dismiss="modal">Cerrar</button>
                                                 <a href="{% url 'gestionMusical:reivindicar_alumno' alu.dni %}">
                                                   <button type="button" class="btn btn-primary">Confirmar </button>
                                                 </a>
@@ -866,6 +857,11 @@
                                 </button>
                               </div>
                             </center>
+                            
+
+
+
+
                             <div class="modal fade bs-example-modal-lg{{alu.dni}}" id="myModal{{alu.dni}}" tabindex="-1"
                               role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-lg">
@@ -879,99 +875,89 @@
                                   </div>
                                   <div class="modal-body" id="cuerpoModal">
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">DNI: </label>
+                                      <label for="inputEmail3" class="izquierda"><strong>DNI:</strong> </label>
                                       <div class="derecha">
                                         {{alu.dni}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Apellido:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Apellido:</strong></label>
                                       <div class="derecha">
                                         {{alu.apellido}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                                       <div class="derecha">
                                         {{alu.nombre}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Sexo:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Sexo:</strong></label>
                                       <div class="derecha">
                                         {{alu.sexo}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Fecha Nacimiento:</strong></label>
                                       <div class="derecha">
                                         {{alu.fechaNac}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Domicilio:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Domicilio:</strong></label>
                                       <div class="derecha">
                                         {{alu.domicilio}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Telefono:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Telefono:</strong></label>
                                       <div class="derecha">
                                         {{alu.telefono}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Correo:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Correo:</strong></label>
                                       <div class="derecha">
                                         {{alu.correoElectronico}}
                                       </div>
                                     </div>
+            
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Observaciones:</label>
-                                      <div class="derecha">
-                                        {{alu.observaciones}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Gusto Musical:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Gusto Musical:</strong></label>
                                       <div class="derecha">
                                         {{alu.musica}}
                                       </div>
                                     </div>
+            
+            
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
-                                      <div class="derecha">
-                                        {{alu.conocimientoPrevio}}
-                                      </div>
-                                    </div>
-
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Especialidad Requerida:</strong></label>
                                       <div class="derecha">
                                         {% if alu.especialidadRequerida == None  %}
                                         Ninguna Asignada
-
+            
                                         {% else %}
                                         {{alu.especialidadRequerida}}
                                         {% endif %}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nivel en la especialidad:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nivel en la especialidad:</strong></label>
                                       <div class="derecha">
                                         {{alu.nivel}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda" style="color: black;">TUTOR:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Conocimiento Previo:</strong></label>
                                       <div class="derecha">
-
-                                        {%if alu.tutor%}
-                                        {{alu.tutor}}
-                                        <a href="#">mas</a>
-                                        {%else%}
-                                        <p>No registrado / mayor de edad</p>
-                                        {%endif%}
+                                        {{alu.conocimientoPrevio}}
+                                      </div>
+                                    </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda"><strong>Observaciones:</strong></label>
+                                      <div class="derecha">
+                                        {{alu.observaciones}}
                                       </div>
                                     </div>
 
@@ -1004,20 +990,22 @@
                             <div class="btn-group">
                               {%if  perms.gestionMusical.es_director %}
                               <center>
-                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                <button style="margin-left: 15%;" type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                   data-target=".bs-example-modal-lg2{{alu.dni}}">
-                                  <div style="padding: 10px; width: 40px; height: 40px;">
+                                  <div style="padding: 8px; width: 37px; height: 37px;">
                                     <i class="fas fa-trash"></i>
                                   </div>
                                 </button>
                               </center>
 
+                          
+
                               <div class="modal fade bs-example-modal-lg2{{alu.dni}}" id="myModal2{{alu.dni}}"
                                 tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
+                                  <div class="modal-content" >
                                     <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmacion de Eliminacion
+                                      <h4 class="modal-title" id="myModalLabel{{alu.dni}}">Confirmación de eliminación
                                       </h4>
                                       <button type="button" class="close" data-dismiss="modal"><span
                                           aria-hidden="true">×</span>
@@ -1025,13 +1013,13 @@
 
                                     </div>
                                     <div class="modal-body">
-                                      <h4>Esta seguro de Eliminar al Alumno {{alu.apellido}} {{alu.nombre}} ???</h4>
+                                      <h4 style="font-size: 17px;">Esta seguro de <strong>Eliminar</strong>  al Alumno {{alu.apellido}} {{alu.nombre}} ?</h4>
 
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                       <a href="{% url 'gestionMusical:eliminar_alumno' alu.dni %}">
-                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                        <button type="button" class="btn btn-primary">Confirmar eliminación</button>
                                       </a>
                                     </div>
 

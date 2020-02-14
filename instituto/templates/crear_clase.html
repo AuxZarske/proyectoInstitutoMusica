@@ -1,3 +1,4 @@
+{%extends 'index.html'%}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,7 @@
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
 </head>
+
 <script type="text/javascript">
 
     function boton(num) {
@@ -45,6 +47,7 @@
 
     });
 </script>
+{%block estilos%}
 <style type="text/css">
     div#cuadroPrincipal {
         border: 1px solid;
@@ -130,7 +133,8 @@
         background-color: rgba(224, 224, 224, 0.747);
     }
 </style>
-
+{%endblock estilos%}
+{%block contenidiPagina%}
 <body id="total">
 
     <div id="cuadroCabeza">
@@ -513,6 +517,6 @@
 
 </body>
 
-
+{%endblock contenidiPagina%}
 
 </html>

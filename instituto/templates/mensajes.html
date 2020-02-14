@@ -177,12 +177,12 @@
 
 	.user_info span {
 		font-size: 20px;
-		color: white;
+		color: rgb(255, 255, 255);
 	}
 
 	.user_info p {
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.6);
+		color: rgb(255, 255, 255);
 	}
 
 	.video_cam {
@@ -365,7 +365,7 @@ div.alinealoNomas{
 				<div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." name=""
+							<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar..." name=""
 								class="form-control search">
 							<div class="input-group-prepend">
 								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
@@ -388,7 +388,7 @@ div.alinealoNomas{
 										</div>
 										<div class="user_info">
 											<span>{{p.apellido}} {{p.nombre}}</span>
-											<p>Profesor</p>
+											<p style="text-align: left;">Profesor</p>
 										</div>
 									</div>
 								</li>
@@ -406,7 +406,7 @@ div.alinealoNomas{
 										</div>
 										<div class="user_info">
 											<span>{{a.apellido}} {{a.nombre}}</span>
-											<p>Alumno</p>
+											<p style="text-align: left;">Alumno</p>
 										</div>
 									</div>
 								</li>
