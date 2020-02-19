@@ -134,7 +134,7 @@ div#fraseBoton{
         div#elgrando{
   width: 400px;
 }
-button#bot{
+button.bot{
   margin-bottom: 5%;
 }
 button#botonExtra{
@@ -472,7 +472,7 @@ div#zonaBotones{
                     <thead>
                       <tr>    
                         <th >Nombre</th>
-                        <th >Acciones</th>
+                        <th ><center>Acciones</center></th>
                       </tr>
                     </thead>               
                     <tbody>
@@ -489,19 +489,19 @@ div#zonaBotones{
                                           <div class="modal-dialog modal-lg">
                                               <div class="modal-content">
                                                   <div class="modal-header">
-                                                      <h4 class="modal-title" id="myModalLabelC{{com.id}}">Editar Nombre de compositor</h4>
+                                                      <h4 class="modal-title" id="myModalLabelC{{com.id}}">Editar nombre de compositor</h4>
                                                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                               </button>
                                                       
                                                   </div>
-                                                  <div class="modal-body">
-                                                      <label for="">Nombre de Compositor</label>
-                                                      <input type="text" id="inputCompoEditar" value="{{com.nombreIdentificador}}">
+                                                  <div class="modal-body" style="text-align: left;">
+                                                      <label for=""><strong>Nombre del compositor:</strong> </label>
+                                                      <input class="form-control" type="text" id="inputCompoEditar" value="{{com.nombreIdentificador}}">
                                                       <input type="hidden" id="idCompo" value="{{com.id}}" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                       
                                                       <button type="button" class="btn btn-primary" id="botonEditarCompo">Confirmar Cambio</button>
                                                     
@@ -512,15 +512,15 @@ div#zonaBotones{
                                       </div>
                                        <!--mmm-->
                                           <center>
-                                              <button type="button" id="bot" class="btn btn-danger btn-icon-split" style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg254C{{com.id}}">
-                                                  <div id="icon8">
+                                              <button type="button"  class="btn btn-warning " style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg254C{{com.id}}">
+                                                  <div >
                                                 <i class="fas fa-paint-brush"></i>
-                                              </div><div id="fraseBoton"> Editar</div>
+                                             
                                               </button>
-                                            <button type="button" id="bot" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{com.id}}">
-                                                <div id="icon8">
+                                            <button type="button"  class="btn btn-danger " data-toggle="modal" data-target=".bs-example-modal-lg2{{com.id}}">
+                                                <div >
                                               <i class="fas fa-trash"></i>
-                                            </div><div id="fraseBoton"> Eliminar</div>
+                                           
                                             </button>
                                           </center>
                                           
@@ -528,19 +528,19 @@ div#zonaBotones{
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel{{com.id}}">Confirmacion de Eliminacion</h4>
+                                                            <h4 class="modal-title" id="myModalLabel{{com.id}}">Confirmacion de eliminación</h4>
                                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                     </button>
                                                             
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h4>Esta seguro de Eliminar al compositor {{com.nombreIdentificador}}  ???</h4>
+                                                            <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> al compositor {{com.nombreIdentificador}}  ?</h4>
                                                             
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                             <a href="{% url 'gestionMusical:eliminar_compositor' com.id %}">
-                                                            <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                            <button type="button" class="btn btn-primary" >Confirmar eliminación</button>
                                                           </a>
                                                           </div>
                                         
@@ -564,7 +564,7 @@ div#zonaBotones{
                 </div>
                 <div id="dere" >
                     <!--der-->
-                    <label for="" class="titulon">Tipos de Musicas:</label>
+                    <label for="" class="titulon">Tipos de músicas:</label>
                     <button type="button" id="botonMas" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg275">
                         <div id="icon8">
                       <i class="fas fa-plus"> </i>
@@ -580,7 +580,7 @@ div#zonaBotones{
                     <thead>
                       <tr>    
                         <th >Nombre</th>
-                        <th >Acciones</th>
+                        <th ><center>Acciones</center></th>
                       </tr>
                     </thead>               
                     <tbody>
@@ -596,19 +596,19 @@ div#zonaBotones{
                                           <div class="modal-dialog modal-lg">
                                               <div class="modal-content">
                                                   <div class="modal-header">
-                                                      <h4 class="modal-title" id="myModalLabelM{{com.id}}">Editar Nombre de Musica</h4>
+                                                      <h4 class="modal-title" id="myModalLabelM{{com.id}}">Editar nombre de música</h4>
                                                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                               </button>
                                                       
                                                   </div>
-                                                  <div class="modal-body">
-                                                      <label for="">Nombre del Tipo de Musica:</label>
-                                                       <input type="text" id="inputMusicEditar" value="{{com.nombreMusica}}">
+                                                  <div class="modal-body" style="text-align: left;">
+                                                      <label for="" ><strong>Nombre del tipo de música:</strong> </label>
+                                                       <input class="form-control" type="text" id="inputMusicEditar" value="{{com.nombreMusica}}">
                                                        <input type="hidden" id="idMusic" value="{{com.id}}" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                                                       
                                                   </div>
                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                       
                                                       <button type="button" id="botonEditarMusic" class="btn btn-primary" >Confirmar Cambio</button>
                                                     
@@ -623,15 +623,15 @@ div#zonaBotones{
 
                                        <div class="btn-group">
                                           <center>
-                                              <button type="button" id="bot" class="btn btn-danger btn-icon-split" style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg25M{{com.id}}">
-                                                  <div id="icon8">
+                                              <button type="button"  class="btn btn-warning " style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg25M{{com.id}}">
+                                                  <div >
                                                 <i class="fas fa-paint-brush"></i>
-                                              </div><div id="fraseBoton"> Editar</div>
+                                              </div>
                                               </button>
-                                            <button type="button" id="bot" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg25{{com.id}}">
-                                                <div id="icon8">
+                                            <button type="button"  class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg25{{com.id}}">
+                                                <div >
                                               <i class="fas fa-trash"></i>
-                                            </div><div id="fraseBoton"> Eliminar</div>
+                                            </div>
                                             </button>
                                           </center>
                                           
@@ -639,19 +639,19 @@ div#zonaBotones{
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel{{com.id}}">Confirmacion de Eliminacion</h4>
+                                                            <h4 class="modal-title" id="myModalLabel{{com.id}}">Confirmacion de eliminación</h4>
                                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                                     </button>
                                                             
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h4>Esta seguro de Eliminar la musica {{com.nombreMusica}}  ???</h4>
+                                                            <h4 style="font-size:18px">Esta seguro de <strong>eliminar</strong> la música {{com.nombreMusica}}  ?</h4>
                                                             
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                             <a href="{% url 'gestionMusical:eliminar_musica' com.id %}">
-                                                            <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                            <button type="button" class="btn btn-primary" >Confirmar eliminación</button>
                                                           </a>
                                                           </div>
                                         
@@ -680,18 +680,18 @@ div#zonaBotones{
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel275">Establecer nuevo tipo de Musica</h4>
+                <h4 class="modal-title" id="myModalLabel275">Establecer nuevo tipo de música</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                         </button>
                 
             </div>
             <div class="modal-body">
-                <label for="">Nombre del Tipo de Musica:</label>
-                <input type="text" id="inputMusicaCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
+                <label for=""><strong>Nombre del tipo de música:</strong> </label>
+                <input class="form-control" type="text" id="inputMusicaCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                
                 <button type="button" id="botonCrearMusic" class="btn btn-primary" >Crear</button>
               
@@ -705,18 +705,19 @@ div#zonaBotones{
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel2777">Crear Nuevo Compositor</h4>
+                <h4 class="modal-title" id="myModalLabel2777">Crear nuevo compositor</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                         </button>
                 
             </div>
             <div class="modal-body">
-                <label for="">Nombre de Compositor</label>
-                <input type="text" id="inputCompoCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
+              
+                <label for=""><strong>Nombre del compositor:</strong></label>
+                <input class="form-control" type="text" id="inputCompoCrear" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50">
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                
                 <button type="button" id="botonCrearCompo" class="btn btn-primary" >Crear</button>
               
@@ -852,7 +853,7 @@ div#zonaBotones{
                  success: function (data) {
                      
                    if (data.is_taken) {
-                     alert("Ese nombre ya lo tiene otro tipo de musica ");
+                     alert("Ese nombre ya lo tiene otro tipo de música ");
                      document.getElementById("inputMusicaCrear").value = "";
                    }else{
                     
@@ -930,7 +931,7 @@ div#zonaBotones{
          success: function (data) {
              
            if (data.is_taken) {
-             alert("Ese nombre ya lo tiene otra musica ");
+             alert("Ese nombre ya lo tiene otra música ");
              document.getElementById("inputEditarMusic").value = "";
            }else{
             

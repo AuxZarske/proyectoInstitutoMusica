@@ -445,9 +445,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                <i class="fas fa-file"></i>
-              </button>
+              
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de partituras que cuenta
                 actualmente:</h6>
               <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_partitura'%}"
@@ -460,7 +458,14 @@
 
 
               </a>
+              <div>
+                <button class="btn btn-secondary"  onclick="ocultarFiltro()">
+                  <i class="fas fa-filter"></i>
+                </button>
+              </div>
             </div>
+
+           
 
 
 
@@ -468,7 +473,7 @@
 
             <form class="user" method="POST">
               {% csrf_token %}
-              <div id="contenedorFiltro">
+              <div id="contenedorFiltro" class="card" style="background-color: white;">
                 <input type="hidden" id="filtrado" value="{{filtro}}">
 
 
@@ -544,7 +549,7 @@
 
 
 
-
+                    <button type="submit" class="btn btn-primary" style="float: right; margin-top: 3%;" onclick="boton(1)">Filtrar</button>
 
 
 
@@ -557,7 +562,7 @@
                   <!--3dic-->
 
                   <div id="zonaBotones">
-                    <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+               
 
                     <input type="hidden" id="yolo" name="yolo" value="no cambio">
                     <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -664,33 +669,24 @@
                                     </button>
 
                                   </div>
+                                
                                   <div class="modal-body" id="cuerpoModal">
+                                    
                                     <div class="alinealoNomas">
-                                      <label class="izquierda">Id: </label>
-                                      <div class="derecha">
-                                        {{par.id}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                                       <div class="derecha">
                                         {{par.nombre}}
                                       </div>
                                     </div>
+                                    
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                      <div class="derecha">
-                                        {{par.descripcion}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Nivel:</strong></label>
                                       <div class="derecha">
                                         {{par.nivel}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Genero Musical:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Género músical:</strong></label>
                                       <div class="derecha">
                                         {%for p in par.musicaElecciones.all%}
                                         {{p}};
@@ -698,7 +694,7 @@
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Compositor:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Compositor:</strong></label>
                                       <div class="derecha">
                                         {%for p in par.compositor.all%}
                                         {{p}};
@@ -706,23 +702,29 @@
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                      <label for="inputEmail3" class="izquierda"><strong>Archivo:</strong></label>
 
                                       <div class="derecha">
                                         {%if par.archivo%}
 
                                         <center>
-                                          <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')">Documento</a>
+                                          <a href="#" onclick="elPdf('{{par.archivo|binary_to_image}}')"><strong>Documento</strong></a>
                                         </center>
 
                                         {%endif%}
 
                                       </div>
                                     </div>
+                                    <div class="alinealoNomas">
+                                      <label for="inputEmail3" class="izquierda"></label><strong>Descripción:</strong></label>
+                                      <div class="derecha">
+                                        {{par.descripcion}}
+                                      </div>
+                                    </div>
 
                                     <div class="alinealoNomas">
                                       <label for="inputEmail3" class="izquierda"
-                                        style="vertical-align: top">Especialidades para Uso:</label>
+                                        style="vertical-align: top"><strong>Especialidades para uso:</strong></label>
                                       <div class="derecha">
 
                                         {%for es in par.especialidadesAcordes.all%}
@@ -742,7 +744,7 @@
                               </div>
                             </div>
 
-                            <div id="ere">
+                            <div id="ere" style="margin-left: 6%;">
                               <a href="{% url 'gestionMusical:editar_partitura' par.id %}"
                                 class="btn btn-warning btn-icon-split">
 
@@ -757,9 +759,9 @@
                             <div class="btn-group">
                               {%if  perms.gestionMusical.es_director %}
                               <center>
-                                <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                <button style="margin-left: 15%;" type="button" class="btn btn-danger " data-toggle="modal"
                                   data-target=".bs-example-modal-lg23{{par.id}}">
-                                  <div id="icon8">
+                                  <div >
                                     <i class="fas fa-trash"></i>
                                   </div>
                                 </button>
@@ -770,7 +772,7 @@
                                 <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmacion de Eliminacion
+                                      <h4 class="modal-title" id="myModalLabel{{par.id}}">Confirmación de eliminación
                                       </h4>
                                       <button type="button" class="close" data-dismiss="modal"><span
                                           aria-hidden="true">×</span>
@@ -778,13 +780,13 @@
 
                                     </div>
                                     <div class="modal-body">
-                                      <h4>Esta seguro de Eliminar la Partitura {{par.nombre}} ???</h4>
+                                      <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> la partitura {{par.nombre}} ?</h4>
 
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                       <a href="{% url 'gestionMusical:eliminar_partitura' par.id %}">
-                                        <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                        <button type="button" class="btn btn-primary">Confirmar eliminación</button>
                                       </a>
                                     </div>
 

@@ -1,6 +1,8 @@
+{%extends 'index.html'%}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+    {%block head%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +15,8 @@
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
   <link href="{%static 'css/multi-select.css'%}" type="text/css" rel="stylesheet">
 </head>
+{%endblock head%}
+{%block archivos2%}
 <script type="text/javascript">
 
     function boton(num){
@@ -80,6 +84,32 @@
           
       });
 </script>
+<script>
+    $(document).ready(function(){
+       $("#nombr").change(function () {
+         var username = $(this).val();
+         
+         $.ajax({
+           
+           url: '{% url "gestionMusical:validate_username_tema" %}',
+           data: {
+             'username': username
+           },
+           dataType: 'json',
+           
+           success: function (data) {
+               
+             if (data.is_taken) {
+               alert("Ese nombre esta ocupado por otro Tema");
+             }
+           }
+         });
+   
+       });
+   });
+     </script>
+{%endblock archivos2%}
+{%block estilos%}
 <style type="text/css">
 
     div#cuadroPrincipal{
@@ -146,30 +176,8 @@
     
     
     </style>
-<script>
-        $(document).ready(function(){
-           $("#nombr").change(function () {
-             var username = $(this).val();
-             
-             $.ajax({
-               
-               url: '{% url "gestionMusical:validate_username_tema" %}',
-               data: {
-                 'username': username
-               },
-               dataType: 'json',
-               
-               success: function (data) {
-                   
-                 if (data.is_taken) {
-                   alert("Ese nombre esta ocupado por otro Tema");
-                 }
-               }
-             });
-       
-           });
-       });
-         </script>
+{%endblock estilos%}
+{%block contenidiPagina%}
 <body id="total">
     
         <div id="cuadroCabeza">
@@ -326,27 +334,29 @@
 
 
     
-              {%block archivos%}
-              <!-- Bootstrap core JavaScript-->
-              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-              <!-- Core plugin JavaScript-->
-              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-            
-              <!-- Custom scripts for all pages-->
-              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-            
-              <!-- Page level plugins -->
-              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-            
-              <!-- Page level custom scripts -->
-              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-  <script src="{%static 'js/selectMul2.js'%}"></script>
-              {%endblock archivos%} 
+           
 
 </body>
+{%endblock contenidiPagina%}
+{%block archivos%}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<!-- Page level plugins -->
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<script src="{%static 'js/jquery.multi-select.js'%}"></script>
+<script src="{%static 'js/selectMul2.js'%}"></script>
+{%endblock archivos%} 
 
 
 

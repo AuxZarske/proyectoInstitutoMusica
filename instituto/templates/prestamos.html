@@ -84,15 +84,15 @@
 
 
       if (reputacion < 61) {
-      
+
         document.getElementById("mal").style.display = "block";
       } else {
-        
+
         document.getElementById("mal").style.display = "none";
       }
     } else {
       //oculto los dos
-      
+
       document.getElementById("mal").style.display = "none";
     }
   }
@@ -562,8 +562,8 @@
         {%block contenidiPagina%}
         <div style="float: right;">
           <div class="fa-hover">
-            <a target="_blank"  href="https://youtu.be/Dxje-ES-mtQ">
-              <i class="fa fa-question-circle" ></i>
+            <a target="_blank" href="https://youtu.be/Dxje-ES-mtQ">
+              <i class="fa fa-question-circle"></i>
             </a>
           </div>
         </div>
@@ -599,8 +599,8 @@
           {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_director %}
           <form class="user" method="POST">
             {% csrf_token %}
-            <div id="establecerPrestamo">
-              <h1 class="h3 mb-2 text-gray-800" id="tituloPrestamo">Establecer Prestamo:</h1>
+            <div  class="card shadow" style="background-color: white; padding: 2%;">
+              <h1 class="h3 mb-2 text-gray-800" id="tituloPrestamo" style="margin-left: 0;">Establecer Prestamo:</h1>
 
               <div>
                 <div class="form-row">
@@ -651,8 +651,7 @@
                   </div>
 
 
-                  <button type="button" id="botonPrestamito" class="btn btn-facebook" onclick="mensaje()" style="vertical-align: bottom;"
-                    data-toggle="modal" data-target=".bs-example-modal-lg2371">Establecer Prestamo</button>
+
                   <div class="form-group" style="vertical-align: bottom;">
 
 
@@ -956,6 +955,11 @@
 
 
                 </div>
+                <div style="float:right;">
+                  <button type="button" id="botonPrestamito" class="btn btn-facebook" onclick="mensaje()"
+                    style="vertical-align: bottom;" data-toggle="modal"
+                    data-target=".bs-example-modal-lg2371">Establecer Prestamo</button>
+                </div>
               </div>
             </div>
           </form>
@@ -1079,6 +1083,7 @@
           </div>
           <!--tyty-->
           <br>
+          <div class="card shadow" style="padding: 1%;">
           <h1 class="h3 mb-2 text-gray-800">Prestamos</h1>
           {%if perms.gestionMusical.es_profesor or perms.gestionMusical.es_director %}
           <p class="mb-4">En la siguiente tabla podra visualizar los prestamos actuales y pasados que han sido
@@ -1093,12 +1098,15 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                <i class="fas fa-file"></i>
-              </button>
-              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de prestamos que cuenta:</h6>
 
+              <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de prestamos que cuenta:</h6>
+              <div>
+                <button class="btn btn-secondary" onclick="ocultarFiltro()">
+                  <i class="fas fa-filter"></i>
+                </button>
+              </div>
             </div>
+
 
 
 
@@ -1106,7 +1114,7 @@
 
             <form class="user" method="POST">
               {% csrf_token %}
-              <div id="contenedorFiltro">
+              <div id="contenedorFiltro" class="card" style="background-color: white;">
                 <input type="hidden" id="filtrado" value="">
 
 
@@ -1153,7 +1161,8 @@
 
 
 
-
+                    <button type="button" class="btn btn-primary" style="float: right; margin-top: 3%;"
+                      id="filtrar">Filtrar</button>
 
 
                   </div>
@@ -1165,7 +1174,7 @@
                   <!--3dic-->
 
                   <div id="zonaBotones">
-                    <button type="button" class="btn btn-primary" id="filtrar">Filtrar</button>
+
 
                     <input type="hidden" id="yolo" name="yolo" value="no cambio">
                     <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -1529,7 +1538,7 @@
               </div>
             </div>
           </div>
-
+        </div>
         </div>
         <!-- /.container-fluid -->
         {%endblock contenidiPagina%}
@@ -1675,15 +1684,15 @@
 
   <script>
 
-    function cambioBoton(){
+    function cambioBoton() {
 
       var v1 = document.getElementById("country").value;
       var v2 = document.getElementById("country2").value;
       var v3 = document.getElementById("numeroDias").value;
-      
-      if(v1 != "" && v2 != "" && v3 > 0 && v3 < 99){
+
+      if (v1 != "" && v2 != "" && v3 > 0 && v3 < 99) {
         document.getElementById("botonPrestamito").disabled = false;
-      }else{
+      } else {
         document.getElementById("botonPrestamito").disabled = true;
       }
 
@@ -1692,21 +1701,21 @@
 
 
 
-    $( "#country" ).change(function() {
-  cambioBoton();
-});
-$( "#country2" ).change(function() {
-  cambioBoton();
-});
-$( "#numeroDias" ).change(function() {
-  cambioBoton();
-});
+    $("#country").change(function () {
+      cambioBoton();
+    });
+    $("#country2").change(function () {
+      cambioBoton();
+    });
+    $("#numeroDias").change(function () {
+      cambioBoton();
+    });
 
 
 
     $(document).ready(function () {
 
-      
+
       document.getElementById("botonPrestamito").disabled = true;
       cambioBoton();
 

@@ -164,7 +164,7 @@
   div#contenedorFiltro {
     padding: 2%;
     display: none;
-    background-color: antiquewhite;
+   
   }
 
   div.laFilitaUno {
@@ -488,9 +488,9 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                <i class="fas fa-file"></i>
-              </button>
+
+              
+
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de tutores que cuenta actualmente:
               </h6>
               <!--modal-->
@@ -505,15 +505,21 @@
                 <span class="icon text-white-50">
                   <i class="fas fa-plus"></i>
                 </span>
-                <span class="text">Añadir Tutores</span>
+                <span class="text" style="color: white;">Añadir Tutor</span>
 
 
               </a>
               {%endif%}
+              <div>
+                <button class="btn btn-secondary"   onclick="ocultarFiltro()">
+                  <i class="fas fa-filter"></i>
+                </button>
+              </div>
+              
 
               <form class="user" method="POST">
                 {% csrf_token %}
-                <div id="contenedorFiltro">
+                <div id="contenedorFiltro" class="card" style="padding: 2%; background-color: white;">
                   
                   <div id="comboFiltro">
                     <div id="zonaInput">
@@ -522,7 +528,7 @@
                         <label for="inputAddress2" class="sub" style="color: black">Filtrar segun alumno asociado:</label>
   
                         <div class="form-row">
-                          <select id="alunoElejir" name="alumnoElejir" class="selectpicker" single
+                          <select  id="alunoElejir" name="alumnoElejir" class="selectpicker" single
                           data-live-search="true" required>
                           <option value='---'>---</option>
 
@@ -536,17 +542,17 @@
                       </select>
   
                         </div>
-  
+                        <button type="submit" class="btn btn-primary" id="filtrar" style="float: right; ">Filtrar</button>
                       </div>
   
-  
+                      
                     </div>
   
   
                     <!--3dic-->
   
                     <div id="zonaBotones">
-                      <button type="submit" class="btn btn-primary" id="filtrar">Filtrar</button>
+                     
   
                       <input type="hidden" id="yolo" name="yolo" value="no cambio">
                       <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -621,7 +627,7 @@
 
 
 
-                              <div id="ere">
+                              <div id="ere" style="margin-left: 5%;">
                                 <a href="{% url 'gestionMusical:editar_tutor' t.dniTutor %}"
                                   class="btn btn-warning btn-icon-split">
 
@@ -636,9 +642,9 @@
                               <div class="btn-group">
                                 {%if  perms.gestionMusical.es_director %}
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                  <button style="margin-left: 15%;" type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
                                     data-target=".bs-example-modal-lg2{{t.dniTutor}}">
-                                    <div id="icon8">
+                                    <div style="padding: 8px; width: 37px; height: 37px;">
                                       <i class="fas fa-trash"></i>
                                     </div>
                                   </button>
@@ -650,22 +656,22 @@
                                     <div class="modal-content">
                                       <div class="modal-header">
                                         <h4 class="modal-title" id="myModalLabel{{t.dniTutor}}">Confirmacion de
-                                          Eliminacion</h4>
+                                          eliminación</h4>
                                         <button type="button" class="close" data-dismiss="modal"><span
                                             aria-hidden="true">×</span>
                                         </button>
 
                                       </div>
                                       <div class="modal-body">
-                                        <h4>Esta seguro de Eliminar al Tutor {{t.apellidoTutor}} {{t.nombreTutor}} ???
+                                        <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> al tutor {{t.apellidoTutor}} {{t.nombreTutor}} ?
                                         </h4>
 
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-default"
-                                          data-dismiss="modal">Close</button>
+                                          data-dismiss="modal">Cerrar</button>
                                         <a href="{% url 'gestionMusical:eliminar_tutor' t.dniTutor %}">
-                                          <button type="button" class="btn btn-primary">Confirmar Eliminacion</button>
+                                          <button type="button" class="btn btn-primary">Confirmar eliminación</button>
                                         </a>
                                       </div>
 
@@ -702,19 +708,19 @@
                 </div>
                 <div class="modal-body">
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda">DNI: </label>
+                    <label for="inputEmail3" class="izquierda"><strong>DNI:</strong> </label>
                     <div class="derecha" id="dniTU">
                       {{t.dniTutor}}
                     </div>
                   </div>
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda">Apellido:</label>
+                    <label for="inputEmail3" class="izquierda"><strong>Apellido:</strong></label>
                     <div class="derecha" id="apellidoTU">
                       {{t.apellidoTutor}}
                     </div>
                   </div>
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda">Nombre:</label>
+                    <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                     <div class="derecha" id="nombreTU">
                       {{t.nombreTutor}}
                     </div>
@@ -722,14 +728,14 @@
 
 
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda">Telefono:</label>
+                    <label for="inputEmail3" class="izquierda"><strong>Teléfono:</strong></label>
                     <div class="derecha" id="telefonoTU">
                       {{t.telefonoTutor}}
                     </div>
                   </div>
 
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda">Correo Electronico:</label>
+                    <label for="inputEmail3" class="izquierda"><strong>Correo electronico:</strong></label>
                     <div class="derecha" id="emailTU">
                       {{t.emailTutor}}
                     </div>
@@ -737,7 +743,7 @@
 
 
                   <div class="alinealoNomas">
-                    <label for="inputEmail3" class="izquierda" style="vertical-align: top;">Alumnos asociados:</label>
+                    <label for="inputEmail3" class="izquierda" style="vertical-align: top;"><strong>Alumnos asociados:</strong></label>
                     <div class="derecha" id="tipuTU">
 
                     </div>

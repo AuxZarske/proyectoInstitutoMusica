@@ -248,8 +248,8 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Especialidades</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar las especialidades que cuenta la institucion
-            actualmente; editar o eliminar alguna. Ademas de insertar una nueva al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podrá visualizar las especialidades que cuenta la institución
+            actualmente; editar o dar de baja alguna. Además de insertar una nueva al sistema.</p>
           <div id="cuadroMensajes">
 
             {% if messages %}
@@ -276,9 +276,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <button class="btn btn-facebook" id="botonExtra" onclick="mostrar_ocultar()">
-                <i class="fas fa-file"></i>
-              </button>
+             
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de especialidades que cuenta
                 actualmente:</h6>
 
@@ -296,12 +294,21 @@
 
 
               </a>
+
+              <div>
+                <button class="btn btn-secondary" onclick="mostrar_ocultar()">
+                  <i class="fas fa-filter"></i>
+                </button>
+              </div>
+
+
+
             </div>
             <form class="user" method="POST">
               {% csrf_token %}
-              <div id="contenedorFiltro">
+              <div id="contenedorFiltro" class="card" style="background-color: white; color: black;">
                 <input type="hidden" id="filtrado" value="{{filtro}}">
-                <p style="font-size: 22px">Fecha de Creacion:</p>
+                <p style="font-size: 22px" style="color: black;">Fecha de Creación:</p>
 
                 <input type="hidden" id="inputOculto" value="{{pedidor}}">
 
@@ -351,7 +358,7 @@
 
 
 
-
+                    <button type="submit" class="btn btn-primary"  style="float: right; margin-top: 3%;" onclick="boton(1)">Filtrar</button>
                   </div>
 
 
@@ -361,7 +368,7 @@
                   <!--3dic-->
 
                   <div id="zonaBotones">
-                    <button type="submit" class="btn btn-primary" id="fil" onclick="boton(1)">Filtrar</button>
+                   
                     <input type="hidden" id="custId" name="custId" value="no cambio">
 
                   </div>
@@ -381,7 +388,7 @@
                       <th>Fecha Creacion</th>
                       <th>Descripcion</th>
                       <th class="noExport">Estado</th>
-                      <th class="noExport">Acciones</th>
+                      <th class="noExport" style="width: 25%;">Acciones</th>
 
                     </tr>
                   </thead>
@@ -403,7 +410,7 @@
                         {%endif%}
                       </td>
 
-                      <td>
+                      <td style="width: 25%;">
                         <!--tda-->
                         <center>
 
@@ -412,7 +419,7 @@
                           <a href="{% url 'gestionMusical:editar_especialidad' especialidad.id %}">
 
                             <button type="button" class="btn btn-warning btn-sm" ng-click="Editar(l.Id)">
-                              <span class="fas fa-paint-brush" aria-hidden="true"></span>
+                              <span class="fas fa-paint-brush" aria-hidden="true"></span> Editar
                             </button>
 
                           </a>
@@ -420,14 +427,14 @@
 
                           <button type="button" ng-hide="btnAlta" class="btn btn-info btn-sm" ng-click="Alta(l.Id)"
                           data-toggle="modal" data-target=".bs-example-modal-lg2878{{especialidad.id}}">
-                            <span class="fa fa-angle-up" aria-hidden="true"></span>Alta
+                            <span class="fa fa-angle-up" aria-hidden="true"></span> Alta
                           </button>
 
 
 
                           <button type="button" ng-hide="btnBaja" class="btn btn-danger btn-sm" ng-click="Baja(l.Id)"
                             data-toggle="modal" data-target=".bs-example-modal-lg2{{especialidad.id}}">
-                            <span class="fa fa-angle-down" aria-hidden="true"></span>Baja
+                            <span class="fa fa-angle-down" aria-hidden="true"></span> Baja
                           </button>
 
 

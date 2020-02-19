@@ -426,14 +426,12 @@ div#espeNIvel{
         </div>
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Instrumentos</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los instrumentos que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar un nuevo al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar los instrumentos que cuenta la institucion actualmente; editar o eliminar alguno. Además de insertar un nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                    <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                            <i class="fas fa-file"></i>
-                          </button>
+                    
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de instrumentos que cuenta actualmente:</h6>
                     <!--modal-->
                   
@@ -444,17 +442,22 @@ div#espeNIvel{
                             <span class="icon text-white-50">
                                   <i class="fas fa-plus"></i>
                             </span>
-                            <span class="text">Añadir Instrumento</span>
+                            <span class="text" style="color: white;">Añadir Instrumento</span>
                             
                       
                         </a>
                         {%endif%}
+                        <div>
+                          <button class="btn btn-secondary" onclick="ocultarFiltro()">
+                            <i class="fas fa-filter"></i>
+                          </button>
+                        </div>
 
                         
                      <!--dsds-->
                      <form class="user" method="POST">
                             {% csrf_token %}
-                        <div id="contenedorFiltro">
+                        <div id="contenedorFiltro" class="card" style="background-color: white;">
                             <input type="hidden" id="filtrado" value="{{filtro}}">
             
                        
@@ -527,7 +530,7 @@ div#espeNIvel{
 
 
 
-
+                                            <button type="submit" class="btn btn-primary"   style="float: right; margin-top: 3%;"  onclick="boton(1)">Filtrar</button>
 
                                   </div>
             
@@ -538,7 +541,7 @@ div#espeNIvel{
                               <!--3dic-->
                             
                             <div id="zonaBotones">
-                            <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+                          
                            
                             <input type="hidden" id="yolo" name="yolo" value="no cambio">
                             <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -606,39 +609,41 @@ div#espeNIvel{
                                                                                           </button>
                                                   
                                               </div>
+                                             
                                               <div class="modal-body">
                                                   <div class="alinealoNomas">
-                                                      <label for="inputEmail3" class="izquierda">Nombre: </label>
+                                                      <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong> </label>
                                                       <div class="derecha">
                                                         {{t.nombre}}
                                                       </div>
                                                     </div>
-                                                    <div class="alinealoNomas">
-                                                        <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                                        <div class="derecha">
-                                                            {{t.descripcion}}
-                                                        </div>
-                                                      </div>
+                                                   
                                                       <div class="alinealoNomas">
-                                                          <label for="inputEmail3" class="izquierda">Color:</label>
+                                                          <label for="inputEmail3" class="izquierda"><strong>Color:</strong></label>
                                                           <div class="derecha">
                                                               {{t.color}}
                                                           </div>
                                                         </div>
                                                         <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Estado de uso:</label>
+                                                                <label for="inputEmail3" class="izquierda"><strong>Estado de uso:</strong></label>
                                                                 <div class="derecha">
                                                                     {{t.estadoUso}}
                                                                 </div>
                                                               </div>
                                                               <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Fecha de Carga:</label>
+                                                                  <label for="inputEmail3" class="izquierda"><strong>Fecha de carga:</strong></label>
                                                                   <div class="derecha">
                                                                       {{t.fechaCreacion}}
                                                                   </div>
                                                                 </div>
                                                                 <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Imagen:</label>
+                                                                  <label for="inputEmail3" class="izquierda"><strong>Descripción:</strong></label>
+                                                                  <div class="derecha">
+                                                                      {{t.descripcion}}
+                                                                  </div>
+                                                                </div>
+                                                                <div class="alinealoNomas">
+                                                                    <label for="inputEmail3" class="izquierda" style="vertical-align: top;"><strong>Imágen:</strong></label>
                                                                     <div class="derecha">
                                                                             
                                                                         <img src="data:image/png;base64, {{t.archivo|binary_to_image}}" alt="" id="imagenInstrumento">
@@ -659,7 +664,7 @@ div#espeNIvel{
                                       </div>
                                   </div>
 
-                                  <div id="ere">
+                                  <div id="ere" style="margin-left: 6%;">
                             <a href="{% url 'gestionMusical:editar_instrumento' t.id %}" class="btn btn-warning btn-icon-split">
                                  
                                 <span class="icon text-white-50">
@@ -673,8 +678,8 @@ div#espeNIvel{
                               <div class="btn-group">
                                   {%if  perms.gestionMusical.es_director %}
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{t.id}}">
-                                      <div id="icon8">
+                                  <button style="margin-left: 15%;" type="button" class="btn btn-danger " data-toggle="modal" data-target=".bs-example-modal-lg2{{t.id}}">
+                                      <div >
                                     <i class="fas fa-trash"></i>
                                   </div>
                                   </button>
@@ -684,19 +689,19 @@ div#espeNIvel{
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{t.id}}">Confirmacion de Eliminacion</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{t.id}}">Confirmacion de eliminación</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar el instrumento {{t.nombre}} ???</h4>
+                                                  <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> el instrumento {{t.nombre}} ?</h4>
                                                   
                                               </div>
                                               <div class="modal-footer">
-                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                   <a href="{% url 'gestionMusical:eliminar_instrumento' t.id %}">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                  <button type="button" class="btn btn-primary" >Confirmar eliminación</button>
                                                 </a>
                                                 </div>
                               

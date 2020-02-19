@@ -1,7 +1,9 @@
+{%extends 'index.html'%}
 {% load staticfiles %}
 {% load poll_extras %}
 <!DOCTYPE html>
 <html lang="en">
+    {%block head%}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +18,8 @@
   	
 <link rel="stylesheet" href="{%static 'css/select2.min.css'%}" />
 </head>
+{%endblock head%}
+{%block archivos2%}
 <script type="text/javascript">
 
     
@@ -113,6 +117,8 @@
            
     });
 </script>
+{%endblock archivos2%}
+{%block estilos%}
 <style type="text/css">
 
     div#cuadroPrincipal{
@@ -222,7 +228,8 @@ p#msj{
     
     
     </style>
- 
+ {%endblock estilos%}
+ {%block contenidiPagina%}
 <body id="total" name="total">
     
         <div id="cuadroCabeza">
@@ -404,37 +411,38 @@ p#msj{
 
 
     
-              {%block archivos%}
-              <!-- Bootstrap core JavaScript-->
-              <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-              <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-              <!-- Core plugin JavaScript-->
-              <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-            
-              <!-- Custom scripts for all pages-->
-              <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-            
-              <!-- Page level plugins -->
-              <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-              </script>
-              <script src="{%static 'js/select2.min.js'%}"></script>
-              <script>
-              $("#country").select2( {
-               placeholder: "Seleccione Compositor",
-               allowClear: true
-               } );
-              </script>
-            
-              <!-- Page level custom scripts -->
-              <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-              <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
-              <script src="{%static 'js/jquery.multi-select.js'%}"></script>
-  <script src="{%static 'js/selectMul2.js'%}"></script>
-              {%endblock archivos%} 
 
 </body>
+{%endblock contenidiPagina%}
 
+{%block archivos%}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<!-- Page level plugins -->
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src="{%static 'js/select2.min.js'%}"></script>
+<script>
+$("#country").select2( {
+ placeholder: "Seleccione Compositor",
+ allowClear: true
+ } );
+</script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<script src="{%static 'js/jquery.multi-select.js'%}"></script>
+<script src="{%static 'js/selectMul2.js'%}"></script>
+{%endblock archivos%} 
 
 
 </html>

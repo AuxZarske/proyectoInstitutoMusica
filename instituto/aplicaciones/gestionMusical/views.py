@@ -4160,7 +4160,10 @@ def editarPartitura(request,id):
                 espeParti.append(Especialidad.objects.get(id = e['especialidadesAcordes']))
         
         for e in espeParti:
-            especialidadesTodas.remove(e)
+            try:
+                especialidadesTodas.remove(e)
+            except:
+                pass
 
         if request.method == 'GET':
             partitura_form = PartituraForm(instance = partitura)

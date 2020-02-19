@@ -387,14 +387,12 @@ div#zonaBotones{
         </div>
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Temas</h1>
-          <p class="mb-4">En la siguiente tabla podra visualizar los temas que cuenta la institucion actualmente; editar o eliminar alguno. Ademas de insertar uno nuevo al sistema.</p>
+          <p class="mb-4">En la siguiente tabla podra visualizar los temas que cuenta la institucion actualmente; editar o eliminar alguno. Además de insertar uno nuevo al sistema.</p>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <button class="btn btn-facebook" id="botonExtra" onclick="ocultarFiltro()">
-                    <i class="fas fa-file"></i>
-                  </button>
+                
               <h6 id="fraseTable" class="m-0 font-weight-bold text-primary">Conjunto de temas que cuenta actualmente:</h6>
               <a id="fraseTableBoton" href="{% url 'gestionMusical:crear_tema'%}" class="btn btn-primary btn-icon-split">
                               
@@ -405,13 +403,19 @@ div#zonaBotones{
                                     
                               
                               </a>
+                              <div>
+                                <button class="btn btn-secondary" onclick="ocultarFiltro()">
+                                  <i class="fas fa-filter"></i>
+                                </button>
+                              </div>
             </div>
+            
             <!--t-->
             <form class="user" method="POST">
                 {% csrf_token %}
                 <input type="hidden" id="inputOculto" value="{{pedidor}}">
         <input type="hidden" id="inputOcultoTemplate" value="3">
-            <div id="contenedorFiltro">
+            <div id="contenedorFiltro" class="card" style="background-color: white;">
                 <input type="hidden" id="filtrado" value="{{filtro}}">
 
            
@@ -473,7 +477,7 @@ div#zonaBotones{
 
 
 
-
+                            <button type="submit" class="btn btn-primary"   style="float: right; margin-top: 3%;" onclick="boton(1)">Filtrar</button>
 
                       </div>
 
@@ -484,7 +488,7 @@ div#zonaBotones{
                   <!--3dic-->
                 
                 <div id="zonaBotones">
-                <button type="submit" class="btn btn-primary"  id="fil" onclick="boton(1)">Filtrar</button>
+              
                
                 <input type="hidden" id="yolo" name="yolo" value="no cambio">
                 <input type="hidden" id="custId" name="custId" value="no cambio">
@@ -574,38 +578,28 @@ div#zonaBotones{
                                                           
                                                       </div>
                                                       <div class="modal-body" id="cuerpoModal">
-                                                          <div class="alinealoNomas">
-                                                              <label for="inputEmail3" class="izquierda">Id: </label>
-                                                              <div class="derecha">
-                                                                {{tema.id}}
-                                                              </div>
-                                                            </div>
+                                                        
                                                             <div class="alinealoNomas">
-                                                                <label for="inputEmail3" class="izquierda">Nombre:</label>
+                                                                <label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
                                                                 <div class="derecha">
                                                                     {{tema.nombre}}
                                                                 </div>
                                                               </div>
-                                                              <div class="alinealoNomas">
-                                                                  <label for="inputEmail3" class="izquierda">Descripcion:</label>
-                                                                  <div class="derecha">
-                                                                      {{tema.descripcion}}
-                                                                  </div>
-                                                                </div>
+                                                            
                                                                 <div class="alinealoNomas">
-                                                                    <label for="inputEmail3" class="izquierda">Nivel:</label>
+                                                                    <label for="inputEmail3" class="izquierda"><strong>Nivel:</strong></label>
                                                                     <div class="derecha">
                                                                         {{tema.nivel}}
                                                                     </div>
                                                                   </div>
                                                                   <div class="alinealoNomas">
-                                                                      <label for="inputEmail3" class="izquierda">Tema:</label>
+                                                                      <label for="inputEmail3" class="izquierda"><strong>Tema:</strong></label>
                                                                       <div class="derecha">
                                                                           {{tema.tipo}}
                                                                       </div>
                                                                     </div>
                                                                     <div class="alinealoNomas">
-                                                                        <label for="inputEmail3" class="izquierda">Archivo:</label>
+                                                                        <label for="inputEmail3" class="izquierda"><strong>Archivo:</strong></label>
                                                                         <div class="derecha">
                                                                             {%if tema.archivo%}
                                                                     
@@ -616,6 +610,13 @@ div#zonaBotones{
                                                                             {%endif%}
                                                                           </div>
                                                                       </div>
+                                                                      <div class="alinealoNomas">
+                                                                        <label for="inputEmail3" class="izquierda"><strong>Descripción:</strong></label>
+                                                                        <div class="derecha">
+                                                                            {{tema.descripcion}}
+                                                                        </div>
+                                                                      </div>
+                                                                      
                                               </div>
                                               <div class="modal-footer">
                                                   
@@ -626,7 +627,7 @@ div#zonaBotones{
                                       </div>
                                   </div>
 
-                                  <div id="ere">
+                                  <div id="ere" style="margin-left: 6%;">
                                 <a href="{% url 'gestionMusical:editar_tema' tema.id %}" class="btn btn-warning btn-icon-split">
                               
                                 <span class="icon text-white-50">
@@ -640,8 +641,8 @@ div#zonaBotones{
                               <div class="btn-group">
                                   {%if  perms.gestionMusical.es_director %}
                                 <center>
-                                  <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{tema.id}}">
-                                      <div id="icon8">
+                                  <button style="margin-left: 15%;" type="button" class="btn btn-danger " data-toggle="modal" data-target=".bs-example-modal-lg2{{tema.id}}">
+                                      <div >
                                     <i class="fas fa-trash"></i>
                                   </div>
                                   </button>
@@ -651,19 +652,19 @@ div#zonaBotones{
                                       <div class="modal-dialog modal-lg">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h4 class="modal-title" id="myModalLabel{{tema.id}}">Confirmacion de Eliminacion</h4>
+                                                  <h4 class="modal-title" id="myModalLabel{{tema.id}}">Confirmacion de eliminación</h4>
                                                   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                                                                           </button>
                                                   
                                               </div>
                                               <div class="modal-body">
-                                                  <h4>Esta seguro de Eliminar el tema {{tema.nombre}}  ???</h4>
+                                                  <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> el tema {{tema.nombre}}  ?</h4>
                                                   
                                               </div>
                                               <div class="modal-footer">
-                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                                   <a href="{% url 'gestionMusical:eliminar_tema' tema.id %}">
-                                                  <button type="button" class="btn btn-primary" >Confirmar Eliminacion</button>
+                                                  <button type="button" class="btn btn-primary" >Confirmar eliminación</button>
                                                 </a>
                                                 </div>
                               
