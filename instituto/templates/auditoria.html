@@ -3347,11 +3347,7 @@
             if (filtro3 != "" && filtro4 != "") {
               var filtradoTabla = function FuncionFiltrado(settings, data, dataIndex) {
 
-                if (tablas == String(data[2])) {
-                  console.log("g");
-                  console.log(Date.parse(String(fechaMAX)) + 86399000)
-                  console.log(Date.parse(String(data[1])));
-                }
+               
 
                 if (tablas == String(data[2]) && accion == String(data[0]) && (Date.parse(String(fechaMIN)) + 86399000) <= Date.parse(String(data[1])) && (Date.parse(String(fechaMAX)) + 86399000) >= Date.parse(String(data[1]))) {
                   return true;

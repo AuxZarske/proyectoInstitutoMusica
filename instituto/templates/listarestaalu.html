@@ -3,12 +3,29 @@
 {% load staticfiles %}
 
 {%block contenidiPagina%}
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 
 
+
+
+
+
+
+{%block archivos%}
+
+
+<script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
+
+<script src="{%static 'js/sb-admin-2.min.js'%}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    
+
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{%endblock archivos%}
 <style type="text/css">
     div#colapser1 {
 
@@ -27,10 +44,12 @@
     path.highcharts-button-symbol {
         display: none;
     }
-    label#tyutyu2{
+
+    label#tyutyu2 {
         display: inline-block;
     }
-    input#tyutyu{
+
+    input#tyutyu {
         display: inline-block;
         width: 20%;
     }
@@ -40,26 +59,40 @@
 
 <div class="colap">
     <div>
-        <h1 class="h3 mb-2 text-gray-800">Grafico Comparativo de Alumnos </h1>
-        <p class="mb-4">Se presentan la cantidad de alumnos del instituto, hombres y mujeres, segun rango de edades.</p>
-        <div>
-                <form class="user" method="POST">
-                        {% csrf_token %}
-            <label for="" id="tyutyu2">Filtrar por año: </label>
-            <input class="form-control" id="tyutyu" name="number"  type="number" placeholder="{{num}}" min="2000" max="2100">
-            <button class="btn btn-primary" type="submit">Filtrar</button>
-                </form>
+        <h1 class="h3 mb-2 text-gray-800">Gráfico comparativo de alumnos </h1>
+        <p class="mb-4">Se presentan la cantidad de alumnos totales del instituto, hombres y mujeres, según rango de
+            edades.</p>
+            <div style="margin-left: 10%; margin-right: 10%;">
+        <div style="display: inline-block;">
+            <form class="user" method="POST" style="width: 150%;">
+                {% csrf_token %}
+                
+                <label for="" id="tyutyu2">Filtrar por fecha de ingreso: </label>
+<!--
+                <input class="form-control" style="width: 30%;" id="tyutyu" name="number" placeholder="----"
+                    type="number" min="2000" max="2100">-->
+                    <input class="form-control" style="display: inline-block; width: 35%;" type="text" name="daterange" id="daterangepic" value="01/01/2018 - 01/15/2018" />
+                <button style="display: inline-block;" class="btn btn-primary" type="submit">Filtrar</button>
+            </form>
         </div>
-        <br>
-        <br>
+        <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i
+                class="fa fa-print"></i></button>
+            </div>
+       <br>
     </div>
-    <div >
-        <!---->
+    <div>
+        <!--
 
         <div id="container" style="min-width: 310px; max-width: 800px; height:600px; margin: 0 auto"></div>
 
 
-        <!---->
+        -->
+        <center>
+            <div style="padding: 4%; width: 80%;height: 80%;" class="card shadow">
+                <canvas id="myChart"></canvas>
+            </div>
+        </center>
+
     </div>
 </div>
 <!--Fincolapcer2-->
@@ -70,7 +103,90 @@
 
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+
 <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var data = {
+        labels: ['75 +', '70-74', '65-69', '60-64', '55-59', '50-54', '45-49', '40-44', '35-39', '30-34', '25-29', '20-24', '15-19', '10-14', '5-9'
+
+
+        ],
+        datasets: [{
+            label: "Hombres",
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgb(54, 162, 235)",
+            borderWidth: 2,
+            data: [parseInt(-"{{p15h}}"), parseInt(-"{{p14h}}"), parseInt(-"{{p13h}}"), parseInt(-"{{p12h}}"), parseInt(-"{{p11h}}"), parseInt(-"{{p10h}}"), parseInt(-"{{p9h}}"), parseInt(-"{{p8h}}"), parseInt(-"{{p7h}}"), parseInt(-"{{p6h}}"), parseInt(-"{{p5h}}"), parseInt(-"{{p4h}}"), parseInt(-"{{p3h}}"), parseInt(-"{{p2h}}"),
+            parseInt(-"{{p1h}}")
+
+
+            ],
+        }, {
+            label: "Mujeres",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            borderWidth: 2,
+            data: [parseInt("{{p15m}}"), parseInt("{{p14m}}"), parseInt("{{p13m}}"), parseInt("{{p12m}}"), parseInt("{{p11m}}"), parseInt("{{p10m}}"), parseInt("{{p9m}}"), parseInt("{{p8m}}"), parseInt("{{p7m}}"), parseInt("{{p6m}}"), parseInt("{{p5m}}"), parseInt("{{p4m}}"), parseInt("{{p3m}}"), parseInt("{{p2m}}"),
+            parseInt("{{p1m}}")
+
+
+            ],
+        }
+
+
+        ],
+
+    };
+
+    var myBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: data,
+        options: {
+
+
+            title: {
+                display: true,
+                position: 'top',
+                text: 'Total de Alumnos Inscriptos en el Instituto',
+                fontSize: 22
+            },
+
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+
+                        labelString: "Edades en Años",
+                        fontSize: 20
+                    },
+                    stacked: true
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+
+                        labelString: "Cantidad de Alumnos",
+                        fontSize: 20
+                    },
+                    ticks: {
+                        callback: function (value, index, values) {
+                            return Math.abs(value);
+                        }
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItems, data) {
+                        return data.datasets[tooltipItems.datasetIndex].label + ": " + Math.abs(tooltipItems.xLabel);
+                    }
+                }
+            }
+        }
+    });
     // Data gathered from http://populationpyramid.net/germany/2015/
 
     // Age categories
@@ -81,75 +197,35 @@
         '70-74', '75 +'
     ];
 
-    Highcharts.chart('container', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Total de Alumnos Inscriptos del Instituto'
-        },
-        subtitle: {
-            text: 'Comparativa de alumnos hombres y mujeres en rango de edades'
-        },
-        xAxis: [{
-            categories: categories,
-            reversed: false,
-            labels: {
-                step: 1
-            }
-        }, { // mirror axis on right side
-            opposite: true,
-            reversed: false,
-            categories: categories,
-            linkedTo: 0,
-            labels: {
-                step: 1
-            }
-        }],
-        yAxis: {
-            title: {
-                text: null
-            },
-            labels: {
-                formatter: function () {
-                    return Math.abs(this.value) + '%';
-                }
-            }
-        },
-
-        plotOptions: {
-            series: {
-                stacking: 'normal'
-            }
-        },
-
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
-                    'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 2);
-            }
-        },
-
-        series: [{
-            name: 'Hombre',
-            data: [
-                parseInt(-"{{p1h}}"), parseInt(-"{{p2h}}"), parseInt(-"{{p3h}}"), parseInt(-"{{p4h}}"),
-                 parseInt(-"{{p5h}}"), parseInt(-"{{p6h}}"), parseInt(-"{{p7h}}"), parseInt(-"{{p8h}}"), parseInt(-"{{p9h}}"), parseInt(-"{{p10h}}"),
-                 parseInt(-"{{p11h}}"), parseInt(-"{{p12h}}"), parseInt(-"{{p13h}}"), parseInt(-"{{p14h}}"), parseInt(-"{{p15h}}")
-            ]
-        }, {
-            name: 'Mujer',
-            data: [
-            parseInt("{{p1m}}"), parseInt("{{p2m}}"), parseInt("{{p3m}}"), parseInt("{{p4m}}"),
-                 parseInt("{{p5m}}"), parseInt("{{p6m}}"), parseInt("{{p7m}}"), parseInt("{{p8m}}"), parseInt("{{p9m}}"), parseInt("{{p10m}}"),
-                 parseInt("{{p11m}}"), parseInt("{{p12m}}"), parseInt("{{p13m}}"), parseInt("{{p14m}}"), parseInt("{{p15m}}")
-            ]
-        }],
-        
-    });
     
-    
+
+
 </script>
 
+
+
+
+<script>
+
+
+    $(function() {
+      $('#daterangepic').daterangepicker({
+        opens: 'left'
+      }, function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+    });
+
+</script>
+
+
+
+
+
+<script>
+    function imprimirEsto() {
+        print();
+    }
+</script>
 
 {% endblock contenidiPagina %}

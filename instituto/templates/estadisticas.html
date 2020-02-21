@@ -6,90 +6,63 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
     window.onload = function () {
 
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            title: {
-                text: "Comparacion Alumnos: Pre-Inscriptos/Inscriptos del {{num}}"
-            },
-            axisY: {
-
-                title: "Cantidad de Alumnos",
-                titleFontColor: "#4F81BC",
-                lineColor: "#4F81BC",
-                labelFontColor: "#4F81BC",
-                tickColor: "#4F81BC"
-            },
-            axisY2: {
-                title: "Millions of Barrels/day",
-                titleFontColor: "#C0504E",
-                lineColor: "#C0504E",
-                labelFontColor: "#C0504E",
-                tickColor: "#C0504E"
-
-            },
-            scales: {
-                axisY: [{
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1,
-                        min: 0,
-                        max: 78
-
-                    }
-                }],
-            },
-            toolTip: {
-                shared: true
-            },
-            legend: {
-                cursor: "pointer",
-                itemclick: toggleDataSeries
-            },
-            data: [{
-                type: "column",
-                name: "Pre-Inscriptos",
-                legendText: "Pre-Inscriptos",
-                showInLegend: true,
-                dataPoints: [
-                    { label: "Enero", y: parseInt("{{preEnero}}") },
-                    { label: "Febrero", y: parseInt("{{preFebrero}}") },
-                    { label: "Marzo", y: parseInt("{{preMarzo}}") },
-                    { label: "Abril", y: parseInt("{{preAbril}}") },
-                    { label: "Mayo", y: parseInt("{{preMayo}}") },
-                    { label: "Junio", y: parseInt("{{preJunio}}") },
-                    { label: "Julio", y: parseInt("{{preJulio}}") },
-                    { label: "Agosto", y: parseInt("{{preAgosto}}") },
-                    { label: "Septiembre", y: parseInt("{{preSeptiembre}}") },
-                    { label: "Octubre", y: parseInt("{{preOctubre}}") },
-                    { label: "Noviembre", y: parseInt("{{preNoviembre}}") },
-                    { label: "Diciembre", y: parseInt("{{preDiciembre}}") }
-                ]
-            },
-            {
-                type: "column",
-                name: "Inscriptos",
-                legendText: "Inscriptos",
-
-                showInLegend: true,
-                dataPoints: [
-                    { label: "Enero", y: parseInt("{{Enero}}") },
-                    { label: "Febrero", y: parseInt("{{Febrero}}") },
-                    { label: "Marzo", y: parseInt("{{Marzo}}") },
-                    { label: "Abril", y: parseInt("{{Abril}}") },
-                    { label: "Mayo", y: parseInt("{{Mayo}}") },
-                    { label: "Junio", y: parseInt("{{Junio}}") },
-                    { label: "Julio", y: parseInt("{{Julio}}") },
-                    { label: "Agosto", y: parseInt("{{Agosto}}") },
-                    { label: "Septiembre", y: parseInt("{{Septiembre}}") },
-                    { label: "Octubre", y: parseInt("{{Octubre}}") },
-                    { label: "Noviembre", y: parseInt("{{Noviembre}}") },
-                    { label: "Diciembre", y: parseInt("{{Diciembre}}") }
-                ]
+        
+     var chart =   new Chart(document.getElementById("bar-chart-grouped"), {
+    type: 'bar',
+    data: {
+      labels: ["Enero", "Febrero", "Marzo", "Abril","Mayo", "Junio", "Julio", "Agosto","Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets: [
+        {
+          label: "Pre-Inscriptos",
+          backgroundColor: "#3e95cd",
+          data: [parseInt("{{preEnero}}"),parseInt("{{preFebrero}}"),parseInt("{{preMarzo}}"),parseInt("{{preAbril}}"),parseInt("{{preMayo}}"),parseInt("{{preJunio}}"),parseInt("{{preJulio}}"),parseInt("{{preAgosto}}"),parseInt("{{preSeptiembre}}"),parseInt("{{preOctubre}}"),parseInt("{{preNoviembre}}"),parseInt("{{preDiciembre}}")]
+        }, {
+          label: "Inscriptos",
+          backgroundColor: "#8e5ea2",
+          data: [parseInt("{{Enero}}"),parseInt("{{Febrero}}"),parseInt("{{Marzo}}"),parseInt("{{Abril}}"),parseInt("{{Mayo}}"),parseInt("{{Junio}}"),parseInt("{{Julio}}"),parseInt("{{Agosto}}"),parseInt("{{Septiembre}}"),parseInt("{{Octubre}}"),parseInt("{{Noviembre}}"),parseInt("{{Diciembre}}")]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        position:'top',
+        text: "Comparación Alumnos: Pre-Inscriptos/Inscriptos del {{num}}",
+        fontSize: 18
+      }, scales: {
+            yAxes: [{
+                scaleLabel:{
+                    display: true,
+                    
+                    labelString: "Cantidad de Alumnos",
+                    fontSize: 20
+                },
+               
+                   
+     
+                
+            }],
+            xAxes: [{
+                scaleLabel:{
+                    display: true,
+                    
+                    labelString: "Meses",
+                    fontSize: 18
+                },
+               
+                   
+     
+                
             }]
-        });
+
+
+        }
+    }
+});
         chart.render();
 
         function toggleDataSeries(e) {
@@ -130,6 +103,9 @@
         }
 
     }
+    function imprimirEsto(){
+        print();
+    }
 </script>
 <style type="text/css">
     div#colapser1 {
@@ -163,16 +139,20 @@
 
 <div class="colap">
     <div>
-        <h1 class="h3 mb-2 text-gray-800">Grafico Comparativo de Pre-inscripcion/Inscripcion</h1>
-        <p class="mb-4">Se presentan la cantidad de alumnos inscritos mensualmente del ciclo anual.</p>
-        <div>
+        <h1 class="h3 mb-2 text-gray-800">Gráfico Comparativo de Pre-inscripción/Inscripción</h1>
+        <p class="mb-4">Se presentan la cantidad de alumnos inscritos y pre-inscriptos mensualmente del ciclo anual actual.</p>
+        <div style="margin-left: 10%; margin-right: 10%;">
+            <div style="display: inline-block;" >
                 <form class="user" method="POST">
                         {% csrf_token %}
-            <label for="" id="tyutyu2">Filtrar por año: </label>
-            <input class="form-control" id="tyutyu" name="number"  type="number" placeholder="{{num}}" min="2000" max="2100">
+            <label for=""  id="tyutyu2">Filtrar por año: </label>
+            <input class="form-control" style="width: 30%;" id="tyutyu" name="number"  type="number" value="{{num}}" min="2000" max="2100" required>
             <button class="btn btn-primary" type="submit">Filtrar</button>
                 </form>
+            </div>
+                <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i class="fa fa-print"></i></button>
         </div>
+
         
 <script>
   document.querySelector("input[type=number]")
@@ -180,12 +160,19 @@
 </script>
     </div>
     <div >
-        <!---->
+        <!--
 
         <div id="chartContainer" style="height: 400px; width: 100%;"></div>
 
-
-        <!---->
+<br>
+        -->
+        <br>
+        <center>
+        <div style="padding: 2%; width: 80%; height: 80%;" class="card shadow">
+            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+        </div>
+    </center>
+       
     </div>
 </div>
 <!--Fincolapcer1-->

@@ -421,7 +421,7 @@ def listarestadisticaspresta(request,num):
     for k,v in dicti.items():
         por = (v * 100)/globalTotal
         dicti2[k] = por
-    dicti = dicti2
+    #dicti = dicti2
 
     dicti4 = {}
     cantccc = list(Alumno.objects.all())
@@ -438,7 +438,7 @@ def listarestadisticaspresta(request,num):
     for k,v in dicti4.items():
         por = (v * 100)/globalTotal
         dicti5[k] = por
-    dicti4 = dicti5
+    #dicti4 = dicti5
     
 
 
@@ -781,13 +781,13 @@ def listarestadisticasparti(request, num):
             numero = cveces
             globalTotal += numero
             print(numero)
-            nombre = n.nombreIdentificador + "("+ str(numero) +")"
+            nombre = n.nombreIdentificador 
             dicti[nombre] = numero
     dicti2 = {}
     for k,v in dicti.items():
         por = (v * 100)/globalTotal
         dicti2[k] = por
-    dicti = dicti2
+    #dicti = dicti2
     print(dicti)
 
     dicti4 = {}
@@ -805,7 +805,7 @@ def listarestadisticasparti(request, num):
     for k,v in dicti4.items():
         por = (v * 100)/globalTotal
         dicti5[k] = por
-    dicti4 = dicti5
+    #dicti4 = dicti5
 
     dicti7 = {}
     cantccc = ['Avanzado','Medio','Principiante'] 
@@ -822,7 +822,7 @@ def listarestadisticasparti(request, num):
     for k,v in dicti7.items():
         por = (v * 100)/globalTotal
         dicti8[k] = por
-    dicti7 = dicti8 
+    #dicti7 = dicti8 
 
     return render(request,'listarestaparti.html',{'dicti':dicti,'dicti4':dicti4,'dicti7':dicti7})
 

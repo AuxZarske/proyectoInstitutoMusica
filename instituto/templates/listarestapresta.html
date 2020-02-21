@@ -3,29 +3,34 @@
 {% load staticfiles %}
 
 {%block contenidiPagina%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-        var lista = [];
+       var listaInstru = [];
+    var listaInstruCantidad = [];
 </script>
     {%for k,v in dicti.items%}
     <script>
         
         
         t = { y: parseInt("{{v}}"), name: "{{k}}", exploded: true }
-        lista.push(t)
+        listaInstru.push("{{k}}");
+    listaInstruCantidad.push(parseInt("{{v}}"));
 
         
     </script>
     {%endfor%}
 
     <script>
-        var lista3 = [];
+          var lista2Nom = [];
+    var lista2Cant = [];
 </script>
     {%for k,v in dicti4.items%}
     <script>
         
         
         t = { y: parseInt("{{v}}"), name: "{{k}}", exploded: true }
-        lista3.push(t)
+        lista2Nom.push("{{k}}");
+    lista2Cant.push(parseInt("{{v}}"));
 
         
     </script>
@@ -146,29 +151,105 @@
                             <br>
                             <br>
                         </div>
-                        <div >
-                            <!---->
-                    
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                                    aria-controls="nav-home" aria-selected="true">Instrumentos</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                                    aria-controls="nav-profile" aria-selected="false">Alumnos</a>
+                             
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                
+                                <!--ini-->
+                                <div class="card shadow" style="border-top:0px;background-color: rgb(247, 247, 247);">
+                                    <div style="margin: 0.5%;">
+                                        <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i class="fa fa-print"></i></button>
+                                    </div>
+                              
+                                <center>
+                                <div style="margin: 2%;">
+                                <div class="card shadow" style="width: 70%; height: 70%;">
+                                    <canvas id="pie-chart" width="auto" height="auto"></canvas>
+                                </div>
+                                <br>
+                                <div class="card shadow" style="width: 70%; height: 70%;">
+                                    
+                                      <div class="table-responsive table--no-card m-b-30" style="padding-left:20%;padding-right: 20%;padding-top: 5%; padding-bottom: 2%;">
+                                          <table class="table table-borderless table-striped table-earning">
+                                              <thead>
+                                                  <tr style="background-color: rgb(63, 63, 63);color: white;">
+                                                      <th style='text-align:left'>Nombre de instrumento</th>
+                                                      <th style='text-align:right'>Cantidad de préstamos</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody id="mi-tabla1">
+                                                {%for k,v in dicti.items%}
+                                                <tr>
+                                                    <td>{{k}}</td>
+                                                    <td style='text-align:right'>{{v}}</td>
+                                                </tr>
+                                               
+                                                {%endfor%}
+                
+                                              </tbody>
+                                          </table>
+                                      
+                                    </div>
+                                </div>
+                                </div>
+                                </center>
+                                </div>
+                                <!--ini-->
+                
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                
+                                <!--ini-->
+                                <div class="card shadow" style="border-top:0px;background-color: rgb(247, 247, 247);">
+                                    <div style="margin: 0.5%;">
+                                        <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i class="fa fa-print"></i></button>
+                                    </div>
+                              
+                                <center>
+                                <div style="margin: 2%;">
+                                <div class="card shadow" style="width: 70%; height: 70%;">
+                                    <canvas id="pie-chart2" width="auto" height="auto"></canvas>
+                                </div>
+                                <br>
+                                <div class="card shadow" style="width: 70%; height: 70%;">
+                                    
+                                      <div class="table-responsive table--no-card m-b-30" style="padding-left:20%;padding-right: 20%;padding-top: 5%; padding-bottom: 2%;">
+                                          <table class="table table-borderless table-striped table-earning">
+                                              <thead>
+                                                  <tr style="background-color: rgb(63, 63, 63);color: white;">
+                                                      <th style='text-align:left'>Nombre del alumno</th>
+                                                      <th style='text-align:right'>Cantidad de préstamos</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody id="mi-tabla2">
+                                                {%for k,v in dicti4.items%}
+                                                <tr>
+                                                    <td>{{k}}</td>
+                                                    <td style='text-align:right'>{{v}}</td>
+                                                </tr>
+                                               
+                                                {%endfor%}
+                
+                                              </tbody>
+                                          </table>
+                                      
+                                    </div>
+                                </div>
+                                </div>
+                                </center>
+                                </div>
+                                <!--ini-->
+                
+                            </div>
                             
-                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                    
-                            <!---->
-                        </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <div >
-                            <!---->
-                    
-                            
-                            
-                            <!---->
-                    
-                            
-                            <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
-                    
-                            <!---->
                         </div>
                     </div>
 
@@ -183,5 +264,49 @@
 
 
         </body>
+        <script>
+            function imprimirEsto(){
+        print();
+    }
+
+new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    animationEnabled: true,
+    data: {
+      labels: listaInstru,
+      datasets: [{
+        label: "",
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: listaInstruCantidad
+      }]
+    },
+    options: {
+      title: {
+        fontSize: 20,
+        display: true,
+        text: "Instrumentos más prestados"
+      }
+    }
+});
+new Chart(document.getElementById("pie-chart2"), {
+    type: 'pie',
+    animationEnabled: true,
+    data: {
+      labels: lista2Nom,
+      datasets: [{
+        label: "",
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: lista2Cant
+      }]
+    },
+    options: {
+      title: {
+        fontSize: 20,
+        display: true,
+        text: "Alumnos que mas préstamos solicitan"
+      }
+    }
+});
+        </script>
 
 {% endblock contenidiPagina %}
