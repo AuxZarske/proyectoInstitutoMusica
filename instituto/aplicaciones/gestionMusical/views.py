@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from django.core.mail import EmailMessage
 from django.db.models import Q
 import json
 from django.http import HttpResponse
@@ -126,7 +127,10 @@ def obtenerInsti():
     insti = list(InstitutoDato.objects.all())
     if len(insti) > 0:
         insti = insti[0]
-    datosi = insti
+        datosi = insti
+    else:
+        datosi = None
+
     return datosi
 
 class Inicio(View):
@@ -161,7 +165,7 @@ def obtenerInfo(request):
         data = {
             'is_taken': True
         }
-        return JsonResponse(data)
+        return JsonResponse(data) 
     nombre = insti.nombre
     telefono= insti.telefono
     correo= insti.correoElectronico
@@ -406,43 +410,103 @@ def registrarProfesor(request):
 
 
 def listarestadisticaspresta(request,num):
-    dicti = {}
-    cantccc = list(Instrumento.objects.all())
-    globalTotal = 0
-    for n in cantccc:
-        cveces = Prestamo.objects.filter(instrumentoPrestado = n).count()
-        if cveces != 0:
-            
-            nombre = n.nombre
-            numero = cveces
-            globalTotal += numero
-            dicti[nombre] = numero
-    dicti2 = {}
-    for k,v in dicti.items():
-        por = (v * 100)/globalTotal
-        dicti2[k] = por
-    #dicti = dicti2
 
-    dicti4 = {}
-    cantccc = list(Alumno.objects.all())
-    globalTotal = 0
-    for n in cantccc:
-        cveces = Prestamo.objects.filter(alumnoResponsable = n).count()
-        if cveces != 0:
-            
-            nombre = n.nombre
-            numero = cveces
-            globalTotal += numero
-            dicti4[nombre] = numero
-    dicti5 = {}
-    for k,v in dicti4.items():
-        por = (v * 100)/globalTotal
-        dicti5[k] = por
-    #dicti4 = dicti5
+
+    numero = request.POST.get('daterange', None)
+    filtro = 0
+    fechaUno = "Ninguna"
+    fechaDos = "Ninguna"
+    if numero != None:
+        
+        minFecha =  numero[6] +numero[7] +numero[8] +numero[9] +"/" + numero[3] +numero[4] +"/"+numero[0] + numero[1]
+        maxFecha =numero[19] +numero[20] +numero[21] +numero[22] +"/" + numero[16] +numero[17] +"/"+ numero[13] + numero[14] 
+
+        fechaUno = numero[0] + numero[1] +"/" +  numero[3] +numero[4]     +"/" + numero[6] +numero[7] +numero[8] +numero[9]
+        fechaDos =   numero[13] + numero[14]      +"/" +      numero[16] +numero[17]     +"/" + numero[19] +numero[20] +numero[21] +numero[22]
+
+
+
+        minFecha = datetime.strptime(minFecha, "%Y/%m/%d").date()
+        maxFecha = datetime.strptime(maxFecha, "%Y/%m/%d").date()
+        num = numero
+
+
+
+    if num !=0:
+        dicti = {}
+        cantccc = list(Instrumento.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Prestamo.objects.filter(instrumentoPrestado = n, fechaCreacion__range=(minFecha,maxFecha)).count()
+            if cveces != 0:
+                
+                nombre = n.nombre
+                numero = cveces
+                globalTotal += numero
+                dicti[nombre] = numero
+        dicti2 = {}
+        for k,v in dicti.items():
+            por = (v * 100)/globalTotal
+            dicti2[k] = por
+        #dicti = dicti2
+
+        dicti4 = {}
+        cantccc = list(Alumno.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Prestamo.objects.filter(alumnoResponsable = n, fechaCreacion__range=(minFecha,maxFecha)).count()
+            if cveces != 0:
+                
+                nombre = n.nombre
+                numero = cveces
+                globalTotal += numero
+                dicti4[nombre] = numero
+        dicti5 = {}
+        for k,v in dicti4.items():
+            por = (v * 100)/globalTotal
+            dicti5[k] = por
+        #dicti4 = dicti5
+
+        filtro = 1
+
+    else:
+        dicti = {}
+        cantccc = list(Instrumento.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Prestamo.objects.filter(instrumentoPrestado = n).count()
+            if cveces != 0:
+                
+                nombre = n.nombre
+                numero = cveces
+                globalTotal += numero
+                dicti[nombre] = numero
+        dicti2 = {}
+        for k,v in dicti.items():
+            por = (v * 100)/globalTotal
+            dicti2[k] = por
+        #dicti = dicti2
+
+        dicti4 = {}
+        cantccc = list(Alumno.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Prestamo.objects.filter(alumnoResponsable = n).count()
+            if cveces != 0:
+                
+                nombre = n.nombre
+                numero = cveces
+                globalTotal += numero
+                dicti4[nombre] = numero
+        dicti5 = {}
+        for k,v in dicti4.items():
+            por = (v * 100)/globalTotal
+            dicti5[k] = por
+        #dicti4 = dicti5
     
 
 
-    return render(request,'listarestapresta.html',{  'dicti':dicti,'dicti4':dicti4  })
+    return render(request,'listarestapresta.html',{  'dicti':dicti,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4  })
 
 
 
@@ -770,61 +834,139 @@ def GrupoPresta(request):
 
 
 def listarestadisticasparti(request, num):
-    dicti = {}
-    cantccc = list(Compositor.objects.all())
-    globalTotal = 0
-    for n in cantccc:
-        cveces = Partitura.objects.filter(compositor = n).count()
-        if cveces != 0:
-            
-            
-            numero = cveces
-            globalTotal += numero
-            print(numero)
-            nombre = n.nombreIdentificador 
-            dicti[nombre] = numero
-    dicti2 = {}
-    for k,v in dicti.items():
-        por = (v * 100)/globalTotal
-        dicti2[k] = por
-    #dicti = dicti2
-    print(dicti)
+    numero = request.POST.get('daterange', None)
+    filtro = 0
+    fechaUno = "Ninguna"
+    fechaDos = "Ninguna"
 
-    dicti4 = {}
-    cantccc = list(MusicaTipo.objects.all())
-    globalTotal = 0
-    for n in cantccc:
-        cveces = Partitura.objects.filter(musicaElecciones = n).count()
-        if cveces != 0:
-            
-            nombre = n.nombreMusica
-            numero = cveces
-            globalTotal += numero
-            dicti4[nombre] = numero
-    dicti5 = {}
-    for k,v in dicti4.items():
-        por = (v * 100)/globalTotal
-        dicti5[k] = por
-    #dicti4 = dicti5
+    if numero != None:
+        
+        minFecha =  numero[6] +numero[7] +numero[8] +numero[9] +"/" + numero[3] +numero[4] +"/"+numero[0] + numero[1]
+        maxFecha =numero[19] +numero[20] +numero[21] +numero[22] +"/" + numero[16] +numero[17] +"/"+ numero[13] + numero[14] 
 
-    dicti7 = {}
-    cantccc = ['Avanzado','Medio','Principiante'] 
-    globalTotal = 0
-    for n in cantccc:
-        cveces = Partitura.objects.filter(nivel = n).count()
-        if cveces != 0:
-            
-            nombre = n
-            numero = cveces
-            globalTotal += numero
-            dicti7[nombre] = numero
-    dicti8 = {}
-    for k,v in dicti7.items():
-        por = (v * 100)/globalTotal
-        dicti8[k] = por
-    #dicti7 = dicti8 
+        fechaUno = numero[0] + numero[1] +"/" +  numero[3] +numero[4]     +"/" + numero[6] +numero[7] +numero[8] +numero[9]
+        fechaDos =   numero[13] + numero[14]      +"/" +      numero[16] +numero[17]     +"/" + numero[19] +numero[20] +numero[21] +numero[22]
 
-    return render(request,'listarestaparti.html',{'dicti':dicti,'dicti4':dicti4,'dicti7':dicti7})
+
+
+        minFecha = datetime.strptime(minFecha, "%Y/%m/%d").date()
+        maxFecha = datetime.strptime(maxFecha, "%Y/%m/%d").date()
+        num = numero
+
+    if num != 0:
+        dicti = {}
+        cantccc = list(Compositor.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(compositor = n, fechaCrear__range=(minFecha,maxFecha)).count()
+            if cveces != 0:
+                
+                
+                numero = cveces
+                globalTotal += numero
+                print(numero)
+                nombre = n.nombreIdentificador 
+                dicti[nombre] = numero
+        dicti2 = {}
+        for k,v in dicti.items():
+            por = (v * 100)/globalTotal
+            dicti2[k] = por
+        #dicti = dicti2
+        print(dicti)
+
+        dicti4 = {}
+        cantccc = list(MusicaTipo.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(musicaElecciones = n, fechaCrear__range=(minFecha,maxFecha)).count()
+            if cveces != 0:
+                
+                nombre = n.nombreMusica
+                numero = cveces
+                globalTotal += numero
+                dicti4[nombre] = numero
+        dicti5 = {}
+        for k,v in dicti4.items():
+            por = (v * 100)/globalTotal
+            dicti5[k] = por
+        #dicti4 = dicti5
+
+        dicti7 = {}
+        cantccc = ['Avanzado','Medio','Principiante'] 
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(nivel = n, fechaCrear__range=(minFecha,maxFecha)).count()
+            if cveces != 0:
+                
+                nombre = n
+                numero = cveces
+                globalTotal += numero
+                dicti7[nombre] = numero
+        dicti8 = {}
+        for k,v in dicti7.items():
+            por = (v * 100)/globalTotal
+            dicti8[k] = por
+        #dicti7 = dicti8
+
+        filtro = 1
+    else:
+
+
+        dicti = {}
+        cantccc = list(Compositor.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(compositor = n).count()
+            if cveces != 0:
+                
+                
+                numero = cveces
+                globalTotal += numero
+                print(numero)
+                nombre = n.nombreIdentificador 
+                dicti[nombre] = numero
+        dicti2 = {}
+        for k,v in dicti.items():
+            por = (v * 100)/globalTotal
+            dicti2[k] = por
+        #dicti = dicti2
+        print(dicti)
+
+        dicti4 = {}
+        cantccc = list(MusicaTipo.objects.all())
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(musicaElecciones = n).count()
+            if cveces != 0:
+                
+                nombre = n.nombreMusica
+                numero = cveces
+                globalTotal += numero
+                dicti4[nombre] = numero
+        dicti5 = {}
+        for k,v in dicti4.items():
+            por = (v * 100)/globalTotal
+            dicti5[k] = por
+        #dicti4 = dicti5
+
+        dicti7 = {}
+        cantccc = ['Avanzado','Medio','Principiante'] 
+        globalTotal = 0
+        for n in cantccc:
+            cveces = Partitura.objects.filter(nivel = n).count()
+            if cveces != 0:
+                
+                nombre = n
+                numero = cveces
+                globalTotal += numero
+                dicti7[nombre] = numero
+        dicti8 = {}
+        for k,v in dicti7.items():
+            por = (v * 100)/globalTotal
+            dicti8[k] = por
+        #dicti7 = dicti8 
+
+    return render(request,'listarestaparti.html',{'dicti':dicti,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4,'dicti7':dicti7})
 
 def listarestadisticasalu(request, num):
     p1h = -0
@@ -859,9 +1001,22 @@ def listarestadisticasalu(request, num):
     p13m= 0
     p14m= 0
     p15m= 0
-    numero = request.POST.get('number', None)
-    print(numero)
+    numero = request.POST.get('daterange', None)
+    filtro = 0
+    fechaUno = "Ninguna"
+    fechaDos = "Ninguna"
     if numero != None:
+        
+        minFecha =  numero[6] +numero[7] +numero[8] +numero[9] +"/" + numero[3] +numero[4] +"/"+numero[0] + numero[1]
+        maxFecha =numero[19] +numero[20] +numero[21] +numero[22] +"/" + numero[16] +numero[17] +"/"+ numero[13] + numero[14] 
+
+        fechaUno = numero[0] + numero[1] +"/" +  numero[3] +numero[4]     +"/" + numero[6] +numero[7] +numero[8] +numero[9]
+        fechaDos =   numero[13] + numero[14]      +"/" +      numero[16] +numero[17]     +"/" + numero[19] +numero[20] +numero[21] +numero[22]
+
+
+
+        minFecha = datetime.strptime(minFecha, "%Y/%m/%d").date()
+        maxFecha = datetime.strptime(maxFecha, "%Y/%m/%d").date()
         num = numero
     
     if num != 0:
@@ -870,95 +1025,95 @@ def listarestadisticasalu(request, num):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p1h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p1m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p1h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p1m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(10, 15):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p2h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p2h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
             
-            p2m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p2m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(15, 20):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p3h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p3m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p3h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p3m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(20, 25):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p4h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p4m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p4h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p4m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(25, 30):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p5h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p5m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p5h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p5m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(30, 35):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p6h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p6m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p6h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p6m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(35, 40):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p7h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p7m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p7h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p7m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(40, 45):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p8h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p8m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p8h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p8m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(45, 50):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p9h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p9m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p9h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p9m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(50, 55):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p10h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p10m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p10h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p10m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(55, 60):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p11h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p11m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p11h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p11m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(60, 65):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p12h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p12m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p12h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p12m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(65, 70):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p13h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p13m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p13h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p13m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(70, 75):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p14h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p14m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p14h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p14m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         for n in range(75, 101):
             edad = n
             years_min = datetime.now() - relativedelta(years=(int(edad) +1))
             years_max = datetime.now() - relativedelta(years=int(edad))
-            p15h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
-            p15m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__year=int(num)  , fechaNac__range = (years_min,years_max) ).count()
+            p15h += Alumno.objects.filter(sexo = "Masculino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
+            p15m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         
-        
+        filtro = 1
     else:
         #devolver 2 listas, 
         #cada posision cantiddad total de inscriptos, hombres, acomodado por edad
@@ -1059,7 +1214,7 @@ def listarestadisticasalu(request, num):
         print(listH)
         print(listM)
        
-    return render(request,'listarestaalu.html',{'num':num, 'p1h':p1h,'p2h':p2h,'p3h':p3h,'p4h':p4h,'p5h':p5h, 'p6h':p6h,'p7h':p7h,'p8h':p8h,'p9h':p9h,'p10h':p10h, 'p11h':p11h,'p12h':p12h,'p13h':p13h,'p14h':p14h,'p15h':p15h, 'p1m':p1m,'p2m':p2m,'p3m':p3m,'p4m':p4m,'p5m':p5m, 'p6m':p6m,'p7m':p7m,'p8m':p8m,'p9m':p9m,'p10m':p10m, 'p11m':p11m,'p12m':p12m,'p13m':p13m,'p14m':p14m,'p15m':p15m})
+    return render(request,'listarestaalu.html',{'num':num,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno, 'p1h':p1h,'p2h':p2h,'p3h':p3h,'p4h':p4h,'p5h':p5h, 'p6h':p6h,'p7h':p7h,'p8h':p8h,'p9h':p9h,'p10h':p10h, 'p11h':p11h,'p12h':p12h,'p13h':p13h,'p14h':p14h,'p15h':p15h, 'p1m':p1m,'p2m':p2m,'p3m':p3m,'p4m':p4m,'p5m':p5m, 'p6m':p6m,'p7m':p7m,'p8m':p8m,'p9m':p9m,'p10m':p10m, 'p11m':p11m,'p12m':p12m,'p13m':p13m,'p14m':p14m,'p15m':p15m})
 
 
 
@@ -1159,7 +1314,7 @@ def listarAuditoria(request):
     objetoss = []
     #call_command('python manage.py clean_duplicate_history --auto', 'foo', bar='baz')
     #call_command('clean_duplicate_history --auto')
-    conexion1 = psycopg2.connect(database="todo19", user="postgres", password="1234",port=1234)
+    conexion1 = psycopg2.connect(database="todo21", user="postgres", password="1234",port=1234)
     cursor1=conexion1.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql="select id, login_type, username, datetime, remote_ip from easyaudit_loginevent"
     cursor1.execute(sql)
@@ -1172,7 +1327,7 @@ def listarAuditoria(request):
     conexion1.close()
 
 
-    conexion2 = psycopg2.connect(database="todo19", user="postgres", password="1234",port=1234)
+    conexion2 = psycopg2.connect(database="todo21", user="postgres", password="1234",port=1234)
     cursor2=conexion2.cursor(cursor_factory=psycopg2.extras.DictCursor)
     sql = "select id, event_type, datetime, content_type_id, user_id from easyaudit_crudevent ORDER BY datetime DESC"
     cursor2.execute(sql)
@@ -1610,7 +1765,8 @@ def listarAuditoria(request):
 
 
 
-
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 def listarprestamos(request, numer):
     if request.method == 'POST':
@@ -1623,20 +1779,49 @@ def listarprestamos(request, numer):
         elInstrum = Instrumento.objects.get(id = instru)
         if prestamo_form.is_valid() and not (Prestamo.objects.filter(alumnoResponsable = alu, estadoPrestamo = True).exists()) or not(Prestamo.objects.filter(instrumentoPrestado = instru, estadoPrestamo = True).exists()) and (elInstrum.estado == True): 
         
+            
+            prestamo = prestamo_form.save(commit=False)
+            prestamo.estadoProfesor = "Entregador"
+            prestamo.estadoPrestamo = True
+            pedidor = str(request.user.username)
+            print("bjb")
+            elProfe = Profesor.objects.get(correoElectronico = pedidor)
+            print(elProfe)
+            prestamo.profesorReferencia = elProfe
+            prestamo.save()
+            messages.success(request, "Registro Correcto!")
+            #mandar msj html al alumno
+            correoo = prestamo.alumnoResponsable.correoElectronico
+            print(correoo)
+
+
+            t = InstitutoDato.objects.all()[0]
+            print("aqui deeria estar la imagen")
+            print(t.archivo)
+            binary = base64.b64encode(t.archivo)
+            cadena = str(binary)
+            cadena = cadena[2:]
+
+            total = len(cadena)
+            archivo = cadena[:total - 1]
+            
+
+            textoImagen = "data:image/jpeg;base64," + archivo
+            
+            prestam = Prestamo.objects.get(id = prestamo.id)
+            text_content = 'Detalle de pedido'
+            msg_html = render_to_string('enviarPresta.html', {'prestam':prestam,'textoImagen':textoImagen})
+            html_content = msg_html
+            msg = EmailMultiAlternatives('PROYECTO SOFTWARE', text_content, to=[correoo])
+            msg.attach_alternative(html_content, "text/html")
             try:
-                prestamo = prestamo_form.save(commit=False)
-                prestamo.estadoProfesor = "Entregador"
-                prestamo.estadoPrestamo = True
-                pedidor = str(request.user.username)
-                print("bjb")
-                elProfe = Profesor.objects.get(correoElectronico = pedidor)
-                print(elProfe)
-                prestamo.profesorReferencia = elProfe
-                prestamo.save()
-                messages.success(request, "Registro Correcto!")
-            except e:
+                msg.send()
+            except Exception as e:
                 print(e)
-                messages.error(request, " Error - No se pudo cargar")
+
+        
+            
+            messages.error(request, " Error - No se pudo cargar")
         else:
             print(request.POST)
             print(prestamo_form.errors.as_data())
@@ -3102,7 +3287,7 @@ def establecerDirecto(request, dni):
         #ver que no existan roles, crear roles, asignar rol
         rles = list(Rol.objects.all())
         if len(rles) > 0:
-            unRol= list(Rol.objects.filter(nombre = "director"))
+            unRol= list(Rol.objects.filter(nombre = "DIRECTOR"))
             unRol = unRol[0]
             profesor.rol = unRol
             profesor.save()

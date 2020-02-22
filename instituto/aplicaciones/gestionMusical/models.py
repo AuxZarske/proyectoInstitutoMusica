@@ -75,6 +75,7 @@ class Partitura(models.Model):
     archivo = models.BinaryField(blank=True, null=True)
     nivel = models.CharField('Nivel de la partitura', max_length = 100, null = False, blank = False)
     especialidadesAcordes = models.ManyToManyField(Especialidad, blank = True )
+    fechaCrear = models.DateField('Fecha de Creacion', auto_now=False,auto_now_add=True)
     history = HistoricalRecords()
    
 
