@@ -120,7 +120,7 @@
 
                             </td>
                             <td style="font-size: 22px;">
-                                <strong style="margin-left:25% ;"> Registro de préstamo</strong>
+                                <strong style="margin-left:25% ;"> Recepción de préstamo</strong>
                                
                             </td>
                             <td>
@@ -140,10 +140,10 @@
             
             <label>Saludos {{prestam.alumnoResponsable}}</label>
             <br>
-            <label>Se le notifica la <strong>creación</strong>  de un nuevo préstamo, con los siguientes datos asociados:</label>
+            <label>Se le notifica la <strong>finalización</strong>  del préstamo previamente solicitado, con los siguientes datos asociados:</label>
             <br>
             <br>
-            <label style="margin-left:10% ;"><strong>Profesor de referencia:</strong> {{prestam.profesorReferencia.apellido}}, {{prestam.profesorReferencia.nombre}}</label>
+            <label style="margin-left:10% ;"><strong>Profesor que marco la devolución:</strong> {{prestam.profesorReferencia.apellido}}, {{prestam.profesorReferencia.nombre}}</label>
             <br>
             <label style="margin-left:10% ;"><strong>Alumno a cargo:</strong> {{prestam.alumnoResponsable.apellido}}, {{prestam.alumnoResponsable.nombre}}</label>
             <br>
@@ -153,15 +153,13 @@
             <br>
             <label style="margin-left:10% ;"><strong>Duración (días):</strong> {{prestam.duracionDias}}</label>
             <br>
-
-            <br>
-            <label style="margin-left:10% ;"><strong>Recuerde devolver el préstamo antes del {{fechaFinalDevolucion}}, para no causar inconvenientes con futuros prestamos.</strong> </label>
+            <label style="margin-left:10% ;"><strong>Fecha de recepción:</strong> {{prestam.fechaCierre |date:"SHORT_DATE_FORMAT"}}</label>
             <br>
             <br>
             <hr>
             
         </table>
-        <label style="float: left;">Generado el {{prestam.fechaCreacion |date:"SHORT_DATE_FORMAT"}}</label>
+        <label style="float: left;">Generado el {{prestam.fechaCierre |date:"SHORT_DATE_FORMAT"}}</label>
         <label style="float: right;">Página 1 de 1</label>
     </div>
 </body>

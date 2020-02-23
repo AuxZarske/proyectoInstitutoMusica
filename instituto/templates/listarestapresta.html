@@ -19,6 +19,11 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://cdn.jsdelivr.net/npm/jspdf@1.5.3/dist/jspdf.min.js"></script>
+
+
+
+<script  src="https://unpkg.com/jspdf-autotable@3.2.13/dist/jspdf.plugin.autotable.js"></script>
 
 {%endblock archivos2%}
 
@@ -178,6 +183,16 @@
                             <br>
                             <br>
                         </div>
+                        <input type="hidden" id="inputOculto33" value="{{pedidor}}">
+
+                        <input type="hidden" id="filtroUno" value="{{filtroUno}}">
+                        {%if filtroUno != ""%}
+                        <label>Se ha filtrado las estadísticas, para lo cual solo se tuvieron en cuenta los prestamos establecidos entre: {{fechaUno}} y {{fechaDos}}</label>
+                        <hr>
+                        {%endif%}
+
+
+
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
@@ -193,7 +208,7 @@
                                 <!--ini-->
                                 <div class="card shadow" style="border-top:0px;background-color: rgb(247, 247, 247);">
                                     <div style="margin: 0.5%;">
-                                        <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i class="fa fa-print"></i></button>
+                                        <button class="btn btn-info" id="botonImprimir1" style="float: right;"> <i class="fa fa-print"></i></button>
                                     </div>
                               
                                 <center>
@@ -205,7 +220,7 @@
                                 <div class="card shadow" style="width: 70%; height: 70%;">
                                     
                                       <div class="table-responsive table--no-card m-b-30" style="padding-left:20%;padding-right: 20%;padding-top: 5%; padding-bottom: 2%;">
-                                          <table class="table table-borderless table-striped table-earning">
+                                          <table id="tablaUnoOriginal"  class="table table-borderless table-striped table-earning">
                                               <thead>
                                                   <tr style="background-color: rgb(63, 63, 63);color: white;">
                                                       <th style='text-align:left'>Nombre de instrumento</th>
@@ -237,7 +252,7 @@
                                 <!--ini-->
                                 <div class="card shadow" style="border-top:0px;background-color: rgb(247, 247, 247);">
                                     <div style="margin: 0.5%;">
-                                        <button class="btn btn-info" onclick="imprimirEsto()" style="float: right;"> <i class="fa fa-print"></i></button>
+                                        <button class="btn btn-info" id="botonImprimir2" style="float: right;"> <i class="fa fa-print"></i></button>
                                     </div>
                               
                                 <center>
@@ -249,7 +264,7 @@
                                 <div class="card shadow" style="width: 70%; height: 70%;">
                                     
                                       <div class="table-responsive table--no-card m-b-30" style="padding-left:20%;padding-right: 20%;padding-top: 5%; padding-bottom: 2%;">
-                                          <table class="table table-borderless table-striped table-earning">
+                                          <table id="tablaDosOriginal" class="table table-borderless table-striped table-earning">
                                               <thead>
                                                   <tr style="background-color: rgb(63, 63, 63);color: white;">
                                                       <th style='text-align:left'>Nombre del alumno</th>
@@ -382,6 +397,237 @@ new Chart(document.getElementById("pie-chart2"), {
       });
     });
 
+</script>
+
+<script>
+     $('#botonImprimir1').on('click', function() {
+
+var canvas = document.querySelector("#pie-chart");
+ 
+//Escoje la calidad de la imagen segun el navegador supuestamente, la verdad no veo diferencia xd
+var v = 0
+var url = canvas.toDataURL('image/jpeg')
+for(var i = 0; i < 100; i++ ){
+
+    v += 0.01;
+    x = parseFloat((v).toFixed(2))
+    var test = canvas.toDataURL('image/jpeg', x);
+
+    if(test == url){
+        console.log('The default value is: ' + x);
+    }
+}
+var canvasImg = canvas.toDataURL("image/png", x); //JPEG will not match background color
+//creates PDF from img
+var doc = new jsPDF('portrait');
+
+//Seccion Titulo/Encabezado
+var logo = '{{textoImagen}}';
+doc.addImage(logo, 'PNG', 10, 10, 30, 15)                                                                                                                                                                                                                                                               
+doc.setFont('helvetica')
+doc.setFontType('bold')
+doc.setFontSize(16);        
+doc.text(70, 28, "Reporte de estadística");
+doc.setFontType('normal')
+doc.setFontSize(8);
+var generado_por = "Admin"
+var hoy = new Date();
+var dd = hoy.getDate();
+ var mm = hoy.getMonth()+1;
+ var yyyy = hoy.getFullYear();
+ 
+if(dd<10) {
+dd='0'+dd;
+} 
+
+if(mm<10) {
+mm='0'+mm;
+} 
+var fecha_hoy = dd+"/"+mm+"/"+yyyy;
+var filtro_user= "filtrado por teves"
+var filtro_fecha = $('#daterangepicker').val()
+var pk_user_actual = 325
+
+if(pk_user_actual == filtro_user){
+    filtro_user = generado_por;
+}else{
+    filtro_user= $('#filter_user option:selected').text()
+}
+
+if(filtro_fecha == ''){
+    filtro_fecha = '-'
+}
+var pprrt = document.getElementById('inputOculto33').value;
+doc.text(145, 10, "Generado por: " + pprrt);
+
+doc.setFontType('bold')
+doc.setFontType('normal')
+
+doc.setFontSize(12);
+
+var stryui = document.getElementById('filtroUno').value;
+if(stryui != ""){
+ doc.text(15, 40, stryui);
+}
+
+
+doc.setFontSize(8);
+
+
+
+
+
+//FOOTER
+doc.text(20, 285, "Generado el " + fecha_hoy);
+doc.text(155, 285, "Página 1 de 1");
+
+doc.setLineWidth(0.2)
+doc.line(10, 30, 200, 30)
+
+//Seccion Chart
+doc.addImage(canvasImg, 'PNG', 30, 50, 135, 90 );
+
+ doc.autoTable({ 
+     html: '#tablaUnoOriginal',
+     margin: { top: 160
+              },
+ 
+  });
+
+
+/**    doc.autoTable({
+head: [['Name', 'Email', 'Country']],
+body: [
+['David', 'david@example.com', 'Sweden'],
+['Castille', 'castille@example.com', 'Norway'],
+// ...
+],
+});**/
+
+
+/**var sourceZe = $('#tablaUno')[0];
+doc.fromHTML(sourceZe,30,150,  {// y coord
+                 'width': 50, // max width of content on PDF
+                 
+             });**/
+
+doc.save('canvas.pdf');
+
+});
+$('#botonImprimir2').on('click', function() {
+
+var canvas = document.querySelector("#pie-chart2");
+ 
+//Escoje la calidad de la imagen segun el navegador supuestamente, la verdad no veo diferencia xd
+var v = 0
+var url = canvas.toDataURL('image/jpeg')
+for(var i = 0; i < 100; i++ ){
+
+    v += 0.01;
+    x = parseFloat((v).toFixed(2))
+    var test = canvas.toDataURL('image/jpeg', x);
+
+    if(test == url){
+        console.log('The default value is: ' + x);
+    }
+}
+var canvasImg = canvas.toDataURL("image/png", x); //JPEG will not match background color
+//creates PDF from img
+var doc = new jsPDF('portrait');
+
+//Seccion Titulo/Encabezado
+var logo = '{{textoImagen}}';
+doc.addImage(logo, 'PNG', 10, 10, 30, 15)                                                                                                                                                                                                                                                               
+doc.setFont('helvetica')
+doc.setFontType('bold')
+doc.setFontSize(16);        
+doc.text(70, 28, "Reporte de estadística");
+doc.setFontType('normal')
+doc.setFontSize(8);
+var generado_por = "Admin"
+var hoy = new Date();
+var dd = hoy.getDate();
+ var mm = hoy.getMonth()+1;
+ var yyyy = hoy.getFullYear();
+ 
+if(dd<10) {
+dd='0'+dd;
+} 
+
+if(mm<10) {
+mm='0'+mm;
+} 
+var fecha_hoy = dd+"/"+mm+"/"+yyyy;
+var filtro_user= "filtrado por teves"
+var filtro_fecha = $('#daterangepicker').val()
+var pk_user_actual = 325
+
+if(pk_user_actual == filtro_user){
+    filtro_user = generado_por;
+}else{
+    filtro_user= $('#filter_user option:selected').text()
+}
+
+if(filtro_fecha == ''){
+    filtro_fecha = '-'
+}
+var pprrt = document.getElementById('inputOculto33').value;
+doc.text(145, 10, "Generado por: " + pprrt);
+
+doc.setFontType('bold')
+doc.setFontType('normal')
+
+doc.setFontSize(12);
+
+var stryui = document.getElementById('filtroUno').value;
+if(stryui != ""){
+ doc.text(15, 40, stryui);
+}
+
+
+doc.setFontSize(8);
+
+
+
+
+
+//FOOTER
+doc.text(20, 285, "Generado el " + fecha_hoy);
+doc.text(155, 285, "Página 1 de 1");
+
+doc.setLineWidth(0.2)
+doc.line(10, 30, 200, 30)
+
+//Seccion Chart
+doc.addImage(canvasImg, 'PNG', 30, 50, 135, 90 );
+
+ doc.autoTable({ 
+     html: '#tablaDosOriginal',
+     margin: { top: 160
+              },
+ 
+  });
+
+
+/**    doc.autoTable({
+head: [['Name', 'Email', 'Country']],
+body: [
+['David', 'david@example.com', 'Sweden'],
+['Castille', 'castille@example.com', 'Norway'],
+// ...
+],
+});**/
+
+
+/**var sourceZe = $('#tablaUno')[0];
+doc.fromHTML(sourceZe,30,150,  {// y coord
+                 'width': 50, // max width of content on PDF
+                 
+             });**/
+
+doc.save('canvas.pdf');
+
+});
 </script>
 
 {% endblock contenidiPagina %}

@@ -410,7 +410,37 @@ def registrarProfesor(request):
 
 
 def listarestadisticaspresta(request,num):
+    filtroUno = ""
 
+    pedidor = ''
+    peticion = request.POST.copy()
+
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass
+
+    t = InstitutoDato.objects.all()[0]
+    print("aqui deeria estar la imagen")
+    print(t.archivo)
+    binary = base64.b64encode(t.archivo)
+    cadena = str(binary)
+    cadena = cadena[2:]
+
+    total = len(cadena)
+    archivo = cadena[:total - 1]
+    
+
+    textoImagen = "data:image/jpeg;base64," + archivo
 
     numero = request.POST.get('daterange', None)
     filtro = 0
@@ -468,6 +498,7 @@ def listarestadisticaspresta(request,num):
         #dicti4 = dicti5
 
         filtro = 1
+        filtroUno = "Filtrado por prestamos establecidos entre: "+ fechaUno  + " y " +fechaDos
 
     else:
         dicti = {}
@@ -506,7 +537,7 @@ def listarestadisticaspresta(request,num):
     
 
 
-    return render(request,'listarestapresta.html',{  'dicti':dicti,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4  })
+    return render(request,'listarestapresta.html',{  'dicti':dicti,'textoImagen':textoImagen,'pedidor':pedidor,'filtroUno':filtroUno,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4  })
 
 
 
@@ -834,6 +865,43 @@ def GrupoPresta(request):
 
 
 def listarestadisticasparti(request, num):
+    filtroUno = ""
+    filtroDos = ""
+    filtroTres = ""
+
+    pedidor = ''
+    peticion = request.POST.copy()
+
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass
+
+    t = InstitutoDato.objects.all()[0]
+    print("aqui deeria estar la imagen")
+    print(t.archivo)
+    binary = base64.b64encode(t.archivo)
+    cadena = str(binary)
+    cadena = cadena[2:]
+
+    total = len(cadena)
+    archivo = cadena[:total - 1]
+    
+
+    textoImagen = "data:image/jpeg;base64," + archivo
+
+
+
+
     numero = request.POST.get('daterange', None)
     filtro = 0
     fechaUno = "Ninguna"
@@ -909,6 +977,9 @@ def listarestadisticasparti(request, num):
         #dicti7 = dicti8
 
         filtro = 1
+        filtroUno = "Filtrado por partituras creadas entre: "+ fechaUno  + " y " +fechaDos
+        filtroDos = "Filtrado por partituras creadas entre: "+ fechaUno  + " y " +fechaDos
+        filtroTres = "Filtrado por partituras creadas entre: "+ fechaUno  + " y " +fechaDos
     else:
 
 
@@ -966,9 +1037,48 @@ def listarestadisticasparti(request, num):
             dicti8[k] = por
         #dicti7 = dicti8 
 
-    return render(request,'listarestaparti.html',{'dicti':dicti,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4,'dicti7':dicti7})
+    return render(request,'listarestaparti.html',{'dicti':dicti,'filtroUno':filtroUno,'filtroDos':filtroDos,'filtroTres':filtroTres,'textoImagen':textoImagen,'pedidor':pedidor,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'dicti4':dicti4,'dicti7':dicti7})
 
 def listarestadisticasalu(request, num):
+
+    filtroUno = ""
+    
+
+    pedidor = ''
+    peticion = request.POST.copy()
+
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass
+    print(pedidor)
+    t = InstitutoDato.objects.all()[0]
+    print("aqui deeria estar la imagen")
+    print(t.archivo)
+    binary = base64.b64encode(t.archivo)
+    cadena = str(binary)
+    cadena = cadena[2:]
+
+    total = len(cadena)
+    archivo = cadena[:total - 1]
+    
+
+    textoImagen = "data:image/jpeg;base64," + archivo
+
+
+
+
+
+
     p1h = -0
     p2h = -0
     p3h= -0
@@ -1114,6 +1224,7 @@ def listarestadisticasalu(request, num):
             p15m += Alumno.objects.filter(sexo = "Femenino", fechaInscripcion__range=(minFecha, maxFecha)  , fechaNac__range = (years_min,years_max) ).count()
         
         filtro = 1
+        filtroUno = "Filtrado por alumnos registrados entre: "+ str(fechaUno) + " y " + str(fechaUno) 
     else:
         #devolver 2 listas, 
         #cada posision cantiddad total de inscriptos, hombres, acomodado por edad
@@ -1214,48 +1325,113 @@ def listarestadisticasalu(request, num):
         print(listH)
         print(listM)
        
-    return render(request,'listarestaalu.html',{'num':num,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno, 'p1h':p1h,'p2h':p2h,'p3h':p3h,'p4h':p4h,'p5h':p5h, 'p6h':p6h,'p7h':p7h,'p8h':p8h,'p9h':p9h,'p10h':p10h, 'p11h':p11h,'p12h':p12h,'p13h':p13h,'p14h':p14h,'p15h':p15h, 'p1m':p1m,'p2m':p2m,'p3m':p3m,'p4m':p4m,'p5m':p5m, 'p6m':p6m,'p7m':p7m,'p8m':p8m,'p9m':p9m,'p10m':p10m, 'p11m':p11m,'p12m':p12m,'p13m':p13m,'p14m':p14m,'p15m':p15m})
+    return render(request,'listarestaalu.html',{'num':num,'filtro':filtro,'fechaDos':fechaDos,'fechaUno':fechaUno,'pedidor':pedidor,'filtroUno':filtroUno,'textoImagen':textoImagen, 'p1h':p1h,'p2h':p2h,'p3h':p3h,'p4h':p4h,'p5h':p5h, 'p6h':p6h,'p7h':p7h,'p8h':p8h,'p9h':p9h,'p10h':p10h, 'p11h':p11h,'p12h':p12h,'p13h':p13h,'p14h':p14h,'p15h':p15h, 'p1m':p1m,'p2m':p2m,'p3m':p3m,'p4m':p4m,'p5m':p5m, 'p6m':p6m,'p7m':p7m,'p8m':p8m,'p9m':p9m,'p10m':p10m, 'p11m':p11m,'p12m':p12m,'p13m':p13m,'p14m':p14m,'p15m':p15m})
 
 
 
 def listarestadisticas(request, num):
+
+    filtroUno = ""
+    
+
+    pedidor = ''
+    peticion = request.POST.copy()
+
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass
+
+    t = InstitutoDato.objects.all()[0]
+    print("aqui deeria estar la imagen")
+    print(t.archivo)
+    binary = base64.b64encode(t.archivo)
+    cadena = str(binary)
+    cadena = cadena[2:]
+
+    total = len(cadena)
+    archivo = cadena[:total - 1]
+    
+
+    textoImagen = "data:image/jpeg;base64," + archivo
+
+
+
     print(request.POST)
     numero = request.POST.get('number', None)
     print(numero)
     if numero != None:
         num = numero
 
-    Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count()
-    Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()
-    Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()
-    Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()
-    Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()
-    Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()
+        Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count()
+        Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()
+        Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()
+        Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()
+        Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()
+        Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()
 
-    Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()
-    Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()
-    Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()
-    Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()
-    Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()
-    Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()
+        Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()
+        Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()
+        Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()
+        Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()
+        Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()
+        Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()
 
-    preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count() + Enero
-    preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()+ Febrero
-    preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()+ Marzo
-    preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()+ Abril
-    preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()+ Mayo
-    preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()+ Junio
+        preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1, fechaInscripcion__year=int(num)).count() + Enero
+        preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2, fechaInscripcion__year=int(num)).count()+ Febrero
+        preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3, fechaInscripcion__year=int(num)).count()+ Marzo
+        preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4, fechaInscripcion__year=int(num)).count()+ Abril
+        preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5, fechaInscripcion__year=int(num)).count()+ Mayo
+        preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6, fechaInscripcion__year=int(num)).count()+ Junio
 
-    preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()+ Julio
-    preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()+ Agosto
-    preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()+ Septiembre
-    preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()+ Octubre
-    preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()+ Noviembre
-    preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()+ Diciembre
+        preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7, fechaInscripcion__year=int(num)).count()+ Julio
+        preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8, fechaInscripcion__year=int(num)).count()+ Agosto
+        preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9, fechaInscripcion__year=int(num)).count()+ Septiembre
+        preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10, fechaInscripcion__year=int(num)).count()+ Octubre
+        preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11, fechaInscripcion__year=int(num)).count()+ Noviembre
+        preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12, fechaInscripcion__year=int(num)).count()+ Diciembre
+
+        filtroUno = "Filtrado por alumnos registrados en el año: "+ num
+    else:
+        Enero = Alumno.objects.filter(estado = True, fechaInscripcion__month=1, ).count()
+        Febrero = Alumno.objects.filter(estado = True, fechaInscripcion__month=2, ).count()
+        Marzo = Alumno.objects.filter(estado = True, fechaInscripcion__month=3, ).count()
+        Abril = Alumno.objects.filter(estado = True, fechaInscripcion__month=4, ).count()
+        Mayo = Alumno.objects.filter(estado = True, fechaInscripcion__month=5, ).count()
+        Junio = Alumno.objects.filter(estado = True, fechaInscripcion__month=6, ).count()
+
+        Julio = Alumno.objects.filter(estado = True, fechaInscripcion__month=7, ).count()
+        Agosto = Alumno.objects.filter(estado = True, fechaInscripcion__month=8, ).count()
+        Septiembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=9, ).count()
+        Octubre = Alumno.objects.filter(estado = True, fechaInscripcion__month=10, ).count()
+        Noviembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=11, ).count()
+        Diciembre = Alumno.objects.filter(estado = True, fechaInscripcion__month=12, ).count()
+
+        preEnero = Alumno.objects.filter(estado = False, fechaInscripcion__month=1, ).count() + Enero
+        preFebrero = Alumno.objects.filter(estado = False, fechaInscripcion__month=2, ).count()+ Febrero
+        preMarzo = Alumno.objects.filter(estado = False, fechaInscripcion__month=3, ).count()+ Marzo
+        preAbril = Alumno.objects.filter(estado = False, fechaInscripcion__month=4, ).count()+ Abril
+        preMayo = Alumno.objects.filter(estado = False, fechaInscripcion__month=5, ).count()+ Mayo
+        preJunio = Alumno.objects.filter(estado = False, fechaInscripcion__month=6, ).count()+ Junio
+
+        preJulio = Alumno.objects.filter(estado = False, fechaInscripcion__month=7, ).count()+ Julio
+        preAgosto = Alumno.objects.filter(estado = False, fechaInscripcion__month=8, ).count()+ Agosto
+        preSeptiembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=9, ).count()+ Septiembre
+        preOctubre = Alumno.objects.filter(estado = False, fechaInscripcion__month=10, ).count()+ Octubre
+        preNoviembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=11, ).count()+ Noviembre
+        preDiciembre = Alumno.objects.filter(estado = False, fechaInscripcion__month=12, ).count()+ Diciembre 
 
 
-
-    return render(request,'estadisticas.html',{'preEnero':preEnero,'num':num,'preFebrero':preFebrero,'preMarzo':preMarzo,'preAbril':preAbril,'preMayo':preMayo,'preJunio':preJunio,'preJulio':preJulio,'preAgosto':preAgosto,'preSeptiembre':preSeptiembre,'preOctubre':preOctubre,'preNoviembre':preNoviembre,'preDiciembre':preDiciembre,'Enero':Enero,'Febrero':Febrero,'Marzo':Marzo,'Abril':Abril,'Mayo':Mayo,'Junio':Junio,'Julio':Julio,'Agosto':Agosto,'Septiembre':Septiembre,'Octubre':Octubre,'Noviembre':Noviembre,'Diciembre':Diciembre})
+    return render(request,'estadisticas.html',{'preEnero':preEnero,'pedidor':pedidor,'textoImagen':textoImagen,'filtroUno':filtroUno,'num':num,'preFebrero':preFebrero,'preMarzo':preMarzo,'preAbril':preAbril,'preMayo':preMayo,'preJunio':preJunio,'preJulio':preJulio,'preAgosto':preAgosto,'preSeptiembre':preSeptiembre,'preOctubre':preOctubre,'preNoviembre':preNoviembre,'preDiciembre':preDiciembre,'Enero':Enero,'Febrero':Febrero,'Marzo':Marzo,'Abril':Abril,'Mayo':Mayo,'Junio':Junio,'Julio':Julio,'Agosto':Agosto,'Septiembre':Septiembre,'Octubre':Octubre,'Noviembre':Noviembre,'Diciembre':Diciembre})
 
 
 def listartutores(request):
@@ -1779,49 +1955,51 @@ def listarprestamos(request, numer):
         elInstrum = Instrumento.objects.get(id = instru)
         if prestamo_form.is_valid() and not (Prestamo.objects.filter(alumnoResponsable = alu, estadoPrestamo = True).exists()) or not(Prestamo.objects.filter(instrumentoPrestado = instru, estadoPrestamo = True).exists()) and (elInstrum.estado == True): 
         
-            
-            prestamo = prestamo_form.save(commit=False)
-            prestamo.estadoProfesor = "Entregador"
-            prestamo.estadoPrestamo = True
-            pedidor = str(request.user.username)
-            print("bjb")
-            elProfe = Profesor.objects.get(correoElectronico = pedidor)
-            print(elProfe)
-            prestamo.profesorReferencia = elProfe
-            prestamo.save()
-            messages.success(request, "Registro Correcto!")
-            #mandar msj html al alumno
-            correoo = prestamo.alumnoResponsable.correoElectronico
-            print(correoo)
-
-
-            t = InstitutoDato.objects.all()[0]
-            print("aqui deeria estar la imagen")
-            print(t.archivo)
-            binary = base64.b64encode(t.archivo)
-            cadena = str(binary)
-            cadena = cadena[2:]
-
-            total = len(cadena)
-            archivo = cadena[:total - 1]
-            
-
-            textoImagen = "data:image/jpeg;base64," + archivo
-            
-            prestam = Prestamo.objects.get(id = prestamo.id)
-            text_content = 'Detalle de pedido'
-            msg_html = render_to_string('enviarPresta.html', {'prestam':prestam,'textoImagen':textoImagen})
-            html_content = msg_html
-            msg = EmailMultiAlternatives('PROYECTO SOFTWARE', text_content, to=[correoo])
-            msg.attach_alternative(html_content, "text/html")
             try:
-                msg.send()
-            except Exception as e:
-                print(e)
+                prestamo = prestamo_form.save(commit=False)
+                prestamo.estadoProfesor = "Entregador"
+                prestamo.estadoPrestamo = True
+                pedidor = str(request.user.username)
+                print("bjb")
+                elProfe = Profesor.objects.get(correoElectronico = pedidor)
+                print(elProfe)
+                prestamo.profesorReferencia = elProfe
+                prestamo.save()
+                messages.success(request, "Registro Correcto!")
+                #mandar msj html al alumno
+                correoo = prestamo.alumnoResponsable.correoElectronico
+                print(correoo)
 
-        
+                
+                fechaFinalDevolucion =  prestamo.fechaCreacion  + relativedelta(days=int(prestamo.duracionDias))
+                print(fechaFinalDevolucion) 
+                t = InstitutoDato.objects.all()[0]
+                print("aqui deeria estar la imagen")
+                print(t.archivo)
+                binary = base64.b64encode(t.archivo)
+                cadena = str(binary)
+                cadena = cadena[2:]
+
+                total = len(cadena)
+                archivo = cadena[:total - 1]
+                
+
+                textoImagen = "data:image/jpeg;base64," + archivo
+                
+                prestam = Prestamo.objects.get(id = prestamo.id)
+                text_content = 'Detalle de registro de préstamo'
+                msg_html = render_to_string('enviarPresta.html', {'prestam':prestam,'textoImagen':textoImagen,'fechaFinalDevolucion':fechaFinalDevolucion})
+                html_content = msg_html
+                msg = EmailMultiAlternatives('Instituto Todo X arte', text_content, to=[correoo])
+                msg.attach_alternative(html_content, "text/html")
+                try:
+                    msg.send()
+                except Exception as e:
+                    print(e)
+
+            except:
             
-            messages.error(request, " Error - No se pudo cargar")
+                messages.error(request, " Error - No se pudo cargar")
         else:
             print(request.POST)
             print(prestamo_form.errors.as_data())
@@ -1983,6 +2161,34 @@ def finPrestamo(request):
             alu.save()
             presta.save()
             messages.success(request, "Carga Correcta!")
+            #msj
+            correoo = presta.alumnoResponsable.correoElectronico
+            print(correoo)
+
+
+            t = InstitutoDato.objects.all()[0]
+            print("aqui deeria estar la imagen")
+            print(t.archivo)
+            binary = base64.b64encode(t.archivo)
+            cadena = str(binary)
+            cadena = cadena[2:]
+
+            total = len(cadena)
+            archivo = cadena[:total - 1]
+            
+
+            textoImagen = "data:image/jpeg;base64," + archivo
+            
+            prestam = Prestamo.objects.get(id = presta.id)
+            text_content = 'Detalle de final de préstamo'
+            msg_html = render_to_string('recibirPresta.html', {'prestam':prestam,'textoImagen':textoImagen})
+            html_content = msg_html
+            msg = EmailMultiAlternatives('Instituto Todo X arte', text_content, to=[correoo])
+            msg.attach_alternative(html_content, "text/html")
+            try:
+                msg.send()
+            except Exception as e:
+                print(e)
         except:
             messages.error(request, " Error - No se pudo Cerrar prestamo")
         
