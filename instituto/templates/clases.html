@@ -45,7 +45,19 @@
       document.getElementById("contenedorFiltro").style.display = 'none';
     }
 
-  }
+  };
+  function ocultarFiltro2() {
+
+
+if (document.getElementById("contenedorFiltro2").style.display == "none" || document.getElementById("contenedorFiltro2").style.display == "") {
+  document.getElementById("contenedorFiltro2").style.display = 'block';
+}
+else {
+  document.getElementById("contenedorFiltro2").style.display = 'none';
+}
+
+}
+
 </script>
 <script>
   function cambioOcultarHistorico() {
@@ -216,6 +228,20 @@ if (v == "none") {
     margin-bottom: 2%;
   }
 
+  div.dt-buttons btn-group flex-wrap {
+
+position: absolute initial;
+
+}
+div.dataTables_length{
+  display: inline-block;
+  margin-left: 3%;
+}
+div.dataTables_filter{
+  float: right;
+  
+}
+
   div#contenedorFiltro {
     padding: 2%;
     display: none;
@@ -223,6 +249,15 @@ if (v == "none") {
   }
 
   div#contenedorFiltro {
+    padding: 2%;
+    display: none;
+    background-color: rgb(219, 255, 252);
+    border-radius: 23px 23px 23px 23px;
+    -moz-border-radius: 23px 23px 23px 23px;
+    -webkit-border-radius: 23px 23px 23px 23px;
+    margin-bottom: 2%;
+  }
+  div#contenedorFiltro2 {
     padding: 2%;
     display: none;
     background-color: rgb(219, 255, 252);
@@ -559,19 +594,118 @@ if (v == "none") {
 
               </a>
               {%endif%}
+              <div>
+                <button class="btn btn-secondary" onclick="ocultarFiltro2()">
+                  <i class="fas fa-filter"></i>
+                </button>
+              </div>
             </div>
+
+            <!--dvifiltro-->
+            <input type="hidden" id="inputOculto" value="{{pedidor}}">
+
+            <input type="hidden" id="inputOcultoTemplate" value="284">
+            <input type="hidden" id="filtrado1" value="">
+
+           
+            <input type="hidden" id="filtrado2" value="">
+          
+            <div id="contenedorFiltro2">
+              <h4>Filtrar por:</h4>
+
+              <div >
+
+
+
+                <div class="form-group" id="espeNIvel2">
+                  <label for="inputAddress2" class="sub" style="color: black">Profesor a cargo:</label>
+
+                  <div class="form-row">
+                    <select id="accion1tabal" class="selectpicker" data-live-search="true" name="especialidades">
+                      <option value=''>---</option>
+                      {%for pro in profesTodos%}
+
+                      <option value='{{pro.dni}}' name="{{pro.apellido}}, {{pro.nombre}}">{{pro.apellido}}, {{pro.nombre}}</option>
+
+
+                      {%endfor%}
+
+
+
+                    </select>
+                  </div>
+                </div>
+
+
+
+               
+
+
+                <div class="form-group" id="espeNIvel2">
+                  <label for="inputAddress2" class="sub" style="color: black">Especialidad:</label>
+
+                  <div class="form-row">
+                    <select id="accion3tabal" class="selectpicker" multiple data-live-search="true"
+                      name="especialidades">
+
+
+
+                      {%for espec in especialidadesTodas%}
+
+                      <option value='{{espec.id}}'> {{espec.nombre}}</option>
+
+
+                      {%endfor%}
+
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group" id="espeNIvel2">
+                  <label for="inputAddress2" class="sub" style="color: black">Nivel:</label>
+
+                  <div class="form-row">
+                    <select id="accion4tabal" class="form-control" single>
+                      <option value='' selected>---</option>
+
+                      <option value='Principiante'>Principiante</option>
+                      <option value='Medio'>Medio</option>
+                      <option value='Avanzado'>Avanzado</option>
+
+                    </select>
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+
+              <h3>
+                <button class="btn btn-primary" onclick="updateTable2()">Filtrar</button>
+              </h3>
+            </div>
+
+
+
+
+            <!--dvifiltro-->
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable97" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>#</th>
+                     
                       <th>Nombre de Clase</th>
-
+                      <th >Profesor</th>
+                          <th>Nivel</th>
+                         
                       <th>Horarios</th>
 
 
-                      <th>Acciones</th>
+                      <th class="noExport">Acciones</th>
 
                     </tr>
                   </thead>
@@ -581,7 +715,7 @@ if (v == "none") {
 
 
                     <tr>
-                      <td>{{clase.id}}</td>
+                     
                       {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
                       <td><a href="{% url 'gestionMusical:una_clase' clase.id%}">{{clase.nombre}}</a></td>
                       {%else%}
@@ -590,6 +724,11 @@ if (v == "none") {
                       {%endif%}
 
                       {%endif%}
+
+                      
+                      <td >{{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}</td>
+                      <td >{{clase.nivel}}</td>
+                     
 
                       <td>{% for h in clase.horarios.all%}
                         <label>{{h}}</label><br>
@@ -817,7 +956,7 @@ if (v == "none") {
                           <option value=''>---</option>
                           {%for pro in profesTodos%}
 
-                          <option value='{{pro.dni}}'>{{pro.apellido}}, {{pro.nombre}}</option>
+                          <option value='{{pro.dni}}' name="{{pro.apellido}}, {{pro.nombre}}">{{pro.apellido}}, {{pro.nombre}}</option>
 
 
                           {%endfor%}
@@ -855,7 +994,7 @@ if (v == "none") {
 
                           {%for espec in especialidadesTodas%}
 
-                          <option value='{{espec.id}}'>{{espec.nombre}}</option>
+                          <option value='{{espec.id}}'> {{espec.nombre}}</option>
 
 
                           {%endfor%}
@@ -898,16 +1037,21 @@ if (v == "none") {
 
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable775544" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable775544ty" width="100%" cellspacing="0">
                       <thead>
                         <tr>
-                          <th style="width: 10%;">#</th>
+                      
                           <th style="width: 30%;">Nombre de Clase</th>
+
+                          <th >Profesor</th>
+                          <th >Nivel</th>
+                         
+                          
 
                           <th style="width: 50%;">Últimos Horarios</th>
 
 
-                          <th style="width: 10%;">Acciones</th>
+                          <th style="width: 10%;" class="noExport">Acciones</th>
 
                         </tr>
                       </thead>
@@ -917,8 +1061,12 @@ if (v == "none") {
 
 
                         <tr>
-                          <td>{{clase.id}}</td>
+                
                           <td>{{clase.nombre}}</td>
+
+                          <td >{{clase.profesorCargo.apellido}} {{clase.profesorCargo.nombre}}</td>
+                          <td >{{clase.nivel}}</td>
+                        
 
 
                           <td>{% for h in clase.horarios.all%}
@@ -1253,9 +1401,9 @@ addData( );
       var cantidadLista = 0;
       console.log('cambio filtro');
 
-      var table = $('#dataTable775544').DataTable();
-      $('#dataTable775544').DataTable().clear();
-      $('#dataTable775544').DataTable().draw();
+      var table = $('#dataTable775544ty').DataTable();
+      $('#dataTable775544ty').DataTable().clear();
+      $('#dataTable775544ty').DataTable().draw();
 
 
 
@@ -1263,6 +1411,37 @@ addData( );
       var year = $("#accion").val();
       var especialidades = $("#accion3").val();
       var nivel = $("#accion4").val();
+
+
+      var stre = "Filtrado realizado por"
+
+      if(profe != ""){
+        stre += "; Profesor: "+ $('#accion1').find('option:selected').text();
+      }
+
+      if(year != ""){
+        stre += "; Año: "+ year;
+      }
+
+      if(especialidades != ""){
+        stre += "; Especialidades: "+  $('#accion3').find('option:selected').text();; 
+      }
+
+
+      if(nivel != ""){
+        stre += "; Nivel: "+ nivel;
+      }
+
+
+
+      document.getElementById('filtrado1').value = stre;
+
+
+
+
+
+
+
       console.log(especialidades);
       $.ajax({
         url: '{% url "gestionMusical:filtro_Table_Historico" %}',
@@ -1289,6 +1468,9 @@ addData( );
 
             id = data['info'][i]['id'];
             nombre = data['info'][i]['nombre'];
+            profe = data['info'][i]['profesorCargo'];
+            nivel = data['info'][i]['nivel'];
+            cupo = data['info'][i]['cupo'];
             horarios = data['info'][i]['horarios'];
             for (var k = 0; k < horarios.length; k++) {
 
@@ -1301,7 +1483,7 @@ addData( );
             acciones = " <center><div class='btn-group'><center><div><button type='button' " + cosa + "  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34ClasesHistoricas'> <i class='fa fa-eye'></i></button></div></center></center>";
 
 
-            table.row.add([id, nombre, horariosFinal, acciones]).draw();
+            table.row.add([ nombre,profe,nivel, horariosFinal, acciones]).draw();
 
           }
           //obtener las listas,borrar viejo, poner nuevo
@@ -1367,6 +1549,117 @@ addData( );
       //chart.update();
       
     };
+
+
+    function updateTable2() {
+      var cantidadLista = 0;
+      console.log('cambio filtro');
+
+      var table = $('#dataTable').DataTable();
+      $('#dataTable').DataTable().clear();
+      $('#dataTable').DataTable().draw();
+
+
+
+      var profe = $("#accion1tabal").val();
+ 
+      var especialidades = $("#accion3tabal").val();
+      var nivel = $("#accion4tabal").val();
+
+      var stre = "Filtrado realizado por"
+
+      if(profe != ""){
+        stre += "; Profesor: "+ $('#accion1tabal').find('option:selected').text();
+      }
+
+      if(especialidades != ""){
+        stre += "; Especialidades: "+ $('#accion3tabal').find('option:selected').text();; 
+      }
+
+
+      if(nivel != ""){
+        stre += "; Nivel: "+ nivel;
+      }
+
+
+
+      document.getElementById('filtrado2').value = stre;
+
+
+      console.log(especialidades);
+      $.ajax({
+        url: '{% url "gestionMusical:filtro_Table_NoHistorico" %}',
+        data: {
+          'profe': profe,
+          
+          'especialidades': especialidades,
+          'nivel': nivel,
+        },
+        dataType: 'json',
+        success: function (data) {
+          var id = "";
+          var nombre = "";
+          var horarios = "";
+          var horariosFinal = "";
+          var acciones = "";
+
+          var nid;
+          var claseID = "0"
+          console.log(data);
+          console.log(data['info'].length);
+          for (var i = 0; i < data['info'].length; i++) {
+
+
+            id = data['info'][i]['id'];
+            nombre = data['info'][i]['nombre'];
+            profe = data['info'][i]['profesorCargo'];
+            nivel = data['info'][i]['nivel'];
+            cupo = data['info'][i]['cupo'];
+            horarios = data['info'][i]['horarios'];
+            for (var k = 0; k < horarios.length; k++) {
+
+              horariosFinal += "<label>" + horarios[k] + "</label><br>";
+
+            }
+            claseID = data['info'][i]['id'];
+            c = " ' " + claseID + " ' ";
+            cosa = 'onclick="updateModal(' + c + ')"';
+            acciones = " <center><div class='btn-group'><center><div><button type='button' " + cosa + "  class='btn btn-primary' data-toggle='modal' data-target='.bs-example-modal-lg34ClasesHistoricas'> <i class='fa fa-eye'></i></button></div></center></center>";
+
+
+            table.row.add([nombre,profe,nivel, horariosFinal, acciones]).draw();
+
+          }
+          //obtener las listas,borrar viejo, poner nuevo
+        }
+
+        
+        
+    
+  
+
+
+
+
+
+          //$('#cuerpoT2').html(html);
+          
+
+
+
+
+        
+      
+
+      //document.getElementById("cuadroEstadisticaHistorico").style.height = "300px";
+      //pregunta cantidad, evlua pone altura
+      
+      
+
+      
+      //chart.update();
+      
+    });};
     
 
 
@@ -1417,6 +1710,12 @@ addData( );
 
   <!-- Page level custom scripts -->
   <script src="{%static 'js/demo/datatables-demo.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/datatables.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/buttons.html5.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/dataTables.buttons.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/jszip.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/pdfmake.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/prueba/vfs_fonts.js'%}"></script>
   <script src="{%static 'js/jquery.multi-select.js'%}"></script>
   <script src="{%static 'js/selectMul.js'%}"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">

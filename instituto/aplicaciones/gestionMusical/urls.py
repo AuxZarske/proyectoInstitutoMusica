@@ -2,8 +2,8 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from .views import editarProfesor, crearProfesor, eliminarProfesor, listarprofesores, error, editarEspecialidad, crearEspecialidad, bajaEspecialidad, altaEspecialidad, listarespecialidades, editarAlumno, crearAlumno, eliminarAlumno, listaralumnos, listarclases, eliminarClase, crearClase, editarClase, mostrarClase, listarmensajes, listarinstrumentos, listarpartituras, listartemas, eliminarPartitura, crearPartitura, editarPartitura, eliminarTema, crearTema, editarTema, asociarAlumnoClase, desasociarAlumnoClase, verAlumnoClase, asociarPartituraAlumno, desasociarAlumnoPartitura, asociarTemaAlumno, desasociarAlumnoTema, reivindicarProfesor, reivindicarAlumno, crearCompo, listartutores, listarcompoMusic
 from .views import eliminarTutor, crearTutor, editarTutor, eliminarCompositor, crearCompositor, editarComposito, listarAuditoria, listarestadisticas, finPrestamo, listarclasesProfe, listarclasesAlumno, crearHorario, crearAsistenciaPasada, editarUsuario, editarIndividuo, editarIndividuoAlumno, editarIndividuoProfesor, configInstituto, configTodo, configDirectores, listarestadisticaspresta, listarestadisticasparti, listarestadisticasalu, eliminartipotarea, eliminarFilmina
-from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo, GrupoTable, nomInstru, GrupoPresta, GrupoTableYellow, filtroTablaHistorica, grupoClaseHistoricaUno, nuevoRelacionTutor, eliminarAsociacionTutor, agregarTipoTarea
-from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI, enviarMensaje, verConversacion, ocultarMensajes, vistoMensaje, obtenerUltimosMensajes, dniUser, grupoUnTutor
+from .views import eliminarMusica, crearMusica, editarMusica, listarprestamos, crearInstrumento, editarInstrumento, eliminarInstrumento, crearRecomendacion, eliminarReco, realizarReco, asistenciaClase, eliminarAsistencia, editarAsistencia, establecerDirecto, eliminarDirector, obtenerInfo, GrupoTable, nomInstru, GrupoPresta, GrupoTableYellow, filtroTablaHistorica, grupoClaseHistoricaUno, nuevoRelacionTutor, eliminarAsociacionTutor, agregarTipoTarea, filtroTablaNoHistorica
+from .views import validate_username_especialidad, validate_username_partitura, validate_username_tema, validate_username_tipoMusica, validate_username_tutorDNI, enviarMensaje, verConversacion, ocultarMensajes, vistoMensaje, obtenerUltimosMensajes, dniUser, grupoUnTutor, editarImagenPerfil
 urlpatterns = [
     #path('',home,name='index'),
 
@@ -64,6 +64,8 @@ urlpatterns = [
 
     path('filtro_Table_Historico/',login_required(filtroTablaHistorica),name='filtro_Table_Historico'),
 
+    path('filtro_Table_NoHistorico/',login_required(filtroTablaNoHistorica),name='filtro_Table_NoHistorico'),
+
 
     path('enviar_mensaje_ajax/', login_required(enviarMensaje), name='enviar_mensaje_ajax'),
     path('ver_conversacion_ajax/', login_required(verConversacion), name='ver_conversacion_ajax'),
@@ -108,6 +110,8 @@ urlpatterns = [
     path('editar_individuo',login_required(editarIndividuo),name='editar_individuo'),
     path('editar_individuoPro',login_required(editarIndividuoProfesor),name='editar_individuoPro'),
     path('editar_individuoAlu',login_required(editarIndividuoAlumno),name='editar_individuoAlu'),
+
+    path('editar_imagenPerfil',login_required(editarImagenPerfil),name='editar_imagenPerfil'),
 
     path('clases/',login_required(listarclases),name='clases'),
     path('clasesProfe/',login_required(listarclasesProfe),name='clasesProfe'),

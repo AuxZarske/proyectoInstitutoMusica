@@ -1238,8 +1238,10 @@
 
               </div>
               <br>
+              <br>
 
             </div>
+            <br>
           </center>
 
 
@@ -1540,7 +1542,7 @@
 
                                                             </div>
                                                             <div class="modal-body">
-                                                              <h4 style="font-size: 18px;">Esta seguro de Asociar el
+                                                              <h4 style="font-size: 18px;">Esta seguro de <strong>asociar</strong> el
                                                                 tema {{tema.nombre}} al alumno
                                                                 {{elAlumno.apellido}} {{elAlumno.nombre}} ?</h4 s>
 
@@ -1748,7 +1750,7 @@
 
                                           </div>
                                           <div class="modal-body">
-                                            <h4 style="font-size: 18px;">Esta seguro de desasociar el tema
+                                            <h4 style="font-size: 18px;">Esta seguro de  <strong>desasociar</strong> el tema
                                               {{tema.nombre}} al Alumno {{alu.nombre}}
                                               ?</h4>
 
@@ -1798,7 +1800,7 @@
                             data-toggle="modal" data-target=".bs-example-modal-lg6132{{laClase.id}}"
                             style="margin-right: 10px;">
                             <span class="icon text-white-50">
-                              <i class="fas fa-paperclip"></i>
+                              <i class="fas fa-paperclip"> <label style="color: white;"> Recomendadas</label></i>
 
                             </span>
 
@@ -2041,7 +2043,7 @@
 
                                                             </div>
                                                             <div class="modal-body">
-                                                              <h4 style="font-size: 18px;">Esta seguro de Asociar la
+                                                              <h4 style="font-size: 18px;">Esta seguro de <strong>asociar</strong> la
                                                                 Partitura {{par.nombre}} al
                                                                 alumno {{elAlumno.apellido}} {{elAlumno.nombre}} ?</h4>
 
@@ -2341,7 +2343,7 @@
 
                                                             </div>
                                                             <div class="modal-body">
-                                                              <h4 style="font-size: 18px;">Esta seguro de Asociar la
+                                                              <h4 style="font-size: 18px;">Esta seguro de <strong>asociar</strong> la
                                                                 Partitura {{par.nombre}} al
                                                                 alumno {{elAlumno.apellido}} {{elAlumno.nombre}} ?</h4>
 
@@ -2541,9 +2543,9 @@
                                   <div class="btn-group">
                                     <center>
                                       {%if  perms.gestionMusical.es_director or perms.gestionMusical.es_profesor%}
-                                      <button type="button" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                      <button type="button" class="btn btn-danger " data-toggle="modal"
                                         data-target=".bs-example-modal-lg2pol{{par.id}}">
-                                        <div id="icon8">
+                                        <div >
                                           <i class="fas fa-trash"></i>
                                         </div>
                                       </button>
@@ -2562,7 +2564,7 @@
 
                                           </div>
                                           <div class="modal-body">
-                                            <h4 style="font-size: 18px;">Esta seguro de desasociar la partitura
+                                            <h4 style="font-size: 18px;">Esta seguro de <strong>desasociar</strong>  la partitura
                                               {{par.nombre}} al Alumno
                                               {{alu.nombre}} ?</h4>
 
@@ -2615,7 +2617,7 @@
                       <span class="icon text-white-50">
                         <i class="fas fa-plus"></i>
                       </span>
-                      <span class="text" style="color: white;">Añadir Nuevo</span>
+                      <span class="text" style="color: white;">Añadir Nueva</span>
 
 
                     </a>
@@ -2720,14 +2722,14 @@
                                               <label for="inputEmail3" class="izquierda"><strong>Fecha
                                                   Inicio:</strong></label>
                                               <div class="derecha">
-                                                {{t.fechaCreacion}}
+                                                {{t.fechaCreacion |date:"SHORT_DATE_FORMAT"}}
                                               </div>
                                             </div>
                                             <div class="alinealoNomas">
                                               <label for="inputEmail3" class="izquierda"><strong>Fecha
                                                   fin:</strong></label>
                                               <div class="derecha">
-                                                {{t.fechaCierre}}
+                                                {{t.fechaCierre |date:"SHORT_DATE_FORMAT"}}
                                               </div>
                                             </div>
 
@@ -2736,7 +2738,9 @@
                                                   Recomendada:</strong></label>
                                               <div class="derecha">
                                                 {%if t.partiMusicReco%}
-                                                {{t.partiMusicReco.nombre}}
+                                                
+                                                <a href="#"
+                                                onclick="elPdf('{{t.partiMusicReco.archivo|binary_to_image}}')">{{t.partiMusicReco.nombre}}</a>
                                                 {%else%}
                                                 Ninguna
                                                 {%endif%}
@@ -2830,7 +2834,7 @@
 
                                             </div>
                                             <div class="modal-body">
-                                              <h4 style="font-size: 18px;">Esta seguro de Eliminar la recomendación:
+                                              <h4 style="font-size: 18px;">Esta seguro de <strong>eliminar</strong> la recomendación:
                                                 {{t.nombre}} ???</h4>
 
                                             </div>
@@ -3196,7 +3200,7 @@
 
                                     </div>
                                     <div class="modal-body">
-                                      <h4 style="font-size: 18px;">Esta seguro de establecer como Alumno al Sr/a
+                                      <h4 style="font-size: 18px;">Esta seguro de <strong>establecer</strong>  como Alumno al Sr/a
                                         {{alu.apellido}} {{alu.nombre}}
                                         ?</h4>
 

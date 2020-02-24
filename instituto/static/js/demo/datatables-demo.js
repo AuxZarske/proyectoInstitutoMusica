@@ -3,13 +3,7 @@
 $(document).ready(function () {
   $('#dataTable775544ty').DataTable({
     "paging": true,
-    "columns": [
-      { "width": "30%" },
-      { "width": "20%" },
-      { "width": "30%" },
-      { "width": "19%" }
-      
-    ],
+    
     "buttons": [
       { text: 'PDF',
       extend: 'pdfHtml5',
@@ -62,6 +56,10 @@ $(document).ready(function () {
    if(template == 3){
      var tipoReporte = "Temas";
    }
+   if(template == 284){
+    var tipoReporte = "Clases historicas";
+    filtrado = $('#filtrado1').val();
+  }
    if(template == 4){
      var tipoReporte = "Profesores";
    }
@@ -759,6 +757,10 @@ if(template == 6){
 if(template == 7){
   var tipoReporte = "Instrumentos";
 }
+if(template == 284){
+  var tipoReporte = "Clases";
+  filtrado = $('#filtrado2').val();
+}
 if(template == 8){
   var tipoReporte = "Auditoria";
 }
@@ -856,7 +858,7 @@ margin: 20
                 if(template == 5){
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
-                   doc.content[0].table.widths = [60, 100, 40,70,95,45];
+                   doc.content[0].table.widths = [45, 100, 50,60,99,60];
                 }
                 if(template == 6){
                   //doc.content[0].table.widths = colCount;
@@ -899,7 +901,7 @@ margin: 20
                 if(template == 10){
                   //doc.content[0].table.widths = colCount;
                  //Es equivalente a: 
-                 doc.content[0].table.widths = [60, 100, 40,70,95,45];
+                 doc.content[0].table.widths = [45, 100, 40,70,98,58];
                 }
                 
 // Change dataTable layout (Table styling)

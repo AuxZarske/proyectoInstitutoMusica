@@ -662,6 +662,111 @@ def grupoClaseHistoricaUno(request):
 
     return JsonResponse(data)
 
+def filtroTablaNoHistorica(request):
+    print(request.GET)#ver la lista
+
+    #obtener los datos por separado
+    profesor= request.GET.get('profe',None)
+    
+    especialidades= request.GET.get('especialidades[]',None)
+    nivel= request.GET.get('nivel',None)
+    
+    #lista principal de clases
+    todasClases = []
+    todasClases = list(Clase.objects.filter(historica = False))
+    todasClases = todasClases[::-1]
+    print(profesor)
+    
+    print(nivel)
+    #el filtrado if cuadruple
+    if profesor != None and profesor != '':
+        auxiliar = []
+        prof = Profesor.objects.get(dni = profesor)
+        for c in todasClases:
+            if c.profesorCargo == prof:
+                auxiliar.append(c)
+        todasClases = auxiliar
+
+    print(todasClases)
+ 
+    if nivel != None and nivel != '':
+        auxiliar = []
+        for c in todasClases:
+            if c.nivel == nivel:
+                auxiliar.append(c)
+        todasClases = auxiliar
+    print(todasClases)
+    if especialidades != None:
+        
+        for e in especialidades:
+            auxiliar = []
+            eO = Especialidad.objects.get(id = e)
+            for c in todasClases:
+                
+                listAux = list(c.especialidadesDar.all())
+                if listAux.count(eO) > 0:
+                    auxiliar.append(c)
+            todasClases = auxiliar
+
+
+    print(todasClases)
+    print("listo")
+
+    listaD = []
+    
+    for c in todasClases:
+        
+        lis1 = []
+        lis3 = []
+
+
+        lis1 = list(c.horarios.all())
+        auxH = []
+        for h in lis1:
+            auxH.append(" "+h.__str__() + " ")
+        lis1 = auxH
+
+
+        
+        lis3 = list(c.especialidadesDar.all())
+        aux = []
+        for e in lis3:
+            aux.append(e.nombre)
+        lis3 = aux
+
+        print(lis1)
+      
+        print(lis3)
+
+
+        data = {
+            'id': c.id,
+            'creadaClase': c.creadaClase,
+            'nombre': c.nombre,
+            'descripcion': c.descripcion,
+
+
+            'horarios': lis1.copy(),
+            
+            'especialidadesDar': lis3.copy(), 
+
+            'cupo': c.cupo,
+            'nivel': c.nivel,
+            'historica': c.historica,
+            'profesorCargo': c.profesorCargo.apellido + " " +c.profesorCargo.nombre, 
+            
+        }
+    
+        listaD.append(data)
+
+    
+
+    dicD = {
+        'info': listaD
+    }
+
+    return JsonResponse(dicD)
+
 
 def filtroTablaHistorica(request):
     print(request.GET)#ver la lista
@@ -2386,6 +2491,52 @@ def crearAsistenciaPasada(request):
     print(data)
     return JsonResponse(data)
 
+import io
+import base64
+from io import StringIO
+def editarImagenPerfil(request):
+    imagen = request.GET.get('country', None)
+    dni = request.GET.get('id', None)
+
+    data = {
+        'is_taken': False
+        
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Error.'
+    else:
+        #crear compositor, ponerle ese nombre
+
+        try:
+            elUsuario = Profesor.objects.get(dni = dni) 
+        except:
+            elUsuario = Alumno.objects.get(dni = dni)
+        
+        
+       # elUsuario.archivo = request.FILES['country'].file.read()
+        #elUsuario.archivo = imagen.file.read()
+
+
+        pic = StringIO()
+        image_string = StringIO(base64.b64decode(imagen))
+        image = Image.open(image_string)
+        image.save(pic, image.format, quality = 100)
+        pic.seek(0)
+
+
+
+
+        elUsuario.save()
+
+        messages.success(request, "Edicion Correcta!")
+        data['error_message'] = 'creado exitosamente.'
+       
+        
+        
+    print(data)
+    return JsonResponse(data)
+
+
 
 def editarIndividuo(request):
     apellido = request.GET.get('apellido', None)
@@ -2749,9 +2900,10 @@ def eliminarAsistencia(request, id):
     return asistenciaClase(request, num)
 
 def eliminarReco(request,id,dni,idC):
-    reco = Recomendacion.objects.get(id = id)
+    
     
     try:
+        reco = Recomendacion.objects.get(id = id)
         reco.delete()
         messages.success(request, "eliminado Correcto!")
     except:
@@ -3532,6 +3684,20 @@ def establecerDirecto(request, dni):
 
 
 def listarclases(request):
+    pedidor = ""
+    try:
+        pedidor = str(request.user.username)
+    
+    
+        elusuario = Profesor.objects.filter(correoElectronico = pedidor)
+
+        if not elusuario:
+            elusuario = Alumno.objects.filter(correoElectronico = pedidor)
+        if elusuario:
+            elusuario = elusuario[0]
+            pedidor = elusuario.apellido + ' '+ elusuario.nombre
+    except:
+        pass
     clases = Clase.objects.filter(historica = False)
     clasesHistoricas =   list(Clase.objects.filter(historica = True).order_by('cantidadAsistida'))
     clasesHistoricas = clasesHistoricas[::-1]
@@ -3552,7 +3718,7 @@ def listarclases(request):
     especialidadesTodas = Especialidad.objects.all()
     profesTodos = Profesor.objects.all()
     
-    return render(request,'clases.html',{'clases':clases,'listaClassHistoryColors':listaClassHistoryColors,'listaClassHistoryCant':listaClassHistoryCant,'listaClassHistoryNom':listaClassHistoryNom, 'clasesHistoricas':clasesHistoricas,'especialidadesTodas':especialidadesTodas,'profesTodos':profesTodos })
+    return render(request,'clases.html',{'clases':clases,'pedidor':pedidor,'listaClassHistoryColors':listaClassHistoryColors,'listaClassHistoryCant':listaClassHistoryCant,'listaClassHistoryNom':listaClassHistoryNom, 'clasesHistoricas':clasesHistoricas,'especialidadesTodas':especialidadesTodas,'profesTodos':profesTodos })
 
 def listarclasesProfe(request):
     pedidor = str(request.user.username)

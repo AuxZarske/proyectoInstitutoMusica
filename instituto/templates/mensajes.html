@@ -1,4 +1,5 @@
 {%extends 'index.html'%}
+{% load staticfiles %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -382,7 +383,7 @@ div.alinealoNomas{
 								<li>
 									<div class="d-flex bd-highlight">
 										<div class="img_cont">
-											<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+											<img width="60" height="60" src="{% static 'avatar.png'%}"
 												class="rounded-circle user_img" style="width: 50px;height: 50px;">
 
 										</div>
@@ -400,7 +401,7 @@ div.alinealoNomas{
 								<li>
 									<div class="d-flex bd-highlight">
 										<div class="img_cont">
-											<img src="https://source.unsplash.com/rPOmLGwai2w/60x60"
+											<img width="60" height="60" src="{% static 'avatar.png'%}"
 												class="rounded-circle user_img" style="width: 50px;height: 50px;">
 
 										</div>
@@ -425,7 +426,7 @@ div.alinealoNomas{
 					<div class="card-header msg_head">
 						<div class="d-flex bd-highlight">
 							<div class="img_cont">
-								<img src="https://source.unsplash.com/FZWivbri0Xk/60x60"
+								<img width="60" height="60" src="{% static 'avatar.png'%}"
 									class="rounded-circle user_img">
 
 							</div>
@@ -459,102 +460,61 @@ div.alinealoNomas{
 									</div>
 									<div class="modal-body" id="cuerpoModal">
 										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">DNI: </label>
+											<label for="inputEmail3" class="izquierda"><strong>DNI:</strong>
+											</label>
 											<div class="derecha">
-												{{alu.dni}}
+											  {{alu.dni}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Apellido:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Apellido:</strong></label>
 											<div class="derecha">
-												{{alu.apellido}}
+											  {{alu.apellido}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Nombre:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Nombre:</strong></label>
 											<div class="derecha">
-												{{alu.nombre}}
+											  {{alu.nombre}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Sexo:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Sexo:</strong></label>
 											<div class="derecha">
-												{{alu.sexo}}
+											  {{alu.sexo}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Fecha
+												Nacimiento:</strong></label>
 											<div class="derecha">
-												{{alu.fechaNac}}
+											  {{alu.fechaNac}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Domicilio:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Domicilio:</strong></label>
 											<div class="derecha">
-												{{alu.domicilio}}
+											  {{alu.domicilio}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Telefono:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Telefono:</strong></label>
 											<div class="derecha">
-												{{alu.telefono}}
+											  {{alu.telefono}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Correo:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3"
+											  class="izquierda"><strong>Correo:</strong></label>
 											<div class="derecha">
-												{{alu.correoElectronico}}
+											  {{alu.correoElectronico}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Observaciones:</label>
-											<div class="derecha">
-												{{alu.observaciones}}
-											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Gusto Musical:</label>
-											<div class="derecha">
-												{{alu.musica}}
-											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Conocimiento Previo:</label>
-											<div class="derecha">
-												{{alu.conocimientoPrevio}}
-											</div>
-										</div>
-
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Especialidad Requerida:</label>
-											<div class="derecha">
-												{% if alu.especialidadRequerida == None  %}
-												Ninguna Asignada
-
-												{% else %}
-												{{alu.especialidadRequerida}}
-												{% endif %}
-											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Nivel en la especialidad:</label>
-											<div class="derecha">
-												{{alu.nivel}}
-											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda"
-												style="color: black;">TUTOR:</label>
-											<div class="derecha">
-
-												{%if alu.tutor%}
-												{{alu.tutor}}
-												<a href="#">mas</a>
-												{%else%}
-												<p>No registrado / mayor de edad</p>
-												{%endif%}
-											</div>
-										</div>
+										  </div>
 
 
 									</div>
@@ -585,69 +545,53 @@ div.alinealoNomas{
 									</div>
 									<div class="modal-body" id="cuerpoModal">
 										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">DNI: </label>
+											<label for="inputEmail3" class="izquierda"><strong>DNI: </strong></label>
 											<div class="derecha">
-												{{profe.dni}}
+											  {{profe.dni}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Apellido:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Apellido:</strong></label>
 											<div class="derecha">
-												{{profe.apellido}}
+											  {{profe.apellido}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Nombre:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Nombre:</strong></label>
 											<div class="derecha">
-												{{profe.nombre}}
+											  {{profe.nombre}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Sexo:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Sexo:</strong></label>
 											<div class="derecha">
-												{{profe.sexo}}
+											  {{profe.sexo}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Fecha Nacimiento:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Fecha de nacimiento:</strong></label>
 											<div class="derecha">
-												{{profe.fechaNac}}
+											  {{profe.fechaNac}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Domicilio:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Domicilio:</strong></label>
 											<div class="derecha">
-												{{profe.domicilio}}
+											  {{profe.domicilio}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Telefono:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Teléfono:</strong></label>
 											<div class="derecha">
-												{{profe.telefono}}
+											  {{profe.telefono}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Correo:</label>
+										  </div>
+										  <div class="alinealoNomas">
+											<label for="inputEmail3" class="izquierda"><strong>Correo:</strong></label>
 											<div class="derecha">
-												{{profe.correoElectronico}}
+											  {{profe.correoElectronico}}
 											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Observaciones:</label>
-											<div class="derecha">
-												{{profe.observaciones}}
-											</div>
-										</div>
-										<div class="alinealoNomas">
-											<label for="inputEmail3" class="izquierda">Especialidades:</label>
-											<div class="derecha">
-
-												{%for es in profe.especialidades.all%}
-
-												<p> {{es}} </p>
-												{%endfor%}
-											</div>
-										</div>
+										  </div>
 
 									</div>
 									<div class="modal-footer">

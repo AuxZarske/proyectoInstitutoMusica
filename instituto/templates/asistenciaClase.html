@@ -472,11 +472,11 @@ div#zonaBotones{
                           <tr>                          
                             <td>{{asist.alumnoAsist.apellido}} {{asist.alumnoAsist.nombre}}</td> 
                             <td>{{asist.claseReferencia.nombre}} - {{asist.horario}}</td>  
-                            <td>{{asist.creada}}</td>  
+                            <td>{{asist.creada|date:"SHORT_DATE_FORMAT"}}</td>  
                             <td>{% if asist.estadoReco %}
 
                                                                 
-                                    Asistio
+                                    Asistió
                                         
                                     {%else%}
                                    
@@ -530,15 +530,15 @@ div#zonaBotones{
                                       </div>
                                        <!--mmm-->
                                           <center>
-                                              <button type="button" id="bot" class="btn btn-danger btn-icon-split" style="background-color: rgb(255, 174, 0);" data-toggle="modal" data-target=".bs-example-modal-lg254C{{asist.id}}">
-                                                  <div id="icon8">
+                                              <button type="button"  class="btn btn-danger " style="background-color: rgb(255, 174, 0); border: 0px;" data-toggle="modal" data-target=".bs-example-modal-lg254C{{asist.id}}">
+                                                  <div >
                                                 <i class="fas fa-paint-brush"></i>
-                                              </div><div id="fraseBoton"> Editar</div>
+                                              </div>
                                               </button>
-                                            <button type="button" id="bot" class="btn btn-danger btn-icon-split" data-toggle="modal" data-target=".bs-example-modal-lg2{{asist.id}}">
-                                                <div id="icon8">
+                                            <button type="button"  class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg2{{asist.id}}">
+                                                <div >
                                               <i class="fas fa-trash"></i>
-                                            </div><div id="fraseBoton"> Eliminar</div>
+                                            </div>
                                             </button>
                                           </center>
                                           

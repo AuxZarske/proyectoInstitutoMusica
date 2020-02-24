@@ -164,11 +164,13 @@
                 </div>
                 <div id="contennedorTop">
                     <div id="foto">
-                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/rPOmLGwai2w/120x120">
+                        <img class="img-profile rounded-circle" width="120" height="120" src="{% static 'avatar.png'%}">
                     </div>
                     <div id="botonesTop">
 
-                        <button id="b2" class="bobo">Establecer foto de perfil</button>
+                        <button style="display: none;" id="b2" class="bobo" type="button" data-toggle="modal"
+                        data-target=".bs-example-modal-lg634743">Establecer foto de perfil</button>
+
                         <button id="b3" class="bobo" type="button" data-toggle="modal"
                             data-target=".bs-example-modal-lg6347">Cambiar Contraseña</button>
                         <a href="#tema1">
@@ -179,6 +181,40 @@
 
                     </div>
                 </div>
+
+                <!--md-->
+                <div class="modal fade bs-example-modal-lg634743" id="myModal634743" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel634743">Establecer nueva Imagen perfil:</h4>
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">×</span>
+                            </button>
+
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <label for="inputAddress2" class="sub">Cargue una imagen:</label>
+                                <input type="file" class="form-control mb-2" name="archivo" id="txtDocNuevoImagen"   required>
+                            </div>
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="button" id="botonPerfilImagen" class="btn btn-primary">Confirmar</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--mmm-->
+
+                <!--md-->
 
                 <!--MMMM-->
                 <form class="user" method="POST">
@@ -558,6 +594,39 @@
                         'country': country,
                         'espealu': espealu,
                         'id_especialidadnivel': id_especialidadnivel
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        if (data.is_taken) {
+                            alert("Error al editar");
+                        } else {
+
+                            location.reload(true);
+                        }
+                    }
+                });
+            }
+
+        });
+        $("#botonPerfilImagen").click(function () {
+            var country = $("#txtDocNuevoImagen").val();
+           
+            var id = "{{individuo.dni}}";
+
+
+            if (country == "" ) {
+                alert("Complete el campo con una imagen");
+            } else {
+                
+                $.ajax({
+
+                    url: '{% url "gestionMusical:editar_imagenPerfil" %}',
+                    data: {
+                        'country': country,
+                        
+                        'id': id
                     },
                     dataType: 'json',
 

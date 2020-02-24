@@ -217,9 +217,9 @@
                 <label for="inputAddress2" class="sub">Descripción de la clase:</label>
                 {%if editacion != 1%}
                 <textarea class="form-control" id="desbr" name="descripcion"
-                    placeholder="Descripción y detalles de la clase..." required maxlength="250"></textarea>
+                    placeholder="Descripción y detalles de la clase..." required maxlength="550"></textarea>
                 {%else%}
-                <textarea class="form-control" id="desbr" maxlength="250" name="descripcion"
+                <textarea class="form-control" id="desbr" maxlength="550" name="descripcion"
                     placeholder="Descripción y detalles de la clase...">{{clase_form.descripcion.value}}</textarea>
                 {%endif%}
             </div>

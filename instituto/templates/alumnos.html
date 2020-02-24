@@ -839,7 +839,7 @@
 
                       <td style="display: none">{{alu.apellido}}, {{alu.nombre}}</td>
                       <td style="display: none">{{alu.sexo}}</td>
-                      <td style="display: none">{{alu.fechaNac}}</td>
+                      <td style="display: none">{{alu.fechaNac|date:"SHORT_DATE_FORMAT"}}</td>
                       <td style="display: none">{{alu.correoElectronico}}</td>
                       <td style="display: none">{{alu.telefono}}</td>
 
@@ -917,7 +917,7 @@
                                       <label for="inputEmail3" class="izquierda"><strong>Fecha
                                           Nacimiento:</strong></label>
                                       <div class="derecha">
-                                        {{alu.fechaNac}}
+                                        {{alu.fechaNac|date:"SHORT_DATE_FORMAT"}}
                                       </div>
                                     </div>
                                     <div class="alinealoNomas">
