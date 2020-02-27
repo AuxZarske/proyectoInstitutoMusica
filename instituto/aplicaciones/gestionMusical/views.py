@@ -2448,17 +2448,18 @@ def crearAsistenciaPasada(request):
         hor = Horario.objects.get(id = int(horario))
         a = Alumno.objects.get(dni = int(alumno))
         if Asistencia.objects.filter(claseReferencia = laClase, alumnoAsist = a, creada__day = dia, creada__month = mes, creada__year = ano, horario = hor).exists():
+            print(Asistencia.objects.filter(claseReferencia = laClase, alumnoAsist = a, creada__day = dia, creada__month = mes, creada__year = ano, horario = hor).count())
             data['error_message'] = 'existe'
             data = {
                     'is_taken': True
         
             }
-            messages.error(request, " Error - La asistencia ye esta creada, puede modificarla desde la tabla de asistencias")
+            messages.error(request, " Error - La asistencia ya esta creada, puede modificarla desde la tabla de asistencias")
             print(data)
             return JsonResponse(data)
 
         else:
-            print(hor.diaSemanal)
+            print("no")
             num = date(fecha.year,fecha.month, fecha.day).isoweekday()
             if hor.diaSemanal ==  switch_demo(num) :
                 
@@ -3404,9 +3405,9 @@ def reivindicarAlumno(request,dni):
     espe = alumno.especialidadRequerida
     nive = alumno.nivel
     #buscar una clase
-    if Clase.objects.filter(especialidadesDar = espe, nivel = nive).exists():
+    if Clase.objects.filter(especialidadesDar = espe, nivel = nive, historica = False).exists():
         
-        clasesEspecNiv = list(Clase.objects.filter(especialidadesDar = espe, nivel = nive))
+        clasesEspecNiv = list(Clase.objects.filter(especialidadesDar = espe, nivel = nive, historica = False))
         for c in clasesEspecNiv:
             print(c.nombre)
             cantAlu = list(c.alumnoAsociados.all())
@@ -4188,68 +4189,70 @@ def verConversacion (request):
     #print(request.GET['idEmisor'])
     dic = {}
     conversacion = []
-    #//marcar vistos-eliminarlos//prestamos
-    
-    dniR = request.GET.get('idReceptor', None)
-    dniE = request.GET.get('idEmisor', None)
-
-    if dniR !="" and dniE !="":
-        elusuario = list(Profesor.objects.filter(dni = dniR))
-
-        if len(elusuario) < 1:
-            elusuario = list(Alumno.objects.filter(dni = dniR))
-        if len(elusuario) > 0:
-            elusuario = elusuario[0]
-        userReceptor = elusuario 
-        idR = userReceptor.correoElectronico
-
-        userReceptor = list(User.objects.filter(username = idR))[0]
-
-
+    try:
+        #//marcar vistos-eliminarlos//prestamos
         
-        elusuario = list(Profesor.objects.filter(dni = dniE))
+        dniR = request.GET.get('idReceptor', None)
+        dniE = request.GET.get('idEmisor', None)
 
-        if len(elusuario) < 1:
-            elusuario = list(Alumno.objects.filter(dni = dniE))
-        if len(elusuario) > 0:
-            elusuario = elusuario[0]
-        userEmisor = elusuario
-        idR = userEmisor.correoElectronico
+        if dniR !="" and dniE !="":
+            elusuario = list(Profesor.objects.filter(dni = dniR))
 
-        userEmisor = list(User.objects.filter(username = idR))[0]
-        print("hyg") 
-        conversacionAux = list(Inbox.get_conversation(userEmisor, userReceptor, 50))
+            if len(elusuario) < 1:
+                elusuario = list(Alumno.objects.filter(dni = dniR))
+            if len(elusuario) > 0:
+                elusuario = elusuario[0]
+            userReceptor = elusuario 
+            idR = userReceptor.correoElectronico
 
-
-        copia = conversacionAux.copy() 
-        for a in copia:       
-            if a.read_at != None:   
-                print("esta visto")
-                conversacionAux.remove(a)
-            else:
-                print("no esta visto")
-        
+            userReceptor = list(User.objects.filter(username = idR))[0]
 
 
-        print(userEmisor)
-        print(userReceptor)
-        
-        conversacion = []
-        dic = {}
-        for conver in conversacionAux:
-            ahora = conver.sent_at
             
-            ahora = ahora - timedelta(hours=3)
+            elusuario = list(Profesor.objects.filter(dni = dniE))
+
+            if len(elusuario) < 1:
+                elusuario = list(Alumno.objects.filter(dni = dniE))
+            if len(elusuario) > 0:
+                elusuario = elusuario[0]
+            userEmisor = elusuario
+            idR = userEmisor.correoElectronico
+
+            userEmisor = list(User.objects.filter(username = idR))[0]
+            print("hyg") 
+            conversacionAux = list(Inbox.get_conversation(userEmisor, userReceptor, 50))
+
+
+            copia = conversacionAux.copy() 
+            for a in copia:       
+                if a.read_at != None:   
+                    print("esta visto")
+                    conversacionAux.remove(a)
+                else:
+                    print("no esta visto")
             
-            dic = {
-            'content': conver.content,
-            'sender': conver.sender.id,
-            'recipient': conver.recipient.id,
-            'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
-            'idMensaje': str(conver.id)
-            }
-            conversacion.append(dic)
-    
+
+
+            print(userEmisor)
+            print(userReceptor)
+            
+            conversacion = []
+            dic = {}
+            for conver in conversacionAux:
+                ahora = conver.sent_at
+                
+                ahora = ahora - timedelta(hours=3)
+                
+                dic = {
+                'content': conver.content,
+                'sender': conver.sender.id,
+                'recipient': conver.recipient.id,
+                'sent_at': str(ahora.strftime('%d %b. %Y %H:%M')),
+                'idMensaje': str(conver.id)
+                }
+                conversacion.append(dic)
+    except:
+        pass    
     
     return HttpResponse(
                 json.dumps(conversacion),
@@ -5031,8 +5034,10 @@ def verAlumnoClase(request,dni,idC):
             
 
             for r in partituras:
-                
-                partiturasTodas.remove(r)
+                try:
+                    partiturasTodas.remove(r)
+                except:
+                    pass
             
             temasTodos = list(Tema.objects.all())
             for t in temas:

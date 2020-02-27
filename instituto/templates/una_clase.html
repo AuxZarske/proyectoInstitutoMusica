@@ -1209,19 +1209,8 @@
                             {{elAlumno.nivel}}
                           </div>
                         </div>
-                        <div class="alinealoNomas">
-                          <label for="inputEmail3" class="izquierda"><strong>Conocimiento Previo:</strong></label>
-                          <div class="derecha">
-                            {{elAlumno.conocimientoPrevio}}
-                          </div>
-                        </div>
-                        <div class="alinealoNomas">
-                          <label for="inputEmail3" class="izquierda"><strong>Observaciones:</strong></label>
-                          <div class="derecha">
-                            {{elAlumno.observaciones}}
-                          </div>
-                        </div>
-
+                       
+                       
 
 
 
@@ -1454,13 +1443,7 @@
                                                           </div>
                                                           <div class="modal-body" id="cuerpoModal">
 
-                                                            <div class="alinealoNomas">
-                                                              <label for="inputEmail3" class="izquierda">
-                                                                <strong>Id:</strong> </label>
-                                                              <div class="derecha">
-                                                                {{tema.id}}
-                                                              </div>
-                                                            </div>
+                                    
                                                             <div class="alinealoNomas">
                                                               <label for="inputEmail3" class="izquierda">
                                                                 <strong>Nombre:</strong></label>
@@ -1661,12 +1644,7 @@
                                           </div>
 
                                           <div class="modal-body" id="cuerpoModal">
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda"><strong>Id:</strong> </label>
-                                              <div class="derecha">
-                                                {{tema.id}}
-                                              </div>
-                                            </div>
+                                           
                                             <div class="alinealoNomas">
                                               <label for="inputEmail3"
                                                 class="izquierda"><strong>Nombre:</strong></label>
@@ -1930,12 +1908,7 @@
                                                           </div>
 
                                                           <div class="modal-body" id="cuerpoModal">
-                                                            <div class="alinealoNomas">
-                                                              <label class="izquierda"> <strong>Id: </strong></label>
-                                                              <div class="derecha">
-                                                                {{par.id}}
-                                                              </div>
-                                                            </div>
+                                                            
                                                             <div class="alinealoNomas">
                                                               <label for="inputEmail3"
                                                                 class="izquierda"><strong>Nombre:</strong></label>
@@ -2230,12 +2203,7 @@
                                                           </div>
 
                                                           <div class="modal-body" id="cuerpoModal">
-                                                            <div class="alinealoNomas">
-                                                              <label class="izquierda"><strong>Id:</strong> </label>
-                                                              <div class="derecha">
-                                                                {{par.id}}
-                                                              </div>
-                                                            </div>
+                                                           
                                                             <div class="alinealoNomas">
                                                               <label for="inputEmail3"
                                                                 class="izquierda"><strong>Nombre:</strong></label>
@@ -2463,12 +2431,7 @@
                                           </div>
 
                                           <div class="modal-body">
-                                            <div class="alinealoNomas">
-                                              <label for="inputEmail3" class="izquierda"><strong>Id:</strong> </label>
-                                              <div class="derecha">
-                                                {{par.id}}
-                                              </div>
-                                            </div>
+                                           
                                             <div class="alinealoNomas">
                                               <label for="inputEmail3"
                                                 class="izquierda"><strong>Nombre:</strong></label>
@@ -3150,19 +3113,7 @@
                                         {{alu.nivel}}
                                       </div>
                                     </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda"><strong>Conocimiento
-                                          Previo:</strong></label>
-                                      <div class="derecha">
-                                        {{alu.conocimientoPrevio}}
-                                      </div>
-                                    </div>
-                                    <div class="alinealoNomas">
-                                      <label for="inputEmail3" class="izquierda"><strong>Observaciones:</strong></label>
-                                      <div class="derecha">
-                                        {{alu.observaciones}}
-                                      </div>
-                                    </div>
+                                    
 
 
 
@@ -3415,7 +3366,7 @@
               success: function (data) {
 
                 if (data.is_taken) {
-                  alert("Ese nombre ya lo tiene otro tipo de musica ");
+                  alert("Error: la fecha no corresponde al horario ");
                   document.getElementById("inputMusicaCrear").value = "";
                 } else {
 
